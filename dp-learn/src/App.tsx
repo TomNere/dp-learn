@@ -1,11 +1,25 @@
-import * as React from 'react';
 import './App.css';
-import Welcome from './components/Welcome';
+
+import * as React from 'react';
+
+import Container from './components/Container';
+import Header from './components/Header';
+import { BrowserRouter as Router } from 'react-router-dom'
 
 class App extends React.Component {
+  constructor(props: any) {
+    super(props);
+  }
+
   public render() {
+
     return (
-      <Welcome />
+      <Router>
+        <div>
+          <Header location={this.props} />
+          <Container location={this.props} />
+        </div>
+      </Router>
     );
   }
 }

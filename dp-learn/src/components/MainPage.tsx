@@ -1,71 +1,58 @@
 import * as React from 'react';
-// tslint:disable-next-line:ordered-imports
-import { Theme, WithStyles, withStyles, Grow } from '@material-ui/core';
 
-export interface IProps {
-    visible: boolean
-}
+import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
-const styles = (theme: Theme) => ({
-    root: {
-        flexGrow: 1,
-        height: '100vh',
-        backgroundColor: '#263238',
-        display: 'flex',
-    },
-    grid: {
-        marginTop: 100,
-    },
-    brief: {
-        fontSize: 24,
-        color: 'green'
-    },
-    button: {
-        margin: theme.spacing.unit,
-        marginTop: 100,
-        color: 'white',
-        borderColor: 'white',
-        borderWidth: 2
-    },
-});
+import Menu from './Menu';
+import Typography from '@material-ui/core/Typography';
+import myTheme from '../styles/index';
+
+// import Header from './Header';
+
+
+
 
 type AllProps =
-    IProps &
     WithStyles<typeof styles>;
 
+const styles = (theme: Theme) => createStyles ({
+    root: {
+        flexGrow: 1,
+        zIndex: 1,
+        height: '100vh',
+        overflow: 'hidden',
+        position: 'relative',
+        display: 'flex',
+    },
+    appBar: {
+        zIndex: theme.zIndex.drawer + 1,
+        backgroundColor: myTheme.palette.primary.main
+    },
+    content: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.default,
+        padding: theme.spacing.unit * 3,
+        minWidth: 0, // So the Typography noWrap works
+    },
+    toolbar: theme.mixins.toolbar,
+});
+
+
 class MainPage extends React.Component<AllProps> {
-    public static defaultProps: IProps = {
-        visible: true
-    }
 
     public render() {
         const { classes } = this.props;
 
         return (
-            <div>
-                <Grow
-                    in={this.props.visible}
-                    timeout={5000}
-                >
-                <div className={classes.brief}>Main Page</div>
-                </Grow>
-                <Grow
-                    in={this.props.visible}
-                    style={{ transformOrigin: '0 0 0' }}
-                    {...(this.props.visible ? { timeout: 5000 } : {})}
-                >
-                <div className={classes.brief}>Main Page</div>
-                </Grow>
-                
+            <div className={classes.root}>
+                <Menu />
+                <main className={classes.content}>
+                    <div className={classes.toolbar} />
+                    <Typography noWrap={true}>{'You think water moves fast? You should see ice.'}</Typography>
+                </main>
             </div>
-
-
-
         );
     }
-
 }
 
-// helpers
 
 export default withStyles(styles)(MainPage);
