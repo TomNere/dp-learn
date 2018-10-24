@@ -5,6 +5,7 @@ import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/s
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import logo from '../resources/dp_transparent.png';
 import myTheme from '../styles/index';
 
 type AllProps =
@@ -23,6 +24,9 @@ const styles = (theme: Theme) => createStyles({
         zIndex: theme.zIndex.drawer + 1,
         backgroundColor: myTheme.palette.primary.main
     },
+    logo: {
+        marginRight: '20px'
+    }
 });
 
 
@@ -38,9 +42,12 @@ class Header extends React.Component<AllProps> {
             <AppBar position="absolute" className={classes.appBar}>
                 <div>
                     {!welcomePage &&
-                        <Toolbar disableGutters={true}>
+                        <Toolbar>
+                            <span className={classes.logo}>
+                            <img src={logo} height='50' width='50'/>
+                            </span>
                             <Typography variant="h6" color="inherit" noWrap={true}>
-                                Clipped drawer
+                                Dynamic programming
                             </Typography>
                         </Toolbar>
                     }

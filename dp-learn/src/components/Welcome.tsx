@@ -6,10 +6,6 @@ import { Theme, WithStyles, withStyles } from '@material-ui/core/styles';
 import logo from '../resources/dp_transparent.png';
 import myTheme from '../styles/index';
 
-// import { Theme } from '../styles/index';
-
-
-
 declare module '*.png';
 
 export interface IProps {

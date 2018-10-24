@@ -2,14 +2,9 @@ import * as React from 'react';
 
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
+import Coins from './examples/Coins';
 import Menu from './Menu';
-import Typography from '@material-ui/core/Typography';
 import myTheme from '../styles/index';
-
-// import Header from './Header';
-
-
-
 
 type AllProps =
     WithStyles<typeof styles>;
@@ -47,12 +42,11 @@ class MainPage extends React.Component<AllProps> {
                 <Menu />
                 <main className={classes.content}>
                     <div className={classes.toolbar} />
-                    <Typography noWrap={true}>{'You think water moves fast? You should see ice.'}</Typography>
+                    <Coins/>
                 </main>
             </div>
         );
     }
 }
-
 
 export default withStyles(styles)(MainPage);

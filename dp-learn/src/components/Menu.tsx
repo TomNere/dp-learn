@@ -1,8 +1,7 @@
-import * as Icons from '@material-ui/icons';
 import * as React from 'react';
 
 import { Drawer, List, Theme, WithStyles, createStyles, withStyles } from '@material-ui/core';
-import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { ListItem, ListItemText } from '@material-ui/core';
 
 import myTheme from '../styles/index';
 
@@ -51,16 +50,10 @@ class Menu extends React.Component<AllProps> {
             <List>
                 <div>
                     <ListItem button={true}>
-                        <ListItemIcon>
-                            <Icons.Inbox />
-                        </ListItemIcon>
-                        <ListItemText primary="Inbox" />
+                        <ListItemText primary="Minimum coins" />
                     </ListItem>
                     <ListItem button={true}>
-                        <ListItemIcon>
-                            <Icons.Satellite />
-                        </ListItemIcon>
-                        <ListItemText primary="Starred" />
+                        <ListItemText primary="Shortest path" />
                     </ListItem>
                 </div>
             </List>
