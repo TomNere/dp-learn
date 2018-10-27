@@ -8,7 +8,7 @@ import myTheme from '../../styles/index';
 interface ICoinsState {
     givenValue: number
     givenCoins: string
-    result: number
+    result: string
 }
 
 type AllProps =
@@ -37,9 +37,9 @@ class Coins extends React.Component<AllProps, ICoinsState> {
     public constructor(props: AllProps) {
         super(props)
         this.state = {
-            givenValue: 100,
-            givenCoins: "1,2,5,10",
-            result: 0
+            givenValue: 4,
+            givenCoins: "1,2,5",
+            result: ""
         }
         this.handleValue = this.handleValue.bind(this);
         this.handleCoins = this.handleCoins.bind(this);
@@ -80,7 +80,7 @@ class Coins extends React.Component<AllProps, ICoinsState> {
                     <Button variant="contained" color="primary" className={classes.button} onClick={this.evaluate}>
                         Start
                     </Button>
-                    {(this.state.result !== 0) &&
+                    {(this.state.result !== "") &&
                         <div>
                             {this.state.result}
                         </div>
@@ -98,9 +98,7 @@ class Coins extends React.Component<AllProps, ICoinsState> {
     }
 
     private handleCoins(e: React.ChangeEvent<HTMLInputElement>) {
-        const coins = e.target.value.split(",");
-
-        for (const coin of coins) {
+        for (const coin of e.target.value.split(",")) {
             if (Number.isNaN(+coin)) {
                 return;
             }
@@ -110,41 +108,72 @@ class Coins extends React.Component<AllProps, ICoinsState> {
     }
 
     private evaluate = () => {
-        // // table[i] will be storing  
-        // // the minimum number of coins 
-        // // required for i value. So  
-        // // table[V] will have result 
-        // var int[]table = new int[V + 1];
+        // Get coins
+        //  log: string = "Coins: ";
 
-        // // Base case (If given 
-        // // value V is 0) 
-        // table[0] = 0;
+        const givenCoins: number[] = [];
+        for (const coin of this.state.givenCoins.split(",")) {
+            if (!Number.isNaN(+coin)) {
+                givenCoins.push(+coin);
+            }
+            else {
+                this.setState({result: "Error"});
+                return;
+            }
+        }
 
-        // // Initialize all table 
-        // // values as Infinite 
-        // for (int i = 1; i <= V; i++)
-        // table[i] = int.MaxValue;
+        // Store our key values to constants to have clear code
+        const GIVEN_VALUE = this.state.givenValue;
+        const COINS_NUMBER = givenCoins.length;
+        // log += "coins length = " += this
+        const MAX_INT = 99999;
 
-        // // Compute minimum coins  
-        // // required for all 
-        // // values from 1 to V 
-        // for (int i = 1; i <= V; i++)
-        // {
-        //     // Go through all coins 
-        //     // smaller than i 
-        //     for (int j = 0; j < m; j++)
-        //     if (coins[j] <= i) {
-        //         int sub_res = table[i - coins[j]];
-        //         if (sub_res != int.MaxValue &&
-        //             sub_res + 1 < table[i])
-        //             table[i] = sub_res + 1;
-        //     }
-        // }
-        // return table[V];
+        // table[i] will be storing  
+        // the minimum number of coins 
+        // required for i value. So  
+        // table[] will have result 
+        const table:number[] = new Array(GIVEN_VALUE + 1); 
 
+        // Base case (If given 
+        // value is 0) 
+        table[0] = 0;
 
+        // Initialize all table 
+        // values as Infinite 
+        for (let i = 1; i <= GIVEN_VALUE; i++) {
+            table[i] = MAX_INT;
+        }
 
-        this.setState({ result: 42 });
+        // Compute minimum coins  
+        // required for all 
+        // values from 1 to given value
+        for (let i = 1; i <= GIVEN_VALUE; i++) {
+            // Go through all coins 
+            // smaller than i 
+            // log += "_outer for_";
+            for (let j = 0; j < COINS_NUMBER; j++) {
+                // log += "_inner for_";
+                if (givenCoins[j] <= i) {
+
+                    const subRes: number = table[i - givenCoins[j]];
+                    
+                    if ((subRes !== MAX_INT) && (subRes + 1 < table[i])) {
+                        table[i] = subRes + 1;
+                    }
+                }
+                
+            }
+            // log += "Table content: ";
+
+                // for (let g = 0; g <= GIVEN_VALUE; g++) {
+                //     log += table[g];
+                //     log += ",";
+                // }
+                // log += "\n";
+        }
+        // this.setState({ result: log });
+        
+         this.setState({ result: table[GIVEN_VALUE].toString() });
     }
 }
 
