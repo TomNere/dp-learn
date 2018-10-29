@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Button, Grid, TextField, Typography } from '@material-ui/core';
+import { Button, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from '@material-ui/core';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
 import myTheme from '../../styles/index';
@@ -9,6 +9,9 @@ interface ICoinsState {
     givenValue: number
     givenCoins: string
     result: string
+    eval: boolean
+    cols: number
+    rows: number[][]
 }
 
 type AllProps =
@@ -28,9 +31,18 @@ const styles = (theme: Theme) => createStyles({
         margin: theme.spacing.unit,
         backgroundColor: myTheme.palette.primary.main
     },
+    table: {
+        minWidth: 700,
+    },
+    row1: {
+        backgroundColor: 'blue',
+        borderColor: 'green',
+        borderWidth: 5
+    },
+    row2: {
+        backgroundColor: 'red'
+    }
 });
-
-
 
 class Coins extends React.Component<AllProps, ICoinsState> {
 
@@ -39,7 +51,10 @@ class Coins extends React.Component<AllProps, ICoinsState> {
         this.state = {
             givenValue: 4,
             givenCoins: "1,2,5",
-            result: ""
+            result: "",
+            eval: false,
+            cols: 0,
+            rows: [],
         }
         this.handleValue = this.handleValue.bind(this);
         this.handleCoins = this.handleCoins.bind(this);
@@ -80,9 +95,23 @@ class Coins extends React.Component<AllProps, ICoinsState> {
                     <Button variant="contained" color="primary" className={classes.button} onClick={this.evaluate}>
                         Start
                     </Button>
-                    {(this.state.result !== "") &&
+                    {(this.state.eval === true) &&
                         <div>
-                            {this.state.result}
+                            <Paper>
+                                <Table className={classes.table}>
+                                    <TableHead>
+                                        <TableRow>
+                                            {this.tableHead(this.state.givenValue)}
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {this.tableBody()}
+                                    </TableBody>
+                                </Table>
+                            </Paper>
+                            <Paper>
+                                {this.state.result}
+                            </Paper>
                         </div>
                     }
                 </Grid>
@@ -110,6 +139,7 @@ class Coins extends React.Component<AllProps, ICoinsState> {
     private evaluate = () => {
         // Get coins
         //  log: string = "Coins: ";
+        this.setState({rows: []});
 
         const givenCoins: number[] = [];
         for (const coin of this.state.givenCoins.split(",")) {
@@ -117,7 +147,7 @@ class Coins extends React.Component<AllProps, ICoinsState> {
                 givenCoins.push(+coin);
             }
             else {
-                this.setState({result: "Error"});
+                this.setState({ result: "Error" });
                 return;
             }
         }
@@ -126,7 +156,6 @@ class Coins extends React.Component<AllProps, ICoinsState> {
         const GIVEN_VALUE = this.state.givenValue;
         const COINS_NUMBER = givenCoins.length;
         // log += "coins length = " += this
-        const MAX_INT = 99999;
 
         // table[i] will be storing  
         // the minimum number of coins 
@@ -141,7 +170,7 @@ class Coins extends React.Component<AllProps, ICoinsState> {
         // Initialize all table 
         // values as Infinite 
         for (let i = 1; i <= GIVEN_VALUE; i++) {
-            table[i] = MAX_INT;
+            table[i] = Number.MAX_VALUE;
         }
 
         // Compute minimum coins  
@@ -157,23 +186,95 @@ class Coins extends React.Component<AllProps, ICoinsState> {
 
                     const subRes: number = table[i - givenCoins[j]];
                     
-                    if ((subRes !== MAX_INT) && (subRes + 1 < table[i])) {
+                    if ((subRes !== Number.MAX_VALUE) && (subRes + 1 < table[i])) {
                         table[i] = subRes + 1;
                     }
                 }
                 
             }
-            // log += "Table content: ";
+            const tmp = [0];
 
-                // for (let g = 0; g <= GIVEN_VALUE; g++) {
-                //     log += table[g];
-                //     log += ",";
-                // }
-                // log += "\n";
+            for (let k = 1; k <= GIVEN_VALUE ; k++) {
+                tmp.push(table[k]);
+            }
+
+            this.setState(prevState => ({
+                rows: [...prevState.rows, tmp]
+            }));
+            
         }
         // this.setState({ result: log });
-        
-         this.setState({ result: table[GIVEN_VALUE].toString() });
+
+        this.setState({ result: "Result: " + table[GIVEN_VALUE].toString() });
+        this.setState({ eval: true });
+    }
+
+    private tableHead = (cols: number) => {
+        const table = [];
+
+        for (let i = 1; i <= cols; i++) {
+            table.push(<TableCell>{i}</TableCell>);
+        }
+
+        // for (let i = 1; i <= cols; i++) {
+        //     table.push(<tr>
+        //         {
+        //             //inner loop to create columns
+        //         }
+        //     </tr>)
+        // }
+        return table;
+
+        // return TableHead(
+        //     for () {
+        //     <TableCell>Dessert (100g serving)</TableCell>
+        //         <TableCell numeric={true}>Calories</TableCell>
+        //         <TableCell numeric={true}>Fat (g)</TableCell>
+        //         <TableCell numeric={true}>Carbs (g)</TableCell>
+        //         <TableCell numeric={true}>Protein (g)</TableCell>
+        //     </TableRow >
+        // }
+        // )
+    }
+
+    private tableBody = () => {
+
+        const body = [];
+
+        for (let i = 0; i < this.state.rows.length; i++) {
+            const key: string = "cycle: " + { i };
+            const row = [];
+
+            for (let j = 1; j <= this.state.givenValue; j++) {
+                let cell = "IntMax";
+
+                if (this.state.rows[i][j] !== Number.MAX_VALUE) {
+                    cell = this.state.rows[i][j].toString();
+                }
+
+                row.push(
+                    <TableCell>{cell}</TableCell>
+                );
+            }
+
+            body.push(
+                <TableRow key={key}>
+                    {row}
+                </TableRow>
+            );
+        }
+
+        return body;
+
+        // <TableRow key={row.id}>
+        //     <TableCell component="th" scope="row">
+        //         {row.name}
+        //     </TableCell>
+        //     <TableCell numeric>{row.calories}</TableCell>
+        //     <TableCell numeric>{row.fat}</TableCell>
+        //     <TableCell numeric>{row.carbs}</TableCell>
+        //     <TableCell numeric>{row.protein}</TableCell>
+        // </TableRow>
     }
 }
 
