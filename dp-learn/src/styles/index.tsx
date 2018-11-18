@@ -23,6 +23,7 @@ export default createMuiTheme({
         borderRadius: 2
     },
     typography: {
-        fontSize: 13
+        fontSize: 13,
+        useNextVariants: true
     },
 })

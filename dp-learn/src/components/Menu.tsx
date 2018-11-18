@@ -3,9 +3,11 @@ import * as React from 'react';
 import { Drawer, List, Theme, WithStyles, createStyles, withStyles } from '@material-ui/core';
 import { ListItem, ListItemText } from '@material-ui/core';
 
+import { IProps } from './Welcome';
 import myTheme from '../styles/index';
 
 type AllProps =
+    IProps &
     WithStyles<typeof styles>;
 
 const styles = (theme: Theme) => createStyles({
@@ -35,6 +37,9 @@ const styles = (theme: Theme) => createStyles({
 });
 
 class Menu extends React.Component<AllProps> {
+    public static defaultProps: IProps = {
+        history: {}
+    }
 
     public render() {
         const { classes } = this.props;
@@ -49,16 +54,24 @@ class Menu extends React.Component<AllProps> {
             <div className={classes.toolbar} />
             <List>
                 <div>
-                    <ListItem button={true}>
+                    <ListItem button={true} onClick={this.showCoins}>
                         <ListItemText primary="Minimum coins" />
                     </ListItem>
-                    <ListItem button={true}>
-                        <ListItemText primary="Shortest path" />
+                    <ListItem button={true} onClick={this.showSubstring}>
+                        <ListItemText primary="Common substring" />
                     </ListItem>
                 </div>
             </List>
         </Drawer>
         );
+    }
+
+    private showCoins = () => {
+        this.props.history.push("/mainpage/coins");
+    }
+
+    private showSubstring = () => {
+        this.props.history.push("/mainpage/substring");
     }
 }
 

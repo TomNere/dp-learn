@@ -2,11 +2,15 @@ import * as React from 'react';
 
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
-import Coins from './examples/Coins';
+import { IProps } from './Welcome';
 import Menu from './Menu';
+import WindowContainer from './WindowContainer';
 import myTheme from '../styles/index';
 
+// import Substring from './examples/Substring';
+
 type AllProps =
+    IProps &
     WithStyles<typeof styles>;
 
 const styles = (theme: Theme) => createStyles ({
@@ -33,17 +37,20 @@ const styles = (theme: Theme) => createStyles ({
 
 
 class MainPage extends React.Component<AllProps> {
+    public static defaultProps: IProps = {
+        history: {}
+    }
 
     public render() {
         const { classes } = this.props;
 
         return (
             <div className={classes.root}>
-                <Menu />
-                <main className={classes.content}>
-                    <div className={classes.toolbar} />
-                    <Coins/>
-                </main>
+                <Menu history={this.props.history}/>
+                    <main className={classes.content}>
+                        <div className={classes.toolbar}/>
+                        <WindowContainer />
+                    </main>
             </div>
         );
     }
