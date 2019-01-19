@@ -58,6 +58,9 @@ const Wrapper = styled.div`
      top: 0;
      left: 0;
    }
+   .body {
+     font-family: 'Roboto', sans-serif;
+   }
 `;
 
 export default withRouter(Container);

@@ -24,6 +24,15 @@ export default createMuiTheme({
     },
     typography: {
         fontSize: 13,
-        useNextVariants: true
+        fontFamily: [
+            'Roboto',
+            '"Segoe UI"',
+            '"Helvetica Neue"',
+            'Arial',
+            'sans-serif',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
+          ].join(','),
+        useNextVariants: true,
     },
 })

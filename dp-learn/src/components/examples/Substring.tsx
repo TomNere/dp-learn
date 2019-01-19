@@ -1,19 +1,23 @@
 import * as React from 'react';
 
-import { Button, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from '@material-ui/core';
+import { Avatar, Button, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from '@material-ui/core';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import myTheme from '../../styles/index';
+import posed from "react-pose";
 
 interface ISubstringState {
     stringX: string
     stringY: string
+    charX: string
+    charY: string
     result: string
     eval: boolean
     doCycle: boolean
     table: number[][]
+    cellColors: string[][]
     cols: number
+    hovering: boolean
 }
 
 type AllProps =
@@ -32,6 +36,11 @@ const styles = (theme: Theme) => createStyles({
     button: {
         margin: theme.spacing.unit,
         backgroundColor: myTheme.palette.primary.main
+    },
+    box: {
+        width: '100px',
+        height: '100px',
+        backgroundColor: 'red'
     },
     table: {
     },
@@ -66,14 +75,41 @@ const styles = (theme: Theme) => createStyles({
     label: {
         fontSize: theme.typography.pxToRem(30),
         textAlign: 'center'
-    }
+    },
+    leftMargin: {
+        marginLeft: 20
+    },
+    firstAvatar: {
+        margin: 10,
+        display: 'flex',
+        color: '#fff',
+        backgroundColor: 'blue'
+    },
+    greenAvatar: {
+        margin: 10,
+        display: 'flex',
+        color: '#fff',
+        backgroundColor: 'green'
+    },
+    redAvatar: {
+        margin: 10,
+        display: 'flex',
+        color: '#fff',
+        backgroundColor: 'red'
+    },
+});
+
+const AnimatedDiv = posed.div({
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 }
 });
 
 class Substring extends React.Component<AllProps, ISubstringState> {
 
     /////////////////////// private variables /////////////////////////////////
-    
+
     private cycleCounter: number
+    private innerCounter: number
     // To store length of the longest common 
     // substring 
     private intResult: number
@@ -85,10 +121,10 @@ class Substring extends React.Component<AllProps, ISubstringState> {
     // column entries have no logical meaning, 
     // they are used only for simplicity of  
     // program 
-    private table:number[][]
+    private table: number[][]
     // Length of strings
-    private LENGTH1:number
-    private LENGTH2:number
+    private LENGTH1: number
+    private LENGTH2: number
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -97,11 +133,15 @@ class Substring extends React.Component<AllProps, ISubstringState> {
         this.state = {
             stringX: "String",
             stringY: "Testing",
+            charX: "",
+            charY: "",
             result: "",
             eval: false,
             doCycle: false,
+            cellColors: [],
             table: [],
-            cols: 0
+            cols: 0,
+            hovering: false
         }
         this.strXChange = this.strXChange.bind(this);
         this.strYChange = this.strYChange.bind(this);
@@ -112,37 +152,39 @@ class Substring extends React.Component<AllProps, ISubstringState> {
 
         return (
             <Grid container={true} direction='column'>
-                <h1>
-                    Longest common substring
-                </h1>
+                <Typography variant={'h4'} align={'center'}>
+                    Longest common substring <br /><br />
+                </Typography>
                 <Grid className={classes.gap}>
-                    <Typography noWrap={true}>{'Given two strings ‘X’ and ‘Y’, find the length of the longest common substring.'}</Typography>
+                    Given two strings <b>X</b> and <b>Y</b>. We want to find the length of the longest common substring. <br /> <br />
+                    For example: <br />
+                    <div className={classes.leftMargin}>
+                        X = "I like dynamic programm<b>ing!</b>"<br />
+                        Y = "Really? So tell me something about this cool th<b>ing!</b>"<br /><br />
+                    </div>
+                    The lenght of the longest common substring is <b>4</b> and the substring is "ing!".<br /> <br />
+
+                    <Typography variant={'h6'}>
+                        Simple solution
+                    </Typography>
+                    We have to consider all substrings of first string and check if this is a substring in second string.
+                    There will be <b>O(m^2)</b> substrings. We can check for matching substring in <b>O(n)</b> time.<br /><br />
+
+                    <div className={classes.leftMargin}>
+                        Time complexity is <b>O(m^2 * n)</b><br /><br />
+                    </div>
+
+                    <Typography variant={'h6'}>
+                        Dynamic programming
+                    </Typography>
+                    Using this method we need to find the length of longest common <b>suffix</b> for substrings of both strings.
+                        These length's are stored in a table. At the end cell with the biggest value is our result.<br /><br />
+
+                    <div className={classes.leftMargin}>
+                        Time complexity is <b>O(m* n)</b><br /><br />
+                    </div>
                 </Grid>
-                <Grid>
-                    <ExpansionPanel >
-                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                            <Typography className={classes.heading}>Examples</Typography>
-                        </ExpansionPanelSummary>
-                        <ExpansionPanelDetails>
-                            <Typography>
-                                Input : X = "GeeksforGeeks", y = "GeeksQuiz" <br/>
-                                Output : 5 <br/>
-                                The longest common substring is "Geeks" and is of <br/>
-                                length 5. <br/><br/>
-                                
-                                Input : X = "abcdxyz", y = "xyzabcd" <br/>
-                                Output : 4 <br/>
-                                The longest common substring is "abcd" and is of <br/>
-                                length 4. <br/><br/>
-                                
-                                Input : X = "zxabcdezy", y = "yzabcdezx" <br/>
-                                Output : 6 <br/>
-                                The longest common substring is "abcdez" and is of <br/>
-                                length 6. <br/>
-                            </Typography>
-                        </ExpansionPanelDetails>
-                    </ExpansionPanel>
-                </Grid>
+
                 <Grid>
                     <form className={classes.container} autoComplete="off">
                         <TextField
@@ -168,10 +210,18 @@ class Substring extends React.Component<AllProps, ISubstringState> {
                         Start
                     </Button>
                     {(this.state.doCycle === true) &&
-                                <Button variant="contained" color="primary" className={classes.button} onClick={this.doCycle}>
-                                    Next cycle
-                                </Button>
-                            }
+                        <Button variant="contained" color="primary" className={classes.button} onClick={this.nextClick}>
+                            Next cycle
+                        </Button>
+                    }
+                    <Grid container={true} direction='row'>
+                        <AnimatedDiv pose={this.state.charX !== "" ? 'visible' : 'hidden'}>
+                            <Avatar className={classes.firstAvatar}>{this.state.charX}</Avatar>
+                        </AnimatedDiv>
+                        <AnimatedDiv pose={this.state.charY !== "" ? 'visible' : 'hidden'}>
+                            <Avatar className={this.state.charX === this.state.charY ? classes.greenAvatar : classes.redAvatar}>{this.state.charY}</Avatar>
+                        </AnimatedDiv>
+                    </Grid>
                     {(this.state.eval === true) &&
                         <div>
                             <Paper className={classes.gap}>
@@ -191,7 +241,7 @@ class Substring extends React.Component<AllProps, ISubstringState> {
                             </div>
                         </div>
                     }
-                    
+
                 </Grid>
             </Grid >
 
@@ -207,12 +257,12 @@ class Substring extends React.Component<AllProps, ISubstringState> {
     }
 
     private evaluate = () => {
+        this.setState({ hovering: !this.state.hovering });
         this.table = [];
         this.cycleCounter = 0;
         this.intResult = 0;
         this.LENGTH1 = this.state.stringX.length;
         this.LENGTH2 = this.state.stringY.length;
-
 
         // Initialize all table 
         // values as Infinite 
@@ -223,82 +273,110 @@ class Substring extends React.Component<AllProps, ISubstringState> {
             }
         }
 
-        this.doCycle();
+        this.initialize();
         this.setState({ eval: true, doCycle: true });
-        this.setState({ cols: this.LENGTH2 + 1});
+        this.setState({ cols: this.LENGTH2 + 1 });
+    }
 
+    private nextClick = () => {
+        this.doCycle();
+    }
+
+    private initialize = () => {
+        for (let j = 0; j <= this.LENGTH2; j++) {
+            this.table[this.cycleCounter][j] = 0;
+        }
+        this.cycleCounter++;
+        console.log('init cycleC: ', this.cycleCounter);
+        this.setState({ table: this.table });
+        // for (let j = 0; j <= this.LENGTH1; j++) {
+        //     this.setState(prevState => ({
+        //         table: [...prevState.table, this.table[j]]
+        //     }));
+        // }
+        this.setState({ result: "Current result: " + this.intResult.toString() });
     }
 
     private doCycle = () => {
         // Assign current state for easy manipulation
-
-        if (this.cycleCounter <= this.LENGTH1) { 
-            for (let j = 0; j <= this.LENGTH2; j++) { 
-                if (this.cycleCounter === 0 || j === 0) {
-                    this.table[this.cycleCounter][j] = 0;
-                }
-                else if (this.state.stringX[this.cycleCounter - 1] === this.state.stringY[j - 1]) { 
-                    this.table[this.cycleCounter] [j] = this.table[this.cycleCounter - 1] [j - 1] + 1;
-
-                    this.intResult = Math.max(this.intResult, this.table[this.cycleCounter] [j]); 
-                }
-                else {
-                    this.table[this.cycleCounter][j] = 0;
-                }
-            }
-            this.cycleCounter++;
+        if (this.cycleCounter <= this.LENGTH1) {
+            this.innerCounter = 0;
+            setTimeout(this.doInnerCycle, 2000);
         }
+    }
 
-        this.setState({table:[]});
-        
-        for (let j = 0; j <= this.LENGTH1; j++) {
-            this.setState(prevState => ({
-                table: [...prevState.table, this.table[j]]}));
+    private doInnerCycle = () => {
+        if (this.cycleCounter === 0 || this.innerCounter === 0) {
+            this.table[this.cycleCounter][this.innerCounter] = 0;
         }
+        else if (this.state.stringX[this.cycleCounter - 1] === this.state.stringY[this.innerCounter - 1]) {
+            this.table[this.cycleCounter][this.innerCounter] = this.table[this.cycleCounter - 1][this.innerCounter - 1] + 1;
 
-        if (this.cycleCounter > this.LENGTH1) {
-            this.setState({ doCycle: false});
-            this.setState({ result: "Final result: " + this.intResult.toString()});
+            this.intResult = Math.max(this.intResult, this.table[this.cycleCounter][this.innerCounter]);
         }
         else {
-            this.setState({ result: "Current result: " + this.intResult.toString()});
-            this.setState({})
+            this.table[this.cycleCounter][this.innerCounter] = 0;
         }
+
+        this.setState({ charX: this.state.stringX[this.cycleCounter - 1], charY: this.state.stringY[this.innerCounter - 1] });
+
+        this.setState({ table: this.table });
+
+        this.innerCounter++;
+
+        if (this.innerCounter <= this.LENGTH2) {
+            setTimeout(this.doInnerCycle, 2000);
+        }
+        else {
+            this.cycleCounter++;
+            if (this.cycleCounter > this.LENGTH1) {
+                this.setState({ doCycle: false });
+                this.setState({ result: "Final result: " + this.intResult.toString() });
+            }
+            else {
+                this.setState({ result: "Current result: " + this.intResult.toString() });
+                this.setState({})
+            }
+        }
+
+        // for(let i = 0; i <= this.LENGTH1; i++) {
+        //     this.setState(prevState => ({
+        //         table: [...prevState.table, this.table[i]]
+        //     }));
+        // }
     }
 
     private tableHead = (cols: number) => {
-        const {classes} = this.props;
+        const { classes } = this.props;
 
         const table = [];
 
-        table.push(<TableCell className={[classes.tableHeading, classes.caption].join(' ')}>{"Table"}</TableCell>)
+        table.push(<TableCell key='heading' className={[classes.tableHeading, classes.caption].join(' ')}>Table</TableCell>)
         for (let i = 1; i < cols; i++) {
-            table.push(<TableCell className={[classes.tableTopCaption, classes.caption].join(' ')}>{"str Y[" + (i - 1) + "] - " + this.state.stringY[i - 1]}</TableCell>);
+            table.push(<TableCell key={'columnName' + i.toString()} className={[classes.tableTopCaption, classes.caption].join(' ')}>{"str Y[" + (i - 1) + "] - " + this.state.stringY[i - 1]}</TableCell>);
         }
 
-        return table; 
+        return table;
     }
 
     private tableBody = () => {
-        const {classes} = this.props;
+        const { classes } = this.props;
 
         const body = [];
 
-        console.log("in body, length: " + this.LENGTH1.toString());
+        // console.log("in body, length: " + this.LENGTH1.toString());
 
         for (let i = 1; i <= this.LENGTH1; i++) {
-            console.log("body cycle outer");
+            // console.log("body cycle outer");
 
             const key: string = "cycle: " + { i };
             const row = [];
 
             row.push(
-                <TableCell className={[classes.tableLeftCaption, classes.caption].join(' ')}>{"String X[" + (i - 1) + "] - " + this.state.stringX[i - 1]}</TableCell>
+                <TableCell key={key + 'cell' + i.toString()} className={[classes.tableLeftCaption, classes.caption].join(' ')}>{"String X[" + (i - 1) + "] - " + this.state.stringX[i - 1]}</TableCell>
             );
 
             for (let j = 1; j <= this.LENGTH2; j++) {
-                console.log("body cycle inner");
-
                 let cell = "-";
 
                 if (this.state.table[i][j] !== Number.MAX_VALUE) {
@@ -306,12 +384,12 @@ class Substring extends React.Component<AllProps, ISubstringState> {
                 }
 
                 row.push(
-                    <TableCell className={classes.tableCell}>{cell}</TableCell>
+                    <TableCell key={key + 'cell2 ' + j.toString()} className={classes.tableCell}>{cell}</TableCell>
                 );
             }
 
             body.push(
-                <TableRow key={key}>
+                <TableRow key={key + i.toString()}>
                     {row}
                 </TableRow>
             );

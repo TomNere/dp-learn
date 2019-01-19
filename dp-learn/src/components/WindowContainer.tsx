@@ -10,7 +10,7 @@ import Substring from './examples/Substring';
 function WindowContainer(props: any) {
     return (
         <Switch location={props.location}>
-            <Route exact={true} path="/mainpage/coins" component={Coins} />
+            <Route path="/mainpage/coins" component={Coins} />
             <Route path="/mainpage/substring" component={Substring} />
         </Switch>
     );

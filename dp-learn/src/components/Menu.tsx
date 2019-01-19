@@ -4,7 +4,6 @@ import { Drawer, List, Theme, WithStyles, createStyles, withStyles } from '@mate
 import { ListItem, ListItemText } from '@material-ui/core';
 
 import { IProps } from './Welcome';
-import myTheme from '../styles/index';
 
 type AllProps =
     IProps &
@@ -18,10 +17,6 @@ const styles = (theme: Theme) => createStyles({
         overflow: 'hidden',
         position: 'relative',
         display: 'flex',
-    },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-        backgroundColor: myTheme.palette.primary.main
     },
     drawerPaper: {
         position: 'relative',

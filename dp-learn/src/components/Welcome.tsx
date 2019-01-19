@@ -74,7 +74,7 @@ class Welcome extends React.Component<AllProps> {
     }
 
     private redirectMe = () => {
-        this.props.history.push("/mainpage");
+        this.props.history.push("/mainpage/coins");
     }
 }
 

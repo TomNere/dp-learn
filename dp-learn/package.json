@@ -12,11 +12,14 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-jss": "^8.6.1",
+    "react-motion": "^0.5.2",
+    "react-pose": "^4.0.5",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-router-page-transition-v2": "^1.1.2",
     "react-scripts-ts": "3.1.0",
-    "styled-components": "^4.0.2"
+    "styled-components": "^4.0.2",
+    "typeface-roboto": "0.0.54"
   },
   "scripts": {
     "start": "react-scripts-ts start",

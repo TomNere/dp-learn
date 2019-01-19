@@ -5,7 +5,6 @@ import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/s
 import { IProps } from './Welcome';
 import Menu from './Menu';
 import WindowContainer from './WindowContainer';
-import myTheme from '../styles/index';
 
 // import Substring from './examples/Substring';
 
@@ -17,18 +16,13 @@ const styles = (theme: Theme) => createStyles ({
     root: {
         flexGrow: 1,
         zIndex: 1,
-        height: '100vh',
         overflow: 'hidden',
         position: 'relative',
         display: 'flex',
-    },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-        backgroundColor: myTheme.palette.primary.main
+        minHeight: '100vh'
     },
     content: {
         flexGrow: 1,
-        backgroundColor: theme.palette.background.default,
         padding: theme.spacing.unit * 3,
         minWidth: 0, // So the Typography noWrap works
     },
