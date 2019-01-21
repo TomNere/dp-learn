@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Avatar, Button, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from '@material-ui/core';
+import { Avatar, Button, FormControl, FormControlLabel, FormLabel, Grid, Paper, Radio, RadioGroup, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from '@material-ui/core';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
 import myTheme from '../../styles/index';
@@ -18,6 +18,8 @@ interface ISubstringState {
     cellColors: string[][]
     cols: number
     hovering: boolean
+    speed: number
+    buttonLabel: string
 }
 
 type AllProps =
@@ -81,22 +83,33 @@ const styles = (theme: Theme) => createStyles({
     },
     firstAvatar: {
         margin: 10,
+        height: 60,
+        width: 60,
         display: 'flex',
         color: '#fff',
         backgroundColor: 'blue'
     },
     greenAvatar: {
         margin: 10,
+        height: 60,
+        width: 60,
         display: 'flex',
         color: '#fff',
         backgroundColor: 'green'
     },
     redAvatar: {
         margin: 10,
+        height: 60,
+        width: 60,
         display: 'flex',
         color: '#fff',
         backgroundColor: 'red'
     },
+    avatars:{
+        display:'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
 });
 
 const AnimatedDiv = posed.div({
@@ -141,7 +154,9 @@ class Substring extends React.Component<AllProps, ISubstringState> {
             cellColors: [],
             table: [],
             cols: 0,
-            hovering: false
+            hovering: false,
+            speed: 1,
+            buttonLabel: "Finish"
         }
         this.strXChange = this.strXChange.bind(this);
         this.strYChange = this.strYChange.bind(this);
@@ -206,22 +221,64 @@ class Substring extends React.Component<AllProps, ISubstringState> {
                             margin="normal"
                         />
                     </form>
-                    <Button variant="contained" color="primary" className={classes.button} onClick={this.evaluate}>
+                    <br/>
+
+                    {/* Speed select */}
+                    <FormControl component="fieldset">
+                        <FormLabel component="legend">Select speed</FormLabel>
+                        <RadioGroup
+                            aria-label="position"
+                            name="position"
+                            value={this.state.speed.toString()}
+                            onChange={this.speedChange}
+                            row={true}
+                            
+                        >
+                            <FormControlLabel
+                                value="1"
+                                control={<Radio color="primary" />}
+                                label="1x"
+                            />
+                            <FormControlLabel
+                                value="2"
+                                control={<Radio color="primary" />}
+                                label="2x"
+                            />
+                            <FormControlLabel
+                                value="5"
+                                control={<Radio color="primary" />}
+                                label="5x"
+                            />
+                            <FormControlLabel
+                                value="10"
+                                control={<Radio color="primary" />}
+                                label="10x"
+                            />
+                            <FormControlLabel
+                                value="0"
+                                control={<Radio color="primary" />}
+                                label="Step by step"
+                            />
+                        </RadioGroup>
+                    </FormControl>
+                    <br/>
+                    <br/>
+                    <Button variant="contained" color="primary" className={classes.button} onClick={this.evaluate} disabled={this.state.doCycle}>
                         Start
                     </Button>
                     {(this.state.doCycle === true) &&
-                        <Button variant="contained" color="primary" className={classes.button} onClick={this.nextClick}>
-                            Next cycle
+                        <Button variant="contained" color="primary" className={classes.button} onClick={this.state.speed === 0 ? this.doStep : this.finish}>
+                            {this.state.buttonLabel}
                         </Button>
                     }
-                    <Grid container={true} direction='row'>
+                    <div className={classes.avatars}>
                         <AnimatedDiv pose={this.state.charX !== "" ? 'visible' : 'hidden'}>
                             <Avatar className={classes.firstAvatar}>{this.state.charX}</Avatar>
                         </AnimatedDiv>
                         <AnimatedDiv pose={this.state.charY !== "" ? 'visible' : 'hidden'}>
                             <Avatar className={this.state.charX === this.state.charY ? classes.greenAvatar : classes.redAvatar}>{this.state.charY}</Avatar>
                         </AnimatedDiv>
-                    </Grid>
+                    </div>
                     {(this.state.eval === true) &&
                         <div>
                             <Paper className={classes.gap}>
@@ -241,10 +298,8 @@ class Substring extends React.Component<AllProps, ISubstringState> {
                             </div>
                         </div>
                     }
-
                 </Grid>
             </Grid >
-
         );
     }
 
@@ -256,8 +311,19 @@ class Substring extends React.Component<AllProps, ISubstringState> {
         this.setState({ stringY: e.target.value });
     }
 
+    private speedChange = (e: any) => {
+        this.setState({ speed: +e.target.value });
+    };
+
+    private finish = () => {
+        this.setState({speed: 1000});
+    }
+
     private evaluate = () => {
-        this.setState({ hovering: !this.state.hovering });
+        this.setState({ 
+            hovering: !this.state.hovering,
+            buttonLabel: this.state.speed === 0 ? "Step" : "Finish"
+        });
         this.table = [];
         this.cycleCounter = 0;
         this.intResult = 0;
@@ -274,12 +340,16 @@ class Substring extends React.Component<AllProps, ISubstringState> {
         }
 
         this.initialize();
-        this.setState({ eval: true, doCycle: true });
-        this.setState({ cols: this.LENGTH2 + 1 });
-    }
+        this.setState({ 
+            eval: true,
+            doCycle: true,
+            cols: this.LENGTH2 + 1
+        });
 
-    private nextClick = () => {
-        this.doCycle();
+        this.innerCounter = 0;
+        if (this.state.speed !== 0) {
+            setTimeout(this.doStep, 1000);
+        }
     }
 
     private initialize = () => {
@@ -287,63 +357,69 @@ class Substring extends React.Component<AllProps, ISubstringState> {
             this.table[this.cycleCounter][j] = 0;
         }
         this.cycleCounter++;
-        console.log('init cycleC: ', this.cycleCounter);
+
         this.setState({ table: this.table });
-        // for (let j = 0; j <= this.LENGTH1; j++) {
-        //     this.setState(prevState => ({
-        //         table: [...prevState.table, this.table[j]]
-        //     }));
-        // }
         this.setState({ result: "Current result: " + this.intResult.toString() });
     }
 
-    private doCycle = () => {
-        // Assign current state for easy manipulation
-        if (this.cycleCounter <= this.LENGTH1) {
-            this.innerCounter = 0;
-            setTimeout(this.doInnerCycle, 2000);
-        }
+    private transitionHelper = () => {
+        this.setState({charY: ""});
+        setTimeout(this.doStep, 1000 / this.state.speed)
     }
 
-    private doInnerCycle = () => {
-        if (this.cycleCounter === 0 || this.innerCounter === 0) {
+    private doStep = () => {
+        this.setState({ charX: this.state.stringX[this.cycleCounter - 1], charY: this.state.stringY[this.innerCounter - 1] });
+
+        if (this.innerCounter === 0) {
             this.table[this.cycleCounter][this.innerCounter] = 0;
+            this.setState({charY: ""});
         }
         else if (this.state.stringX[this.cycleCounter - 1] === this.state.stringY[this.innerCounter - 1]) {
             this.table[this.cycleCounter][this.innerCounter] = this.table[this.cycleCounter - 1][this.innerCounter - 1] + 1;
-
             this.intResult = Math.max(this.intResult, this.table[this.cycleCounter][this.innerCounter]);
         }
         else {
             this.table[this.cycleCounter][this.innerCounter] = 0;
         }
 
-        this.setState({ charX: this.state.stringX[this.cycleCounter - 1], charY: this.state.stringY[this.innerCounter - 1] });
-
         this.setState({ table: this.table });
 
         this.innerCounter++;
 
+        if (this.innerCounter === 1) {
+            if (this.state.speed !== 0) {
+                this.doStep();
+            }
+            return;
+        }
+
         if (this.innerCounter <= this.LENGTH2) {
-            setTimeout(this.doInnerCycle, 2000);
+            this.setState({ result: "Current result: " + this.intResult.toString() });
+
+            if (this.state.speed === 1000) {
+                this.doStep();
+            }
+            else if (this.state.speed !== 0) {
+                setTimeout(this.transitionHelper, 1000 / this.state.speed);
+            }
         }
         else {
             this.cycleCounter++;
             if (this.cycleCounter > this.LENGTH1) {
-                this.setState({ doCycle: false });
-                this.setState({ result: "Final result: " + this.intResult.toString() });
+                this.setState({ 
+                    doCycle: false,
+                    result: "Final result: " + this.intResult.toString()
+                });
             }
             else {
                 this.setState({ result: "Current result: " + this.intResult.toString() });
-                this.setState({})
+                this.innerCounter = 0;
+                
+                if (this.state.speed !== 0) {
+                    setTimeout(this.transitionHelper, 1000 / this.state.speed);
+                }
             }
         }
-
-        // for(let i = 0; i <= this.LENGTH1; i++) {
-        //     this.setState(prevState => ({
-        //         table: [...prevState.table, this.table[i]]
-        //     }));
-        // }
     }
 
     private tableHead = (cols: number) => {
