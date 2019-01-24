@@ -3,8 +3,8 @@ import * as React from 'react';
 import { Avatar, Button, FormControl, FormControlLabel, FormLabel, Grid, Paper, Radio, RadioGroup, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from '@material-ui/core';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
+import { AnimatedDiv } from '../ConstComponents';
 import myTheme from '../../styles/index';
-import posed from "react-pose";
 
 interface ISubstringState {
     stringX: string
@@ -30,6 +30,10 @@ const styles = (theme: Theme) => createStyles({
         display: 'flex',
         flexWrap: 'wrap',
     },
+    flexChild: {
+        flexBasis: '50%',
+        flexGrow: 0
+    },
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
@@ -39,28 +43,22 @@ const styles = (theme: Theme) => createStyles({
         margin: theme.spacing.unit,
         backgroundColor: myTheme.palette.primary.main
     },
-    box: {
-        width: '100px',
-        height: '100px',
-        backgroundColor: 'red'
-    },
-    table: {
-    },
-    heading: {
-        fontSize: theme.typography.pxToRem(15),
-        fontWeight: theme.typography.fontWeightRegular,
-    },
-    gap: {
-        marginBottom: 15
+    bottomMargin: {
+        marginBottom: 15,
     },
     tableHeading: {
         fontSize: theme.typography.pxToRem(30),
     },
-    tableTopCaption: {
+    caption: {
+        color: 'white',
+        borderRight: 'solid 1px gray',
+        backgroundColor: myTheme.palette.primary.main
+    },
+    columnCaption: {
         fontSize: theme.typography.pxToRem(14),
         textAlign: 'center',
     },
-    tableLeftCaption: {
+    rowCaption: {
         fontSize: theme.typography.pxToRem(14),
     },
     tableCell: {
@@ -69,52 +67,39 @@ const styles = (theme: Theme) => createStyles({
             borderRight: 'solid 1px gray'
         },
     },
-    caption: {
-        color: 'white',
-        borderRight: 'solid 1px gray',
-        backgroundColor: myTheme.palette.primary.main
-    },
-    label: {
+    result: {
         fontSize: theme.typography.pxToRem(30),
         textAlign: 'center'
     },
     leftMargin: {
         marginLeft: 20
     },
-    firstAvatar: {
+    paper: {
+        padding: 20,
+        marginBottom: 15
+    },
+    avatar: {
         margin: 10,
         height: 60,
         width: 60,
         display: 'flex',
         color: '#fff',
+        fontSize: 30
+    },
+    avatars: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    blueAvatar: {
         backgroundColor: 'blue'
     },
     greenAvatar: {
-        margin: 10,
-        height: 60,
-        width: 60,
-        display: 'flex',
-        color: '#fff',
         backgroundColor: 'green'
     },
     redAvatar: {
-        margin: 10,
-        height: 60,
-        width: 60,
-        display: 'flex',
-        color: '#fff',
         backgroundColor: 'red'
-    },
-    avatars:{
-        display:'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
     }
-});
-
-const AnimatedDiv = posed.div({
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 }
 });
 
 class Substring extends React.Component<AllProps, ISubstringState> {
@@ -166,39 +151,63 @@ class Substring extends React.Component<AllProps, ISubstringState> {
         const { classes } = this.props;
 
         return (
-            <Grid container={true} direction='column'>
-                <Typography variant={'h4'} align={'center'}>
-                    Longest common substring <br /><br />
+            <div>
+                <Typography variant={'h4'} align={'center'} className={classes.bottomMargin}>
+                    Longest common substring
                 </Typography>
-                <Grid className={classes.gap}>
-                    Given two strings <b>X</b> and <b>Y</b>. We want to find the length of the longest common substring. <br /> <br />
-                    For example: <br />
+                <Typography variant={'h5'}>
+                    Brief:
+                </Typography>
+                <Paper className={classes.paper}>
+                    There are two strings <b>X</b> and <b>Y</b>. We want to find the length of the longest common substring, e.g.: <br />
                     <div className={classes.leftMargin}>
                         X = "I like dynamic programm<b>ing!</b>"<br />
                         Y = "Really? So tell me something about this cool th<b>ing!</b>"<br /><br />
                     </div>
-                    The lenght of the longest common substring is <b>4</b> and the substring is "ing!".<br /> <br />
-
-                    <Typography variant={'h6'}>
-                        Simple solution
-                    </Typography>
+                    The lenght of the longest common substring is <b>4</b> and the substring is <b>"ing!"</b>.
+                </Paper>
+                <Typography variant={'h5'} >
+                    Simple solution:
+                </Typography>
+                <Paper className={classes.paper}>
                     We have to consider all substrings of first string and check if this is a substring in second string.
                     There will be <b>O(m^2)</b> substrings. We can check for matching substring in <b>O(n)</b> time.<br /><br />
 
                     <div className={classes.leftMargin}>
-                        Time complexity is <b>O(m^2 * n)</b><br /><br />
+                        Time complexity is <b>O(m^2 * n)</b>
                     </div>
+                </Paper>
+                <Typography variant={'h5'}>
+                    Programming solutions
+                </Typography>
+                <Paper className={classes.paper}>
+                    <div className={classes.container}>
+                        <div className={classes.flexChild}>
+                            <Typography variant={'h6'}>
+                                Using recursion
+                            </Typography>
+                            <div className={classes.leftMargin}>
+                            <pre>
+                                <code>
+                                    <p>for(let i = 0)</p>
+                                </code>
+                            </pre>
+                            </div>
+                        </div>
+                        <div className={classes.flexChild}>
+                            <Typography variant={'caption'}>
+                                Dynamic programing
+                            </Typography>
+                        </div>
+                    </div>
+                </Paper>
 
-                    <Typography variant={'h6'}>
-                        Dynamic programming
-                    </Typography>
-                    Using this method we need to find the length of longest common <b>suffix</b> for substrings of both strings.
+                Using this method we need to find the length of longest common <b>suffix</b> for substrings of both strings.
                         These length's are stored in a table. At the end cell with the biggest value is our result.<br /><br />
 
-                    <div className={classes.leftMargin}>
-                        Time complexity is <b>O(m* n)</b><br /><br />
-                    </div>
-                </Grid>
+                <div className={classes.leftMargin}>
+                    Time complexity is <b>O(m* n)</b><br /><br />
+                </div>
 
                 <Grid>
                     <form className={classes.container} autoComplete="off">
@@ -221,7 +230,7 @@ class Substring extends React.Component<AllProps, ISubstringState> {
                             margin="normal"
                         />
                     </form>
-                    <br/>
+                    <br />
 
                     {/* Speed select */}
                     <FormControl component="fieldset">
@@ -232,7 +241,7 @@ class Substring extends React.Component<AllProps, ISubstringState> {
                             value={this.state.speed.toString()}
                             onChange={this.speedChange}
                             row={true}
-                            
+
                         >
                             <FormControlLabel
                                 value="1"
@@ -261,8 +270,8 @@ class Substring extends React.Component<AllProps, ISubstringState> {
                             />
                         </RadioGroup>
                     </FormControl>
-                    <br/>
-                    <br/>
+                    <br />
+                    <br />
                     <Button variant="contained" color="primary" className={classes.button} onClick={this.evaluate} disabled={this.state.doCycle}>
                         Start
                     </Button>
@@ -271,18 +280,19 @@ class Substring extends React.Component<AllProps, ISubstringState> {
                             {this.state.buttonLabel}
                         </Button>
                     }
-                    <div className={classes.avatars}>
-                        <AnimatedDiv pose={this.state.charX !== "" ? 'visible' : 'hidden'}>
-                            <Avatar className={classes.firstAvatar}>{this.state.charX}</Avatar>
-                        </AnimatedDiv>
-                        <AnimatedDiv pose={this.state.charY !== "" ? 'visible' : 'hidden'}>
-                            <Avatar className={this.state.charX === this.state.charY ? classes.greenAvatar : classes.redAvatar}>{this.state.charY}</Avatar>
-                        </AnimatedDiv>
-                    </div>
+                    {(this.state.eval) &&
+                        <div className={classes.avatars}>
+                            <Avatar className={[classes.avatar, classes.blueAvatar].join(' ')}>{this.state.charX}</Avatar>
+                            <AnimatedDiv pose={this.state.charY !== "" ? 'visible' : 'hidden'}>
+                                <Avatar className={this.state.charX === this.state.charY ? classes.greenAvatar : classes.redAvatar}>{this.state.charY}</Avatar>
+                            </AnimatedDiv>
+                        </div>
+                    }
+
                     {(this.state.eval === true) &&
                         <div>
-                            <Paper className={classes.gap}>
-                                <Table className={classes.table}>
+                            <Paper className={classes.bottomMargin}>
+                                <Table>
                                     <TableHead>
                                         <TableRow>
                                             {this.tableHead(this.state.cols)}
@@ -293,13 +303,13 @@ class Substring extends React.Component<AllProps, ISubstringState> {
                                     </TableBody>
                                 </Table>
                             </Paper>
-                            <div className={classes.label}>
+                            <div className={classes.result}>
                                 {this.state.result}
                             </div>
                         </div>
                     }
                 </Grid>
-            </Grid >
+            </div>
         );
     }
 
@@ -316,11 +326,11 @@ class Substring extends React.Component<AllProps, ISubstringState> {
     };
 
     private finish = () => {
-        this.setState({speed: 1000});
+        this.setState({ speed: 1000 });
     }
 
     private evaluate = () => {
-        this.setState({ 
+        this.setState({
             hovering: !this.state.hovering,
             buttonLabel: this.state.speed === 0 ? "Step" : "Finish"
         });
@@ -340,7 +350,7 @@ class Substring extends React.Component<AllProps, ISubstringState> {
         }
 
         this.initialize();
-        this.setState({ 
+        this.setState({
             eval: true,
             doCycle: true,
             cols: this.LENGTH2 + 1
@@ -348,6 +358,7 @@ class Substring extends React.Component<AllProps, ISubstringState> {
 
         this.innerCounter = 0;
         if (this.state.speed !== 0) {
+            this.setState({ charX: this.state.stringX[this.cycleCounter - 1] })
             setTimeout(this.doStep, 1000);
         }
     }
@@ -363,7 +374,7 @@ class Substring extends React.Component<AllProps, ISubstringState> {
     }
 
     private transitionHelper = () => {
-        this.setState({charY: ""});
+        this.setState({ charY: "" });
         setTimeout(this.doStep, 1000 / this.state.speed)
     }
 
@@ -372,7 +383,7 @@ class Substring extends React.Component<AllProps, ISubstringState> {
 
         if (this.innerCounter === 0) {
             this.table[this.cycleCounter][this.innerCounter] = 0;
-            this.setState({charY: ""});
+            this.setState({ charY: "" });
         }
         else if (this.state.stringX[this.cycleCounter - 1] === this.state.stringY[this.innerCounter - 1]) {
             this.table[this.cycleCounter][this.innerCounter] = this.table[this.cycleCounter - 1][this.innerCounter - 1] + 1;
@@ -406,7 +417,7 @@ class Substring extends React.Component<AllProps, ISubstringState> {
         else {
             this.cycleCounter++;
             if (this.cycleCounter > this.LENGTH1) {
-                this.setState({ 
+                this.setState({
                     doCycle: false,
                     result: "Final result: " + this.intResult.toString()
                 });
@@ -414,7 +425,7 @@ class Substring extends React.Component<AllProps, ISubstringState> {
             else {
                 this.setState({ result: "Current result: " + this.intResult.toString() });
                 this.innerCounter = 0;
-                
+
                 if (this.state.speed !== 0) {
                     setTimeout(this.transitionHelper, 1000 / this.state.speed);
                 }
@@ -422,50 +433,53 @@ class Substring extends React.Component<AllProps, ISubstringState> {
         }
     }
 
+    // Return table heading
     private tableHead = (cols: number) => {
         const { classes } = this.props;
 
-        const table = [];
+        const heading = [];
 
-        table.push(<TableCell key='heading' className={[classes.tableHeading, classes.caption].join(' ')}>Table</TableCell>)
+        heading.push(<TableCell key='tableHeading' className={[classes.tableHeading, classes.caption].join(' ')}>Table</TableCell>)
+
         for (let i = 1; i < cols; i++) {
-            table.push(<TableCell key={'columnName' + i.toString()} className={[classes.tableTopCaption, classes.caption].join(' ')}>{"str Y[" + (i - 1) + "] - " + this.state.stringY[i - 1]}</TableCell>);
+            heading.push(
+                <TableCell key={'columnName' + i.toString()} className={[classes.columnCaption, classes.caption].join(' ')}>
+                    {`Str Y[${i - 1}] - '${this.state.stringY[i - 1]}'`}
+                </TableCell>);
         }
 
-        return table;
+        return heading;
     }
 
+    // Return table body
     private tableBody = () => {
         const { classes } = this.props;
 
         const body = [];
 
-        // console.log("in body, length: " + this.LENGTH1.toString());
-
+        // i = 1 because 0 is heading
         for (let i = 1; i <= this.LENGTH1; i++) {
-            // console.log("body cycle outer");
-
-            const key: string = "cycle: " + { i };
             const row = [];
 
+            // Row names
             row.push(
-                <TableCell key={key + 'cell' + i.toString()} className={[classes.tableLeftCaption, classes.caption].join(' ')}>{"String X[" + (i - 1) + "] - " + this.state.stringX[i - 1]}</TableCell>
+                <TableCell key={`rowName ${i.toString()}`} className={[classes.caption, classes.rowCaption].join(' ')}>
+                    {`Str X[${i - 1}] - ${this.state.stringX[i - 1]}`}
+                </TableCell>
             );
 
+            // Table body(content), j = 1 because 0 is row name
             for (let j = 1; j <= this.LENGTH2; j++) {
-                let cell = "-";
-
-                if (this.state.table[i][j] !== Number.MAX_VALUE) {
-                    cell = this.state.table[i][j].toString();
-                }
-
                 row.push(
-                    <TableCell key={key + 'cell2 ' + j.toString()} className={classes.tableCell}>{cell}</TableCell>
+                    <TableCell key={`row ${i},column ${j}`} className={classes.tableCell}>
+                        {this.state.table[i][j] === Number.MAX_VALUE ? "-" : this.state.table[i][j].toString()}
+                    </TableCell>
                 );
             }
 
+            // Push row to the table
             body.push(
-                <TableRow key={key + i.toString()}>
+                <TableRow key={`row ${i}`}>
                     {row}
                 </TableRow>
             );
