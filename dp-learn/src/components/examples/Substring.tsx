@@ -1,9 +1,13 @@
+import '../../styles/prism.css';
+
+import * as Prism from 'prismjs';
 import * as React from 'react';
 
-import { Avatar, Button, FormControl, FormControlLabel, FormLabel, Grid, Paper, Radio, RadioGroup, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from '@material-ui/core';
+import { Avatar, Button, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, FormControl, FormControlLabel, FormLabel, Grid, Paper, Radio, RadioGroup, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from '@material-ui/core';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
 import { AnimatedDiv } from '../ConstComponents';
+import { Code } from '@material-ui/icons';
 import myTheme from '../../styles/index';
 
 interface ISubstringState {
@@ -32,7 +36,7 @@ const styles = (theme: Theme) => createStyles({
     },
     flexChild: {
         flexBasis: '50%',
-        flexGrow: 0
+        flexGrow: 0,
     },
     textField: {
         marginLeft: theme.spacing.unit,
@@ -76,7 +80,8 @@ const styles = (theme: Theme) => createStyles({
     },
     paper: {
         padding: 20,
-        marginBottom: 15
+        marginBottom: 15,
+        display: 'inline-block'
     },
     avatar: {
         margin: 10,
@@ -99,6 +104,23 @@ const styles = (theme: Theme) => createStyles({
     },
     redAvatar: {
         backgroundColor: 'red'
+    },
+    heading: {
+        fontSize: theme.typography.pxToRem(18),
+        fontWeight: theme.typography.fontWeightRegular,
+    },
+    expPanel: {
+        margin: theme.spacing.unit,
+        background: myTheme.palette.primary.main,
+    },
+    whiteText: {
+        color: 'white'
+    },
+    minHeight: {
+        minHeight: 100,
+    },
+    margin: {
+        margin: theme.spacing.unit,
     }
 });
 
@@ -147,6 +169,10 @@ class Substring extends React.Component<AllProps, ISubstringState> {
         this.strYChange = this.strYChange.bind(this);
     }
 
+    public componentDidMount() {
+        Prism.highlightAll();
+    }
+
     public render() {
         const { classes } = this.props;
 
@@ -167,47 +193,158 @@ class Substring extends React.Component<AllProps, ISubstringState> {
                     The lenght of the longest common substring is <b>4</b> and the substring is <b>"ing!"</b>.
                 </Paper>
                 <Typography variant={'h5'} >
-                    Simple solution:
+                    Solution:
                 </Typography>
                 <Paper className={classes.paper}>
+                    {/* Simple solution */}
+                    <Typography variant={'h6'}>
+                        Simple solution
+                    </Typography>
                     We have to consider all substrings of first string and check if this is a substring in second string.
                     There will be <b>O(m^2)</b> substrings. We can check for matching substring in <b>O(n)</b> time.<br /><br />
-
-                    <div className={classes.leftMargin}>
+                
+                    <div className={classes.margin}>
                         Time complexity is <b>O(m^2 * n)</b>
                     </div>
-                </Paper>
-                <Typography variant={'h5'}>
-                    Programming solutions
-                </Typography>
-                <Paper className={classes.paper}>
+                    <hr/>
                     <div className={classes.container}>
+                        <div className={classes.flexChild}>
+                            <Typography variant={'h6'}>
+                                Dynamic programing
+                            </Typography>
+
+                            <div className={[classes.leftMargin, classes.bottomMargin, classes.minHeight].join(' ')}>
+                                Using this method we need to find the length of longest common <b>suffix</b> for substrings of both strings.
+                            These length's are stored in a table. At the end cell with the biggest value is our result. <br />
+                                Value in column is compared to value in row. Default value is 0, but when a match is detected, value from
+                                previous column and row is incremented (suffix is incremented).
+                            </div>
+                            <div className={classes.leftMargin}>
+                                Time complexity is <b>O(m * n), where m,n are lengths of strings </b><br /><br />
+                            </div>
+                            <ExpansionPanel className={classes.expPanel}>
+                                <ExpansionPanelSummary expandIcon={<Code className={classes.whiteText} />}>
+                                    <Typography className={[classes.heading, classes.whiteText].join(' ')}>Source code</Typography>
+                                </ExpansionPanelSummary>
+                                <ExpansionPanelDetails>
+                                    <Typography className={classes.leftMargin}>
+                                        <pre>
+                                            <code className="language-clike">
+                                                {`// Returns length of longest common substring
+int CommonSubstrLength(char* x, char* y) 
+{
+    // Store strings length
+    int len1 = strlen(x);
+    int len2 = strlen(y);
+
+    // Table (two-dimensional array) for storing values
+    // Table size is length +1 because of simplicity
+    int[len1 + 1][len2 + 1] table;
+          
+    // Variable keeping length of the longest common substring
+    int result = 0;
+  
+    // Algorithm
+    for (int i = 0; i <= len1; i++)
+    {
+        for (int j = 0; j <= len2; j++)
+        {
+            // This will fill first row and column of table with zero values
+            if (i == 0 || j == 0)
+            {
+                table[i, j] = 0;
+            }
+            // Check for matching characters
+            // (i - 1 and j - 1 because we have bigger table than strings)
+            else if (x[i - 1] == x[j - 1])
+            {
+                // Match!
+                // Suffix is incremented
+                // We have zero value in first column/row, so we can just increment
+                table[i][j] = ++table[i - 1][j - 1];
+
+                // Set new result if needed
+                if (result < table[i][j]) {
+                    result = table[i][j];
+                }
+            }
+            // Different characters
+            else
+            {
+                table[i, j] = 0; 
+            }
+        }
+    }
+
+    return result; 
+}`}
+                                            </code>
+                                        </pre>
+                                    </Typography>
+                                </ExpansionPanelDetails>
+                            </ExpansionPanel>
+                        </div>
                         <div className={classes.flexChild}>
                             <Typography variant={'h6'}>
                                 Using recursion
                             </Typography>
-                            <div className={classes.leftMargin}>
-                            <pre>
-                                <code>
-                                    <p>for(let i = 0)</p>
-                                </code>
-                            </pre>
+
+                            <div className={[classes.leftMargin, classes.bottomMargin, classes.minHeight].join(' ')}>
+                                This solution seems simple but
                             </div>
-                        </div>
-                        <div className={classes.flexChild}>
-                            <Typography variant={'caption'}>
-                                Dynamic programing
-                            </Typography>
+                            <div className={classes.leftMargin}>
+                                Time complexity is <b>O(n^2), where m,n are lengths of strings </b><br /><br />
+                            </div>
+
+                            <ExpansionPanel className={classes.expPanel}>
+                                <ExpansionPanelSummary expandIcon={<Code className={classes.whiteText} />}>
+                                    <Typography className={[classes.heading, classes.whiteText].join(' ')}>Source code</Typography>
+                                </ExpansionPanelSummary>
+                                <ExpansionPanelDetails>
+                                    <Typography className={classes.leftMargin}>
+                                        <pre>
+                                            <code className="language-clike">
+                                                {`// Returns length of longest common substring
+// x, y - strings
+// i - length of y
+// j - length of x
+// count must be 0
+int CommonSubstrLength(char* x, char* y, int i, int j, int count)  
+{
+    if (i == 0 || j == 0)
+    {
+        return count;
+    }
+  
+    if (x[i - 1] == y[j - 1])
+    {
+        count = CommonSubstrLength(i - 1, j - 1, count + 1);
+    }
+
+    int tmp1 = CommonSubstrLength(i, j - 1, 0);
+    int tmp2 = CommonSubstrLength(i - 1, j, 0);
+
+    if (tmp1 < 2)
+    {
+        tmp1 = tmp2;
+    }
+
+    if (count < tmp1)
+    {
+        count = tmp1;
+    }
+
+    return count;
+}`}
+                                            </code>
+                                        </pre>
+
+                                    </Typography>
+                                </ExpansionPanelDetails>
+                            </ExpansionPanel>
                         </div>
                     </div>
                 </Paper>
-
-                Using this method we need to find the length of longest common <b>suffix</b> for substrings of both strings.
-                        These length's are stored in a table. At the end cell with the biggest value is our result.<br /><br />
-
-                <div className={classes.leftMargin}>
-                    Time complexity is <b>O(m* n)</b><br /><br />
-                </div>
 
                 <Grid>
                     <form className={classes.container} autoComplete="off">
