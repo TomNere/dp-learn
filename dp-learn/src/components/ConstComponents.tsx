@@ -11,7 +11,7 @@ export const AnimatedDiv = posed.div({
         scale: 2,
         transition: {
             scale: {
-            type: 'spring', 
+            type: 'spring',
                 stiffness: 100,
                 delay: 200
             }

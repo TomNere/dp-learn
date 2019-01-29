@@ -3,11 +3,11 @@ import '../../styles/prism.css';
 import * as Prism from 'prismjs';
 import * as React from 'react';
 
+import { AccessTime, Code, Storage } from '@material-ui/icons';
 import { Avatar, Button, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, FormControl, FormControlLabel, FormLabel, Grid, Paper, Radio, RadioGroup, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from '@material-ui/core';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
 import { AnimatedDiv } from '../ConstComponents';
-import { Code } from '@material-ui/icons';
 import myTheme from '../../styles/index';
 
 interface ISubstringState {
@@ -32,11 +32,11 @@ type AllProps =
 const styles = (theme: Theme) => createStyles({
     container: {
         display: 'flex',
-        flexWrap: 'wrap',
+        flexDirection: 'row'
     },
     flexChild: {
-        flexBasis: '50%',
-        flexGrow: 0,
+        flex: 1,
+        padding: theme.spacing.unit * 2
     },
     textField: {
         marginLeft: theme.spacing.unit,
@@ -79,9 +79,7 @@ const styles = (theme: Theme) => createStyles({
         marginLeft: 20
     },
     paper: {
-        padding: 20,
-        marginBottom: 15,
-        display: 'inline-block'
+        padding: theme.spacing.unit * 2,
     },
     avatar: {
         margin: 10,
@@ -110,7 +108,6 @@ const styles = (theme: Theme) => createStyles({
         fontWeight: theme.typography.fontWeightRegular,
     },
     expPanel: {
-        margin: theme.spacing.unit,
         background: myTheme.palette.primary.main,
     },
     whiteText: {
@@ -119,8 +116,21 @@ const styles = (theme: Theme) => createStyles({
     minHeight: {
         minHeight: 100,
     },
-    margin: {
-        margin: theme.spacing.unit,
+    complexityParent: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    complexity: {
+        margin: theme.spacing.unit * 3,
+        border: '1px solid black',
+        padding: '8px 4px',
+        marginRight: '20px',
+        display: 'inline-block',
+        '& svg': {
+            display: 'inline-block',
+            verticalAlign: 'middle'
+        }
     }
 });
 
@@ -181,56 +191,59 @@ class Substring extends React.Component<AllProps, ISubstringState> {
                 <Typography variant={'h4'} align={'center'} className={classes.bottomMargin}>
                     Longest common substring
                 </Typography>
-                <Typography variant={'h5'}>
-                    Brief:
-                </Typography>
                 <Paper className={classes.paper}>
-                    There are two strings <b>X</b> and <b>Y</b>. We want to find the length of the longest common substring, e.g.: <br />
-                    <div className={classes.leftMargin}>
-                        X = "I like dynamic programm<b>ing!</b>"<br />
-                        Y = "Really? So tell me something about this cool th<b>ing!</b>"<br /><br />
+                    <div className={classes.bottomMargin}>
+                        There are two strings <b>X</b> and <b>Y</b>. We want to find the length of the longest common substring(subsequence), e.g.: <br />
+                        <div className={classes.leftMargin}>
+                            X = "I like dynamic programm<b>ing!</b>"<br />
+                            Y = "Really? So tell me something about this cool th<b>ing!</b>"<br /><br />
+                        </div>
+                        The lenght of the longest common substring is <b>4</b> and the substring is <b>"ing!"</b>.
                     </div>
-                    The lenght of the longest common substring is <b>4</b> and the substring is <b>"ing!"</b>.
-                </Paper>
-                <Typography variant={'h5'} >
-                    Solution:
-                </Typography>
-                <Paper className={classes.paper}>
+                    <hr />
                     {/* Simple solution */}
-                    <Typography variant={'h6'}>
+                    <Typography variant={'h6'} className={classes.bottomMargin}>
                         Simple solution
                     </Typography>
-                    We have to consider all substrings of first string and check if this is a substring in second string.
-                    There will be <b>O(m^2)</b> substrings. We can check for matching substring in <b>O(n)</b> time.<br /><br />
-                
-                    <div className={classes.margin}>
-                        Time complexity is <b>O(m^2 * n)</b>
+                    <div>
+                        We have to consider all substrings of first string and check if this is a substring in second string.
+                    Consider <b>m</b> is length of the first string and <b>n</b> length of the second string, there will be <b>O(m^2)</b> substrings in first string.
+                    We can check for matching substring in <b>O(n)</b> time.
                     </div>
-                    <hr/>
+                    <div className={classes.complexity}>
+                        <AccessTime />
+                        <span>Time complexity is <b>O(m^2 * n)</b></span>
+                    </div>
+                    <hr />
                     <div className={classes.container}>
                         <div className={classes.flexChild}>
-                            <Typography variant={'h6'}>
+                            <Typography variant={'h6'} align={'center'} className={classes.bottomMargin}>
                                 Dynamic programing
                             </Typography>
 
-                            <div className={[classes.leftMargin, classes.bottomMargin, classes.minHeight].join(' ')}>
+                            <div className={classes.minHeight}>
                                 Using this method we need to find the length of longest common <b>suffix</b> for substrings of both strings.
-                            These length's are stored in a table. At the end cell with the biggest value is our result. <br />
+                                These length's are stored in a table. At the end cell with the biggest value is our result. <br />
                                 Value in column is compared to value in row. Default value is 0, but when a match is detected, value from
-                                previous column and row is incremented (suffix is incremented).
+                                previous column and row is incremented (suffix is incremented). We need to fill <b>M x N</b> table.
                             </div>
-                            <div className={classes.leftMargin}>
-                                Time complexity is <b>O(m * n), where m,n are lengths of strings </b><br /><br />
+                            <div className={classes.complexityParent}>
+                                <div className={classes.complexity}>
+                                    <AccessTime />
+                                    <span>Time complexity is <b>O(m * n)</b></span>
+                                    <br />
+                                    <Storage />
+                                    <span>Space complexity is the same - <b>O(m * n)</b></span>
+                                </div>
                             </div>
                             <ExpansionPanel className={classes.expPanel}>
                                 <ExpansionPanelSummary expandIcon={<Code className={classes.whiteText} />}>
                                     <Typography className={[classes.heading, classes.whiteText].join(' ')}>Source code</Typography>
                                 </ExpansionPanelSummary>
                                 <ExpansionPanelDetails>
-                                    <Typography className={classes.leftMargin}>
-                                        <pre>
-                                            <code className="language-clike">
-                                                {`// Returns length of longest common substring
+                                    <pre>
+                                        <code className="language-clike">
+                                            {`// Returns length of longest common substring
 int CommonSubstrLength(char* x, char* y) 
 {
     // Store strings length
@@ -249,18 +262,19 @@ int CommonSubstrLength(char* x, char* y)
     {
         for (int j = 0; j <= len2; j++)
         {
-            // This will fill first row and column of table with zero values
+            // Fill first row and column of table with zero values
             if (i == 0 || j == 0)
             {
                 table[i, j] = 0;
             }
             // Check for matching characters
-            // (i - 1 and j - 1 because we have bigger table than strings)
+            // (i-1 and j-1 because we have bigger table than strings)
             else if (x[i - 1] == x[j - 1])
             {
                 // Match!
                 // Suffix is incremented
-                // We have zero value in first column/row, so we can just increment
+                // We have zero value in first column/row, 
+                // so we can just increment
                 table[i][j] = ++table[i - 1][j - 1];
 
                 // Set new result if needed
@@ -278,24 +292,30 @@ int CommonSubstrLength(char* x, char* y)
 
     return result; 
 }`}
-                                            </code>
-                                        </pre>
-                                    </Typography>
+                                        </code>
+                                    </pre>
                                 </ExpansionPanelDetails>
                             </ExpansionPanel>
                         </div>
                         <div className={classes.flexChild}>
-                            <Typography variant={'h6'}>
+                            <Typography variant={'h6'} align={'center'} className={classes.bottomMargin}>
                                 Using recursion
                             </Typography>
 
-                            <div className={[classes.leftMargin, classes.bottomMargin, classes.minHeight].join(' ')}>
-                                This solution seems simple but
+                            <div className={ classes.minHeight }>
+                                This solution seems pretty simple. Space complexity is only on lengths of strings.
+                                But if the strings has no common substring, time complexity can grow nearly to <b>2^n</b> considering <b>m == n</b>,
+                                so this method is very inefficient.
                             </div>
-                            <div className={classes.leftMargin}>
-                                Time complexity is <b>O(n^2), where m,n are lengths of strings </b><br /><br />
+                            <div className={classes.complexityParent}>
+                                <div className={classes.complexity}>
+                                    <AccessTime />
+                                    <span>Time complexity is <b>O(n^2)</b></span>
+                                    <br />
+                                    <Storage />
+                                    <span>Space complexity is <b>O(m + n)</b></span>
+                                </div>
                             </div>
-
                             <ExpansionPanel className={classes.expPanel}>
                                 <ExpansionPanelSummary expandIcon={<Code className={classes.whiteText} />}>
                                     <Typography className={[classes.heading, classes.whiteText].join(' ')}>Source code</Typography>
@@ -305,36 +325,20 @@ int CommonSubstrLength(char* x, char* y)
                                         <pre>
                                             <code className="language-clike">
                                                 {`// Returns length of longest common substring
-// x, y - strings
-// i - length of y
-// j - length of x
-// count must be 0
-int CommonSubstrLength(char* x, char* y, int i, int j, int count)  
+int CommonSubstrLength(char* x, char* y)
 {
-    if (i == 0 || j == 0)
+    if (*x == '\0' || *y == '\0')
     {
-        return count;
+        return 0;
     }
-  
-    if (x[i - 1] == y[j - 1])
+    else if (*x == *y)
     {
-        count = CommonSubstrLength(i - 1, j - 1, count + 1);
+        return (1 + CommonSubstrLength(x + 1, y + 1);
     }
-
-    int tmp1 = CommonSubstrLength(i, j - 1, 0);
-    int tmp2 = CommonSubstrLength(i - 1, j, 0);
-
-    if (tmp1 < 2)
+    else
     {
-        tmp1 = tmp2;
+        return max(CommonSubstrLength(x + 1, y), CommonSubstrLength(x, y + 1));
     }
-
-    if (count < tmp1)
-    {
-        count = tmp1;
-    }
-
-    return count;
 }`}
                                             </code>
                                         </pre>
@@ -370,8 +374,8 @@ int CommonSubstrLength(char* x, char* y, int i, int j, int count)
                     <br />
 
                     {/* Speed select */}
-                    <FormControl component="fieldset">
-                        <FormLabel component="legend">Select speed</FormLabel>
+                    <FormControl component={"fieldset" as "div"}>
+                        <FormLabel component="caption">Select speed</FormLabel>
                         <RadioGroup
                             aria-label="position"
                             name="position"
