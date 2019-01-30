@@ -54,7 +54,6 @@ const Wrapper = styled.div`
    }
    section.route-section {
      position: absolute;
-     width: 100%;
      top: 0;
      left: 0;
    }

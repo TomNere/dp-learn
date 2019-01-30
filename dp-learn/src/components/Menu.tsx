@@ -32,13 +32,11 @@ const styles = (theme: Theme) => createStyles({
 });
 
 class Menu extends React.Component<AllProps> {
-    public static defaultProps: IProps = {
-        history: {}
+    public constructor(props: AllProps) {
+        super(props);
     }
-
     public render() {
         const { classes } = this.props;
-
         return (
         <Drawer
             variant="permanent"

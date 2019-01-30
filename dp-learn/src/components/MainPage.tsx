@@ -16,10 +16,9 @@ const styles = (theme: Theme) => createStyles ({
     root: {
         flexGrow: 1,
         zIndex: 1,
-        overflow: 'hidden',
         position: 'relative',
         display: 'flex',
-        // minHeight: '20vh'
+        minHeight: '100vh'
     },
     content: {
         flexGrow: 1,

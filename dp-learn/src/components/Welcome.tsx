@@ -9,7 +9,7 @@ import myTheme from '../styles/index';
 declare module '*.png';
 
 export interface IProps {
-    history: any
+    history: any,
 }
 
 type AllProps =

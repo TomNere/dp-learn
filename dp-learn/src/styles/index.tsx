@@ -7,6 +7,12 @@ export default createMuiTheme({
             main: '#263238',
             // dark: will be calculated from palette.primary.main,
             // contrastText: will be calculated from palette.primary.main,
+        },
+        secondary: {
+            // light: will be calculated from palette.primary.main,
+            main: '#0069c0',
+            // dark: will be calculated from palette.primary.main,
+            // contrastText: will be calculated from palette.primary.main,
         }
     },
     overrides: {
