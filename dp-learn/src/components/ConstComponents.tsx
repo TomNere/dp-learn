@@ -2,19 +2,27 @@ import posed from 'react-pose';
 
 // Animated div components
 export const AnimatedDiv = posed.div({
-    hidden: {
-        opacity: 0.5,
+    empty: {
         scale: 1
     },
-    visible: { 
+    // nonEmpty: { 
+    //     opacity: 1,
+    //     scale: 1.3  ,
+    //     transition: {
+    //         scale: {
+    //         type: 'spring',
+    //             stiffness: 200,
+    //             delay: 0
+    //         }
+    //   }
+    // }
+    nonEmpty: {
         opacity: 1,
-        scale: 2,
+        scale: 1.2,
         transition: {
-            scale: {
-            type: 'spring',
-                stiffness: 100,
-                delay: 200
-            }
-      }
+          type: 'spring',
+          stiffness: 200,
+          damping: 0
+        }
     }
 });

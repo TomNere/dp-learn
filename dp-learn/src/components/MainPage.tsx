@@ -23,7 +23,7 @@ const styles = (theme: Theme) => createStyles ({
     content: {
         flexGrow: 1,
         padding: theme.spacing.unit * 3,
-        minWidth: 0, // So the Typography noWrap works
+        // minWidth: 0, // So the Typography noWrap works
     },
     toolbar: theme.mixins.toolbar,
 });
