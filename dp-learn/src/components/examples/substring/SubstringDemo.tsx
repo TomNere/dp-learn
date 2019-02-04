@@ -19,6 +19,9 @@ interface ISubstringDemoState {
     cols: number
     speed: number
     buttonLabel: string
+    selectedCol: number
+    selectedRow: number
+    highlitedCells: string[]
 }
 
 type AllProps =
@@ -60,12 +63,12 @@ const styles = (theme: Theme) => createStyles({
         color: 'white',
         borderRight: 'solid 1px gray',
         backgroundColor: myTheme.palette.primary.main,
-        padding: '4px 24px 4px 14px'
+        padding: '4px 24px 4px 14px',
     },
     columnCaption: {
         fontSize: theme.typography.pxToRem(14),
         textAlign: 'center',
-        padding: 0
+        padding: theme.spacing.unit,
     },
     rowCaption: {
         fontSize: theme.typography.pxToRem(14),
@@ -73,9 +76,7 @@ const styles = (theme: Theme) => createStyles({
     tableCell: {
         textAlign: 'center',
         padding: 0,
-        "& th:last-child": {
-            borderRight: 'solid 1px gray'
-        },
+        borderRight: '1px solid rgba(224, 224, 224, 1)',
     },
     highlitedCell: {
         backgroundColor: myTheme.palette.secondary.main
@@ -83,7 +84,6 @@ const styles = (theme: Theme) => createStyles({
     centeredContent: {
         textAlign: 'center',
         margin: theme.spacing.unit * 2,
-
         "& span": {
             fontSize: theme.typography.pxToRem(24),
             color: 'white',
@@ -114,17 +114,27 @@ const styles = (theme: Theme) => createStyles({
     redAvatar: {
         backgroundColor: 'red'
     },
+    table: {
+        width: 'auto',
+        "& td:last-child, th:last-child": {
+            paddingRight: theme.spacing.unit
+        },
+    },
+    incCell: {
+        backgroundColor: myTheme.palette.secondary.light
+    }
 });
 
 class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
 
     /////////////////////// private variables /////////////////////////////////
 
-    private outerCycle: number;
+    private outerCounter: number;
     private innerCounter: number;
-    // To store length of the longest common 
-    // substring 
-    private intResult: number;
+
+    // To store table position of the result
+    private tableRow: number;
+    private tableCol: number;
 
     // Create a table to store lengths of  
     // longest common suffixes of substrings. 
@@ -143,6 +153,9 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
     // Timeout
     private timeout: any;
 
+    // Delay helper
+    private delayHelper = 1500;
+
     ////////////////////////////////////////////////////////////////////////////
 
     public constructor(props: AllProps) {
@@ -159,7 +172,10 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
             table: [],
             cols: 0,
             speed: 1,
-            buttonLabel: "Finish"
+            buttonLabel: "Finish",
+            selectedCol: 0,
+            selectedRow: 0,
+            highlitedCells: []
         }
     }
 
@@ -246,7 +262,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
                 {(this.state.charX !== "" || this.state.charY !== "") &&
                     <div className={classes.avatars}>
                         <Avatar className={[classes.avatar, classes.defaultAvatar].join(' ')}>{this.state.charX}</Avatar>
-                        <AnimatedDiv pose={this.state.charY !== "" ? 'nonEmpty' : 'empty'}>
+                        <AnimatedDiv pose={this.state.charY === "" || this.state.speed === 0 ? 'empty' : (this.state.charX === this.state.charY ? 'match' : 'noMatch')}>
                             <Avatar
                                 className={[classes.avatar, this.state.charY === "" ? classes.defaultAvatar :
                                     this.state.charX !== this.state.charY ? classes.redAvatar : classes.greenAvatar].join(' ')}
@@ -256,7 +272,6 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
                         </AnimatedDiv>
                     </div>
                 }
-
                 {(this.state.eval === true) &&
                     <div>
                         <div className={classes.centeredContent}>
@@ -264,7 +279,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
                                 {this.state.result}
                             </span>
                         </div>
-                        <Table>
+                        <Table className={classes.table}>
                             <TableHead>
                                 <TableRow>
                                     {this.tableHead(this.state.cols)}
@@ -296,10 +311,11 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
         clearTimeout(this.timeout);
         this.setState({ speed: 0 });
 
-        while (this.outerCycle <= this.LENGTH1) {
-            console.log('while');
+        while (this.outerCounter <= this.LENGTH1) {
             this.doStep();
         }
+        
+        this.setState({ speed: 1});
     };
 
     private evaluate = () => {
@@ -310,7 +326,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
         });
 
         this.table = [];
-        this.intResult = 0;
+        this.tableCol = this.tableRow = 0;
 
         this.LENGTH1 = this.state.stringX.length;
         this.LENGTH2 = this.state.stringY.length;
@@ -329,7 +345,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
             this.table[0][j] = 0;
         }
 
-        this.outerCycle = 1;
+        this.outerCounter = 1;
 
         this.setState({
             eval: true,
@@ -343,8 +359,10 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
 
         // Check if auto play or debugging
         if (this.state.speed !== 0) {
-            this.setState({ charX: this.state.stringX[this.outerCycle - 1] })
-            this.timeout = setTimeout(this.doStep, 1000);
+            this.timeout = setTimeout(this.doStep, this.delayHelper / this.state.speed);
+        }
+        else {
+            this.doStep();
         }
     }
 
@@ -356,18 +374,39 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
     }
 
     private doStep = () => {
-        this.setState({ charX: this.state.stringX[this.outerCycle - 1], charY: this.state.stringY[this.innerCounter - 1] });
+        // Only for speed === 0
+        if (this.outerCounter > this.LENGTH1) {
+            this.setFinalState();
+            return;
+        }
+
+        this.setState({
+            charX: this.state.stringX[this.outerCounter - 1],
+            charY: this.state.stringY[this.innerCounter - 1],
+            selectedCol: this.innerCounter,
+            selectedRow: this.outerCounter,
+            highlitedCells: []
+        });
 
         if (this.innerCounter === 0) {
-            this.table[this.outerCycle][this.innerCounter] = 0;
+            this.table[this.outerCounter][this.innerCounter] = 0;
             this.setState({ charY: "" });
         }
-        else if (this.state.stringX[this.outerCycle - 1] === this.state.stringY[this.innerCounter - 1]) {
-            this.table[this.outerCycle][this.innerCounter] = this.table[this.outerCycle - 1][this.innerCounter - 1] + 1;
-            this.intResult = Math.max(this.intResult, this.table[this.outerCycle][this.innerCounter]);
+        else if (this.state.stringX[this.outerCounter - 1] === this.state.stringY[this.innerCounter - 1]) {
+            this.table[this.outerCounter][this.innerCounter] = this.table[this.outerCounter - 1][this.innerCounter - 1] + 1;
+
+            // Flash
+            if (this.outerCounter > 1 && this.innerCounter > 1) {
+                this.incrementOn();
+            }
+            
+            if (this.table[this.outerCounter][this.innerCounter] > this.table[this.tableRow][this.tableCol]) {
+                this.tableRow = this.outerCounter;
+                this.tableCol = this.innerCounter;
+            }
         }
         else {
-            this.table[this.outerCycle][this.innerCounter] = 0;
+            this.table[this.outerCounter][this.innerCounter] = 0;
         }
 
         this.setState({ table: this.table });
@@ -382,25 +421,61 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
         }
 
         if (this.innerCounter <= this.LENGTH2) {
-            this.setState({ result: "Current result: " + this.intResult.toString() });
-            this.timeout = setTimeout(this.transitionHelper, 1500 / this.state.speed);
+            this.setState({ result: "Current max. length: " + this.table[this.tableRow][this.tableCol].toString() });
+
+            if (this.state.speed !== 0) {
+                this.timeout = setTimeout(this.transitionHelper, this.delayHelper / this.state.speed);
+            }
         }
         else {
-            this.outerCycle++;
-            if (this.outerCycle > this.LENGTH1) {
-                this.setState({
-                    doCycle: false,
-                    result: "Final result: " + this.intResult.toString(),
-                    charX: "",
-                    charY: "",
-                });
+            this.outerCounter++;
+            if (this.outerCounter > this.LENGTH1) {
+                this.timeout = setTimeout(this.setFinalState, this.delayHelper / this.state.speed);
             }
             else {
-                this.setState({ result: "Current result: " + this.intResult.toString() });
+                this.setState({ result: "Current max. length: " + this.table[this.tableRow][this.tableCol].toString() });
                 this.innerCounter = 0;
-                this.timeout = setTimeout(this.transitionHelper, 1500 / this.state.speed);
+                this.timeout = setTimeout(this.transitionHelper, this.delayHelper / this.state.speed);
             }
         }
+    }
+
+    private incrementOn = () => {
+
+        const cells = [`row ${this.outerCounter - 1},column ${this.innerCounter - 1}`];
+
+        this.setState({ 
+            highlitedCells: cells
+        });
+
+        if (this.state.speed !== 0) {
+            setTimeout(this.incrementOff, (this.delayHelper / 2) / this.state.speed);
+        }
+    }
+
+    private incrementOff = () => {
+        this.setState({ highlitedCells: [] });
+    }
+
+    private setFinalState = () => {
+        const cells: string[] = [];
+        let finalString = "";
+
+        for (let i = this.table[this.tableRow][this.tableCol] - 1; i >= 0; i--) {
+            cells.push(`row ${this.tableRow - i},column ${this.tableCol - i}`);
+            finalString += this.state.stringX[this.tableRow - i - 1];
+        }
+
+
+        this.setState({
+            doCycle: false,
+            result: `Longest common substring: "${finalString}", length is ${this.table[this.tableRow][this.tableCol]}.`,
+            highlitedCells: cells,
+            charX: "",
+            charY: "",
+            selectedCol: 0,
+            selectedRow: 0
+        });
     }
 
     // Return table heading
@@ -412,9 +487,9 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
         heading.push(<TableCell key='tableHeading' className={[classes.tableHeading, classes.caption].join(' ')}>Table</TableCell>)
 
         for (let i = 1; i < cols; i++) {
-
             const classNames = [classes.columnCaption, classes.caption];
-            if (this.innerCounter === i + 1) {
+
+            if (i === this.state.selectedCol) {
                 classNames.push(classes.highlitedCell);
             }
 
@@ -432,13 +507,13 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
         const { classes } = this.props;
 
         const body = [];
-
+        let classNames = [];
         // i = 1 because 0 is heading
         for (let i = 1; i <= this.LENGTH1; i++) {
             const row = [];
 
-            const classNames = [classes.rowCaption, classes.caption];
-            if (this.state.charX === this.state.stringX[i - 1]) {
+            classNames = [classes.rowCaption, classes.caption];
+            if (i === this.state.selectedRow) {
                 classNames.push(classes.highlitedCell);
             }
 
@@ -451,9 +526,24 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
 
             // Table body(content), j = 1 because 0 is row name
             for (let j = 1; j <= this.LENGTH2; j++) {
+                classNames = [classes.tableCell];
+                const key = `row ${i},column ${j}`;
+
+                let value = this.state.table[i][j] === Number.MAX_VALUE ? "-" : this.state.table[i][j].toString();
+
+                for (const highlitedKey in this.state.highlitedCells) {
+                    if (this.state.highlitedCells[highlitedKey] === key) {
+                        classNames.push(classes.incCell);
+
+                        if (this.state.doCycle) {
+                            value += ' + 1';
+                        }
+                    }
+                }
+
                 row.push(
-                    <TableCell key={`row ${i},column ${j}`} className={classes.tableCell}>
-                        {this.state.table[i][j] === Number.MAX_VALUE ? "-" : this.state.table[i][j].toString()}
+                    <TableCell key={key} className={classNames.join(' ')}>
+                        {value}
                     </TableCell>
                 );
             }

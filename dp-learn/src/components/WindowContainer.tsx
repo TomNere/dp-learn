@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Route, Switch, withRouter } from "react-router-dom";
 
-import Coins from './examples/Coins';
+import Coins from './examples/coins/Coins';
 import Substring from './examples/substring/Substring';
 import SubstringDemo from './examples/substring/SubstringDemo';
 

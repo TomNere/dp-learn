@@ -3,11 +3,12 @@ import '../../../styles/prism.css';
 import * as Prism from 'prismjs';
 import * as React from 'react';
 
-import { AccessTime, Code, PlayArrow, Storage } from '@material-ui/icons';
-import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Fab, Paper, Typography } from '@material-ui/core';
+import { AccessTime, Code, Storage } from '@material-ui/icons';
+import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Paper, Typography } from '@material-ui/core';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 import { substrDynCode, substrEnhCode, substrRecCode } from './SubstringCodes';
 
+import FloatingButton from 'src/components/hoc/presentational/buttons/FloatingButton';
 import { IProps } from '../../Welcome';
 import myTheme from '../../../styles/index';
 
@@ -59,35 +60,12 @@ const styles = (theme: Theme) => createStyles({
             verticalAlign: 'middle'
         }
     },
-    fab: {
-        position: 'fixed',
-        zIndex: 9,
-        bottom: '2rem',
-        right: '2rem',
-        color: 'white',
-        borderColor: myTheme.palette.primary.main,
-        background: myTheme.palette.secondary.main
-    },
-    fabBig: {
-        fontSize: 24,
-    },
-    fabButton: {
-        marginBottom: theme.spacing.unit,
-        color: 'white',
-        backgroundColor: myTheme.palette.secondary.main,
-        "&:hover": {
-            backgroundColor: myTheme.palette.primary.main
-        }
-    },
-    extendedIcon: {
-        marginRight: theme.spacing.unit,
-    },
 });
 
 class Substring extends React.Component<AllProps> {
     public constructor(props: AllProps) {
         super(props)
-    }
+    } 
 
     public componentDidMount() {
         Prism.highlightAll();
@@ -98,13 +76,12 @@ class Substring extends React.Component<AllProps> {
 
         return (
             <div>
-                <Fab size='large' variant='extended' aria-label="demo" className={[classes.fab, classes.fabBig].join(' ')} onClick={this.handleDemoOpen}>
-                    <PlayArrow className={classes.extendedIcon} />
-                    Try out demo!
-                </Fab>
+                <FloatingButton variant='floating' onClick={this.handleDemoOpen}/>
+                {/* Title */}
                 <Typography variant={'h4'} align={'center'} className={classes.bottomMargin}>
                     Longest common substring
                 </Typography>
+                {/* Brief */}
                 <Paper className={classes.paper}>
                     <div className={classes.bottomMargin}>
                         There are two strings <b>X</b> and <b>Y</b>. We want to find the length of the longest common substring(subsequence), e.g.: <br />
@@ -150,10 +127,7 @@ class Substring extends React.Component<AllProps> {
                                     <span>Space complexity is <b>O(m * n)</b></span>
                                 </div>
                             </div>
-                            <Fab size='small' variant='extended' aria-label="demo" className={classes.fabButton} onClick={this.handleDemoOpen}>
-                                <PlayArrow className={classes.extendedIcon} />
-                                Try out demo!
-                            </Fab>
+                            <FloatingButton variant='small' onClick={this.handleDemoOpen}/>
                             <ExpansionPanel className={[classes.expPanel, classes.bottomMargin].join(' ')}>
                                 <ExpansionPanelSummary expandIcon={<Code className={classes.whiteText} />}>
                                     <Typography className={[classes.heading, classes.whiteText].join(' ')}>Source code</Typography>

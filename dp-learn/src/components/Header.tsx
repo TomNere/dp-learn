@@ -16,6 +16,7 @@ const styles = (theme: Theme) => createStyles({
         flexGrow: 1,
         zIndex: 1,
         height: '100vh',
+        width: '100vh',
         overflow: 'hidden',
         position: 'relative',
         display: 'flex',
