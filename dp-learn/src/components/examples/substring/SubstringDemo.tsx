@@ -1,10 +1,12 @@
+import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
 import { Avatar, Button, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, Table, TableBody, TableCell, TableHead, TableRow, TextField, Theme, Typography } from '@material-ui/core';
 import { WithStyles, createStyles, withStyles } from "@material-ui/core/styles";
 
-import { AnimatedDiv } from '../../ConstComponents';
+import { AnimatedDiv } from '../../Animated';
 import myTheme from '../../../styles/index';
+import { strings } from 'src/translations/languages';
 
 interface ISubstringDemoState {
     stringX: string
@@ -185,10 +187,10 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
         return (
             <div>
                 <Typography variant={'h4'} align={'center'} className={classes.bottomMargin}>
-                    Longest common substring - demo
+                    {strings.substring.demo.title}
                 </Typography>
                 <div className={classes.bottomMargin}>
-                    Basic dynamic programming method for "Longest common substring" problem.
+                    <Markdown source={strings.substring.demo.brief} />
                 </div>
                 <Grid className={[classes.container, classes.bottomMargin].join(' ')}>
                     <form className={classes.container} autoComplete="off">

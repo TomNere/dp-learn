@@ -5,6 +5,7 @@ import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/s
 import { Fab } from '@material-ui/core';
 import { PlayArrow } from '@material-ui/icons';
 import myTheme from '../../../../styles/index';
+import { strings } from 'src/translations/languages';
 
 type AllProps =
     IStateProps &
@@ -40,17 +41,13 @@ const styles = (theme: Theme) => createStyles({
 })
 
 class FloatingButton extends React.Component<AllProps> {
-    public constructor(props: AllProps) {
-        super(props)
-    }
-
     public render() {
         const { classes } = this.props;
 
         return (
             <Fab size={this.props.variant === 'floating' ? 'large' : 'small'} variant='extended' aria-label="demo" className={this.props.variant === 'floating' ? classes.floating : classes.small} onClick={this.props.onClick}>
                 <PlayArrow className={classes.extendedIcon} />
-                Try out demo!
+                {strings.components.tryDemo}
             </Fab>
         );
     }

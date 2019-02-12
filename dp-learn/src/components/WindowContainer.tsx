@@ -6,8 +6,6 @@ import Coins from './examples/coins/Coins';
 import Substring from './examples/substring/Substring';
 import SubstringDemo from './examples/substring/SubstringDemo';
 
-// import styled from 'styled-components';
-
 function WindowContainer(props: any) {
     return (
         <Switch location={props.location}>

@@ -7,9 +7,6 @@ import MainPage from './MainPage';
 import Welcome from './Welcome';
 import styled from 'styled-components';
 
-// import Welcome from './Welcome';
-
-
 function Container(props: any) {
     return (
         <Wrapper>

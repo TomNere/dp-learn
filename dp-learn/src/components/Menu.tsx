@@ -3,11 +3,15 @@ import * as React from 'react';
 import { Drawer, List, Theme, WithStyles, createStyles, withStyles } from '@material-ui/core';
 import { ListItem, ListItemText } from '@material-ui/core';
 
-import { IProps } from './Welcome';
+import { strings } from 'src/translations/languages';
 
 type AllProps =
-    IProps &
+    IMenuProps &
     WithStyles<typeof styles>;
+
+interface IMenuProps {
+    history: any
+}
 
 const styles = (theme: Theme) => createStyles({
     root: {
@@ -35,27 +39,25 @@ class Menu extends React.Component<AllProps> {
     public constructor(props: AllProps) {
         super(props);
     }
+    
     public render() {
         const { classes } = this.props;
         return (
-        <Drawer
-            variant="permanent"
-            classes={{
-                paper: classes.drawerPaper,
-            }}
-        >
-            <div className={classes.toolbar} />
-            <List>
-                <div>
-                    <ListItem button={true} onClick={this.showCoins}>
-                        <ListItemText primary="Minimum coins" />
-                    </ListItem>
-                    <ListItem button={true} onClick={this.showSubstring}>
-                        <ListItemText primary="Common substring" />
-                    </ListItem>
-                </div>
-            </List>
-        </Drawer>
+            <Drawer variant="permanent" classes={{ paper: classes.drawerPaper }}>
+                <div className={classes.toolbar} />
+                <List>
+                    <div>
+                        {/* Coins */}
+                        <ListItem button={true} onClick={this.showCoins}>
+                            <ListItemText primary={strings.menu.coins} />
+                        </ListItem>
+                        {/* Substring */}
+                        <ListItem button={true} onClick={this.showSubstring}>
+                            <ListItemText primary={strings.menu.substring} />
+                        </ListItem>
+                    </div>
+                </List>
+            </Drawer>
         );
     }
 

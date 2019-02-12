@@ -3,14 +3,14 @@ import '../../../styles/prism.css';
 import * as Prism from 'prismjs';
 import * as React from 'react';
 
-import { AccessTime, Code, Storage } from '@material-ui/icons';
-import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Paper, Typography } from '@material-ui/core';
+import { Paper, Typography } from '@material-ui/core';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 import { substrDynCode, substrEnhCode, substrRecCode } from './SubstringCodes';
 
+import Complexity from 'src/components/hoc/presentational/fields/Complexity';
 import FloatingButton from 'src/components/hoc/presentational/buttons/FloatingButton';
 import { IProps } from '../../Welcome';
-import myTheme from '../../../styles/index';
+import SourceCode from 'src/components/hoc/presentational/fields/SourceCode';
 
 type AllProps =
     IProps &
@@ -34,38 +34,12 @@ const styles = (theme: Theme) => createStyles({
     paper: {
         padding: theme.spacing.unit * 2,
     },
-    heading: {
-        fontSize: theme.typography.pxToRem(18),
-        fontWeight: theme.typography.fontWeightRegular,
-    },
-    expPanel: {
-        background: myTheme.palette.primary.main,
-    },
-    whiteText: {
-        color: 'white'
-    },
-    complexityParent: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    complexity: {
-        margin: theme.spacing.unit * 3,
-        border: '1px solid black',
-        padding: '8px 4px',
-        marginRight: '20px',
-        display: 'inline-block',
-        '& svg': {
-            display: 'inline-block',
-            verticalAlign: 'middle'
-        }
-    },
 });
 
 class Substring extends React.Component<AllProps> {
     public constructor(props: AllProps) {
         super(props)
-    } 
+    }
 
     public componentDidMount() {
         Prism.highlightAll();
@@ -76,7 +50,7 @@ class Substring extends React.Component<AllProps> {
 
         return (
             <div>
-                <FloatingButton variant='floating' onClick={this.handleDemoOpen}/>
+                <FloatingButton variant='floating' onClick={this.handleDemoOpen} />
                 {/* Title */}
                 <Typography variant={'h4'} align={'center'} className={classes.bottomMargin}>
                     Longest common substring
@@ -98,18 +72,28 @@ class Substring extends React.Component<AllProps> {
                     </Typography>
                     <div>
                         We have to consider all substrings of first string and check if this is a substring in second string.
-                    Consider <b>m</b> is length of the first string and <b>n</b> length of the second string, there will be <b>O(m^2)</b> substrings in first string.
-                    We can check for matching substring in <b>O(n)</b> time.
+                        Consider <b>m</b> is length of the first string and <b>n</b> length of the second string, there will be <b>O(m^2)</b> substrings in first string.
+                        We can check for matching substring in <b>O(n)</b> time.
                     </div>
-                    <div className={classes.complexity}>
-                        <AccessTime />
-                        <span>Time complexity is <b>O(m^2 * n)</b></span>
-                    </div>
+                    <Complexity time={'O(m^2 * n)'} />
                     <hr />
                     <div className={classes.container}>
                         <div className={classes.flexChild}>
                             <Typography variant={'h6'} align={'center'} className={classes.bottomMargin}>
-                                Dynamic programing
+                                Using recursion
+                            </Typography>
+
+                            <div>
+                                This solution seems pretty simple. Space complexity is only on lengths of strings.
+                                But if the strings has no common substring, time complexity can grow nearly to <b>2^n</b> considering <b>m == n</b>,
+                                so this method is very inefficient.
+                            </div>
+                            <Complexity time={'O(n^2'} space={'O(m + n)'} />
+                            <SourceCode code={substrRecCode} />
+                        </div>
+                        <div className={classes.flexChild}>
+                            <Typography variant={'h6'} align={'center'} className={classes.bottomMargin}>
+                                Dynamic programming
                             </Typography>
 
                             <div>
@@ -118,28 +102,10 @@ class Substring extends React.Component<AllProps> {
                                 Value in column is compared to value in row. Default value is 0, but when a match is detected, value from
                                 previous column and row is incremented (suffix is incremented). We need to fill <b>M x N</b> table.
                             </div>
-                            <div className={classes.complexityParent}>
-                                <div className={classes.complexity}>
-                                    <AccessTime />
-                                    <span>Time complexity is <b>O(m * n)</b></span>
-                                    <br />
-                                    <Storage />
-                                    <span>Space complexity is <b>O(m * n)</b></span>
-                                </div>
-                            </div>
-                            <FloatingButton variant='small' onClick={this.handleDemoOpen}/>
-                            <ExpansionPanel className={[classes.expPanel, classes.bottomMargin].join(' ')}>
-                                <ExpansionPanelSummary expandIcon={<Code className={classes.whiteText} />}>
-                                    <Typography className={[classes.heading, classes.whiteText].join(' ')}>Source code</Typography>
-                                </ExpansionPanelSummary>
-                                <ExpansionPanelDetails>
-                                    <pre>
-                                        <code className="language-clike">
-                                            {substrDynCode}
-                                        </code>
-                                    </pre>
-                                </ExpansionPanelDetails>
-                            </ExpansionPanel>
+                            <Complexity time={'O(m * n)'} space={'O(m * n)'} />
+
+                            <FloatingButton variant='small' onClick={this.handleDemoOpen} />
+                            <SourceCode code={substrDynCode} />
                             <Typography variant={'subtitle1'} className={classes.bottomMargin}>
                                 Enhancement
                             </Typography>
@@ -155,64 +121,10 @@ class Substring extends React.Component<AllProps> {
                                 Initially row 0 is used as current row for the case when length of string x is zero. At the end of each iteration,
                                 current row is made previous row and previous row is made new current row.
                             </div>
-                            <div className={classes.complexityParent}>
-                                <div className={classes.complexity}>
-                                    <AccessTime />
-                                    <span>Time complexity is <b>O(m * n)</b></span>
-                                    <br />
-                                    <Storage />
-                                    <span>Space complexity is <b>O(2 * n)</b></span>
-                                </div>
-                            </div>
-                            <ExpansionPanel className={classes.expPanel}>
-                                <ExpansionPanelSummary expandIcon={<Code className={classes.whiteText} />}>
-                                    <Typography className={[classes.heading, classes.whiteText].join(' ')}>Source code</Typography>
-                                </ExpansionPanelSummary>
-                                <ExpansionPanelDetails>
-                                    <Typography className={classes.leftMargin}>
-                                        <pre>
-                                            <code className="language-clike">
-                                                {substrEnhCode}
-                                            </code>
-                                        </pre>
-                                    </Typography>
-                                </ExpansionPanelDetails>
-                            </ExpansionPanel>
+                            <Complexity time={'O(m * n)'} space={'O(2 * n)'} />
+                            <SourceCode code={substrEnhCode} />
                         </div>
-                        <div className={classes.flexChild}>
-                            <Typography variant={'h6'} align={'center'} className={classes.bottomMargin}>
-                                Using recursion
-                            </Typography>
 
-                            <div>
-                                This solution seems pretty simple. Space complexity is only on lengths of strings.
-                                But if the strings has no common substring, time complexity can grow nearly to <b>2^n</b> considering <b>m == n</b>,
-                                so this method is very inefficient.
-                            </div>
-                            <div className={classes.complexityParent}>
-                                <div className={classes.complexity}>
-                                    <AccessTime />
-                                    <span>Time complexity is <b>O(n^2)</b></span>
-                                    <br />
-                                    <Storage />
-                                    <span>Space complexity is <b>O(m + n)</b></span>
-                                </div>
-                            </div>
-                            <ExpansionPanel className={classes.expPanel}>
-                                <ExpansionPanelSummary expandIcon={<Code className={classes.whiteText} />}>
-                                    <Typography className={[classes.heading, classes.whiteText].join(' ')}>Source code</Typography>
-                                </ExpansionPanelSummary>
-                                <ExpansionPanelDetails>
-                                    <Typography className={classes.leftMargin}>
-                                        <pre>
-                                            <code className="language-clike">
-                                                {substrRecCode}
-                                            </code>
-                                        </pre>
-                                    </Typography>
-                                </ExpansionPanelDetails>
-                            </ExpansionPanel>
-                        </div>
                     </div>
                 </Paper>
             </div>

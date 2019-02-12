@@ -12,7 +12,7 @@ type AllProps =
     IProps &
     WithStyles<typeof styles>;
 
-const styles = (theme: Theme) => createStyles ({
+const styles = (theme: Theme) => createStyles({
     root: {
         flexGrow: 1,
         zIndex: 1,
@@ -30,8 +30,8 @@ const styles = (theme: Theme) => createStyles ({
 
 
 class MainPage extends React.Component<AllProps> {
-    public static defaultProps: IProps = {
-        history: {}
+    public constructor(props: AllProps) {
+        super(props);
     }
 
     public render() {
@@ -39,11 +39,13 @@ class MainPage extends React.Component<AllProps> {
 
         return (
             <div className={classes.root}>
-                <Menu history={this.props.history}/>
-                    <main className={classes.content}>
-                        <div className={classes.toolbar}/>
-                        <WindowContainer />
-                    </main>
+                {/* Left menu */}
+                <Menu history={this.props.history} />
+                {/* Right window */}
+                <main className={classes.content}>
+                    <div className={classes.toolbar} />
+                    <WindowContainer />
+                </main>
             </div>
         );
     }

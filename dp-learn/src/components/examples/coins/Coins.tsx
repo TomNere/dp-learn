@@ -2,8 +2,11 @@ import * as React from 'react';
 
 import { Button, Grid, Paper, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from '@material-ui/core';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
+import { coinsDynCode, coinsRecCode } from './CoinsCodes';
 
 import CoinsTree from './coinsTree.png';
+import Complexity from 'src/components/hoc/presentational/fields/Complexity';
+import SourceCode from 'src/components/hoc/presentational/fields/SourceCode';
 import myTheme from '../../../styles/index';
 
 interface ICoinsState {
@@ -22,6 +25,11 @@ const styles = (theme: Theme) => createStyles({
     container: {
         display: 'flex',
         flexWrap: 'wrap',
+    },
+    center: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        display: 'block'
     },
     textField: {
         marginLeft: theme.spacing.unit,
@@ -105,113 +113,39 @@ class Coins extends React.Component<AllProps, ICoinsState> {
                     <div className={classes.container}>
                         {/* Recursive solution */}
                         <div className={classes.flexChild}>
-                            <Typography variant={'h6'} align={'center'} className={classes.bottomMargin}>
-                                Using recursion
+                            <Typography variant={'h5'} align={'center'} className={classes.bottomMargin}>
+                                Recursive solution
                             </Typography>
-                            <div>
-                                Program will loop through coin values. For each coin which value is less or equal given value <b>V</b>,
-                                we will call the same method recursively with value <b>V</b> substracted by current coin's value. According
-                                to this solution, we can get time complexity. Space complexity is pretty obvious - <b>n</b> is the number of 
-                                coin types and <b>+1</b> to store given value <b>V</b>.
+                            <div className={classes.bottomMargin}>
+                                Program will loop through <b>N</b> coin values. For each coin which value is less or equal given value <b>V</b>,
+                                we will call the same method recursively with value <b>V</b> substracted by current coin's value.
+                                So, time complexity of this solution is exponential.
+                                Space complexity is pretty obvious - <b>N</b> is the number of coin types and <b>+1</b> to store given value <b>V</b>.
+                            </div>
+                            <Complexity time={'O(N^V)'} space={'O(N + 1)'} />
+                            {/* Recursion Tree */}
+                            <Typography variant={'h6'} className={classes.bottomMargin}>
+                                Recursion tree:
+                            </Typography>
+                            <div className={classes.bottomMargin}>
+                                <img src={CoinsTree} alt="MinimumCoinsRecTree" />
+                            </div>
+                            <SourceCode code={coinsRecCode} />
+                        </div>
 
-                                <img src={CoinsTree} alt="MinimumCoinsRecTree"/>
-                            </div>
-                            </div>
-                            {/* <div className={classes.complexityParent}>
-                                <div className={classes.complexity}>
-                                    <AccessTime />
-                                    <span>Time complexity is <b>O(n^2)</b></span>
-                                    <br />
-                                    <Storage />
-                                    <span>Space complexity is <b>O(m + n)</b></span>
-                                </div>
-                            </div>
-                            <ExpansionPanel className={classes.expPanel}>
-                                <ExpansionPanelSummary expandIcon={<Code className={classes.whiteText} />}>
-                                    <Typography className={[classes.heading, classes.whiteText].join(' ')}>Source code</Typography>
-                                </ExpansionPanelSummary>
-                                <ExpansionPanelDetails>
-                                    <Typography className={classes.leftMargin}>
-                                        <pre>
-                                            <code className="language-clike">
-                                                {substrRecCode}
-                                            </code>
-                                        </pre>
-                                    </Typography>
-                                </ExpansionPanelDetails>
-                            </ExpansionPanel>
-                        </div>
-                    </div>
-                    <div className={classes.flexChild}>
-                        <Typography variant={'h6'} align={'center'} className={classes.bottomMargin}>
-                            Dynamic programing
+                        {/* Dynamic programming */}
+                        <div className={classes.flexChild}>
+                            <Typography variant={'h5'} align={'center'} className={classes.bottomMargin}>
+                                Dynamic programming
                             </Typography>
-                        <div>
-                            Using this method we need to find the length of longest common <b>suffix</b> for substrings of both strings.
-                                These length's are stored in a table. At the end cell with the biggest value is our result. <br />
-                            Value in column is compared to value in row. Default value is 0, but when a match is detected, value from
-                                previous column and row is incremented (suffix is incremented). We need to fill <b>M x N</b> table.
+                            <div className={classes.bottomMargin}>
+                                As can you see in recursion tree, some subproblems are recomputed again and again.
+                                Time complexity can be significantly minimized by storing values in a table. So, let's try
+                                solve this problem by dynamic programming!
+                                In this case, we will need simple one-dimensional array.
                             </div>
-                        <div className={classes.complexityParent}>
-                            <div className={classes.complexity}>
-                                <AccessTime />
-                                <span>Time complexity is <b>O(m * n)</b></span>
-                                <br />
-                                <Storage />
-                                <span>Space complexity is <b>O(m * n)</b></span>
-                            </div>
+                            <SourceCode code={coinsDynCode} />
                         </div>
-                        <FloatingButton variant='small' onClick={this.handleDemoOpen} />
-                        <ExpansionPanel className={[classes.expPanel, classes.bottomMargin].join(' ')}>
-                            <ExpansionPanelSummary expandIcon={<Code className={classes.whiteText} />}>
-                                <Typography className={[classes.heading, classes.whiteText].join(' ')}>Source code</Typography>
-                            </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
-                                <pre>
-                                    <code className="language-clike">
-                                        {substrDynCode}
-                                    </code>
-                                </pre>
-                            </ExpansionPanelDetails>
-                        </ExpansionPanel>
-                        <Typography variant={'subtitle1'} className={classes.bottomMargin}>
-                            Enhancement
-                            </Typography>
-                        <div>
-                            The space used by this solution can be significantly reduced.
-                                Suppose we are at position <b>table[i][j]</b>. <br />
-                            Now if <b>x[i-1] == x[j-1]</b>, then we add the value of <b>table[i-1][j-1]</b>
-                            to our result. That is we add value from previous row and value for all other rows below the previous row are never used.
-                            So, at a time we are using only two consecutive rows.
-                            This observation can be used to reduce the space required to find length of longest common substring.
-                                Instead of creating a matrix of size <b>m*n</b>, we create a matrix of size <b>2*n</b>.
-                    A variable currRow is used to represent that either row 0 or row 1 of this matrix is currently used to find length.
-                    Initially row 0 is used as current row for the case when length of string x is zero. At the end of each iteration,
-                    current row is made previous row and previous row is made new current row.
-                            </div>
-                        <div className={classes.complexityParent}>
-                            <div className={classes.complexity}>
-                                <AccessTime />
-                                <span>Time complexity is <b>O(m * n)</b></span>
-                                <br />
-                                <Storage />
-                                <span>Space complexity is <b>O(2 * n)</b></span>
-                            </div>
-                        </div>
-                        <ExpansionPanel className={classes.expPanel}>
-                            <ExpansionPanelSummary expandIcon={<Code className={classes.whiteText} />}>
-                                <Typography className={[classes.heading, classes.whiteText].join(' ')}>Source code</Typography>
-                            </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
-                                <Typography className={classes.leftMargin}>
-                                    <pre>
-                                        <code className="language-clike">
-                                            {substrEnhCode}
-                                        </code>
-                                    </pre>
-                                </Typography>
-                            </ExpansionPanelDetails>
-                        </ExpansionPanel> */}
                     </div>
                 </Paper>
                 <Grid>

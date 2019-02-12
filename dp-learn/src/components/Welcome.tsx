@@ -1,22 +1,25 @@
 import * as React from 'react';
 
-import { Button, Grid, Grow } from '@material-ui/core';
+import { Button, Grid, Grow, createStyles } from '@material-ui/core';
 import { Theme, WithStyles, withStyles } from '@material-ui/core/styles';
 
 import logo from '../resources/dp_transparent.png';
 import myTheme from '../styles/index';
+import slovak from '../resources/slovakFlag.png';
+import { strings } from 'src/translations/languages';
+import uk from '../resources/ukFlag.png';
 
-declare module '*.png';
-
-export interface IProps {
-    history: any,
-}
+// import { strings } from 'src/translations/languages';
 
 type AllProps =
     IProps &
     WithStyles<typeof styles>;
 
-const styles = (theme: Theme) => ({
+export interface IProps {
+    history: any,
+}
+
+const styles = (theme: Theme) => createStyles({
     root: {
         flexGrow: 1,
         height: '100vh',
@@ -24,7 +27,7 @@ const styles = (theme: Theme) => ({
         display: 'flex',
     },
     grid: {
-        marginTop: 100,
+        margin: 100,
     },
     brief: {
         fontSize: 24,
@@ -37,11 +40,21 @@ const styles = (theme: Theme) => ({
         borderColor: 'white',
         borderWidth: 2
     },
+    flex: {
+        display: 'flex',
+        flexDirection: 'row',
+        flex: 1,
+        margin: 'auto'
+    },
+    langButton: {
+        height: 80
+    }
 });
 
 class Welcome extends React.Component<AllProps> {
-    public static defaultProps: IProps = {
-        history: {}
+    public constructor(props: AllProps) {
+        super(props);
+        this.onStartClicked = this.onStartClicked.bind(this);
     }
 
     public render() {
@@ -50,30 +63,28 @@ class Welcome extends React.Component<AllProps> {
         return (
             <div>
                 <div className={classes.root}>
-                    <Grid container={true} direction='column' alignItems='center'>
+                    <Grid container={true} direction='column' alignItems='center' className={classes.grid}>
                         <Grow in={true} timeout={1500}>
-                            <Grid className={classes.grid}>
+                            <Grid >
                                 <img src={logo} height='350' width='350' />
                             </Grid>
                         </Grow>
-                        <Grid className={classes.brief}>
-                            {name}
-                        </Grid>
-                        <Grid className={classes.brief}>
-                            {name}
-                        </Grid>
-                        <Grid>
-                            <Button variant='outlined' className={classes.button} onClick={this.redirectMe}>
-                                Let's start
+                        <div className={classes.flex}>
+                            <Button onClick={this.onStartClicked('sk')} className={classes.langButton}>
+                                <img src={slovak} height='80' width='80' />
                             </Button>
-                        </Grid>
+                            <Button onClick={this.onStartClicked('en')} className={classes.langButton}>
+                                <img src={uk} height='80' width='80' />
+                            </Button>
+                        </div>
                     </Grid>
                 </div>
             </div>
         );
     }
 
-    private redirectMe = () => {
+    private onStartClicked = (language: string) => (e: any) => {
+        strings.setLanguage(language);
         this.props.history.push("/mainpage/coins");
     }
 }
