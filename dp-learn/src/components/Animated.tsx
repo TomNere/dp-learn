@@ -7,18 +7,18 @@ export const AnimatedDiv = posed.div({
         x: 0
     },
     match: {
-        scale: 1.2,
+        scale: 1.1,
         transition: {
           type: 'spring',
-          stiffness: 700,
+          stiffness: 500,
           damping: 0,
         }
     },
     noMatch: {
-        x: -5,
+        x: -3,
         transition: {
             type: 'spring',
-            stiffness: 1000,
+            stiffness: 500,
             damping: 0,
         }
     }

@@ -9,13 +9,11 @@ import slovak from '../resources/slovakFlag.png';
 import { strings } from 'src/translations/languages';
 import uk from '../resources/ukFlag.png';
 
-// import { strings } from 'src/translations/languages';
-
 type AllProps =
-    IProps &
+    IHistoryProps &
     WithStyles<typeof styles>;
 
-export interface IProps {
+export interface IHistoryProps {
     history: any,
 }
 

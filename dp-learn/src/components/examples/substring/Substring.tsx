@@ -9,11 +9,11 @@ import { substrDynCode, substrEnhCode, substrRecCode } from './SubstringCodes';
 
 import Complexity from 'src/components/hoc/presentational/fields/Complexity';
 import FloatingButton from 'src/components/hoc/presentational/buttons/FloatingButton';
-import { IProps } from '../../Welcome';
+import { IHistoryProps } from '../../Welcome';
 import SourceCode from 'src/components/hoc/presentational/fields/SourceCode';
 
 type AllProps =
-    IProps &
+    IHistoryProps &
     WithStyles<typeof styles>;
 
 const styles = (theme: Theme) => createStyles({

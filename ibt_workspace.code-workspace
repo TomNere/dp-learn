@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "dp-learn"
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"backend": true,
+			"**/node_modules/": true,
+		},
+		"files.eol": "\r\n",
+		"typescript.tsdk": "node_modules\\typescript\\lib",
+	},
+}

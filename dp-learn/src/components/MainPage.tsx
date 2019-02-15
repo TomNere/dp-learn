@@ -2,14 +2,14 @@ import * as React from 'react';
 
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
-import { IProps } from './Welcome';
+import { IHistoryProps } from './Welcome';
 import Menu from './Menu';
 import WindowContainer from './WindowContainer';
 
 // import Substring from './examples/Substring';
 
 type AllProps =
-    IProps &
+    IHistoryProps &
     WithStyles<typeof styles>;
 
 const styles = (theme: Theme) => createStyles({

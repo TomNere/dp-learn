@@ -3,13 +3,15 @@ import * as React from 'react';
 import { Route, Switch, withRouter } from "react-router-dom";
 
 import Coins from './examples/coins/Coins';
+import CoinsDemo from './examples/coins/CoinsDemo';
 import Substring from './examples/substring/Substring';
 import SubstringDemo from './examples/substring/SubstringDemo';
 
 function WindowContainer(props: any) {
     return (
         <Switch location={props.location}>
-            <Route path="/mainpage/coins" component={Coins} />
+            <Route exact={true} path="/mainpage/coins" component={Coins} />
+            <Route exact={true} path="/mainpage/coins/demo" component={CoinsDemo} />
             <Route exact={true} path="/mainpage/substring" component={Substring} />
             <Route exact={true} path="/mainpage/substring/demo" component={SubstringDemo} />
         </Switch>
