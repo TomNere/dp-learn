@@ -9,7 +9,8 @@ export const english = {
         finish: 'Finish',
         step: 'Next step',
         table: 'Table',
-        result: 'Result'
+        result: 'Result',
+        drawCharts: 'Draw charts'
     },
     components: {
         srcCode: 'Source code',
@@ -17,7 +18,10 @@ export const english = {
         spaceComplex: 'Space complexity: ',
         tryDemo: 'Try out demo!',
         speed: 'Speed',
-        step: 'Step by step'
+        step: 'Step by step',
+        theory: 'Theory',
+        demo: 'Demo',
+        charts: 'Charts'
     },
     menu: {
         coins: 'Minimum coins',

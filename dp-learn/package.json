@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@devexpress/dx-react-chart": "^1.10.1",
+    "@devexpress/dx-react-chart-material-ui": "^1.10.1",
+    "@devexpress/dx-react-core": "^1.10.1",
     "@material-ui/core": "^3.9.1",
     "@material-ui/icons": "^3.0.2",
     "@types/jss": "^9.5.7",

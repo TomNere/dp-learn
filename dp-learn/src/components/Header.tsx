@@ -25,10 +25,10 @@ const styles = (theme: Theme) => createStyles({
     root: {
         flexGrow: 1,
         zIndex: 1,
-        height: '100vh',
+        height: 72,
         width: '100vh',
-        overflow: 'hidden',
-        position: 'relative',
+        // overflow: 'hidden',
+        // position: 'relative',
         display: 'flex',
     },
     appBar: {

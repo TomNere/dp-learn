@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Avatar, Button, Grid, TableCell, TableRow, TextField, Typography } from '@material-ui/core';
+import { Avatar, Button, Grid, TableCell, TableRow, TextField } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 
 import { AnimatedDiv } from 'src/components/Animated';
@@ -8,6 +8,7 @@ import DemoTable from 'src/components/hoc/presentational/fields/DemoTable';
 import SpeedSelector from 'src/components/hoc/presentational/buttons/SpeedSelector';
 import StepFinishButton from 'src/components/hoc/presentational/buttons/StepFinishButton';
 import { demoStyles } from 'src/styles/demoStyles';
+import { getCoins } from './CoinsConsts';
 import { strings } from 'src/translations/languages';
 
 interface ICoinsDemoState {
@@ -76,7 +77,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             selectedCol: 0,
             highlitedCells: [],
             skip: false,
-            pose: "empty"
+            pose: "empty",
         }
     }
 
@@ -85,9 +86,6 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
         return (
             <div>
-                <Typography variant={'h4'} align={'center'} className={classes.bottomMargin}>
-                    {strings.coins.demo.title}
-                </Typography>
                 <div className={classes.bottomMargin}>
                     {strings.coins.demo.brief}
                 </div>
@@ -179,7 +177,11 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         this.backtrackHelp = [];
         // this.tableCol = this.tableRow = 0;
 
-        this.getCoins();
+        this.coins = getCoins(this.state.givenCoins);
+        if (this.coins.length === 0) {
+            this.setState({result: 'Error'});
+            return;
+        }
 
         // Base case (If given value is 0) 
         this.table[0] = 0;
@@ -215,30 +217,30 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             return;
         }
 
-        this.setState({ selectedCol: this.innerCounter + 1});
+        this.setState({ selectedCol: this.innerCounter + 1 });
 
         if (this.coins[this.innerCounter] <= this.outerCounter) {
             const subRes = this.table[this.outerCounter - this.coins[this.innerCounter]];
 
             this.setState({
                 charX: this.table[this.outerCounter] === Number.MAX_VALUE ? '∞' : this.table[this.outerCounter].toString(),
-                charY: subRes === Number.MAX_VALUE ? '∞' : `${subRes} + 1` ,
+                charY: subRes === Number.MAX_VALUE ? '∞' : `${subRes} + 1`,
                 highlitedCells: []
             });
 
             if ((subRes !== Number.MAX_VALUE) && (subRes + 1 < this.table[this.outerCounter])) {
                 this.table[this.outerCounter] = subRes + 1;
                 this.backtrackHelp[this.outerCounter] = this.innerCounter;
-                this.setState({ pose: 'match'})
+                this.setState({ pose: 'match' })
                 // Flash
                 this.incrementOn();
             }
             else {
-                this.setState({ pose: 'noMatch'});
+                this.setState({ pose: 'noMatch' });
             }
         }
         else {
-            this.setState({ skip: true, pose: 'empty'});
+            this.setState({ skip: true, pose: 'empty' });
         }
 
         this.setState({ table: this.table });
@@ -299,7 +301,6 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         //     cells.push(`row ${this.tableRow - i},column ${this.tableCol - i}`);
         //     finalString += this.state.stringX[this.tableRow - i - 1];
         // }
-        console.log('used coins: ', this.backtrackHelp);
         this.setState({
             inProgress: false,
             result: this.table[this.state.givenValue].toString(), // `Longest common substring: "${finalString}", length is ${this.table[this.tableRow][this.tableCol]}.`,
@@ -308,20 +309,6 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             charY: "",
             selectedCol: 0,
         });
-    }
-
-    // Convert coins in string to number array
-    private getCoins = () => {
-        this.coins = [];
-        for (const coin of this.state.givenCoins.split(",")) {
-            if (!Number.isNaN(+coin)) {
-                this.coins.push(+coin);
-            }
-            else {
-                this.setState({ result: "Error" });
-                return;
-            }
-        }
     }
 
     private transitionHelper = () => {
@@ -383,7 +370,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
                 </TableCell>
             );
         }
-        
+
         // Push row to the table
         body.push(
             <TableRow key={`tableRow1`}>

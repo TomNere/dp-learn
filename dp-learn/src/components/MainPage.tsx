@@ -22,10 +22,11 @@ const styles = (theme: Theme) => createStyles({
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing.unit * 3,
         // minWidth: 0, // So the Typography noWrap works
     },
-    toolbar: theme.mixins.toolbar,
+    minHeight: {
+        minHeight: 72
+    }
 });
 
 
@@ -43,7 +44,7 @@ class MainPage extends React.Component<AllProps> {
                 <Menu history={this.props.history} />
                 {/* Right window */}
                 <main className={classes.content}>
-                    <div className={classes.toolbar} />
+                    <div className={[classes.minHeight].join(' ')} />
                     <WindowContainer />
                 </main>
             </div>

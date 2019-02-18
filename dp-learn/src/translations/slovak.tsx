@@ -9,7 +9,8 @@ export const slovak = {
         finish: 'Koniec',
         step: 'Ďalší krok',
         table: 'Tabuľka',
-        result: 'Výsledok'
+        result: 'Výsledok',
+        drawCharts: 'Vykresliť grafy'
     },
     components: {
         srcCode: 'Zdrojový kód',
@@ -17,7 +18,10 @@ export const slovak = {
         spaceComplex: 'Priestorová zložitosť: ',
         tryDemo: 'Vyskušaj demo!',
         speed: 'Rýchlosť',
-        step: 'Krokovanie'
+        step: 'Krokovanie',
+        theory: 'Teória',
+        demo: 'Demo',
+        charts: 'Grafy'
     },
     menu: {
         coins: 'Minimálny počet mincí',

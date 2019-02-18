@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Drawer, List, Theme, WithStyles, createStyles, withStyles } from '@material-ui/core';
 import { ListItem, ListItemText } from '@material-ui/core';
 
+import myTheme from '../styles/index';
 import { strings } from 'src/translations/languages';
 
 type AllProps =
@@ -33,6 +34,15 @@ const styles = (theme: Theme) => createStyles({
         minWidth: 0, // So the Typography noWrap works
     },
     toolbar: theme.mixins.toolbar,
+    selectedItem: {
+        backgroundColor: myTheme.palette.primary.main,
+        "&:hover": {
+            backgroundColor: myTheme.palette.primary.dark,
+        }
+    },
+    selectedText: {
+        color: 'white',
+    },
 });
 
 class Menu extends React.Component<AllProps> {
@@ -48,17 +58,27 @@ class Menu extends React.Component<AllProps> {
                 <List>
                     <div>
                         {/* Coins */}
-                        <ListItem button={true} onClick={this.showCoins}>
-                            <ListItemText primary={strings.menu.coins} />
+                        <ListItem className={this.isSelected('/mainpage/coins', true)} button={true} onClick={this.showCoins}>
+                            <ListItemText classes={{ primary: this.isSelected('/mainpage/coins', false) }} primary={strings.menu.coins} />
                         </ListItem>
                         {/* Substring */}
-                        <ListItem button={true} onClick={this.showSubstring}>
-                            <ListItemText primary={strings.menu.substring} />
+                        <ListItem className={this.isSelected('/mainpage/substring', true)} button={true} onClick={this.showSubstring}>
+                            <ListItemText classes={{ primary: this.isSelected('/mainpage/substring', false) }} primary={strings.menu.substring} />
                         </ListItem>
                     </div>
                 </List>
             </Drawer>
         );
+    }
+
+    private isSelected = (which: string, isItem: boolean) => {
+        const { pathname } = this.props.history.location;
+        const { classes } = this.props;
+
+        if (pathname === which) {
+            return isItem ? classes.selectedItem : classes.selectedText
+        }
+        return '';
     }
 
     private showCoins = () => {
