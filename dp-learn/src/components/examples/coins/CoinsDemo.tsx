@@ -22,7 +22,8 @@ interface ICoinsDemoState {
     speed: number
     table: number[]
     selectedCol: number
-    highlitedCells: string[]
+    highlitedCell: number | undefined
+    tableHeading: string
     skip: boolean
     pose: string
 }
@@ -75,9 +76,10 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             result: "",
             table: [],
             selectedCol: 0,
-            highlitedCells: [],
+            highlitedCell: undefined,
             skip: false,
             pose: "empty",
+            tableHeading: ""
         }
     }
 
@@ -137,7 +139,6 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
                                 {this.state.charY}
                             </Avatar>
                         </AnimatedDiv>
-                        {this.state.skip && <span>Skipping...</span>}
                     </div>
                 }
 
@@ -149,7 +150,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
     private handleValue = (e: any) => {
         if (!Number.isNaN(+e.target.value)) {
-            this.setState({ givenValue: +e.target.value });
+            this.setState({ givenValue: +e.target.value, tableVisible: false });
         }
     }
 
@@ -160,7 +161,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             }
         }
 
-        this.setState({ givenCoins: e.target.value });
+        this.setState({ givenCoins: e.target.value, tableVisible: false });
     }
 
     private speedChange = (e: any) => {
@@ -179,12 +180,13 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
         this.coins = getCoins(this.state.givenCoins);
         if (this.coins.length === 0) {
-            this.setState({result: 'Error'});
+            this.setState({ result: 'Error' });
             return;
         }
 
         // Base case (If given value is 0) 
         this.table[0] = 0;
+        this.backtrackHelp[0] = 0;
 
         // Initialize all table
         // values as Infinite
@@ -217,7 +219,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             return;
         }
 
-        this.setState({ selectedCol: this.innerCounter + 1 });
+        this.setState({ selectedCol: this.innerCounter + 1, highlitedCell: undefined });
 
         if (this.coins[this.innerCounter] <= this.outerCounter) {
             const subRes = this.table[this.outerCounter - this.coins[this.innerCounter]];
@@ -225,22 +227,24 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             this.setState({
                 charX: this.table[this.outerCounter] === Number.MAX_VALUE ? '∞' : this.table[this.outerCounter].toString(),
                 charY: subRes === Number.MAX_VALUE ? '∞' : `${subRes} + 1`,
-                highlitedCells: []
+                highlitedCell: this.outerCounter - this.coins[this.innerCounter],
+                tableHeading: `Array[${this.outerCounter} - Coins[${this.innerCounter}]]`
             });
 
             if ((subRes !== Number.MAX_VALUE) && (subRes + 1 < this.table[this.outerCounter])) {
                 this.table[this.outerCounter] = subRes + 1;
                 this.backtrackHelp[this.outerCounter] = this.innerCounter;
-                this.setState({ pose: 'match' })
+                this.setState({ pose: 'match' });
+
                 // Flash
-                this.incrementOn();
+                // this.incrementOn();
             }
             else {
                 this.setState({ pose: 'noMatch' });
             }
         }
         else {
-            this.setState({ skip: true, pose: 'empty' });
+            this.setState({ pose: 'empty' });
         }
 
         this.setState({ table: this.table });
@@ -275,36 +279,26 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         this.setState({ speed: 1 });
     };
 
-    private incrementOn = () => {
+    // private incrementOn = () => {
+    //     this.setState({
+    //         // highlitedCells: cells
+    //     });
 
-        const cells = [`row ${this.outerCounter - 1},column ${this.innerCounter - 1}`];
+    //     if (this.state.speed !== 0) {
+    //         setTimeout(this.incrementOff, (this.delayHelper / 2) / this.state.speed);
+    //     }
+    // }
 
-        this.setState({
-            highlitedCells: cells
-        });
-
-        if (this.state.speed !== 0) {
-            setTimeout(this.incrementOff, (this.delayHelper / 2) / this.state.speed);
-        }
-    }
-
-    private incrementOff = () => {
-        this.setState({ highlitedCells: [] });
-    }
+    // private incrementOff = () => {
+    //     // this.setState({ highlitedCells: [] });
+    // }
 
     private setFinalState = () => {
-        // TODO
-        const cells: string[] = [];
-        // let finalString = "";
 
-        // for (let i = this.table[this.tableRow][this.tableCol] - 1; i >= 0; i--) {
-        //     cells.push(`row ${this.tableRow - i},column ${this.tableCol - i}`);
-        //     finalString += this.state.stringX[this.tableRow - i - 1];
-        // }
         this.setState({
             inProgress: false,
             result: this.table[this.state.givenValue].toString(), // `Longest common substring: "${finalString}", length is ${this.table[this.tableRow][this.tableCol]}.`,
-            highlitedCells: cells,
+            // highlitedCells: cells,
             charX: "",
             charY: "",
             selectedCol: 0,
@@ -324,18 +318,18 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
         const heading = [];
 
-        heading.push(<TableCell key='tableHeading' className={[classes.tableHeading, classes.caption].join(' ')}>Table</TableCell>)
+        heading.push(<TableCell key='tableHeading' className={classes.tableHeading}>{this.state.tableHeading}</TableCell>)
 
-        for (let i = 1; i <= this.state.givenValue; i++) {
+        for (let i = 0; i <= this.state.givenValue; i++) {
             const classNames = [classes.columnCaption, classes.caption];
 
-            if (i === this.state.selectedCol) {
+            if (i === this.outerCounter) {
                 classNames.push(classes.highlitedCell);
             }
 
             heading.push(
                 <TableCell key={'columnName' + i.toString()} className={classNames.join(' ')}>
-                    {`Value ${i}`}
+                    {`Array[${i}]`}
                 </TableCell>);
         }
 
@@ -360,12 +354,22 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             </TableCell>
         );
 
-        for (let j = 1; j <= this.state.givenValue; j++) {
+        for (let j = 0; j <= this.state.givenValue; j++) {
             const key = `body column ${j}`;
-            const value = this.state.table[j] === Number.MAX_VALUE ? "" : this.state.table[j].toString();
+            let value = this.state.table[j] === Number.MAX_VALUE ? "∞" : this.state.table[j].toString();
+
+            classNames = [classes.tableCell];
+
+            if (this.state.highlitedCell === j) {
+                classNames.push(classes.incCell);
+
+                if (this.state.pose === 'match') {
+                    value += ' + 1';
+                }
+            }
 
             row.push(
-                <TableCell key={key} className={classes.tableCell}>
+                <TableCell key={key} className={classNames.join(' ')}>
                     {value}
                 </TableCell>
             );
@@ -380,30 +384,15 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
         row = [];
         row.push(
-            <TableCell key={'backtrackHelp name'} className={classNames.join(' ')}>
+            <TableCell key={'backtrackHelp name'} className={[classes.rowCaption, classes.caption].join(' ')}>
                 {'Backtrac helper'}
             </TableCell>
         );
 
-        for (let j = 1; j <= this.state.givenValue; j++) {
-            classNames = [classes.tableCell];
-            const key = `backtrackHelp column ${j}`;
-
-            let value = this.backtrackHelp[j].toString();
-
-            for (const highlitedKey in this.state.highlitedCells) {
-                if (this.state.highlitedCells[highlitedKey] === key) {
-                    classNames.push(classes.incCell);
-
-                    if (this.state.inProgress) {
-                        value += ' + 1';
-                    }
-                }
-            }
-
+        for (let j = 0; j <= this.state.givenValue; j++) {
             row.push(
-                <TableCell key={key} className={classNames.join(' ')}>
-                    {value}
+                <TableCell key={`backtrack${j}`} className={classes.rowCaption}>
+                    {this.backtrackHelp[j]}
                 </TableCell>
             );
         }

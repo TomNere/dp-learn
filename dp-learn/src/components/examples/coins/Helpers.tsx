@@ -1,7 +1,10 @@
-export const milliToMicro = (param: number) => {
-    return param * 1000;
+
+export type ITimeConverter = (n: number) => number;
+
+export const milliToMicro : ITimeConverter = (n: number) => {
+    return n * 1000;
 }
 
-export const milliToMilli = (param: number) => {
-    return param;
+export const milliToMilli : ITimeConverter = (n: number) => {
+    return n;
 }

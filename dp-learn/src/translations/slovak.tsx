@@ -10,12 +10,17 @@ export const slovak = {
         step: 'Ďalší krok',
         table: 'Tabuľka',
         result: 'Výsledok',
-        drawCharts: 'Vykresliť grafy'
+        drawCharts: 'Vykresliť grafy',
+        numberOfRecCalls: 'Počet rekurzívnych volaní',
+        numberOfCycles: 'Počet cyklov',
+        microSeconds: 'Microseconds',
+        nanoSeconds: 'Nanoseconds',
+        skipping: 'Preskakujem...'
     },
     components: {
         srcCode: 'Zdrojový kód',
-        timeComplex:  'Časová zložitosť:      ',
-        spaceComplex: 'Priestorová zložitosť: ',
+        timeComplex:  'Časová zložitosť     ',
+        spaceComplex: 'Priestorová zložitosť',
         tryDemo: 'Vyskušaj demo!',
         speed: 'Rýchlosť',
         step: 'Krokovanie',

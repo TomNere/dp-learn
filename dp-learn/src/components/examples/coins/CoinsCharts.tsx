@@ -2,12 +2,11 @@ import * as React from 'react';
 
 import { Button, Grid, TextField, Theme, createStyles } from '@material-ui/core';
 import Charts, { IChartData } from 'src/components/hoc/presentational/fields/Charts';
+import { ICoinsSpace, ISolutionCoins, dpCoins, dpSpace, recSpace, recursiveCoins } from './CoinsSolutions';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 import { coinsExamples, getCoins } from './CoinsConsts';
-import { coinsSolCallback, dpCoins, dpSpace, recSpace, recursiveCoins } from './CoinsSolutions';
-import { converterCallback, numberCallback } from './typesDefinitions';
-import { milliToMicro, milliToMilli } from './Helpers';
 
+import { ICallsParameter } from './typesDefinitions';
 import myTheme from './../../../styles/index';
 import { strings } from 'src/translations/languages';
 
@@ -67,7 +66,7 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
     public constructor(props: AllProps) {
         super(props)
         this.state = {
-            givenValue: 4,
+            givenValue: 10,
             givenCoins: "1,2,5",
             chartsVisible: false
         }
@@ -78,9 +77,6 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
 
         return (
             <div>
-                <div className={classes.bottomMargin}>
-                    neco TODO
-                </div>
                 <Grid className={[classes.container, classes.bottomMargin].join(' ')}>
                     <form className={classes.container} autoComplete="off">
                         <TextField
@@ -107,12 +103,16 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
                     {strings.global.drawCharts}
                 </Button>
                 {this.state.chartsVisible &&
-                    <div>
-                    <Charts title={'Using Resursion'} data={this.recStats} timeUnit='Milliseconds' />
-                    <Charts title={'Dynamic programming'} data={this.dpStats} timeUnit='Microseconds' />
+                    <div className={classes.container}>
+                        <div className={classes.flexChild}>
+                            <Charts recOrDp='rec' data={this.recStats} timeUnit='ms' />
+                        </div>
+                        <div className={classes.flexChild}>
+                            <Charts recOrDp='dp' data={this.dpStats} timeUnit='ns' />
+                        </div>
                     </div>
                 }
-                </div>
+            </div>
         );
     }
 
@@ -132,32 +132,40 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
         this.setState({ givenCoins: e.target.value });
     }
 
-    private getStats = (solution: coinsSolCallback, spaceFunc: numberCallback, converter: converterCallback) => {
+    private getStats = (solution: ISolutionCoins, spaceFunc: ICoinsSpace, repeat: number) => {
         const data: IChartData[] = [];
 
         let t0: number;
         let t1: number;
+        let calls: ICallsParameter = { value: 0 };
 
         t0 = performance.now();
-            solution(this.coins, this.coins.length, this.state.givenValue);
+        for (let j = 0; j < repeat; j++) {
+            calls = { value: 0 };
+            solution(this.coins, this.coins.length, this.state.givenValue, calls);
+        }
         t1 = performance.now();
 
-        data.push({ colName: `Coins: ${this.coins}, value: ${this.state.givenValue}`, time: converter(t1 - t0), space: spaceFunc(this.coins.length, this.state.givenValue) });
+        data.push({ colName: `Coins: ${this.coins}, value: ${this.state.givenValue}`, time: t1 - t0, space: spaceFunc(this.coins.length, this.state.givenValue), calls: calls.value });
 
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < coinsExamples.length; i++) {
+            calls = { value: 0 };
             t0 = performance.now();
-            solution(coinsExamples[i].coins, coinsExamples[i].coins.length, coinsExamples[i].value);
+            for (let j = 0; j < repeat; j++) {
+                calls = { value: 0 };
+                solution(coinsExamples[i].coins, coinsExamples[i].coins.length, coinsExamples[i].value, calls);
+            }
             t1 = performance.now();
-            data.push({ colName: `Coins: ${coinsExamples[i].coins}, value: ${coinsExamples[i].value}`, time: converter(t1 - t0), space: spaceFunc(coinsExamples[i].coins.length, this.state.givenValue) });
+            data.push({ colName: `Coins: ${coinsExamples[i].coins}, value: ${coinsExamples[i].value}`, time: t1 - t0, space: spaceFunc(coinsExamples[i].coins.length, coinsExamples[i].value), calls: calls.value });
         }
         return data;
     }
 
     private drawCharts = () => {
         this.coins = getCoins(this.state.givenCoins);
-        this.recStats = this.getStats(recursiveCoins, recSpace, milliToMilli);
-        this.dpStats = this.getStats(dpCoins, dpSpace, milliToMicro);
+        this.recStats = this.getStats(recursiveCoins, recSpace, 1000);
+        this.dpStats = this.getStats(dpCoins, dpSpace, 1000000);
         this.setState({ chartsVisible: true });
     }
 }

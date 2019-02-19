@@ -10,12 +10,18 @@ export const english = {
         step: 'Next step',
         table: 'Table',
         result: 'Result',
-        drawCharts: 'Draw charts'
+        drawCharts: 'Draw charts',
+        recCalls: 'recursive calls',
+        numberOfRecCalls: 'Number of recursive calls',
+        numberOfCycles: 'Number of cycles',
+        microSeconds: 'Microseconds',
+        nanoSeconds: 'Nanoseconds',
+        skipping: 'Skipping...'
     },
     components: {
         srcCode: 'Source code',
-        timeComplex:  'Time complexity:  ',
-        spaceComplex: 'Space complexity: ',
+        timeComplex:  'Time complexity ',
+        spaceComplex: 'Space complexity',
         tryDemo: 'Try out demo!',
         speed: 'Speed',
         step: 'Step by step',

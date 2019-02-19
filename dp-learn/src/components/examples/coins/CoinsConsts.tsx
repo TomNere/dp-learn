@@ -92,19 +92,15 @@ export interface ICoinsExample {
 
 export const coinsExamples: ICoinsExample[] = [
     {
-        coins: [1, 5, 9],
-        value: 18
-    },
-    {
-        coins: [2, 3, 5],
+        coins: [1, 2],
         value: 15
     },
     {
-        coins: [3, 5, 7, 20],
-        value: 35
+        coins: [2, 3, 4],
+        value: 20
     },
     {
-        coins: [10, 11, 22, 33, 44, 55, 66, 77],
-        value: 100
+        coins: [3, 5, 7],
+        value: 40
     },
 ];

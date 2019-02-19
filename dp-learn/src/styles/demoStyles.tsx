@@ -24,7 +24,11 @@ export const demoStyles = (theme: Theme) => createStyles({
         marginBottom: 15,
     },
     tableHeading: {
-        fontSize: theme.typography.pxToRem(30),
+        backgroundColor: 'green',
+        color: 'white',
+        borderRight: 'solid 1px gray',
+        fontSize: theme.typography.pxToRem(14),
+        padding: '4px 24px 4px 14px',
     },
     caption: {
         color: 'white',
