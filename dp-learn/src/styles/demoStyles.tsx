@@ -52,6 +52,9 @@ export const demoStyles = (theme: Theme) => createStyles({
     highlitedCell: {
         backgroundColor: myTheme.palette.secondary.main
     },
+    greenCell: {
+        backgroundColor: 'green'
+    },
     avatar: {
         margin: 10,
         height: 70,
@@ -80,5 +83,8 @@ export const demoStyles = (theme: Theme) => createStyles({
     sign: {
         fontSize: 30,
         margin: theme.spacing.unit
-    }
+    },
+    flexChild: {
+        flex: 1,
+    },
 });

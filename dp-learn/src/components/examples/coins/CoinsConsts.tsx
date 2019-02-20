@@ -41,6 +41,9 @@ int minCoins(int coins[], int arrSize, int value)
     // Array[i] will be storing the minimum number of coins
     // required for i value. So array[value] will have result
     int array[value + 1];
+
+    // To get exact result
+    int backtrackHelp[value + 1];
   
     // Base case (If given value value is 0)
     array[0] = 0;
@@ -49,6 +52,7 @@ int minCoins(int coins[], int arrSize, int value)
     for (int i = 1; i <= value; i++)
     {
         array[i] = INT_MAX; // INT_MAX is from limits.h
+        backtrackHelp[i] = -1;
     }
   
     // Compute minimum coins required for all
@@ -64,12 +68,46 @@ int minCoins(int coins[], int arrSize, int value)
                 if (subRes != INT_MAX && subRes + 1 < array[i])
                 {
                     array[i] = subRes + 1;
+                    backtrackHelp[i] = j;   
                 }
             }
         }
     }
+    if (backtrackHelp[V] == -1) {
+	    printf("No output\\n");
+    }
+    else {
+	    int start = V;
+	    printf("The coins are: \\n");
+	    while(start != 0) {
+	        int j = backtrackHelp[start];
+	        printf("%d ", coins[j]);
+	        start = start - coins[j];
+	    }
+	    printf("\\n");
+	}
     return array[value];
 }`;
+
+export const coinsSmallDynCode = `// Inner cycle part of coins DP solution
+for (int j = 0; j < arrSize; j++)
+    if (coins[j] <= i) {
+        int subRes = array[i - coins[j]];
+        if (subRes != INT_MAX && subRes + 1 < array[i]) {
+            array[i] = subRes + 1;
+            result[i] = j;
+        }
+    }`;
+
+export const coinsBacktrack = `// Print exact solution
+int start = V;
+printf("The coins are: \\n");
+while(start != 0) {
+    int j = backtrackHelp[start];
+    printf("%d ", coins[j]);
+    start = start - coins[j];
+}
+printf("\\n");`;
 
 // Convert coins in string to number array
 export const getCoins = (coinsStr: string) => {

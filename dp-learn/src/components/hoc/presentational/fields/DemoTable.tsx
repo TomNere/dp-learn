@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Table, TableBody, TableHead, TableRow } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
 import myTheme from '../../../../styles/index';
@@ -12,6 +12,8 @@ type AllProps =
 interface IStateProps {
     visible: boolean,
     result: string,
+    subRes: string,
+    cols: number,
     head: () => any,
     body: () => any
 }
@@ -34,6 +36,11 @@ const styles = (theme: Theme) => createStyles({
             paddingRight: theme.spacing.unit
         },
     },
+    subRes: {
+        color: 'white',
+        backgroundColor: myTheme.palette.primary.main,
+        padding: '4px 24px 4px 14px',
+    }
 })
 
 class DemoTable extends React.Component<AllProps> {
@@ -42,25 +49,29 @@ class DemoTable extends React.Component<AllProps> {
 
         return (
             <div>
-            {(this.props.visible) &&
-                <div>
-                    <div className={classes.centeredContent}>
-                        <span>
-                            {this.props.result}
-                        </span>
+                {(this.props.visible) &&
+                    <div>
+                        {this.props.result !== "" && <div className={classes.centeredContent}>
+                            <span>
+                                {this.props.result}
+                            </span>
+                        </div>
+                        }
+                        <Table className={classes.table}>
+                            <TableBody>
+                                {this.props.subRes !== "" &&
+                                    <TableRow >
+                                        <TableCell className={classes.subRes} colSpan={this.props.cols}>
+                                            {this.props.subRes}
+                                        </TableCell>
+                                    </TableRow>
+                                }
+                                <TableRow> {this.props.head()} </TableRow>
+                                {this.props.body()}
+                            </TableBody>
+                        </Table>
                     </div>
-                    <Table className={classes.table}>
-                        <TableHead>
-                            <TableRow>
-                                {this.props.head()}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {this.props.body()}
-                        </TableBody>
-                    </Table>
-                </div>
-            }
+                }
             </div>
         );
     }

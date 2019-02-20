@@ -1,3 +1,4 @@
+import * as Prism from 'prismjs';
 import * as React from 'react';
 
 import { Button, Grid, TextField, Theme, createStyles } from '@material-ui/core';
@@ -71,6 +72,10 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
             chartsVisible: false
         }
     }
+    
+    public componentDidMount() {
+        Prism.highlightAll();
+    }
 
     public render() {
         const { classes } = this.props;
@@ -81,7 +86,7 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
                     <form className={classes.container} autoComplete="off">
                         <TextField
                             id="givenValueTF"
-                            label={strings.coins.demo.value}
+                            label={strings.coins.value}
                             className={classes.textField}
                             value={this.state.givenValue}
                             onChange={this.handleValue}
@@ -91,7 +96,7 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
                     <form className={classes.container} autoComplete="off">
                         <TextField
                             id="givenCoinsTF"
-                            label={strings.coins.demo.coins}
+                            label={strings.coins.coins}
                             className={classes.textField}
                             value={this.state.givenCoins}
                             onChange={this.handleCoins}

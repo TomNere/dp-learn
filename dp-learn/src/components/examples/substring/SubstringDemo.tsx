@@ -141,7 +141,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
                 }
 
                 {/* Table and result */}
-                <DemoTable visible={this.state.tableVisible} result={this.state.result} head={this.tableHead} body={this.tableBody}/>                
+                <DemoTable subRes="" cols={this.LENGTH2 + 1} visible={this.state.tableVisible} result={this.state.result} head={this.tableHead} body={this.tableBody}/>                
             </div>
         );
     }

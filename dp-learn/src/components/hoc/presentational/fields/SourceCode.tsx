@@ -12,7 +12,8 @@ type AllProps =
     WithStyles<typeof styles>;
 
 interface IStateProps {
-    code: string
+    code: string,
+    expanded: boolean
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -32,11 +33,15 @@ const styles = (theme: Theme) => createStyles({
 })
 
 class SourceCode extends React.Component<AllProps> {
+    public static defaultProps: IStateProps = {
+        code: "",
+        expanded: false
+    }
     public render() {
         const { classes } = this.props;
 
         return (
-            <ExpansionPanel className={classes.expPanel}>
+            <ExpansionPanel className={classes.expPanel} defaultExpanded={this.props.expanded}>
                 <ExpansionPanelSummary expandIcon={<Code className={classes.whiteText} />}>
                     <Typography className={[classes.heading, classes.whiteText].join(' ')}>{strings.components.srcCode}</Typography>
                 </ExpansionPanelSummary>

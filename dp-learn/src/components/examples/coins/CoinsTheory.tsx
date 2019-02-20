@@ -1,4 +1,5 @@
 import * as Markdown from 'react-markdown';
+import * as Prism from 'prismjs';
 import * as React from 'react';
 
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
@@ -7,6 +8,8 @@ import { coinsDynCode, coinsRecCode } from './CoinsConsts';
 import CoinsTree from './coinsTree.png';
 import Complexity from 'src/components/hoc/presentational/fields/Complexity';
 import SourceCode from 'src/components/hoc/presentational/fields/SourceCode';
+import Table1 from './coinsTable1.png';
+import Table2 from './coinsTable2.png';
 import { Typography } from '@material-ui/core';
 import { strings } from 'src/translations/languages';
 
@@ -41,6 +44,10 @@ const styles = (theme: Theme) => createStyles({
 class CoinsTheory extends React.Component<AllProps> {
     public constructor(props: AllProps) {
         super(props)
+    }
+
+    public componentDidMount() {
+        Prism.highlightAll();
     }
 
     public render() {
@@ -96,6 +103,23 @@ class CoinsTheory extends React.Component<AllProps> {
                             </Typography>
                             <div className={classes.bottomMargin}>
                                 {strings.coins.theory.dynProg1}
+                            </div>
+                            <Complexity time={'O(N*V)'} space={'O(N + (V + 1) + 1)'} />
+                            {/* Table example 1 */}
+                            <Typography variant={'subtitle1'} className={classes.bottomMargin}>
+                                {strings.coins.coins} 1, 2, 5 <br/>
+                                {strings.coins.value} 4
+                            </Typography>
+                            <div className={classes.bottomMargin}>
+                                <img src={Table1} width={500} alt="CoinsTable1" />
+                            </div>
+                            {/* Table example 2 */}
+                            <Typography variant={'subtitle1'} className={classes.bottomMargin}>
+                                {strings.coins.coins}: 1, 2, 4 <br/>
+                                {strings.coins.value}: 4
+                            </Typography>
+                            <div className={classes.bottomMargin}>
+                                <img src={Table2} width={500} alt="CoinsTable2" />
                             </div>
                             <SourceCode code={coinsDynCode} />
                         </div>

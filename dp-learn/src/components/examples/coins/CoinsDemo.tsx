@@ -1,14 +1,16 @@
+import * as Prism from 'prismjs';
 import * as React from 'react';
 
 import { Avatar, Button, Grid, TableCell, TableRow, TextField } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
+import { coinsBacktrack, coinsSmallDynCode, getCoins } from './CoinsConsts';
 
 import { AnimatedDiv } from 'src/components/Animated';
 import DemoTable from 'src/components/hoc/presentational/fields/DemoTable';
+import SimpleSourceCode from 'src/components/hoc/presentational/fields/SimpleSourceCode';
 import SpeedSelector from 'src/components/hoc/presentational/buttons/SpeedSelector';
 import StepFinishButton from 'src/components/hoc/presentational/buttons/StepFinishButton';
 import { demoStyles } from 'src/styles/demoStyles';
-import { getCoins } from './CoinsConsts';
 import { strings } from 'src/translations/languages';
 
 interface ICoinsDemoState {
@@ -21,9 +23,8 @@ interface ICoinsDemoState {
     result: string
     speed: number
     table: number[]
-    selectedCol: number
     highlitedCell: number | undefined
-    tableHeading: string
+    subRes: string
     skip: boolean
     pose: string
 }
@@ -44,6 +45,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
     // Given coins
     private coins: number[];
+    private oldValue: string;
 
     private backtrackHelp: number[];
 
@@ -75,12 +77,15 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             tableVisible: false,
             result: "",
             table: [],
-            selectedCol: 0,
             highlitedCell: undefined,
             skip: false,
             pose: "empty",
-            tableHeading: ""
+            subRes: ""
         }
+    }
+
+    public componentDidMount() {
+        Prism.highlightAll();
     }
 
     public render() {
@@ -91,11 +96,13 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
                 <div className={classes.bottomMargin}>
                     {strings.coins.demo.brief}
                 </div>
+                <div className={classes.container}>
+                <div className={classes.flexChild}>
                 <Grid className={[classes.container, classes.bottomMargin].join(' ')}>
                     <form className={classes.container} autoComplete="off">
                         <TextField
                             id="givenValueTF"
-                            label={strings.coins.demo.value}
+                            label={`${strings.coins.value}(1-20)`}
                             className={classes.textField}
                             value={this.state.givenValue}
                             onChange={this.handleValue}
@@ -105,7 +112,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
                     <form className={classes.container} autoComplete="off">
                         <TextField
                             id="givenCoinsTF"
-                            label={strings.coins.demo.coins}
+                            label={`${strings.coins.coins}(max. 5)`}
                             className={classes.textField}
                             value={this.state.givenCoins}
                             onChange={this.handleCoins}
@@ -124,9 +131,18 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
                 {/* Do step or finish */}
                 <StepFinishButton visible={this.state.inProgress} speed={this.state.speed} onStepClick={this.onStepClick} onFinishClick={this.onFinishClick} />
+                </div>
+                <div className={classes.flexChild}>
+                    <SimpleSourceCode code={coinsSmallDynCode} />
+                </div>
+                <div className={classes.flexChild}>
+                    <SimpleSourceCode code={coinsBacktrack} />
+                </div>
+                </div>
+                <br/>
 
                 {/* Animated avatars */}
-                {(this.state.charX !== "" || this.state.charY !== "") &&
+                {(this.state.inProgress) &&
                     <div className={classes.avatars}>
                         <Avatar className={[classes.avatar, classes.defaultAvatar].join(' ')}>{this.state.charX}</Avatar>
                         <span className={classes.sign}> > </span>
@@ -143,25 +159,28 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
                 }
 
                 {/* Table and result */}
-                <DemoTable visible={this.state.tableVisible} result={this.state.result} head={this.tableHead} body={this.tableBody} />
+                <DemoTable visible={this.state.tableVisible} cols={this.state.givenValue + 2} result={this.state.result} subRes={this.state.subRes} head={this.tableHead} body={this.tableBody} />
             </div>
         );
     }
 
     private handleValue = (e: any) => {
-        if (!Number.isNaN(+e.target.value)) {
-            this.setState({ givenValue: +e.target.value, tableVisible: false });
+        if (!Number.isNaN(+e.target.value) && +e.target.value >= 1 && +e.target.value <= 20) {
+            this.setState({ givenValue: +e.target.value, tableVisible: false, inProgress: false });
         }
     }
 
     private handleCoins = (e: any) => {
+        let sum = 0;
         for (const coin of e.target.value.split(",")) {
             if (Number.isNaN(+coin)) {
                 return;
             }
+            sum++;
         }
-
-        this.setState({ givenCoins: e.target.value, tableVisible: false });
+        if (sum <= 5) {
+            this.setState({ givenCoins: e.target.value, tableVisible: false, inProgress: false });
+        }
     }
 
     private speedChange = (e: any) => {
@@ -195,13 +214,12 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             this.backtrackHelp[i] = -1;
         }
 
-        this.outerCounter = 1;
+        this.outerCounter = 0;
 
         this.setState({
             tableVisible: true,
             inProgress: true,
             table: this.table,
-            result: "Current result: 0"
         });
 
         this.innerCounter = 0;
@@ -213,13 +231,17 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
     }
 
     private onStepClick = () => {
+        this.oldValue = '';
+        if (this.innerCounter === 0) {
+            this.outerCounter++;
+        }
         // Only for speed === 0
         if (this.outerCounter > this.state.givenValue) {
             this.setFinalState();
             return;
         }
 
-        this.setState({ selectedCol: this.innerCounter + 1, highlitedCell: undefined });
+        this.setState({ highlitedCell: undefined });
 
         if (this.coins[this.innerCounter] <= this.outerCounter) {
             const subRes = this.table[this.outerCounter - this.coins[this.innerCounter]];
@@ -228,10 +250,11 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
                 charX: this.table[this.outerCounter] === Number.MAX_VALUE ? '∞' : this.table[this.outerCounter].toString(),
                 charY: subRes === Number.MAX_VALUE ? '∞' : `${subRes} + 1`,
                 highlitedCell: this.outerCounter - this.coins[this.innerCounter],
-                tableHeading: `Array[${this.outerCounter} - Coins[${this.innerCounter}]]`
+                subRes: `subres = Array[${this.outerCounter} - Coins[${this.innerCounter}]] = Array[${this.outerCounter} - ${this.coins[this.innerCounter]}] = ${subRes}`
             });
 
             if ((subRes !== Number.MAX_VALUE) && (subRes + 1 < this.table[this.outerCounter])) {
+                this.oldValue = this.table[this.outerCounter] === Number.MAX_VALUE ? '∞' : this.table[this.outerCounter].toString();
                 this.table[this.outerCounter] = subRes + 1;
                 this.backtrackHelp[this.outerCounter] = this.innerCounter;
                 this.setState({ pose: 'match' });
@@ -244,22 +267,31 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             }
         }
         else {
-            this.setState({ pose: 'empty' });
+            this.setState({ 
+                subRes: `(Coins[${this.innerCounter}] => ${this.coins[this.innerCounter]}) > ${this.outerCounter}, skipping...`, 
+                pose: 'empty',
+                charX: '',
+                charY: ''
+            });
         }
 
         this.setState({ table: this.table });
 
         this.innerCounter++;
 
-        if (this.innerCounter < this.state.givenValue) {
+        if (this.innerCounter < this.coins.length) {
             if (this.state.speed !== 0) {
                 this.timeout = setTimeout(this.transitionHelper, this.delayHelper / this.state.speed);
             }
         }
         else {
-            this.outerCounter++;
-            if (this.outerCounter > this.state.givenValue) {
-                this.timeout = setTimeout(this.setFinalState, this.delayHelper / this.state.speed);
+            if (this.outerCounter + 1 > this.state.givenValue) {
+                if (this.state.speed !== 0) {
+                    this.timeout = setTimeout(this.setFinalState, this.delayHelper / this.state.speed);
+                }
+                else {
+                    this.innerCounter = 0;
+                }
             }
             else {
                 this.innerCounter = 0;
@@ -294,14 +326,14 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
     // }
 
     private setFinalState = () => {
-
         this.setState({
             inProgress: false,
-            result: this.table[this.state.givenValue].toString(), // `Longest common substring: "${finalString}", length is ${this.table[this.tableRow][this.tableCol]}.`,
+            result: `We need ${this.table[this.state.givenValue]} coins -toString()`,
             // highlitedCells: cells,
+            subRes: "",
             charX: "",
+            pose: "empty",
             charY: "",
-            selectedCol: 0,
         });
     }
 
@@ -318,12 +350,12 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
         const heading = [];
 
-        heading.push(<TableCell key='tableHeading' className={classes.tableHeading}>{this.state.tableHeading}</TableCell>)
+        heading.push(<TableCell key='tableHeading' className={classes.caption} />)
 
         for (let i = 0; i <= this.state.givenValue; i++) {
             const classNames = [classes.columnCaption, classes.caption];
 
-            if (i === this.outerCounter) {
+            if (i === this.outerCounter && i !== 0) {
                 classNames.push(classes.highlitedCell);
             }
 
@@ -368,6 +400,11 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
                 }
             }
 
+            if (this.outerCounter === j && this.state.pose === 'match') {
+                classNames.push(classes.greenCell);
+                value = `${this.oldValue} => ${value}`;
+            }
+
             row.push(
                 <TableCell key={key} className={classNames.join(' ')}>
                     {value}
@@ -391,7 +428,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
         for (let j = 0; j <= this.state.givenValue; j++) {
             row.push(
-                <TableCell key={`backtrack${j}`} className={classes.rowCaption}>
+                <TableCell key={`backtrack${j}`} className={classes.tableCell}>
                     {this.backtrackHelp[j]}
                 </TableCell>
             );
