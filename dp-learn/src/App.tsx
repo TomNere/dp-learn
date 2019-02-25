@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import Container from './components/Container';
-import Header from './components/Header';
+import Container from 'src/containers/Container';
+import Header from 'src/containers/Header';
 import { BrowserRouter as Router } from 'react-router-dom'
-import { strings } from './translations/languages';
+import { strings } from 'src/strings/languages';
 
 class App extends React.Component {
     public render() {
