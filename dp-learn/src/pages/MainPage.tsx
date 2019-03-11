@@ -3,8 +3,8 @@ import * as React from 'react';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
 import { IHistoryProps } from './Welcome';
+import MainWindow from '../containers/MainWindow';
 import Menu from '../containers/Menu';
-import WindowContainer from '../containers/WindowContainer';
 
 // import Substring from './examples/Substring';
 
@@ -45,7 +45,7 @@ class MainPage extends React.Component<AllProps> {
                 {/* Right window */}
                 <main className={classes.content}>
                     <div className={[classes.minHeight].join(' ')} />
-                    <WindowContainer />
+                    <MainWindow />
                 </main>
             </div>
         );

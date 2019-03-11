@@ -4,17 +4,16 @@ import { Button, Theme } from "@material-ui/core";
 import { WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
 import myTheme from 'src/styles/index';
-import { strings } from 'src/strings/languages';
 
 type AllProps =
     IStateProps &
     WithStyles<typeof styles>;
 
 interface IStateProps {
-    visible: boolean,    
-    speed: number,
-    onStepClick: (e: any) => any,
-    onFinishClick: (e: any) => any
+    visible: boolean,
+    color: 'light' | 'dark',
+    onClick: (e: any) => any,
+    label: string
 }
 
 export const styles = (theme: Theme) => createStyles({
@@ -26,21 +25,29 @@ export const styles = (theme: Theme) => createStyles({
             backgroundColor: myTheme.palette.primary.main
         }
     },
+    buttonDark: {
+        margin: theme.spacing.unit,
+        color: 'white',
+        backgroundColor: myTheme.palette.primary.main,
+        "&:hover": {
+            backgroundColor: myTheme.palette.secondary.main
+        }
+    },
 });
 
-class StepFinishButton extends React.Component<AllProps> {
+class MyButton extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;
         return (
             <div>
                 {(this.props.visible) &&
                     <Button 
-                        variant="contained" 
-                        color="primary" 
-                        className={classes.buttonLight} 
-                        onClick={this.props.speed === 0 ? this.props.onStepClick : this.props.onFinishClick}
+                        variant='contained' 
+                        color='primary'
+                        className={this.props.color === 'light' ? classes.buttonLight : classes.buttonDark} 
+                        onClick={this.props.onClick}
                     >
-                        {this.props.speed !== 0 ? strings.global.finish : strings.global.step}
+                        {this.props.label}
                     </Button>
                 }
             </div>
@@ -48,4 +55,4 @@ class StepFinishButton extends React.Component<AllProps> {
     }
 }
 
-export default withStyles(styles)(StepFinishButton);
+export default withStyles(styles)(MyButton);

@@ -65,6 +65,14 @@ class Menu extends React.Component<AllProps> {
                         <ListItem className={this.isSelected('/mainpage/substring', true)} button={true} onClick={this.showSubstring}>
                             <ListItemText classes={{ primary: this.isSelected('/mainpage/substring', false) }} primary={strings.menu.substring} />
                         </ListItem>
+                        {/* Rod */}
+                        <ListItem className={this.isSelected('/mainpage/rod', true)} button={true} onClick={this.showRod}>
+                            <ListItemText classes={{ primary: this.isSelected('/mainpage/rod', false) }} primary={strings.menu.rod} />
+                        </ListItem>
+                        {/* Edit distance */}
+                        <ListItem className={this.isSelected('/mainpage/editDistance', true)} button={true} onClick={this.showEditDistance}>
+                            <ListItemText classes={{ primary: this.isSelected('/mainpage/editDistance', false) }} primary={strings.menu.editDistance} />
+                        </ListItem>
                     </div>
                 </List>
             </Drawer>
@@ -87,6 +95,14 @@ class Menu extends React.Component<AllProps> {
 
     private showSubstring = () => {
         this.props.history.push("/mainpage/substring");
+    }
+
+    private showRod = () => {
+        this.props.history.push("/mainpage/rod");
+    }
+
+    private showEditDistance = () => {
+        this.props.history.push("/mainpage/editDistance");
     }
 }
 

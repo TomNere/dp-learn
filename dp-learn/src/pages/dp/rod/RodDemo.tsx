@@ -1,31 +1,26 @@
 import * as Prism from 'prismjs';
 import * as React from 'react';
 
-import { Avatar, Button, Grid, TableCell, TableRow, TextField } from '@material-ui/core';
+import { Grid, TableCell, TableRow, TextField, Typography } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
-import { coinsBacktrack, coinsSmallDynCode, getCoins as getPrices } from 'src/dpProblemsStuff/coins/CoinsConsts';
 
-import { AnimatedDiv } from 'src/components/animations/Animated';
 import DemoTable from 'src/components/fields/DemoTable';
-import SimpleSourceCode from 'src/components/fields/SimpleSourceCode';
+import { GetNumbers } from 'src/helpers/Helpers';
+import MyButton from 'src/components/buttons/MyButton';
 import SpeedSelector from 'src/components/buttons/SpeedSelector';
-import StepFinishButton from 'src/components/buttons/StepFinishButton';
 import { demoStyles } from 'src/styles/demoStyles';
 import { strings } from 'src/strings/languages';
 
 interface ICoinsDemoState {
     givenPrices: string
-    charX: string
-    charY: string
     inProgress: boolean
     tableVisible: boolean
     result: string
     speed: number
     array: number[]
-    highlitedCell: number | undefined
-    subRes: string
-    skip: boolean
-    pose: string
+    highlightCandidates: boolean
+    highlightMax: boolean
+    highlightCurrent: boolean
 }
 
 type AllProps =
@@ -36,42 +31,32 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
     /////////////////////// private variables /////////////////////////////////
 
     private outerCounter: number;
-    private innerCounter: number;
+    private nextAutomataState: 'evalMaxVal' | 'highlightMaxIndex' | 'assignValue' | 'nextIteration' | 'final' | 'done' = 'evalMaxVal';
 
-    // To store table position of the result
-    // private tableRow: number;
-    // private tableCol: number;
 
-    // Given coins
-    private coins: number[];
-    private oldValue: string;
+    // Given prices
+    private prices: number[];
 
     private array: number[];
 
     private LENGTH: number;
-    private maxVal: number;
+    private maxIndex: number;
 
     // Timeout
     private timeout: any;
-
-    // Delay helper
-    private delayHelper = 1500;
 
     public constructor(props: AllProps) {
         super(props)
         this.state = {
             givenPrices: "1, 5, 6, 6, 9",
-            charX: "",
-            charY: "",
             speed: 1,
             inProgress: false,
             tableVisible: false,
             result: "",
             array: [],
-            highlitedCell: undefined,
-            skip: false,
-            pose: "empty",
-            subRes: ""
+            highlightCandidates: false,
+            highlightMax: false,
+            highlightCurrent: false,
         }
     }
 
@@ -84,6 +69,9 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
 
         return (
             <div>
+                <Typography variant={'h4'} align={'center'} className={classes.bottomMargin}>
+                    {strings.rod.demo.title}
+                </Typography>
                 <div className={classes.bottomMargin}>
                     {strings.rod.demo.brief}
                 </div>
@@ -106,41 +94,21 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
                         {/* Speed select */}
                         <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
                         <br />
-                        <Button variant="contained" color="primary" className={classes.buttonDark} onClick={this.evaluate}>
-                            {strings.global.start}
-                        </Button>
 
-                        {/* Do step or finish */}
-                        <StepFinishButton visible={this.state.inProgress} speed={this.state.speed} onStepClick={this.onStepClick} onFinishClick={this.onFinishClick} />
-                    </div>
-                    <div className={classes.flexChild}>
-                        <SimpleSourceCode code={coinsSmallDynCode} />
-                    </div>
-                    <div className={classes.flexChild}>
-                        <SimpleSourceCode code={coinsBacktrack} />
+                        {/* Start button */}
+                        <MyButton color='dark' label={strings.global.start} onClick={this.onStartClick} visible={true} />
+
+                        {/* Step button */}
+                        <MyButton color='light' label={strings.global.step} onClick={this.finiteAutomata} visible={this.state.inProgress && this.state.speed === 0} />
+
+                        {/* Finish button */}
+                        <MyButton color='light' label={strings.global.finish} onClick={this.onFinishClick} visible={this.state.inProgress} />
                     </div>
                 </div>
                 <br />
 
-                {/* Animated avatars */}
-                {(this.state.inProgress) &&
-                    <div className={classes.avatars}>
-                        <Avatar className={[classes.avatar, classes.defaultAvatar].join(' ')}>{this.state.charX}</Avatar>
-                        <span className={classes.sign}> > </span>
-
-                        <AnimatedDiv pose={this.state.pose}>
-                            <Avatar
-                                className={[classes.avatar, this.state.charY === "" ? classes.defaultAvatar :
-                                    this.state.pose === 'noMatch' ? classes.redAvatar : classes.greenAvatar].join(' ')}
-                            >
-                                {this.state.charY}
-                            </Avatar>
-                        </AnimatedDiv>
-                    </div>
-                }
-
                 {/* Table and result */}
-                <DemoTable visible={this.state.tableVisible} cols={this.LENGTH + 2} result={this.state.result} subRes={this.state.subRes} head={this.tableHead} body={this.tableBody} />
+                <DemoTable visible={this.state.tableVisible} cols={this.LENGTH + 2} result={this.state.result} subRes='' head={this.tableHead} body={this.tableBody} />
             </div>
         );
     }
@@ -162,18 +130,19 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
         this.setState({ speed: +e.target.value });
     };
 
-    private evaluate = () => {
-        this.setState({
-            charX: "",
-            charY: ""
-        });
+    private setTimeout = (func: () => void) => {
+        this.timeout = setTimeout(func, 5000 / this.state.speed);
+    }
+
+    private onStartClick = () => {
+        clearTimeout(this.timeout);
 
         this.array = [];
 
-        this.coins = getPrices(this.state.givenPrices);
-        this.LENGTH = this.coins.length;
+        this.prices = GetNumbers(this.state.givenPrices);
+        this.LENGTH = this.prices.length;
 
-        if (this.coins.length === 0) {
+        if (this.prices.length === 0) {
             this.setState({ result: 'Error parsing prices.' });
             return;
         }
@@ -183,146 +152,126 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
         this.setState({
             tableVisible: true,
             inProgress: true,
-            array: this.array,
+            result: '',
+            array: [0],
         });
 
-        this.innerCounter = 0;
-        this.maxVal = Number.MIN_VALUE;
+        this.outerCounter = 0;
 
+        this.nextAutomataState = 'evalMaxVal';
         // Check if auto play or step by step
-        if (this.state.speed === 0) {
-            this.outerCounter = 0;
-        }
-        else {
-            this.outerCounter = 1;
-            this.timeout = setTimeout(this.doIteration, this.delayHelper / this.state.speed);
+        if (this.state.speed !== 0) {
+            this.setTimeout(this.finiteAutomata);
         }
     }
 
-    private doIteration = () => {
-        //
-    }
+    private finiteAutomata = () => {
+        // Finite automata
+        switch (this.nextAutomataState) {
+            case 'evalMaxVal':
+                this.evalMaxVal();
+                this.nextAutomataState = 'highlightMaxIndex';
+                break;
+            case 'highlightMaxIndex':
+                this.highlightMaxIndex();
+                this.nextAutomataState = 'assignValue';
+                break;
+            case 'assignValue':
+                this.assignValue();
+                this.nextAutomataState = 'nextIteration';
+                break;
+            case 'nextIteration':
+                this.nextIteration();
 
-    private onStepClick = () => {
-        this.oldValue = '';
-        if (this.innerCounter === 0) {
-            this.outerCounter++;
-        }
-        // Only for speed === 0
-        if (this.outerCounter > this.state.givenValue) {
-            this.setFinalState();
-            return;
-        }
-
-        this.setState({ highlitedCell: undefined });
-
-        if (this.coins[this.innerCounter] <= this.outerCounter) {
-            const subRes = this.array[this.outerCounter - this.coins[this.innerCounter]];
-
-            this.setState({
-                charX: this.array[this.outerCounter] === Number.MAX_VALUE ? '∞' : this.array[this.outerCounter].toString(),
-                charY: subRes === Number.MAX_VALUE ? '∞' : `${subRes} + 1`,
-                highlitedCell: this.outerCounter - this.coins[this.innerCounter],
-                subRes: `subres = Array[${this.outerCounter} - Coins[${this.innerCounter}]] = Array[${this.outerCounter} - ${this.coins[this.innerCounter]}] = ${subRes}`
-            });
-
-            if ((subRes !== Number.MAX_VALUE) && (subRes + 1 < this.array[this.outerCounter])) {
-                this.oldValue = this.array[this.outerCounter] === Number.MAX_VALUE ? '∞' : this.array[this.outerCounter].toString();
-                this.array[this.outerCounter] = subRes + 1;
-                this.backtrackHelp[this.outerCounter] = this.innerCounter;
-                this.setState({ pose: 'match' });
-
-                // Flash
-                // this.incrementOn();
-            }
-            else {
-                this.setState({ pose: 'noMatch' });
-            }
-        }
-        else {
-            this.setState({
-                subRes: `(Coins[${this.innerCounter}] => ${this.coins[this.innerCounter]}) > ${this.outerCounter}, skipping...`,
-                pose: 'empty',
-                charX: '',
-                charY: ''
-            });
-        }
-
-        this.setState({ array: this.array });
-
-        this.innerCounter++;
-
-        if (this.innerCounter < this.coins.length) {
-            if (this.state.speed !== 0) {
-                this.timeout = setTimeout(this.transitionHelper, this.delayHelper / this.state.speed);
-            }
-        }
-        else {
-            if (this.outerCounter + 1 > this.state.givenValue) {
-                if (this.state.speed !== 0) {
-                    this.timeout = setTimeout(this.setFinalState, this.delayHelper / this.state.speed);
+                if (this.outerCounter + 1 > this.LENGTH) {
+                    this.nextAutomataState = 'final';
                 }
                 else {
-                    this.innerCounter = 0;
+                    this.nextAutomataState = 'evalMaxVal';
                 }
-            }
-            else {
-                this.innerCounter = 0;
-                this.timeout = setTimeout(this.transitionHelper, this.delayHelper / this.state.speed);
+                break;
+            case 'final':
+                this.setFinalState();
+                this.nextAutomataState = 'done';
+        }
+
+        // if speed != 0, setTimeout is needed
+        const auto: boolean = this.state.speed !== 0;
+
+        if (auto && this.nextAutomataState !== 'done') {
+            this.setTimeout(this.finiteAutomata);
+        }
+    }
+
+    /****************************** Finite automata operations ************************/
+
+    // Do 1 inner cycle (maxVal is evaluated) and enable candidates highliting
+    private evalMaxVal = () => {
+        this.outerCounter++;
+
+        let maxVal: number = Number.MIN_VALUE;
+
+        for (let i = 0; i < this.outerCounter; i++) {
+            if (this.prices[i] + this.array[this.outerCounter - i - 1] > maxVal) {
+                maxVal = this.prices[i] + this.array[this.outerCounter - i - 1];
+                this.maxIndex = this.outerCounter - i - 1;
             }
         }
+        
+        this.setState({ highlightCandidates: true });
+        this.array[this.outerCounter] = maxVal;
+    }
+
+    // Just enable higliting on max index (evaluated max value)
+    private highlightMaxIndex = () => {
+        this.setState({ highlightMax: true });
+    }
+
+    private assignValue = () => {
+        this.setState(prevState => ({
+            array: [...prevState.array, this.array[this.outerCounter]],
+            highlightCurrent: true,
+        }));
+    }
+
+    private nextIteration = () => {
+        this.setState({
+            highlightCandidates: false,
+            highlightMax: false,
+            highlightCurrent: false
+        });
+    }
+
+    private setFinalState = () => {
+        this.setState({
+            inProgress: false,
+            result: `Result: ${this.array[this.LENGTH]}`,
+        });
     }
 
     private onFinishClick = () => {
         clearTimeout(this.timeout);
-        this.setState({ speed: 0 });
-
-        while (this.outerCounter <= this.state.givenValue) {
-            this.onStepClick();
+        this.array = [0];
+        
+        for (let outerLocal = 1; outerLocal <= this.LENGTH; outerLocal++) {
+            let maxVal = Number.MIN_VALUE;
+            for (let i = 0; i < outerLocal; i++) {
+                if (this.prices[i] + this.array[outerLocal - i - 1] > maxVal) {
+                    maxVal = this.prices[i] + this.array[outerLocal - i - 1];
+                }
+            }
+            this.array[outerLocal] = maxVal;
         }
 
-        this.setState({ speed: 1 });
-    };
-
-    // private incrementOn = () => {
-    //     this.setState({
-    //         // highlitedCells: cells
-    //     });
-
-    //     if (this.state.speed !== 0) {
-    //         setTimeout(this.incrementOff, (this.delayHelper / 2) / this.state.speed);
-    //     }
-    // }
-
-    // private incrementOff = () => {
-    //     // this.setState({ highlitedCells: [] });
-    // }
-
-    private setFinalState = () => {
-        let start = this.state.givenValue;
-        let coins = '';
-        while (start !== 0) {
-            const j = this.backtrackHelp[start];
-            coins += `${this.coins[j]} `;
-            start = start - this.coins[j];
-        }
-
+        this.outerCounter = this.LENGTH;    // To show proper value in table
         this.setState({
-            inProgress: false,
-            result: `We need ${this.array[this.state.givenValue]} coins - ${coins}.`,
-            subRes: "",
-            charX: "",
-            pose: "empty",
-            charY: "",
+            highlightCandidates: false,
+            highlightMax: false,
+            highlightCurrent: false,
+            array: this.array
         });
-    }
-
-    private transitionHelper = () => {
-        if (this.state.speed !== 0) {
-            this.setState({ charY: "" });
-            this.timeout = setTimeout(this.onStepClick, 500 / this.state.speed);
-        }
-    }
+        this.setFinalState();
+    };
 
     // Return table heading
     private tableHead = () => {
@@ -332,11 +281,11 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
 
         heading.push(<TableCell key='tableHeading' className={classes.caption} />)
 
-        for (let i = 0; i <= this.state.givenValue; i++) {
+        for (let i = 0; i <= this.LENGTH; i++) {
             const classNames = [classes.columnCaption, classes.caption];
 
-            if (i === this.outerCounter && i !== 0) {
-                classNames.push(classes.highlitedCell);
+            if (i === this.outerCounter) {
+                classNames.push(classes.blueCell);
             }
 
             heading.push(
@@ -355,34 +304,36 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
         const body = [];
         let classNames = [];
 
-        let row = [];
+        const row = [];
 
         classNames = [classes.rowCaption, classes.caption];
 
         // Row names
         row.push(
-            <TableCell key={'tableRow name'} className={classNames.join(' ')}>
-                {`Cycle ${this.outerCounter}.`}
+            <TableCell key={'rowName'} className={classNames.join(' ')}>
+                {this.outerCounter === 0 ? 'Initial' : `Cycle ${this.outerCounter}.`}
             </TableCell>
         );
 
-        for (let j = 0; j <= this.state.givenValue; j++) {
+        for (let j = 0; j <= this.LENGTH; j++) {
             const key = `body column ${j}`;
-            let value = this.state.array[j] === Number.MAX_VALUE ? "∞" : this.state.array[j].toString();
+            let value = this.state.array[j] === undefined ? "-" : this.state.array[j].toString();
 
             classNames = [classes.tableCell];
 
-            if (this.state.highlitedCell === j) {
-                classNames.push(classes.incCell);
-
-                if (this.state.pose === 'match') {
-                    value += ' + 1';
+            if (this.state.highlightCandidates) {
+                if (value !== "-" && this.outerCounter > j) {
+                    classNames.push(classes.yellowCell);
+                    value += ` + ${this.prices[this.outerCounter - j - 1]}`;
                 }
             }
 
-            if (this.outerCounter === j && this.state.pose === 'match') {
+            if (this.state.highlightMax && j === this.maxIndex) {
                 classNames.push(classes.greenCell);
-                value = `${this.oldValue} => ${value}`;
+            }
+
+            if (this.state.highlightCurrent && j === this.outerCounter) {
+                classNames.push(classes.greenCell);
             }
 
             row.push(
@@ -394,29 +345,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
 
         // Push row to the table
         body.push(
-            <TableRow key={`tableRow1`}>
-                {row}
-            </TableRow>
-        );
-
-        row = [];
-        row.push(
-            <TableCell key={'backtrackHelp name'} className={[classes.rowCaption, classes.caption].join(' ')}>
-                {'Backtrac helper'}
-            </TableCell>
-        );
-
-        for (let j = 0; j <= this.state.givenValue; j++) {
-            row.push(
-                <TableCell key={`backtrack${j}`} className={classes.tableCell}>
-                    {this.backtrackHelp[j]}
-                </TableCell>
-            );
-        }
-
-        // Push row to the table
-        body.push(
-            <TableRow key={`tableRow2`}>
+            <TableRow key={`row`}>
                 {row}
             </TableRow>
         );

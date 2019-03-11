@@ -5,3 +5,9 @@ export interface ISimpleObjectParameter {
 
 // Converter between time units
 export type ITimeConverter = (n: number) => number;
+
+export interface IChartData {
+    colName: string,
+    rec: number,
+    dp: number,
+}

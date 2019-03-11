@@ -11,8 +11,7 @@ export const slovak = {
         table: 'Tabuľka',
         result: 'Výsledok',
         drawCharts: 'Vykresliť grafy',
-        numberOfRecCalls: 'Počet rekurzívnych volaní',
-        numberOfCycles: 'Počet cyklov',
+        numberOfCalls: 'Počet rekurzívnych volaní / cyklov',
         microSeconds: 'Microseconds',
         nanoSeconds: 'Nanoseconds',
         skipping: 'Preskakujem...'
@@ -30,7 +29,9 @@ export const slovak = {
     },
     menu: {
         coins: 'Minimálny počet mincí',
-        substring: 'Najdlhší spoločný podreťazec'
+        substring: 'Najdlhší spoločný podreťazec',
+        rod: 'Rezanie tyče',
+        editDistance: 'Editačná vzdialenosť'
     },
     coins: {
         title: 'Minimálny počet mincí na vytvorenie danej hodnoty',
@@ -66,7 +67,16 @@ export const slovak = {
         },
         demo: {
             title: 'Rezanie tyče - demo',
-            brief: 'Riešenie problému pomocou dynamického programovania. Zadajte ceny jednotlivých dĺžok tyče oddelené čiarkami (dĺžky sú 1, 2, 3, ...).',
+            brief: 'Zadajte ceny jednotlivých dĺžok tyče oddelené čiarkami (dĺžky sú 1, 2, 3, ...).',
         },
-    }
+    },
+    editDistance: {
+        theory: {
+
+        },
+        demo: {
+            title: 'Editačná vzdialenosť - demo',
+            brief: 'Zadajte 2 reťazce, pre ktoré bude následne vypočítaná editačná vzdialenosť.',
+        },
+    },
 };

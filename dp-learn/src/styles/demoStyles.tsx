@@ -12,14 +12,6 @@ export const demoStyles = (theme: Theme) => createStyles({
         marginRight: theme.spacing.unit,
         minWidth: 200,
     },
-    buttonDark: {
-        margin: theme.spacing.unit,
-        color: 'white',
-        backgroundColor: myTheme.palette.primary.main,
-        "&:hover": {
-            backgroundColor: myTheme.palette.secondary.main
-        }
-    },
     bottomMargin: {
         marginBottom: 15,
     },
@@ -49,11 +41,14 @@ export const demoStyles = (theme: Theme) => createStyles({
         padding: 0,
         borderRight: '1px solid rgba(224, 224, 224, 1)',
     },
-    highlitedCell: {
-        backgroundColor: myTheme.palette.secondary.main
+    yellowCell: {
+        backgroundColor: '#ffef25'
     },
     greenCell: {
         backgroundColor: 'green'
+    },
+    blueCell: {
+        backgroundColor: '#1dd8ff'
     },
     avatar: {
         margin: 10,

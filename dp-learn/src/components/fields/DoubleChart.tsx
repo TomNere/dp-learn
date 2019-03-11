@@ -3,14 +3,15 @@ import * as React from 'react';
 import { Animation, ArgumentScale, EventTracker, Stack, ValueScale } from '@devexpress/dx-react-chart';
 import {
     ArgumentAxis,
-    BarSeries,
     Chart,
     Legend,
+    LineSeries,
     Tooltip,
     ValueAxis
 } from '@devexpress/dx-react-chart-material-ui';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
+import { IChartData } from 'src/types';
 import Paper from '@material-ui/core/Paper';
 import { Typography } from '@material-ui/core';
 import { strings } from 'src/strings/languages';
@@ -19,17 +20,10 @@ type AllProps =
     IStateProps &
     WithStyles<typeof styles>;
 
-export interface IChartData {
-    colName: string,
-    time: number,
-    space: number,
-    calls: number
-}
-
 interface IStateProps {
     data: IChartData[],
-    timeUnit: 'ms' | 'ns',
-    recOrDp: 'rec' | 'dp',
+    unit: 'ms' | 'ns' | '',
+    brief: string,
     showLegend: boolean
 }
 
@@ -60,11 +54,11 @@ const Label = (symbol: any) => (props: any) => {
 const nsLabel = Label(' ns');
 const msLabel = Label(' ms');
 
-class Charts extends React.Component<AllProps> {
+class DoubleChart extends React.Component<AllProps> {
     public static defaultProps: IStateProps = {
         data: [],
-        timeUnit: 'ms',
-        recOrDp: 'rec',
+        unit: 'ms',
+        brief: '',
         showLegend: true
     }
     public constructor(props: AllProps) {
@@ -72,55 +66,48 @@ class Charts extends React.Component<AllProps> {
     }
 
     public render() {
-        const { data, timeUnit, recOrDp, showLegend, classes } = this.props;
-        const { global, components } = strings;
+        const { data, unit, showLegend, classes, brief } = this.props;
+        const { global } = strings;
         return (
             <Paper>
                 <Typography align={'center'} className={classes.title} variant={'h6'}>
-                    {recOrDp === 'rec' ? global.recursiveSolution : global.dynProgSolution}
+                    {brief}
                 </Typography>
                 <Chart data={data}>
-                    <ValueScale name="time" />
-                    <ValueScale name="space" />
-                    <ValueScale name="calls" />
+                    <ValueScale name="rec" />
                     <ArgumentScale />
                     <ArgumentAxis />
 
-                    <ValueAxis scaleName="time" showGrid={false} showLine={true} showTicks={true} labelComponent={timeUnit === 'ms' ? msLabel : nsLabel} />
+                    {unit === '' &&
+                        <ValueAxis scaleName="rec" showGrid={false} showLine={true} showTicks={true} />
+                    }
+                    {unit !== '' &&
+                        <ValueAxis scaleName="rec" showGrid={false} showLine={true} showTicks={true} labelComponent={unit === 'ms' ? msLabel : nsLabel} />
+                    }
 
-                    <BarSeries
-                        name={`${components.timeComplex}(${timeUnit})`}
-                        valueField="time"
+                    <LineSeries
+                        name={`${brief} - ${global.dynProgSolution}`}
+                        valueField="rec"
                         argumentField="colName"
-                        scaleName="time"
-                    >
-
-                        s
-                        </BarSeries>
-
-                    <BarSeries
-                        name={strings.components.spaceComplex}
-                        valueField="space"
-                        argumentField="colName"
-                        scaleName="space"
+                        scaleName="rec"
                     />
 
-                    <BarSeries
-                        name={recOrDp === 'rec' ? global.numberOfRecCalls : global.numberOfCycles}
-                        valueField="calls"
+                    <LineSeries
+                        name={`${brief} - ${global.recursiveSolution}`}
+                        valueField="dp"
                         argumentField="colName"
-                        scaleName="calls"
+                        scaleName="rec"
                     />
 
                     {showLegend && <Legend position='bottom' />}
                     <Animation />
                     <Stack />
                     <EventTracker />
-                    <Tooltip/>
+                    <Tooltip />
                 </Chart>
             </Paper>
         );
     }
 }
 
-export default withStyles(styles)(Charts);
+export default withStyles(styles)(DoubleChart);

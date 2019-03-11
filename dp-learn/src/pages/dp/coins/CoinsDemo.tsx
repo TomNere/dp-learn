@@ -1,16 +1,16 @@
 import * as Prism from 'prismjs';
 import * as React from 'react';
 
-import { Avatar, Button, Grid, TableCell, TableRow, TextField } from '@material-ui/core';
+import { Avatar, Grid, TableCell, TableRow, TextField, Typography } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 import { coinsBacktrack, coinsSmallDynCode } from 'src/dpProblemsStuff/coins/CoinsConsts';
 
 import { AnimatedDiv } from 'src/components/animations/Animated';
 import DemoTable from 'src/components/fields/DemoTable';
 import { GetNumbers } from 'src/helpers/Helpers';
+import MyButton from 'src/components/buttons/MyButton';
 import SimpleSourceCode from 'src/components/fields/SimpleSourceCode';
 import SpeedSelector from 'src/components/buttons/SpeedSelector';
-import StepFinishButton from 'src/components/buttons/StepFinishButton';
 import { demoStyles } from 'src/styles/demoStyles';
 import { strings } from 'src/strings/languages';
 
@@ -94,6 +94,9 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
         return (
             <div>
+                <Typography variant={'h4'} align={'center'} className={classes.bottomMargin}>
+                    {strings.coins.demo.title}
+                </Typography>
                 <div className={classes.bottomMargin}>
                     {strings.coins.demo.brief}
                 </div>
@@ -126,12 +129,16 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
                         {/* Speed select */}
                         <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
                         <br />
-                        <Button variant="contained" color="primary" className={classes.buttonDark} onClick={this.evaluate}>
-                            {strings.global.start}
-                        </Button>
+                        
+                        {/* Start button */}
+                        <MyButton color='dark' label={strings.global.start} onClick={this.onStartClick} visible={true} />
 
-                        {/* Do step or finish */}
-                        <StepFinishButton visible={this.state.inProgress} speed={this.state.speed} onStepClick={this.onStepClick} onFinishClick={this.onFinishClick} />
+                        {/* Step button */}
+                        <MyButton color='light' label={strings.global.step} onClick={this.onStepClick} visible={this.state.inProgress && this.state.speed === 0} />
+
+                        {/* Finish button */}
+                        <MyButton color='light' label={strings.global.finish} onClick={this.onFinishClick} visible={this.state.inProgress} />
+
                     </div>
                     <div className={classes.flexChild}>
                         <SimpleSourceCode code={coinsSmallDynCode} />
@@ -188,7 +195,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         this.setState({ speed: +e.target.value });
     };
 
-    private evaluate = () => {
+    private onStartClick = () => {
         this.setState({
             charX: "",
             charY: ""
@@ -364,7 +371,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             const classNames = [classes.columnCaption, classes.caption];
 
             if (i === this.outerCounter && i !== 0) {
-                classNames.push(classes.highlitedCell);
+                classNames.push(classes.yellowCell);
             }
 
             heading.push(

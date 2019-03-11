@@ -2,22 +2,20 @@ import * as Prism from 'prismjs';
 import * as React from 'react';
 
 import { Button, Grid, TextField, Theme, createStyles } from '@material-ui/core';
+import { CheckNumbers, GetNumbers } from 'src/helpers/Helpers';
 import { IChartData, ISimpleObjectParameter } from 'src/types';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
-import { dpCoins, dpCoinsSpace, recCoinsSpace, recursiveCoins } from 'src/dpProblemsStuff/coins/CoinsSolutions';
+import { dpRod, dpRodSpace, recRodSpace, recursiveRod, rodExamples } from 'src/dpProblemsStuff/rod/RodStatsHelper';
 
 import DoubleChart from 'src/components/fields/DoubleChart';
-import { GetNumbers } from 'src/helpers/Helpers';
-import { coinsExamples } from 'src/dpProblemsStuff/coins/CoinsConsts';
-import myTheme from './../../../styles/index';
+import myTheme from '../../../styles/index';
 import { strings } from 'src/strings/languages';
 
 type AllProps =
     WithStyles<typeof styles>;
 
-interface ICoinsChartsState {
-    givenValue: number
-    givenCoins: string
+interface IRodChartsState {
+    givenPrices: string,
     chartsVisible: boolean
 }
 
@@ -59,8 +57,8 @@ const styles = (theme: Theme) => createStyles({
     },
 });
 
-class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
-    private coins: number[];
+class RodCharts extends React.Component<AllProps, IRodChartsState> {
+    private prices: number[];
     private timeStats: IChartData[];
     private spaceStats: IChartData[];
     private callsStats: IChartData[];
@@ -69,8 +67,7 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
     public constructor(props: AllProps) {
         super(props)
         this.state = {
-            givenValue: 10,
-            givenCoins: "1,2,5",
+            givenPrices: '1,5,6,6,9',
             chartsVisible: false
         }
     }
@@ -87,21 +84,11 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
                 <Grid className={[classes.container, classes.bottomMargin].join(' ')}>
                     <form className={classes.container} autoComplete="off">
                         <TextField
-                            id="givenValueTF"
-                            label={strings.coins.value}
-                            className={classes.textField}
-                            value={this.state.givenValue}
-                            onChange={this.handleValue}
-                            margin="normal"
-                        />
-                    </form>
-                    <form className={classes.container} autoComplete="off">
-                        <TextField
-                            id="givenCoinsTF"
+                            id="givenPricesTF"
                             label={strings.coins.coins}
                             className={classes.textField}
-                            value={this.state.givenCoins}
-                            onChange={this.handleCoins}
+                            value={this.state.givenPrices}
+                            onChange={this.handlePrices}
                             margin="normal"
                         />
                     </form>
@@ -111,31 +98,19 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
                 </Button>
                 {this.state.chartsVisible &&
                     <div>
-                        <div>
-                            <DoubleChart data={this.timeStats} unit='ms' brief={strings.components.timeComplex} />
-                            <DoubleChart data={this.spaceStats} unit='' brief={strings.components.spaceComplex} />
-                            <DoubleChart data={this.callsStats} unit='' brief={strings.global.numberOfCalls} />
-                        </div>
+                        <DoubleChart data={this.timeStats} unit='ms' brief={strings.components.timeComplex} />
+                        <DoubleChart data={this.spaceStats} unit='' brief={strings.components.spaceComplex} />
+                        <DoubleChart data={this.callsStats} unit='' brief={strings.global.numberOfCalls} />
                     </div>
                 }
             </div>
         );
     }
 
-    private handleValue = (e: any) => {
-        if (!Number.isNaN(+e.target.value)) {
-            this.setState({ givenValue: +e.target.value });
+    private handlePrices = (e: any) => {
+        if (CheckNumbers(e.target.value)) {
+            this.setState({ givenPrices: e.target.value, chartsVisible: false });
         }
-    }
-
-    private handleCoins = (e: any) => {
-        for (const coin of e.target.value.split(",")) {
-            if (Number.isNaN(+coin)) {
-                return;
-            }
-        }
-
-        this.setState({ givenCoins: e.target.value });
     }
 
     private getStats = (timeChart: IChartData[], spaceChart: IChartData[], callsChart: IChartData[], repeat: number) => {
@@ -151,7 +126,7 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
         t0 = performance.now();
         for (let j = 0; j < repeat; j++) {
             calls = { value: 0 };
-            recursiveCoins(this.coins, this.coins.length, this.state.givenValue, calls);
+            recursiveRod(this.prices, this.prices.length, calls);
         }
         t1 = performance.now();
 
@@ -161,22 +136,22 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
         t0 = performance.now();
         for (let j = 0; j < repeat; j++) {
             calls = { value: 0 };
-            dpCoins(this.coins, this.coins.length, this.state.givenValue, calls);
+            dpRod(this.prices, this.prices.length, calls);
         }
         t1 = performance.now();
         dpTime = t1 - t0;
         dpCalls = calls.value;
 
-        timeChart.push({  colName: `${strings.coins.coins}: ${this.coins}`, rec: recTime, dp: dpTime });
-        spaceChart.push({ colName: `${strings.coins.coins}: ${this.coins}`, rec: recCoinsSpace(this.coins.length), dp: dpCoinsSpace(this.coins.length, this.state.givenValue) });
-        callsChart.push({ colName: `${strings.coins.coins}: ${this.coins}`, rec: recCalls, dp: dpCalls });
+        timeChart.push({ colName: `Prices: ${this.prices}`, rec: recTime, dp: dpTime });
+        spaceChart.push({ colName: `Prices: ${this.prices}`, rec: recRodSpace(this.prices.length), dp: dpRodSpace(this.prices.length) });
+        callsChart.push({ colName: `Prices: ${this.prices}`, rec: recCalls, dp: dpCalls });
 
         // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < coinsExamples.length; i++) {
+        for (let i = 0; i < rodExamples.length; i++) {
             t0 = performance.now();
             for (let j = 0; j < repeat; j++) {
                 calls = { value: 0 };
-                recursiveCoins(coinsExamples[i].coins, coinsExamples[i].coins.length, coinsExamples[i].value, calls);
+                recursiveRod(rodExamples[i].prices, rodExamples[i].prices.length, calls);
             }
             t1 = performance.now();
             recTime = t1 - t0;
@@ -185,21 +160,21 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
             t0 = performance.now();
             for (let j = 0; j < repeat; j++) {
                 calls = { value: 0 };
-                dpCoins(coinsExamples[i].coins, coinsExamples[i].coins.length, coinsExamples[i].value, calls);
+                dpRod(rodExamples[i].prices, rodExamples[i].prices.length, calls);
             }
             t1 = performance.now();
 
             dpTime = t1 - t0;
             dpCalls = calls.value;
 
-            timeChart.push({  colName: `${strings.coins.coins}: ${coinsExamples[i].coins}, ${strings.coins.value}: ${coinsExamples[i].value}`, rec: recTime, dp: dpTime });
-            spaceChart.push({ colName: `${strings.coins.coins}: ${coinsExamples[i].coins}, ${strings.coins.value}: ${coinsExamples[i].value}`, rec: recCoinsSpace(coinsExamples[i].coins.length), dp: dpCoinsSpace(coinsExamples[i].coins.length, coinsExamples[i].value) });
-            callsChart.push({ colName: `${strings.coins.coins}: ${coinsExamples[i].coins}, ${strings.coins.value}: ${coinsExamples[i].value}`, rec: recCalls, dp: dpCalls });
+            timeChart.push({ colName: `Prices: ${rodExamples[i].prices}`, rec: recTime, dp: dpTime });
+            spaceChart.push({ colName: `Prices: ${rodExamples[i].prices}`, rec: recRodSpace(rodExamples[i].prices.length), dp: dpRodSpace(rodExamples[i].prices.length) });
+            callsChart.push({ colName: `Prices: ${rodExamples[i].prices}`, rec: recCalls, dp: dpCalls });
         }
     }
 
     private drawCharts = () => {
-        this.coins = GetNumbers(this.state.givenCoins);
+        this.prices = GetNumbers(this.state.givenPrices);
         this.timeStats = [];
         this.spaceStats = [];
         this.callsStats = [];
@@ -209,4 +184,4 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
     }
 }
 
-export default withStyles(styles)(CoinsCharts);
+export default withStyles(styles)(RodCharts);

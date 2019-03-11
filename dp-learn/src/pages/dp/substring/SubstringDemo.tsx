@@ -1,13 +1,13 @@
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
-import { Avatar, Button, Grid, TableCell, TableRow, TextField, Typography } from '@material-ui/core';
+import { Avatar, Grid, TableCell, TableRow, TextField, Typography } from '@material-ui/core';
 import { WithStyles, withStyles } from "@material-ui/core/styles";
 
 import { AnimatedDiv } from 'src/components/animations/Animated';
 import DemoTable from 'src/components/fields/DemoTable';
+import MyButton from 'src/components/buttons/MyButton';
 import SpeedSelector from 'src/components/buttons/SpeedSelector';
-import StepFinishButton from 'src/components/buttons/StepFinishButton';
 import { demoStyles } from 'src/styles/demoStyles';
 import { strings } from 'src/strings/languages';
 
@@ -118,12 +118,15 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
                 {/* Speed select */}
                 <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
                 <br />
-                <Button variant="contained" className={classes.buttonDark} onClick={this.evaluate} disabled={this.state.inProgress}>
-                    Start
-                </Button>
 
-                {/* Do step or finish */}
-                <StepFinishButton visible={this.state.inProgress} speed={this.state.speed} onStepClick={this.onStepClick} onFinishClick={this.onFinishClick} />
+                {/* Start button */}
+                <MyButton color='dark' label={strings.global.start} onClick={this.onStartClick} visible={true} />
+
+                {/* Step button */}
+                <MyButton color='light' label={strings.global.step} onClick={this.onStepClick} visible={this.state.inProgress && this.state.speed === 0} />
+
+                {/* Finish button */}
+                <MyButton color='light' label={strings.global.finish} onClick={this.onFinishClick} visible={this.state.inProgress} />
 
                 {/* Animated avatars */}
                 {(this.state.charX !== "" || this.state.charY !== "") &&
@@ -141,7 +144,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
                 }
 
                 {/* Table and result */}
-                <DemoTable subRes="" cols={this.LENGTH2 + 1} visible={this.state.tableVisible} result={this.state.result} head={this.tableHead} body={this.tableBody}/>                
+                <DemoTable subRes="" cols={this.LENGTH2 + 1} visible={this.state.tableVisible} result={this.state.result} head={this.tableHead} body={this.tableBody} />
             </div>
         );
     }
@@ -158,7 +161,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
         this.setState({ speed: +e.target.value });
     };
 
-    private evaluate = () => {
+    private onStartClick = () => {
         this.setState({
             charX: "",
             charY: ""
@@ -237,7 +240,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
             if (this.outerCounter > 1 && this.innerCounter > 1) {
                 this.incrementOn();
             }
-            
+
             if (this.table[this.outerCounter][this.innerCounter] > this.table[this.tableRow][this.tableCol]) {
                 this.tableRow = this.outerCounter;
                 this.tableCol = this.innerCounter;
@@ -285,15 +288,15 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
         while (this.outerCounter <= this.LENGTH1) {
             this.onStepClick();
         }
-        
-        this.setState({ speed: 1});
+
+        this.setState({ speed: 1 });
     };
 
     private incrementOn = () => {
 
         const cells = [`row ${this.outerCounter - 1},column ${this.innerCounter - 1}`];
 
-        this.setState({ 
+        this.setState({
             highlitedCells: cells
         });
 
@@ -338,7 +341,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
             const classNames = [classes.columnCaption, classes.caption];
 
             if (i === this.state.selectedCol) {
-                classNames.push(classes.highlitedCell);
+                classNames.push(classes.yellowCell);
             }
 
             heading.push(
@@ -362,7 +365,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
 
             classNames = [classes.rowCaption, classes.caption];
             if (i === this.state.selectedRow) {
-                classNames.push(classes.highlitedCell);
+                classNames.push(classes.yellowCell);
             }
 
             // Row names
@@ -375,7 +378,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
             // Table body(content), j = 1 because 0 is row name
             for (let j = 1; j <= this.LENGTH2; j++) {
                 classNames = [classes.tableCell];
-                const key = `row ${i},column ${j}`;
+                const key = `row ${i}, column ${j}`;
 
                 let value = this.state.table[i][j] === Number.MAX_VALUE ? "-" : this.state.table[i][j].toString();
 

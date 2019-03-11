@@ -12,8 +12,7 @@ export const english = {
         result: 'Result',
         drawCharts: 'Draw charts',
         recCalls: 'recursive calls',
-        numberOfRecCalls: 'Number of recursive calls',
-        numberOfCycles: 'Number of cycles',
+        numberOfCalls: 'Number of recursive calls / iterations',
         microSeconds: 'Microseconds',
         nanoSeconds: 'Nanoseconds',
         skipping: 'Skipping...'
@@ -31,7 +30,9 @@ export const english = {
     },
     menu: {
         coins: 'Minimum coins',
-        substring: 'Longest substring'
+        substring: 'Longest substring',
+        rod: 'Cutting a rod',
+        editDistance: 'Edit Distance'
     },
     coins: {
         title: 'Minimum number of coins that make a given value',
@@ -67,7 +68,16 @@ export const english = {
         },
         demo: {
             title: 'Cutting a rod - demo',
-            brief: 'Dynamic programming solution of cutting a rod problem. Please provide comma separated prices of lengths (lengths are 1, 2, 3, ...).',
+            brief: 'Please provide comma separated prices of lengths (lengths are 1, 2, 3, ...).',
         },
-    }
+    },
+    editDistance: {
+        theory: {
+
+        },
+        demo: {
+            title: 'Edit distance - demo',
+            brief: 'Plese provide 2 strings, which will be edit distance calculated for.',
+        },
+    },
 };
