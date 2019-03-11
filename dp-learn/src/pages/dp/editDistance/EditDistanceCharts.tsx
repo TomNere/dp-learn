@@ -2,10 +2,9 @@ import * as Prism from 'prismjs';
 import * as React from 'react';
 
 import { Button, Grid, TextField, Theme, createStyles } from '@material-ui/core';
-import { CheckNumbers, GetNumbers } from 'src/helpers/Helpers';
 import { IChartData, ISimpleObjectParameter } from 'src/types';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
-import { dpRod, dpRodSpace, recRodSpace, recursiveRod, rodExamples } from 'src/dpProblemsStuff/rod/RodStatsHelper';
+import { dpEditDistance, dpEditDistanceSpace, editDistanceExamples, recEditDistanceSpace, recursiveEditDistance } from 'src/dpProblemsStuff/editDistance/EditDistanceStatsHelper';
 
 import DoubleChart from 'src/components/fields/DoubleChart';
 import myTheme from '../../../styles/index';
@@ -14,8 +13,9 @@ import { strings } from 'src/strings/languages';
 type AllProps =
     WithStyles<typeof styles>;
 
-interface IRodChartsState {
-    givenPrices: string,
+interface IEditDistanceChartsState {
+    stringX: string,
+    stringY: string,
     chartsVisible: boolean
 }
 
@@ -57,15 +57,15 @@ const styles = (theme: Theme) => createStyles({
     },
 });
 
-class RodCharts extends React.Component<AllProps, IRodChartsState> {
-    private prices: number[];
+class EditDistanceCharts extends React.Component<AllProps, IEditDistanceChartsState> {
     private spaceStats: IChartData[];
     private callsStats: IChartData[];
 
     public constructor(props: AllProps) {
         super(props)
         this.state = {
-            givenPrices: '1,5,6,6,9',
+            stringX: "AdRemovee",
+            stringY: "AddRemove",
             chartsVisible: false
         }
     }
@@ -82,11 +82,21 @@ class RodCharts extends React.Component<AllProps, IRodChartsState> {
                 <Grid className={[classes.container, classes.bottomMargin].join(' ')}>
                     <form className={classes.container} autoComplete="off">
                         <TextField
-                            id="givenPricesTF"
-                            label={strings.coins.coins}
+                            id="stringXTF"
+                            label="String X"
                             className={classes.textField}
-                            value={this.state.givenPrices}
-                            onChange={this.handlePrices}
+                            value={this.state.stringX}
+                            onChange={this.strXChange}
+                            margin="normal"
+                        />
+                    </form>
+                    <form className={classes.container} autoComplete="off">
+                        <TextField
+                            id="stringYTF"
+                            label="String Y"
+                            className={classes.textField}
+                            value={this.state.stringY}
+                            onChange={this.strYChange}
                             margin="normal"
                         />
                     </form>
@@ -104,11 +114,13 @@ class RodCharts extends React.Component<AllProps, IRodChartsState> {
         );
     }
 
-    private handlePrices = (e: any) => {
-        if (CheckNumbers(e.target.value)) {
-            this.setState({ givenPrices: e.target.value, chartsVisible: false });
-        }
-    }
+    private strXChange = (e: any) => {
+        this.setState({ stringX: e.target.value });
+    };
+
+    private strYChange = (e: any) => {
+        this.setState({ stringY: e.target.value });
+    };
 
     private getStats = (spaceChart: IChartData[], callsChart: IChartData[]) => {
         let recCalls: number;
@@ -117,37 +129,41 @@ class RodCharts extends React.Component<AllProps, IRodChartsState> {
         let calls: ISimpleObjectParameter = { value: 0 };
 
         calls = { value: 0 };
-        recursiveRod(this.prices, this.prices.length, calls);
+        recursiveEditDistance(this.state.stringX, this.state.stringY, this.state.stringX.length, this.state.stringY.length, calls);
 
         recCalls = calls.value;
 
         calls = { value: 0 };
-        dpRod(this.prices, this.prices.length, calls);
-
+        dpEditDistance(this.state.stringX, this.state.stringY, this.state.stringX.length, this.state.stringY.length, calls);
         dpCalls = calls.value;
 
-        spaceChart.push({ colName: `${strings.rod.prices}: ${this.prices}`, rec: recRodSpace(this.prices.length), dp: dpRodSpace(this.prices.length) });
-        callsChart.push({ colName: `${strings.rod.prices}: ${this.prices}`, rec: recCalls, dp: dpCalls });
+        spaceChart.push({ colName: `StrX: ${this.state.stringX}, StrY: ${this.state.stringY}`, rec: recEditDistanceSpace(this.state.stringX, this.state.stringY), dp: dpEditDistanceSpace(this.state.stringX, this.state.stringY) });
+        callsChart.push({ colName: `StrX: ${this.state.stringX}, StrY: ${this.state.stringY}`, rec: recCalls, dp: dpCalls });
 
         // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < rodExamples.length; i++) {
+        for (let i = 0; i < editDistanceExamples.length; i++) {
             calls = { value: 0 };
-            recursiveRod(rodExamples[i].prices, rodExamples[i].prices.length, calls);
+            recursiveEditDistance(editDistanceExamples[i].stringX,
+                editDistanceExamples[i].stringY,
+                editDistanceExamples[i].stringX.length,
+                editDistanceExamples[i].stringY.length, calls);
 
             recCalls = calls.value;
 
             calls = { value: 0 };
-            dpRod(rodExamples[i].prices, rodExamples[i].prices.length, calls);
+            dpEditDistance(editDistanceExamples[i].stringX,
+                editDistanceExamples[i].stringY,
+                editDistanceExamples[i].stringX.length,
+                editDistanceExamples[i].stringY.length, calls);
 
             dpCalls = calls.value;
 
-            spaceChart.push({ colName: `${strings.rod.prices}: ${rodExamples[i].prices}`, rec: recRodSpace(rodExamples[i].prices.length), dp: dpRodSpace(rodExamples[i].prices.length) });
-            callsChart.push({ colName: `${strings.rod.prices}: ${rodExamples[i].prices}`, rec: recCalls, dp: dpCalls });
+            spaceChart.push({ colName: `StrX: ${editDistanceExamples[i].stringX}, StrY: ${editDistanceExamples[i].stringY}`, rec: recEditDistanceSpace(editDistanceExamples[i].stringX, editDistanceExamples[i].stringY), dp: dpEditDistanceSpace(editDistanceExamples[i].stringX, editDistanceExamples[i].stringY) });
+            callsChart.push({ colName: `StrX: ${editDistanceExamples[i].stringX}, StrY: ${editDistanceExamples[i].stringY}`, rec: recCalls, dp: dpCalls });
         }
     }
 
     private drawCharts = () => {
-        this.prices = GetNumbers(this.state.givenPrices);
         this.spaceStats = [];
         this.callsStats = [];
 
@@ -156,4 +172,4 @@ class RodCharts extends React.Component<AllProps, IRodChartsState> {
     }
 }
 
-export default withStyles(styles)(RodCharts);
+export default withStyles(styles)(EditDistanceCharts);

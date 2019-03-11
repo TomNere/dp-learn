@@ -22,7 +22,7 @@ type AllProps =
 
 interface IStateProps {
     data: IChartData[],
-    unit: 'ms' | 'ns' | '',
+    unit: string,
     brief: string,
     showLegend: boolean
 }
@@ -51,13 +51,10 @@ const Label = (symbol: any) => (props: any) => {
     );
 };
 
-const nsLabel = Label(' ns');
-const msLabel = Label(' ms');
-
 class DoubleChart extends React.Component<AllProps> {
     public static defaultProps: IStateProps = {
         data: [],
-        unit: 'ms',
+        unit: '',
         brief: '',
         showLegend: true
     }
@@ -82,19 +79,19 @@ class DoubleChart extends React.Component<AllProps> {
                         <ValueAxis scaleName="rec" showGrid={false} showLine={true} showTicks={true} />
                     }
                     {unit !== '' &&
-                        <ValueAxis scaleName="rec" showGrid={false} showLine={true} showTicks={true} labelComponent={unit === 'ms' ? msLabel : nsLabel} />
+                        <ValueAxis scaleName="rec" showGrid={false} showLine={true} showTicks={true} labelComponent={Label(` ${unit}`)} />
                     }
 
                     <LineSeries
                         name={`${brief} - ${global.dynProgSolution}`}
-                        valueField="rec"
+                        valueField="dp"
                         argumentField="colName"
                         scaleName="rec"
                     />
 
                     <LineSeries
                         name={`${brief} - ${global.recursiveSolution}`}
-                        valueField="dp"
+                        valueField="rec"
                         argumentField="colName"
                         scaleName="rec"
                     />

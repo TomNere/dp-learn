@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
+import EditDistanceCharts from './EditDistanceCharts';
 import EditDistanceDemo from './EditDistanceDemo';
 import TabMenu from 'src/containers/TabMenu';
 
@@ -25,7 +26,7 @@ class EditDistance extends React.Component<AllProps> {
 
         return (
             <div className={classes.root}>
-                <TabMenu theory={<EditDistanceDemo />} demo={<EditDistanceDemo />} charts={<EditDistanceDemo />} />
+                <TabMenu theory={<EditDistanceDemo />} demo={<EditDistanceDemo />} charts={<EditDistanceCharts />} />
             </div>
         );
     }

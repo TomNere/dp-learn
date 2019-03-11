@@ -26,7 +26,8 @@ export const english = {
         step: 'Step by step',
         theory: 'Theory',
         demo: 'Demo',
-        charts: 'Charts'
+        charts: 'Charts',
+        calls: 'calls'
     },
     menu: {
         coins: 'Minimum coins',
@@ -63,6 +64,7 @@ export const english = {
         },
     },
     rod: {
+        prices: 'Prices',
         theory: {
 
         },

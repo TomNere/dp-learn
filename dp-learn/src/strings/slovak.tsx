@@ -25,7 +25,8 @@ export const slovak = {
         step: 'Krokovanie',
         theory: 'Teória',
         demo: 'Demo',
-        charts: 'Grafy'
+        charts: 'Grafy',
+        calls: 'volaní'
     },
     menu: {
         coins: 'Minimálny počet mincí',
@@ -62,6 +63,7 @@ export const slovak = {
         },
     },
     rod: {
+        prices: 'Ceny',
         theory: {
 
         },
