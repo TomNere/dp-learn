@@ -85,14 +85,14 @@ class DoubleChart extends React.Component<AllProps> {
                     <LineSeries
                         name={`${brief} - ${global.dynProgSolution}`}
                         valueField="dp"
-                        argumentField="colName"
+                        argumentField="name"
                         scaleName="rec"
                     />
 
                     <LineSeries
                         name={`${brief} - ${global.recursiveSolution}`}
                         valueField="rec"
-                        argumentField="colName"
+                        argumentField="name"
                         scaleName="rec"
                     />
 

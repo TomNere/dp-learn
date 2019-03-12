@@ -7,7 +7,15 @@ export interface ISimpleObjectParameter {
 export type ITimeConverter = (n: number) => number;
 
 export interface IChartData {
-    colName: string,
+    name: string,
     rec: number,
     dp: number,
+}
+
+export interface IStatsTableData {
+    name: string,
+    dpTime: number,
+    recTime: number,
+    dpSpace: number,
+    recSpace: number
 }

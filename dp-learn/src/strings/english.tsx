@@ -15,7 +15,9 @@ export const english = {
         numberOfCalls: 'Number of recursive calls / iterations',
         microSeconds: 'Microseconds',
         nanoSeconds: 'Nanoseconds',
-        skipping: 'Skipping...'
+        skipping: 'Skipping...',
+        recursion: 'Rekursion',
+        dp: 'DP'
     },
     components: {
         srcCode: 'Source code',

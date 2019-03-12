@@ -344,7 +344,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
 
         for (let i = 0; i <= this.LENGTH1; i++) {
             table[i] = [];
-            for (let j = 0; i <= this.LENGTH2; j++) {
+            for (let j = 0; j <= this.LENGTH2; j++) {
                 // If first string is empty, only option is to 
                 // insert all characters of second string 
                 if (i === 0) {
@@ -379,9 +379,11 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
             highlightCandidates: false,
             highlightMin: false,
             highlightCurrent: false,
-            table
+            table,
+            inProgress: false,
+            highlightColRow: false,
+            result: `Result: ${table[this.LENGTH1][this.LENGTH2]}`
         });
-        this.setFinalState();
     };
 
     private setFinalState = () => {

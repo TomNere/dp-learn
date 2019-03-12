@@ -167,9 +167,9 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
         dpTime = t1 - t0;
         dpCalls = calls.value;
 
-        timeChart.push({  colName: `${strings.coins.coins}: ${this.coins}`, rec: recTime, dp: dpTime });
-        spaceChart.push({ colName: `${strings.coins.coins}: ${this.coins}`, rec: recCoinsSpace(this.coins.length), dp: dpCoinsSpace(this.coins.length, this.state.givenValue) });
-        callsChart.push({ colName: `${strings.coins.coins}: ${this.coins}`, rec: recCalls, dp: dpCalls });
+        timeChart.push({  name: `${strings.coins.coins}: ${this.coins}`, rec: recTime, dp: dpTime });
+        spaceChart.push({ name: `${strings.coins.coins}: ${this.coins}`, rec: recCoinsSpace(this.coins.length), dp: dpCoinsSpace(this.coins.length, this.state.givenValue) });
+        callsChart.push({ name: `${strings.coins.coins}: ${this.coins}`, rec: recCalls, dp: dpCalls });
 
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < coinsExamples.length; i++) {
@@ -192,9 +192,9 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
             dpTime = t1 - t0;
             dpCalls = calls.value;
 
-            timeChart.push({  colName: `${strings.coins.coins}: ${coinsExamples[i].coins}, ${strings.coins.value}: ${coinsExamples[i].value}`, rec: recTime, dp: dpTime });
-            spaceChart.push({ colName: `${strings.coins.coins}: ${coinsExamples[i].coins}, ${strings.coins.value}: ${coinsExamples[i].value}`, rec: recCoinsSpace(coinsExamples[i].coins.length), dp: dpCoinsSpace(coinsExamples[i].coins.length, coinsExamples[i].value) });
-            callsChart.push({ colName: `${strings.coins.coins}: ${coinsExamples[i].coins}, ${strings.coins.value}: ${coinsExamples[i].value}`, rec: recCalls, dp: dpCalls });
+            timeChart.push({  name: `${strings.coins.coins}: ${coinsExamples[i].coins}, ${strings.coins.value}: ${coinsExamples[i].value}`, rec: recTime, dp: dpTime });
+            spaceChart.push({ name: `${strings.coins.coins}: ${coinsExamples[i].coins}, ${strings.coins.value}: ${coinsExamples[i].value}`, rec: recCoinsSpace(coinsExamples[i].coins.length), dp: dpCoinsSpace(coinsExamples[i].coins.length, coinsExamples[i].value) });
+            callsChart.push({ name: `${strings.coins.coins}: ${coinsExamples[i].coins}, ${strings.coins.value}: ${coinsExamples[i].value}`, rec: recCalls, dp: dpCalls });
         }
     }
 

@@ -14,13 +14,15 @@ export const slovak = {
         numberOfCalls: 'Počet rekurzívnych volaní / cyklov',
         microSeconds: 'Microseconds',
         nanoSeconds: 'Nanoseconds',
-        skipping: 'Preskakujem...'
+        skipping: 'Preskakujem...',
+        recursion: 'Rekurzia',
+        dp: 'DP'
     },
     components: {
         srcCode: 'Zdrojový kód',
         timeComplex:  'Časová zložitosť     ',
         spaceComplex: 'Priestorová zložitosť',
-        tryDemo: 'Vyskušaj demo!',
+        tryDemo: 'Vyskúšaj demo!',
         speed: 'Rýchlosť',
         step: 'Krokovanie',
         theory: 'Teória',

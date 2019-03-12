@@ -82,4 +82,26 @@ export const demoStyles = (theme: Theme) => createStyles({
     flexChild: {
         flex: 1,
     },
+    centeredContent: {
+        textAlign: 'center',
+        margin: theme.spacing.unit * 2,
+        "& span": {
+            fontSize: theme.typography.pxToRem(24),
+            color: 'white',
+            backgroundColor: myTheme.palette.secondary.main,
+            padding: theme.spacing.unit,
+            borderRadius: theme.spacing.unit * 2,
+        }
+    },
+    table: {
+        width: 'auto',
+        "& td:last-child, th:last-child": {
+            paddingRight: theme.spacing.unit
+        },
+    },
+    subRes: {
+        color: 'white',
+        backgroundColor: myTheme.palette.primary.main,
+        padding: '4px 24px 4px 14px',
+    }
 });

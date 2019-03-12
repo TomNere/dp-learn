@@ -3,11 +3,12 @@ import * as React from 'react';
 
 import { Button, Grid, TextField, Theme, createStyles } from '@material-ui/core';
 import { CheckNumbers, GetNumbers } from 'src/helpers/Helpers';
-import { IChartData, ISimpleObjectParameter } from 'src/types';
+import { IChartData, ISimpleObjectParameter, IStatsTableData } from 'src/types';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 import { dpRod, dpRodSpace, recRodSpace, recursiveRod, rodExamples } from 'src/dpProblemsStuff/rod/RodStatsHelper';
 
 import DoubleChart from 'src/components/fields/DoubleChart';
+import StatsTable from 'src/components/fields/StatsTable';
 import myTheme from '../../../styles/index';
 import { strings } from 'src/strings/languages';
 
@@ -61,6 +62,7 @@ class RodCharts extends React.Component<AllProps, IRodChartsState> {
     private prices: number[];
     private spaceStats: IChartData[];
     private callsStats: IChartData[];
+    private tableStats: IStatsTableData[];
 
     public constructor(props: AllProps) {
         super(props)
@@ -98,6 +100,7 @@ class RodCharts extends React.Component<AllProps, IRodChartsState> {
                     <div>
                         <DoubleChart data={this.callsStats} unit={strings.components.calls} brief={strings.components.timeComplex} />
                         <DoubleChart data={this.spaceStats} brief={strings.components.spaceComplex} />
+                        <StatsTable data={this.tableStats} />
                     </div>
                 }
             </div>
@@ -110,9 +113,11 @@ class RodCharts extends React.Component<AllProps, IRodChartsState> {
         }
     }
 
-    private getStats = (spaceChart: IChartData[], callsChart: IChartData[]) => {
+    private getStats = () => {
         let recCalls: number;
         let dpCalls: number;
+        let name: string;
+        let data: IStatsTableData;
 
         let calls: ISimpleObjectParameter = { value: 0 };
 
@@ -126,8 +131,18 @@ class RodCharts extends React.Component<AllProps, IRodChartsState> {
 
         dpCalls = calls.value;
 
-        spaceChart.push({ colName: `${strings.rod.prices}: ${this.prices}`, rec: recRodSpace(this.prices.length), dp: dpRodSpace(this.prices.length) });
-        callsChart.push({ colName: `${strings.rod.prices}: ${this.prices}`, rec: recCalls, dp: dpCalls });
+        name = `${strings.rod.prices}: ${this.prices}`;
+        data = {
+            name,
+            dpTime: dpCalls,
+            recTime: recCalls,
+            dpSpace: dpRodSpace(this.prices.length),
+            recSpace: recRodSpace(this.prices.length)
+        }
+
+        this.spaceStats.push({ name, rec: data.recSpace, dp: data.dpSpace});
+        this.callsStats.push({ name, rec: recCalls, dp: dpCalls });
+        this.tableStats.push(data);
 
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < rodExamples.length; i++) {
@@ -141,8 +156,18 @@ class RodCharts extends React.Component<AllProps, IRodChartsState> {
 
             dpCalls = calls.value;
 
-            spaceChart.push({ colName: `${strings.rod.prices}: ${rodExamples[i].prices}`, rec: recRodSpace(rodExamples[i].prices.length), dp: dpRodSpace(rodExamples[i].prices.length) });
-            callsChart.push({ colName: `${strings.rod.prices}: ${rodExamples[i].prices}`, rec: recCalls, dp: dpCalls });
+            name = `${strings.rod.prices}: ${rodExamples[i].prices}`;
+            data = {
+                name,
+                dpTime: dpCalls,
+                recTime: recCalls,
+                dpSpace: dpRodSpace(rodExamples[i].prices.length),
+                recSpace: recRodSpace(rodExamples[i].prices.length)
+            }
+
+            this.spaceStats.push({ name, rec: data.recSpace, dp: data.dpSpace});
+            this.callsStats.push({ name, rec: recCalls, dp: dpCalls });
+            this.tableStats.push(data);
         }
     }
 
@@ -150,8 +175,9 @@ class RodCharts extends React.Component<AllProps, IRodChartsState> {
         this.prices = GetNumbers(this.state.givenPrices);
         this.spaceStats = [];
         this.callsStats = [];
+        this.tableStats = [];
 
-        this.getStats(this.spaceStats, this.callsStats);
+        this.getStats();
         this.setState({ chartsVisible: true });
     }
 }

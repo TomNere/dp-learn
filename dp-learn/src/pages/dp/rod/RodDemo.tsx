@@ -81,7 +81,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
                             <form className={classes.container} autoComplete="off">
                                 <TextField
                                     id="givenPricesTF"
-                                    label={`${strings.coins.coins}(max. 15)`}
+                                    label={`Prices`}
                                     className={classes.textField}
                                     value={this.state.givenPrices}
                                     onChange={this.handlePrices}
