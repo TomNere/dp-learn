@@ -73,6 +73,10 @@ class Menu extends React.Component<AllProps> {
                         <ListItem className={this.isSelected('/mainpage/editDistance', true)} button={true} onClick={this.showEditDistance}>
                             <ListItemText classes={{ primary: this.isSelected('/mainpage/editDistance', false) }} primary={strings.menu.editDistance} />
                         </ListItem>
+                        {/* Optimalized search binary tree */}
+                        <ListItem className={this.isSelected('/mainpage/tree', true)} button={true} onClick={this.showTree}>
+                            <ListItemText classes={{ primary: this.isSelected('/mainpage/tree', false) }} primary={strings.menu.tree} />
+                        </ListItem>
                     </div>
                 </List>
             </Drawer>
@@ -103,6 +107,10 @@ class Menu extends React.Component<AllProps> {
 
     private showEditDistance = () => {
         this.props.history.push("/mainpage/editDistance");
+    }
+
+    private showTree = () => {
+        this.props.history.push("/mainpage/tree");
     }
 }
 

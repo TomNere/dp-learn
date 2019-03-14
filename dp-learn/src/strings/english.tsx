@@ -21,7 +21,7 @@ export const english = {
     },
     components: {
         srcCode: 'Source code',
-        timeComplex:  'Time complexity ',
+        timeComplex: 'Time complexity ',
         spaceComplex: 'Space complexity',
         tryDemo: 'Try out demo!',
         speed: 'Speed',
@@ -29,13 +29,14 @@ export const english = {
         theory: 'Theory',
         demo: 'Demo',
         charts: 'Charts',
-        calls: 'calls'
+        calls: 'calls',
     },
     menu: {
         coins: 'Minimum coins',
         substring: 'Longest substring',
         rod: 'Cutting a rod',
-        editDistance: 'Edit Distance'
+        editDistance: 'Edit Distance',
+        tree: 'Optimal binary search tree'
     },
     coins: {
         title: 'Minimum number of coins that make a given value',
@@ -72,7 +73,7 @@ export const english = {
         },
         demo: {
             title: 'Cutting a rod - demo',
-            brief: 'Please provide comma separated prices of lengths (lengths are 1, 2, 3, ...).',
+            brief: 'Provide comma separated prices of lengths (lengths are 1, 2, 3, ...).',
         },
     },
     editDistance: {
@@ -81,7 +82,26 @@ export const english = {
         },
         demo: {
             title: 'Edit distance - demo',
-            brief: 'Plese provide 2 strings, which will be edit distance calculated for.',
+            brief: 'Provide 2 strings, which will be edit distance calculated for.',
         },
     },
+    tree: {
+        arrayOfK: 'Array of search keys',
+        arrayOfF: 'Array of frequency counts',
+        theory: {
+
+        },
+        demo: {
+            title: 'Optimal binary search tree - demo',
+            brief: 'Provide array of search keys and array of frequency counts (comma separated numbers in both cases).',
+            initialState: 'Initial state',
+            evalChainLength: 'Evaluating values for chain of length ',
+            assignedIntMax: 'Assigned INT_MAX',
+            selectedToSum: 'Selected cells to sum',
+            assigning: 'assigning!',
+            nothingToDo: 'nothing to do.',
+            nextCell: 'Moving to next cell',
+            done: 'Hotovo.'
+        }
+    }
 };

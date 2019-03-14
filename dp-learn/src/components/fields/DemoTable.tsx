@@ -33,7 +33,7 @@ const styles = (theme: Theme) => createStyles({
     table: {
         width: 'auto',
         "& td:last-child, th:last-child": {
-            paddingRight: theme.spacing.unit
+            paddingRight: 4
         },
     },
     subRes: {
@@ -66,7 +66,7 @@ class DemoTable extends React.Component<AllProps> {
                                         </TableCell>
                                     </TableRow>
                                 }
-                                <TableRow> {this.props.head()} </TableRow>
+                                <TableRow>{this.props.head()}</TableRow>
                                 {this.props.body()}
                             </TableBody>
                         </Table>

@@ -52,3 +52,23 @@ export const MinPosition = (n1: [number, [number, number]], n2: [number, [number
 
     return min[1];
 }
+
+
+// A utility function to get sum of array elements from i to j
+// helper for tree demo
+export const FreqArraySum = (freqs: number[], i: number, j: number) => {
+    let sum = 0;
+    for (let k = i; k <= j; k++) {
+        sum += freqs[k];
+    }
+
+    return sum;
+}
+
+export const ValueOrIntMax = (val: number) => {
+    return val === Number.MAX_VALUE ? 'INT_MAX' : val.toString();
+}
+
+export const ValueOrUndefined = (val: number) => {
+    return val === undefined ? '-' : val.toString();
+}

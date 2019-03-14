@@ -34,7 +34,8 @@ export const slovak = {
         coins: 'Minimálny počet mincí',
         substring: 'Najdlhší spoločný podreťazec',
         rod: 'Rezanie tyče',
-        editDistance: 'Editačná vzdialenosť'
+        editDistance: 'Editačná vzdialenosť',
+        tree: 'Optimalizovaný binárny vyhľadávací strom'
     },
     coins: {
         title: 'Minimálny počet mincí na vytvorenie danej hodnoty',
@@ -83,4 +84,23 @@ export const slovak = {
             brief: 'Zadajte 2 reťazce, pre ktoré bude následne vypočítaná editačná vzdialenosť.',
         },
     },
+    tree: {
+        arrayOfK: 'Pole vyhľadávacích kľúčov',
+        arrayOfF: 'Pole počtu vyhľadaní kľučov',
+        theory: {
+
+        },
+        demo: {
+            title: 'Optimalizovaný binárny vyhľadávací strom - demo',
+            brief: 'Zadajte pole vyhľadávacích kľúčov a pole počtu vyhľadávaní jednotlivých kľúčov (v oboch prípadoch ide o čísla oddelené čiarkami).',
+            initialState: 'Počiatočný stav',
+            evalChainLength: 'Výpočet hodnôt pre reťaz dlžky ',
+            assignedIntMax: 'Priradené INT_MAX',
+            selectedToSum: 'Vybrané bunky pre sčítanie',
+            assigning: 'priradzujem!',
+            nothingToDo: 'žiadna akcia.',
+            nextCell: 'Výber ďalšej bunky',
+            done: 'Hotovo.'
+        }
+    }
 };

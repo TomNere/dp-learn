@@ -6,6 +6,7 @@ import Coins from 'src/pages/dp/coins/Coins';
 import EditDistance from 'src/pages/dp/editDistance/EditDistance';
 import Rod from 'src/pages/dp/rod/Rod';
 import Substring from 'src/pages/dp/substring/Substring';
+import Tree from 'src/pages/dp/tree/Tree';
 
 function MainWindow(props: any) {
     return (
@@ -14,6 +15,7 @@ function MainWindow(props: any) {
             <Route exact={true} path="/mainpage/substring" component={Substring} />
             <Route exact={true} path="/mainpage/rod" component={Rod} />
             <Route exact={true} path="/mainpage/editDistance" component={EditDistance} />
+            <Route exact={true} path="/mainpage/tree" component={Tree} />
         </Switch>
     );
 }

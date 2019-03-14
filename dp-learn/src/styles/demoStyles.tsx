@@ -40,6 +40,7 @@ export const demoStyles = (theme: Theme) => createStyles({
         textAlign: 'center',
         padding: 0,
         borderRight: '1px solid rgba(224, 224, 224, 1)',
+        minWidth: 64
     },
     yellowCell: {
         backgroundColor: '#ffef25'
