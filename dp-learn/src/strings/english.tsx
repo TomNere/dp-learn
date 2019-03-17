@@ -30,6 +30,7 @@ export const english = {
         demo: 'Demo',
         charts: 'Charts',
         calls: 'calls',
+        theoreticValue: 'theoretical value'
     },
     menu: {
         coins: 'Minimum coins',

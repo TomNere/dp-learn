@@ -42,6 +42,11 @@ export const dpRod : ISolutionRod = (prices: number[], arrSize: number, calls: I
 
 export type IRodSpace = (arrSize: number) => number;
 
+export const recRodTime = (arrSize: number) => {
+    // TODO right algorithm
+    return arrSize * arrSize;
+}
+
 export const recRodSpace : IRodSpace = (arrSize: number) => {
     return arrSize;     // Store only prices
 }

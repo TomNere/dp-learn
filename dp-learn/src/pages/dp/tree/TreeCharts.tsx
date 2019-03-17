@@ -1,15 +1,15 @@
 import * as Prism from 'prismjs';
 import * as React from 'react';
 
-import { Button, Grid, TextField, Theme, createStyles } from '@material-ui/core';
-import { IChartData, ISimpleObjectParameter, IStatsTableData } from 'src/types';
+import { Grid, Theme, createStyles } from '@material-ui/core';
+import { ISimpleObjectParameter, ISpaceChartData, IStatsTableData, ITimeChartData } from 'src/types';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
-import { dpTree, dpTreeSpace, recTreeSpace, recursiveTree, treeExamples } from 'src/dpProblemsStuff/tree/TreeStatsHelper';
+import { dpTree, dpTreeSpace, recTreeSpace, recTreeTime, recursiveTree, treeExamples } from 'src/dpProblemsStuff/tree/TreeStatsHelper';
 
-import DoubleChart from 'src/components/fields/DoubleChart';
-import { GetNumbers } from 'src/helpers/Helpers';
-import StatsTable from 'src/components/fields/StatsTable';
-import myTheme from '../../../styles/index';
+import ChartsAndTable from 'src/components/fields/ChartsAndTable';
+import MyButton from 'src/components/buttons/MyButton';
+import NumbersField from 'src/components/fields/NumbersField';
+import { StrToNumArray } from 'src/helpers/Helpers';
 import { strings } from 'src/strings/languages';
 
 type AllProps =
@@ -26,42 +26,14 @@ const styles = (theme: Theme) => createStyles({
         display: 'flex',
         flexWrap: 'wrap',
     },
-    center: {
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        display: 'block'
-    },
-    leftMargin: {
-        marginLeft: 20
-    },
     bottomMargin: {
         marginBottom: 15,
-    },
-    paper: {
-        padding: theme.spacing.unit * 2,
-    },
-    flexChild: {
-        flex: 1,
-        padding: theme.spacing.unit * 2
-    },
-    buttonDark: {
-        margin: theme.spacing.unit,
-        color: 'white',
-        backgroundColor: myTheme.palette.primary.main,
-        "&:hover": {
-            backgroundColor: myTheme.palette.secondary.main
-        }
-    },
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        minWidth: 200,
     },
 });
 
 class TreeCharts extends React.Component<AllProps, ITreeChartsState> {
-    private spaceStats: IChartData[];
-    private callsStats: IChartData[];
+    private spaceStats: ISpaceChartData[];
+    private timeStats: ITimeChartData[];
     private tableStats: IStatsTableData[];
 
     // private keys: number[];
@@ -86,59 +58,28 @@ class TreeCharts extends React.Component<AllProps, ITreeChartsState> {
         return (
             <div>
                 <Grid className={[classes.container, classes.bottomMargin].join(' ')}>
-                    <form className={classes.container} autoComplete="off">
-                        <TextField
-                            id="keysArrayTF"
-                            label={strings.tree.arrayOfK}
-                            className={classes.textField}
-                            value={this.state.givenKeys}
-                            onChange={this.handleKeys}
-                            margin="normal"
-                        />
-                    </form>
-                    <form className={classes.container} autoComplete="off">
-                        <TextField
-                            id="freqsArrayTF"
-                            label={strings.tree.arrayOfF}
-                            className={classes.textField}
-                            value={this.state.givenFreqs}
-                            onChange={this.handleFreqs}
-                            margin="normal"
-                        />
-                    </form>
+                    <NumbersField label={strings.tree.arrayOfK} numbers={this.state.givenKeys} onChange={this.handleKeys} />
+                    <NumbersField label={strings.tree.arrayOfF} numbers={this.state.givenFreqs} onChange={this.handleFreqs} />
                 </Grid>
-                <Button variant="contained" color="primary" className={classes.buttonDark} onClick={this.drawCharts}>
-                    {strings.global.drawCharts}
-                </Button>
-                {this.state.chartsVisible &&
-                    <div>
-                        <DoubleChart data={this.callsStats} unit={strings.components.calls} brief={strings.components.timeComplex} />
-                        <DoubleChart data={this.spaceStats} brief={strings.components.spaceComplex} />
-                        <StatsTable data={this.tableStats} />
-                    </div>
-                }
+                <MyButton label={strings.global.drawCharts} color='dark' onClick={this.drawCharts} visible={true} />
+                <ChartsAndTable timeStats={this.timeStats} spaceStats={this.spaceStats} tableStats={this.tableStats} visible={this.state.chartsVisible} />
             </div>
         );
     }
 
     private handleKeys = (e: any) => {
-        for (const key of e.target.value.split(",")) {
-            if (Number.isNaN(+key)) {
-                return;
-            }
+        const numbers = StrToNumArray(e.target.value);
+        if (numbers.length > 0) {
+            this.setState({ givenKeys: e.target.value });
         }
-        
-        this.setState({ givenKeys: e.target.value });
     }
 
     private handleFreqs = (e: any) => {
-        for (const freq of e.target.value.split(",")) {
-            if (Number.isNaN(+freq)) {
-                return;
-            }
+        const numbers = StrToNumArray(e.target.value);
+        if (numbers.length > 0) {
+            this.setState({ givenFreqs: e.target.value });
+            this.freqs = numbers;
         }
-
-        this.setState({ givenFreqs: e.target.value });
     }
 
     private getStats = () => {
@@ -161,14 +102,15 @@ class TreeCharts extends React.Component<AllProps, ITreeChartsState> {
         name = `Freqs: ${this.state.givenFreqs}`;
         data = {
             name,
-            dpTime: dpCalls,
+            recTheorTime: recTreeTime(this.freqs.length),
             recTime: recCalls,
+            dpTime: dpCalls,
             dpSpace: dpTreeSpace(this.freqs.length),
             recSpace: recTreeSpace(this.freqs.length)
         }
 
         this.spaceStats.push({ name, rec: data.recSpace, dp: data.dpSpace });
-        this.callsStats.push({ name, rec: recCalls, dp: dpCalls });
+        this.timeStats.push({ name, recTheoretical: data.recTheorTime, rec: recCalls, dp: dpCalls });
         this.tableStats.push(data);
 
         // tslint:disable-next-line:prefer-for-of
@@ -189,24 +131,23 @@ class TreeCharts extends React.Component<AllProps, ITreeChartsState> {
             name = `Freqs: ${treeExamples[i].freqs}`;
             data = {
                 name,
-                dpTime: dpCalls,
+                recTheorTime: recTreeTime(treeExamples[i].freqs.length),
                 recTime: recCalls,
+                dpTime: dpCalls,
                 dpSpace: dpTreeSpace(treeExamples[i].freqs.length),
                 recSpace: recTreeSpace(treeExamples[i].freqs.length)
             }
 
             this.spaceStats.push({ name, rec: data.recSpace, dp: data.dpSpace });
-            this.callsStats.push({ name, rec: recCalls, dp: dpCalls });
+            this.timeStats.push({ name, recTheoretical: data.recTheorTime, rec: recCalls, dp: dpCalls });
             this.tableStats.push(data);
         }
     }
 
     private drawCharts = () => {
-        // this.keys = GetNumbers(this.state.givenKeys);
-        this.freqs = GetNumbers(this.state.givenFreqs)
-
+        this.freqs = StrToNumArray(this.state.givenFreqs);
         this.spaceStats = [];
-        this.callsStats = [];
+        this.timeStats = [];
         this.tableStats = [];
 
         this.getStats();

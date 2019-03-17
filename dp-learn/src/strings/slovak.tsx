@@ -28,7 +28,8 @@ export const slovak = {
         theory: 'Teória',
         demo: 'Demo',
         charts: 'Grafy',
-        calls: 'volaní'
+        calls: 'volaní',
+        theoreticValue: 'teoretická hodnota'
     },
     menu: {
         coins: 'Minimálny počet mincí',

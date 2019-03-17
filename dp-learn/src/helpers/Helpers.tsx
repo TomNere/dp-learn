@@ -72,3 +72,18 @@ export const ValueOrIntMax = (val: number) => {
 export const ValueOrUndefined = (val: number) => {
     return val === undefined ? '-' : val.toString();
 }
+
+export const StrToNumArray = (str: string) => {
+    const numbers: number[] = [];
+
+    for (const num of str.split(",")) {
+        if (Number.isNaN(+num)) {
+            return [];
+        }
+        else {
+            numbers.push(+num);
+        }
+    }
+    
+    return numbers;
+}

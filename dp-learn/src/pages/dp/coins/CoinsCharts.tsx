@@ -2,12 +2,14 @@ import * as Prism from 'prismjs';
 import * as React from 'react';
 
 import { Button, Grid, TextField, Theme, createStyles } from '@material-ui/core';
-import { IChartData, ISimpleObjectParameter } from 'src/types';
+import { ISimpleObjectParameter, ISpaceChartData, IStatsTableData, ITimeChartData } from 'src/types';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
-import { dpCoins, dpCoinsSpace, recCoinsSpace, recursiveCoins } from 'src/dpProblemsStuff/coins/CoinsSolutions';
+import { dpCoins, dpCoinsSpace, recCoinsSpace, recCoinsTime, recursiveCoins } from 'src/dpProblemsStuff/coins/CoinsSolutions';
 
-import DoubleChart from 'src/components/fields/DoubleChart';
 import { GetNumbers } from 'src/helpers/Helpers';
+import SpaceChart from 'src/components/fields/SpaceChart';
+import StatsTable from 'src/components/fields/StatsTable';
+import TimeChart from 'src/components/fields/TimeChart';
 import { coinsExamples } from 'src/dpProblemsStuff/coins/CoinsConsts';
 import myTheme from './../../../styles/index';
 import { strings } from 'src/strings/languages';
@@ -61,9 +63,9 @@ const styles = (theme: Theme) => createStyles({
 
 class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
     private coins: number[];
-    private timeStats: IChartData[];
-    private spaceStats: IChartData[];
-    private callsStats: IChartData[];
+    private timeStats: ITimeChartData[];
+    private spaceStats: ISpaceChartData[];
+    private tableStats: IStatsTableData[];
 
 
     public constructor(props: AllProps) {
@@ -112,9 +114,9 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
                 {this.state.chartsVisible &&
                     <div>
                         <div>
-                            <DoubleChart data={this.timeStats} unit='ms' brief={strings.components.timeComplex} />
-                            <DoubleChart data={this.spaceStats} unit='' brief={strings.components.spaceComplex} />
-                            <DoubleChart data={this.callsStats} unit='' brief={strings.global.numberOfCalls} />
+                            <TimeChart data={this.timeStats} />
+                            <SpaceChart data={this.spaceStats} />
+                            <StatsTable data={this.tableStats} />
                         </div>
                     </div>
                 }
@@ -138,63 +140,61 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
         this.setState({ givenCoins: e.target.value });
     }
 
-    private getStats = (timeChart: IChartData[], spaceChart: IChartData[], callsChart: IChartData[], repeat: number) => {
-        let t0: number;
-        let t1: number;
-        let recTime: number;
-        let dpTime: number;
+    private getStats = () => {
         let recCalls: number;
         let dpCalls: number;
+        let name: string;
+        let data: IStatsTableData;
 
         let calls: ISimpleObjectParameter = { value: 0 };
 
-        t0 = performance.now();
-        for (let j = 0; j < repeat; j++) {
-            calls = { value: 0 };
-            recursiveCoins(this.coins, this.coins.length, this.state.givenValue, calls);
-        }
-        t1 = performance.now();
+        calls = { value: 0 };
+        recursiveCoins(this.coins, this.coins.length, this.state.givenValue, calls);
 
-        recTime = t1 - t0;
         recCalls = calls.value;
 
-        t0 = performance.now();
-        for (let j = 0; j < repeat; j++) {
-            calls = { value: 0 };
-            dpCoins(this.coins, this.coins.length, this.state.givenValue, calls);
-        }
-        t1 = performance.now();
-        dpTime = t1 - t0;
+        calls = { value: 0 };
+        dpCoins(this.coins, this.coins.length, this.state.givenValue, calls);
         dpCalls = calls.value;
 
-        timeChart.push({  name: `${strings.coins.coins}: ${this.coins}`, rec: recTime, dp: dpTime });
-        spaceChart.push({ name: `${strings.coins.coins}: ${this.coins}`, rec: recCoinsSpace(this.coins.length), dp: dpCoinsSpace(this.coins.length, this.state.givenValue) });
-        callsChart.push({ name: `${strings.coins.coins}: ${this.coins}`, rec: recCalls, dp: dpCalls });
+        name = `${strings.coins.coins}: ${this.coins}`;
+        data = {
+            name,
+            dpTime: dpCalls,
+            recTime: recCalls,
+            recTheorTime: recCoinsTime(this.coins.length),
+            dpSpace: dpCoinsSpace(this.coins.length),
+            recSpace: recCoinsSpace(this.coins.length)
+        }
+
+        this.spaceStats.push({ name, rec: data.recSpace, dp: data.dpSpace });
+        this.timeStats.push({ name, recTheoretical: data.recTheorTime, rec: recCalls, dp: dpCalls });
+        this.tableStats.push(data);
 
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < coinsExamples.length; i++) {
-            t0 = performance.now();
-            for (let j = 0; j < repeat; j++) {
-                calls = { value: 0 };
-                recursiveCoins(coinsExamples[i].coins, coinsExamples[i].coins.length, coinsExamples[i].value, calls);
-            }
-            t1 = performance.now();
-            recTime = t1 - t0;
+            calls = { value: 0 };
+            recursiveCoins(coinsExamples[i].coins, coinsExamples[i].coins.length, coinsExamples[i].value, calls);
             recCalls = calls.value;
 
-            t0 = performance.now();
-            for (let j = 0; j < repeat; j++) {
-                calls = { value: 0 };
-                dpCoins(coinsExamples[i].coins, coinsExamples[i].coins.length, coinsExamples[i].value, calls);
-            }
-            t1 = performance.now();
+            calls = { value: 0 };
+            dpCoins(coinsExamples[i].coins, coinsExamples[i].coins.length, coinsExamples[i].value, calls);
 
-            dpTime = t1 - t0;
             dpCalls = calls.value;
 
-            timeChart.push({  name: `${strings.coins.coins}: ${coinsExamples[i].coins}, ${strings.coins.value}: ${coinsExamples[i].value}`, rec: recTime, dp: dpTime });
-            spaceChart.push({ name: `${strings.coins.coins}: ${coinsExamples[i].coins}, ${strings.coins.value}: ${coinsExamples[i].value}`, rec: recCoinsSpace(coinsExamples[i].coins.length), dp: dpCoinsSpace(coinsExamples[i].coins.length, coinsExamples[i].value) });
-            callsChart.push({ name: `${strings.coins.coins}: ${coinsExamples[i].coins}, ${strings.coins.value}: ${coinsExamples[i].value}`, rec: recCalls, dp: dpCalls });
+            name = `${strings.coins.coins}: ${coinsExamples[i].coins}`;
+            data = {
+                name,
+                dpTime: dpCalls,
+                recTime: recCalls,
+                recTheorTime: recCoinsTime(coinsExamples[i].coins.length),
+                dpSpace: dpCoinsSpace(coinsExamples[i].coins.length),
+                recSpace: recCoinsSpace(coinsExamples[i].coins.length)
+            }
+
+            this.spaceStats.push({ name, rec: data.recSpace, dp: data.dpSpace });
+            this.timeStats.push({ name, recTheoretical: data.recTheorTime, rec: recCalls, dp: dpCalls });
+            this.tableStats.push(data);
         }
     }
 
@@ -202,9 +202,9 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
         this.coins = GetNumbers(this.state.givenCoins);
         this.timeStats = [];
         this.spaceStats = [];
-        this.callsStats = [];
+        this.tableStats = [];
 
-        this.getStats(this.timeStats, this.spaceStats, this.callsStats, 1000);
+        this.getStats();
         this.setState({ chartsVisible: true });
     }
 }

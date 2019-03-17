@@ -13,7 +13,7 @@ export const demoStyles = (theme: Theme) => createStyles({
         minWidth: 200,
     },
     bottomMargin: {
-        marginBottom: 15,
+        marginBottom: theme.spacing.unit * 2,
     },
     tableHeading: {
         backgroundColor: 'green',

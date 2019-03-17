@@ -6,7 +6,14 @@ export interface ISimpleObjectParameter {
 // Converter between time units
 export type ITimeConverter = (n: number) => number;
 
-export interface IChartData {
+export interface ITimeChartData {
+    name: string,
+    recTheoretical: number,
+    rec: number,
+    dp: number,
+}
+
+export interface ISpaceChartData {
     name: string,
     rec: number,
     dp: number,
@@ -14,8 +21,9 @@ export interface IChartData {
 
 export interface IStatsTableData {
     name: string,
-    dpTime: number,
+    recTheorTime: number,
     recTime: number,
+    dpTime: number,
     dpSpace: number,
     recSpace: number
 }

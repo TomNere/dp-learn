@@ -82,6 +82,11 @@ export const dpTree = (freqs: number[], calls: ISimpleObjectParameter) => {
 
 export type ITreeSpace = (arrSize: number) => number;
 
+export const recTreeTime = (arrSize: number) => {
+    // TODO right forumla
+    return arrSize * arrSize;
+}
+
 export const recTreeSpace: ITreeSpace = (arrSize: number) => {
     return arrSize * 2;     // Store only prices
 }

@@ -79,6 +79,11 @@ export const dpEditDistance: ISolutionEditDistance = (stringX: string, stringY: 
 
 export type IEditDistanceSpace = (stringX: string, stringY: string) => number;
 
+export const recEditDistanceTime = (stringX: string, stringY: string) => {
+    // TODO right formula
+    return stringX.length * stringY.length;
+}
+
 export const recEditDistanceSpace: IEditDistanceSpace = (stringX: string, stringY: string) => {
     return stringX.length + stringY.length;     // Store only prices
 }

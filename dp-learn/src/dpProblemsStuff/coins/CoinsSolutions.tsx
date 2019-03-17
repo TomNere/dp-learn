@@ -64,6 +64,11 @@ export const dpCoins : ISolutionCoins = (coins: number[], arrSize: number, value
 
 export type ICoinsSpace = (coinsLength: number, value?: number) => number;
 
+export const recCoinsTime = (coinsLength: number) => {
+    // TODO right formula
+    return coinsLength * coinsLength;
+}
+
 export const recCoinsSpace : ICoinsSpace = (coinsLength: number) => {
     return coinsLength + 1; // Store coins and given value
 }

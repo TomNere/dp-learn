@@ -2,12 +2,11 @@ import * as Prism from 'prismjs';
 import * as React from 'react';
 
 import { Button, Grid, TextField, Theme, createStyles } from '@material-ui/core';
-import { IChartData, ISimpleObjectParameter, IStatsTableData } from 'src/types';
+import { ISimpleObjectParameter, ISpaceChartData, IStatsTableData, ITimeChartData } from 'src/types';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
-import { dpEditDistance, dpEditDistanceSpace, editDistanceExamples, recEditDistanceSpace, recursiveEditDistance } from 'src/dpProblemsStuff/editDistance/EditDistanceStatsHelper';
+import { dpEditDistance, dpEditDistanceSpace, editDistanceExamples, recEditDistanceSpace, recEditDistanceTime, recursiveEditDistance } from 'src/dpProblemsStuff/editDistance/EditDistanceStatsHelper';
 
-import DoubleChart from 'src/components/fields/DoubleChart';
-import StatsTable from 'src/components/fields/StatsTable';
+import ChartsAndTable from 'src/components/fields/ChartsAndTable';
 import myTheme from '../../../styles/index';
 import { strings } from 'src/strings/languages';
 
@@ -59,8 +58,8 @@ const styles = (theme: Theme) => createStyles({
 });
 
 class EditDistanceCharts extends React.Component<AllProps, IEditDistanceChartsState> {
-    private spaceStats: IChartData[];
-    private callsStats: IChartData[];
+    private spaceStats: ISpaceChartData[];
+    private timeStats: ITimeChartData[];
     private tableStats: IStatsTableData[];
 
     public constructor(props: AllProps) {
@@ -106,12 +105,7 @@ class EditDistanceCharts extends React.Component<AllProps, IEditDistanceChartsSt
                 <Button variant="contained" color="primary" className={classes.buttonDark} onClick={this.drawCharts}>
                     {strings.global.drawCharts}
                 </Button>
-                {this.state.chartsVisible &&
-                    <div>
-                        <DoubleChart data={this.callsStats} unit={strings.components.calls} brief={strings.components.timeComplex} />
-                        <DoubleChart data={this.spaceStats} brief={strings.components.spaceComplex} />
-                        <StatsTable data={this.tableStats} />
-                    </div>
+                <ChartsAndTable visible={this.state.chartsVisible} timeStats={this.timeStats} spaceStats={this.spaceStats} tableStats={this.tableStats} />
                 }
             </div>
         );
@@ -145,14 +139,15 @@ class EditDistanceCharts extends React.Component<AllProps, IEditDistanceChartsSt
         name = `StrX: ${this.state.stringX}, StrY: ${this.state.stringY}`;
         data = {
             name,
-            dpTime: dpCalls,
+            recTheorTime: recEditDistanceTime(this.state.stringX, this.state.stringY),
             recTime: recCalls,
+            dpTime: dpCalls,
             dpSpace: dpEditDistanceSpace(this.state.stringX, this.state.stringY),
             recSpace: recEditDistanceSpace(this.state.stringX, this.state.stringY)
         }
 
         this.spaceStats.push({ name, rec: data.recSpace, dp: data.dpSpace });
-        this.callsStats.push({ name, rec: recCalls, dp: dpCalls });
+        this.timeStats.push({ name, recTheoretical: data.recTheorTime, rec: recCalls, dp: dpCalls });
         this.tableStats.push(data);
 
         // tslint:disable-next-line:prefer-for-of
@@ -176,21 +171,22 @@ class EditDistanceCharts extends React.Component<AllProps, IEditDistanceChartsSt
             name = `StrX: ${editDistanceExamples[i].stringX}, StrY: ${editDistanceExamples[i].stringY}`;
             data = {
                 name,
-                dpTime: dpCalls,
+                recTheorTime: recEditDistanceTime(editDistanceExamples[i].stringX, editDistanceExamples[i].stringY),
                 recTime: recCalls,
+                dpTime: dpCalls,
                 dpSpace: dpEditDistanceSpace(editDistanceExamples[i].stringX, editDistanceExamples[i].stringY),
                 recSpace: recEditDistanceSpace(editDistanceExamples[i].stringX, editDistanceExamples[i].stringY)
             }
 
             this.spaceStats.push({ name, rec: data.recSpace, dp: data.dpSpace });
-            this.callsStats.push({ name, rec: recCalls, dp: dpCalls });
+            this.timeStats.push({ name, recTheoretical: data.recTheorTime, rec: recCalls, dp: dpCalls });
             this.tableStats.push(data);
         }
     }
 
     private drawCharts = () => {
         this.spaceStats = [];
-        this.callsStats = [];
+        this.timeStats = [];
         this.tableStats = [];
 
         this.getStats();

@@ -21,7 +21,7 @@ class StatsTable extends React.Component<AllProps> {
         const { classes } = this.props;
 
         return (
-            <Table className={classes.table}>
+            <Table className={[classes.table, classes.bottomMargin].join(' ')}>
                 <TableHead>
                     <TableRow>
                         {this.tableHead()}
