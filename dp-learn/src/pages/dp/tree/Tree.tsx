@@ -5,6 +5,7 @@ import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/s
 import TabMenu from 'src/containers/TabMenu';
 import TreeCharts from './TreeCharts';
 import TreeDemo from './TreeDemo';
+import TreeTheory from './TreeTheory';
 
 type AllProps =
     WithStyles<typeof styles>;
@@ -26,7 +27,7 @@ class Tree extends React.Component<AllProps> {
 
         return (
             <div className={classes.root}>
-                <TabMenu theory={<TreeDemo />} demo={<TreeDemo />} charts={<TreeCharts />} />
+                <TabMenu theory={<TreeTheory />} demo={<TreeDemo />} charts={<TreeCharts />} />
             </div>
         );
     }

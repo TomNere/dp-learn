@@ -4,6 +4,7 @@ import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/s
 
 import RodCharts from './RodCharts';
 import RodDemo from './RodDemo';
+import RodTheory from './RodTheory';
 import TabMenu from 'src/containers/TabMenu';
 
 type AllProps =
@@ -26,7 +27,7 @@ class Rod extends React.Component<AllProps> {
 
         return (
             <div className={classes.root}>
-                <TabMenu theory={<RodDemo />} demo={<RodDemo />} charts={<RodCharts />} />
+                <TabMenu theory={<RodTheory />} demo={<RodDemo />} charts={<RodCharts />} />
             </div>
         );
     }

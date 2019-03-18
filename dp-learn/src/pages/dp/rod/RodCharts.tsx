@@ -1,13 +1,14 @@
 import * as Prism from 'prismjs';
 import * as React from 'react';
 
-import { Button, Grid, TextField, Theme, createStyles } from '@material-ui/core';
+import { Button, Theme, createStyles } from '@material-ui/core';
 import { CheckNumbers, GetNumbers } from 'src/helpers/Helpers';
 import { ISimpleObjectParameter, ISpaceChartData, IStatsTableData, ITimeChartData } from 'src/types';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 import { dpRod, dpRodSpace, recRodSpace, recRodTime, recursiveRod, rodExamples } from 'src/dpProblemsStuff/rod/RodStatsHelper';
 
 import ChartsAndTable from 'src/components/fields/ChartsAndTable';
+import MyTextField from 'src/components/fields/MyTextField';
 import myTheme from '../../../styles/index';
 import { strings } from 'src/strings/languages';
 
@@ -80,18 +81,7 @@ class RodCharts extends React.Component<AllProps, IRodChartsState> {
 
         return (
             <div>
-                <Grid className={[classes.container, classes.bottomMargin].join(' ')}>
-                    <form className={classes.container} autoComplete="off">
-                        <TextField
-                            id="givenPricesTF"
-                            label={strings.coins.coins}
-                            className={classes.textField}
-                            value={this.state.givenPrices}
-                            onChange={this.handlePrices}
-                            margin="normal"
-                        />
-                    </form>
-                </Grid>
+                <MyTextField label={strings.rod.prices} value={this.state.givenPrices} onChange={this.handlePrices} />
                 <Button variant="contained" color="primary" className={classes.buttonDark} onClick={this.drawCharts}>
                     {strings.global.drawCharts}
                 </Button>

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
-import CoinsCharts from '../coins/CoinsCharts';
+import SubstringCharts from './SubstringCharts';
 import SubstringDemo from './SubstringDemo';
 import SubstringTheory from './SubstringTheory';
 import TabMenu from 'src/containers/TabMenu';
@@ -34,7 +34,7 @@ class Substring extends React.Component<AllProps, ISubstringState> {
 
         return (
             <div className={classes.root}>
-                <TabMenu theory={<SubstringTheory />} demo={<SubstringDemo />} charts={<CoinsCharts />} />
+                <TabMenu theory={<SubstringTheory />} demo={<SubstringDemo />} charts={<SubstringCharts />} />
             </div>
         );
     }

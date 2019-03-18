@@ -1,12 +1,14 @@
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
-import { Avatar, Grid, TableCell, TableRow, TextField, Typography } from '@material-ui/core';
+import { Avatar, TableCell, TableRow, Typography } from '@material-ui/core';
 import { WithStyles, withStyles } from "@material-ui/core/styles";
 
 import { AnimatedDiv } from 'src/components/animations/Animated';
-import DemoTable from 'src/components/fields/DemoTable';
+import DemoTable from 'src/components/tables/DemoTable';
+import FlexRow from 'src/containers/FlexRow';
 import MyButton from 'src/components/buttons/MyButton';
+import MyTextField from 'src/components/fields/MyTextField';
 import SpeedSelector from 'src/components/buttons/SpeedSelector';
 import { demoStyles } from 'src/styles/demoStyles';
 import { strings } from 'src/strings/languages';
@@ -91,30 +93,11 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
                 <div className={classes.bottomMargin}>
                     <Markdown source={strings.substring.demo.brief} />
                 </div>
-                <Grid className={[classes.container, classes.bottomMargin].join(' ')}>
-                    <form className={classes.container} autoComplete="off">
-                        <TextField
-                            id="stringXTF"
-                            label="String X"
-                            className={classes.textField}
-                            value={this.state.stringX}
-                            onChange={this.strXChange}
-                            margin="normal"
-                        />
-                    </form>
-                    <form className={classes.container} autoComplete="off">
-                        <TextField
-                            id="stringYTF"
-                            label="String Y"
-                            className={classes.textField}
-                            value={this.state.stringY}
-                            onChange={this.strYChange}
-                            margin="normal"
-                        />
-                    </form>
-                </Grid>
-                <br />
-
+                <FlexRow>
+                    <MyTextField label={`${strings.components.string} X`} value={this.state.stringX} onChange={this.handlestrXChange} />
+                    <MyTextField label={`${strings.components.string} Y`} value={this.state.stringY} onChange={this.handlestrYChange} />
+                </FlexRow>
+                
                 {/* Speed select */}
                 <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
                 <br />
@@ -149,11 +132,11 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
         );
     }
 
-    private strXChange = (e: any) => {
+    private handlestrXChange = (e: any) => {
         this.setState({ stringX: e.target.value });
     };
 
-    private strYChange = (e: any) => {
+    private handlestrYChange = (e: any) => {
         this.setState({ stringY: e.target.value });
     };
 

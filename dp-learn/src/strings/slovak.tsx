@@ -29,7 +29,9 @@ export const slovak = {
         demo: 'Demo',
         charts: 'Grafy',
         calls: 'volaní',
-        theoreticValue: 'teoretická hodnota'
+        theoreticValue: 'teoretická hodnota',
+        tableComparison: 'Porovnanie v tabuľke',
+        string: 'Reťazec'
     },
     menu: {
         coins: 'Minimálny počet mincí',

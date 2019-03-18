@@ -2,11 +2,13 @@ import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
 import { FreqArraySum, GetNumbers, ValueOrIntMax, ValueOrUndefined } from 'src/helpers/Helpers';
-import { Grid, TableCell, TableRow, TextField, Typography } from '@material-ui/core';
+import { TableCell, TableRow, Typography } from '@material-ui/core';
 import { WithStyles, withStyles } from "@material-ui/core/styles";
 
-import DemoTable from 'src/components/fields/DemoTable';
+import DemoTable from 'src/components/tables/DemoTable';
+import FlexRow from 'src/containers/FlexRow';
 import MyButton from 'src/components/buttons/MyButton';
+import MyTextField from 'src/components/fields/MyTextField';
 import SpeedSelector from 'src/components/buttons/SpeedSelector';
 import { demoStyles } from 'src/styles/demoStyles';
 import { strings } from 'src/strings/languages';
@@ -87,29 +89,10 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
                 <div className={classes.bottomMargin}>
                     <Markdown source={strings.tree.demo.brief} />
                 </div>
-                <Grid className={[classes.container, classes.bottomMargin].join(' ')}>
-                    <form className={classes.container} autoComplete="off">
-                        <TextField
-                            id="keysArrayTF"
-                            label={strings.tree.arrayOfK}
-                            className={classes.textField}
-                            value={this.state.givenKeys}
-                            onChange={this.handleKeys}
-                            margin="normal"
-                        />
-                    </form>
-                    <form className={classes.container} autoComplete="off">
-                        <TextField
-                            id="freqsArrayTF"
-                            label={strings.tree.arrayOfF}
-                            className={classes.textField}
-                            value={this.state.givenFreqs}
-                            onChange={this.handleFreqs}
-                            margin="normal"
-                        />
-                    </form>
-                </Grid>
-                <br />
+                <FlexRow>
+                    <MyTextField label={strings.tree.arrayOfK} value={this.state.givenKeys} onChange={this.handleKeys} />
+                    <MyTextField label={strings.tree.arrayOfF} value={this.state.givenFreqs} onChange={this.handleFreqs} />
+                </FlexRow>
 
                 {/* Speed select */}
                 <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />

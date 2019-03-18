@@ -16,7 +16,7 @@ export const english = {
         microSeconds: 'Microseconds',
         nanoSeconds: 'Nanoseconds',
         skipping: 'Skipping...',
-        recursion: 'Rekursion',
+        recursion: 'Recursion',
         dp: 'DP'
     },
     components: {
@@ -30,7 +30,9 @@ export const english = {
         demo: 'Demo',
         charts: 'Charts',
         calls: 'calls',
-        theoreticValue: 'theoretical value'
+        theoreticValue: 'theoretical value',
+        tableComparison: 'Table comparison',
+        string: 'String'
     },
     menu: {
         coins: 'Minimum coins',

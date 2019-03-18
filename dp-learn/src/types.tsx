@@ -27,3 +27,9 @@ export interface IStatsTableData {
     dpSpace: number,
     recSpace: number
 }
+
+// export interface ICharts {
+//     spaceStats: ISpaceChartData[];
+//     timeStats: ITimeChartData[];
+//     tableStats: IStatsTableData[];
+// }

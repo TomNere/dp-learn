@@ -10,23 +10,19 @@ type AllProps =
 
 interface IStateProps {
     onChange: (e: any) => any,
-    numbers: string,
+    value: string,
     label: string
 }
 
 const styles = (theme: Theme) => createStyles({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        minWidth: 200,
+        minWidth: 300,
     },
 });
 
-class NumbersField extends React.Component<AllProps> {
+class MyTextField extends React.Component<AllProps> {
     public constructor(props: AllProps) {
         super(props)
     }
@@ -34,11 +30,11 @@ class NumbersField extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;
         return (
-            <form className={classes.container} autoComplete='off'>
+            <form autoComplete='off'>
                 <TextField
                     label={this.props.label}
                     className={classes.textField}
-                    value={this.props.numbers}
+                    value={this.props.value}
                     onChange={this.props.onChange}
                     margin='normal'
                 />
@@ -47,4 +43,4 @@ class NumbersField extends React.Component<AllProps> {
     }
 }
 
-export default withStyles(styles)(NumbersField);
+export default withStyles(styles)(MyTextField);

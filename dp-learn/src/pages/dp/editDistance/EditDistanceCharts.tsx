@@ -1,12 +1,14 @@
 import * as Prism from 'prismjs';
 import * as React from 'react';
 
-import { Button, Grid, TextField, Theme, createStyles } from '@material-ui/core';
+import { Button, Theme, createStyles } from '@material-ui/core';
 import { ISimpleObjectParameter, ISpaceChartData, IStatsTableData, ITimeChartData } from 'src/types';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 import { dpEditDistance, dpEditDistanceSpace, editDistanceExamples, recEditDistanceSpace, recEditDistanceTime, recursiveEditDistance } from 'src/dpProblemsStuff/editDistance/EditDistanceStatsHelper';
 
 import ChartsAndTable from 'src/components/fields/ChartsAndTable';
+import FlexRow from 'src/containers/FlexRow';
+import MyTextField from 'src/components/fields/MyTextField';
 import myTheme from '../../../styles/index';
 import { strings } from 'src/strings/languages';
 
@@ -80,42 +82,23 @@ class EditDistanceCharts extends React.Component<AllProps, IEditDistanceChartsSt
 
         return (
             <div>
-                <Grid className={[classes.container, classes.bottomMargin].join(' ')}>
-                    <form className={classes.container} autoComplete="off">
-                        <TextField
-                            id="stringXTF"
-                            label="String X"
-                            className={classes.textField}
-                            value={this.state.stringX}
-                            onChange={this.strXChange}
-                            margin="normal"
-                        />
-                    </form>
-                    <form className={classes.container} autoComplete="off">
-                        <TextField
-                            id="stringYTF"
-                            label="String Y"
-                            className={classes.textField}
-                            value={this.state.stringY}
-                            onChange={this.strYChange}
-                            margin="normal"
-                        />
-                    </form>
-                </Grid>
+                <FlexRow>
+                    <MyTextField label={`${strings.components.string} X`} value={this.state.stringX} onChange={this.handlestrXChange} />
+                    <MyTextField label={`${strings.components.string} Y`} value={this.state.stringY} onChange={this.handlestrYChange} />
+                </FlexRow>
                 <Button variant="contained" color="primary" className={classes.buttonDark} onClick={this.drawCharts}>
                     {strings.global.drawCharts}
                 </Button>
                 <ChartsAndTable visible={this.state.chartsVisible} timeStats={this.timeStats} spaceStats={this.spaceStats} tableStats={this.tableStats} />
-                }
             </div>
         );
     }
 
-    private strXChange = (e: any) => {
+    private handlestrXChange = (e: any) => {
         this.setState({ stringX: e.target.value });
     };
 
-    private strYChange = (e: any) => {
+    private handlestrYChange = (e: any) => {
         this.setState({ stringY: e.target.value });
     };
 

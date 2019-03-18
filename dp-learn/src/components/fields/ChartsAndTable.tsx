@@ -2,9 +2,10 @@ import * as React from 'react';
 
 import { ISpaceChartData, IStatsTableData, ITimeChartData } from 'src/types';
 
-import SpaceChart from './SpaceChart';
-import StatsTable from './StatsTable';
-import TimeChart from './TimeChart';
+import Centered from 'src/containers/Centered';
+import SpaceChart from '../charts/SpaceChart';
+import StatsTable from '../tables/StatsTable';
+import TimeChart from '../charts/TimeChart';
 
 interface IStateProps {
     visible: boolean,
@@ -20,18 +21,20 @@ class ChartsAndTable extends React.Component<IStateProps> {
 
     public render() {
         return (
-            <div>
-            {
-                this.props.visible &&
-                    <div>
-                        <div>
-                            <TimeChart data={this.props.timeStats} />
-                            <SpaceChart data={this.props.spaceStats} />
+            <React.Fragment>
+
+                {
+                    this.props.visible &&
+                    <React.Fragment>
+                        <TimeChart data={this.props.timeStats} />
+                        <SpaceChart data={this.props.spaceStats} />
+                        <Centered>
                             <StatsTable data={this.props.tableStats} />
-                        </div>
-                    </div>
-            }
-            </div>
+                        </Centered>
+                    </React.Fragment>
+                }
+            </React.Fragment>
+
         );
     }
 }

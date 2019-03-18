@@ -1,12 +1,13 @@
 import * as Prism from 'prismjs';
 import * as React from 'react';
 
-import { Grid, TableCell, TableRow, TextField, Typography } from '@material-ui/core';
+import { TableCell, TableRow, Typography } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 
-import DemoTable from 'src/components/fields/DemoTable';
+import DemoTable from 'src/components/tables/DemoTable';
 import { GetNumbers } from 'src/helpers/Helpers';
 import MyButton from 'src/components/buttons/MyButton';
+import MyTextField from 'src/components/fields/MyTextField';
 import SpeedSelector from 'src/components/buttons/SpeedSelector';
 import { demoStyles } from 'src/styles/demoStyles';
 import { strings } from 'src/strings/languages';
@@ -77,19 +78,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
                 </div>
                 <div className={classes.container}>
                     <div className={classes.flexChild}>
-                        <Grid className={[classes.container, classes.bottomMargin].join(' ')}>
-                            <form className={classes.container} autoComplete="off">
-                                <TextField
-                                    id="givenPricesTF"
-                                    label={`Prices`}
-                                    className={classes.textField}
-                                    value={this.state.givenPrices}
-                                    onChange={this.handlePrices}
-                                    margin="normal"
-                                />
-                            </form>
-                        </Grid>
-                        <br />
+                        <MyTextField label={strings.rod.prices} value={this.state.givenPrices} onChange={this.handlePrices} />
 
                         {/* Speed select */}
                         <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
@@ -217,7 +206,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
                 this.maxIndex = this.outerCounter - i - 1;
             }
         }
-        
+
         this.setState({ highlightCandidates: true });
         this.array[this.outerCounter] = maxVal;
     }
@@ -252,7 +241,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
     private onFinishClick = () => {
         clearTimeout(this.timeout);
         this.array = [0];
-        
+
         for (let outerLocal = 1; outerLocal <= this.LENGTH; outerLocal++) {
             let maxVal = Number.MIN_VALUE;
             for (let i = 0; i < outerLocal; i++) {

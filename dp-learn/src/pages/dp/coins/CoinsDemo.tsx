@@ -1,14 +1,16 @@
 import * as Prism from 'prismjs';
 import * as React from 'react';
 
-import { Avatar, Grid, TableCell, TableRow, TextField, Typography } from '@material-ui/core';
+import { Avatar, TableCell, TableRow, Typography } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 import { coinsBacktrack, coinsSmallDynCode } from 'src/dpProblemsStuff/coins/CoinsConsts';
 
 import { AnimatedDiv } from 'src/components/animations/Animated';
-import DemoTable from 'src/components/fields/DemoTable';
+import DemoTable from 'src/components/tables/DemoTable';
+import FlexRow from 'src/containers/FlexRow';
 import { GetNumbers } from 'src/helpers/Helpers';
 import MyButton from 'src/components/buttons/MyButton';
+import MyTextField from 'src/components/fields/MyTextField';
 import SimpleSourceCode from 'src/components/fields/SimpleSourceCode';
 import SpeedSelector from 'src/components/buttons/SpeedSelector';
 import { demoStyles } from 'src/styles/demoStyles';
@@ -102,34 +104,15 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
                 </div>
                 <div className={classes.container}>
                     <div className={classes.flexChild}>
-                        <Grid className={[classes.container, classes.bottomMargin].join(' ')}>
-                            <form className={classes.container} autoComplete="off">
-                                <TextField
-                                    id="givenValueTF"
-                                    label={`${strings.coins.value}(1-20)`}
-                                    className={classes.textField}
-                                    value={this.state.givenValue}
-                                    onChange={this.handleValue}
-                                    margin="normal"
-                                />
-                            </form>
-                            <form className={classes.container} autoComplete="off">
-                                <TextField
-                                    id="givenCoinsTF"
-                                    label={`${strings.coins.coins}(max. 5)`}
-                                    className={classes.textField}
-                                    value={this.state.givenCoins}
-                                    onChange={this.handleCoins}
-                                    margin="normal"
-                                />
-                            </form>
-                        </Grid>
-                        <br />
+                        <FlexRow>
+                            <MyTextField label={`${strings.coins.value} (1-20)`} value={this.state.givenValue.toString()} onChange={this.handleValue} />
+                            <MyTextField label={`${strings.coins.coins} (max. 5)`} value={this.state.givenCoins} onChange={this.handleCoins} />
+                        </FlexRow>
 
                         {/* Speed select */}
                         <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
                         <br />
-                        
+
                         {/* Start button */}
                         <MyButton color='dark' label={strings.global.start} onClick={this.onStartClick} visible={true} />
 

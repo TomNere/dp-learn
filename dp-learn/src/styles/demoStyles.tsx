@@ -1,3 +1,5 @@
+import { dpColor, recColor, recTheorColor } from './colors';
+
 import { Theme } from "@material-ui/core";
 import { createStyles } from "@material-ui/core/styles";
 import myTheme from './index';
@@ -16,17 +18,27 @@ export const demoStyles = (theme: Theme) => createStyles({
         marginBottom: theme.spacing.unit * 2,
     },
     tableHeading: {
-        backgroundColor: 'green',
+        fontSize: theme.typography.pxToRem(18),
+        textAlign: 'center',
+        padding: theme.spacing.unit,
         color: 'white',
+        backgroundColor: myTheme.palette.primary.main,
         borderRight: 'solid 1px gray',
-        fontSize: theme.typography.pxToRem(14),
-        padding: '4px 24px 4px 14px',
     },
     caption: {
         color: 'white',
         borderRight: 'solid 1px gray',
         backgroundColor: myTheme.palette.primary.main,
         padding: '4px 24px 4px 14px',
+    },
+    recTheorBackground: {
+        backgroundColor: recTheorColor
+    },
+    recBackground: {
+        backgroundColor: recColor
+    },
+    dpBackground: {
+        backgroundColor: dpColor
     },
     columnCaption: {
         fontSize: theme.typography.pxToRem(14),
@@ -41,6 +53,12 @@ export const demoStyles = (theme: Theme) => createStyles({
         padding: 0,
         borderRight: '1px solid rgba(224, 224, 224, 1)',
         minWidth: 64
+    },
+    statsTableCell: {
+        textAlign: 'center',
+        padding: 0,
+        borderRight: '1px solid rgba(224, 224, 224, 1)',
+        minWidth: 250
     },
     yellowCell: {
         backgroundColor: '#ffef25'
@@ -95,7 +113,6 @@ export const demoStyles = (theme: Theme) => createStyles({
         }
     },
     table: {
-        width: 'auto',
         "& td:last-child, th:last-child": {
             paddingRight: theme.spacing.unit
         },
@@ -104,5 +121,8 @@ export const demoStyles = (theme: Theme) => createStyles({
         color: 'white',
         backgroundColor: myTheme.palette.primary.main,
         padding: '4px 24px 4px 14px',
+    },
+    emptyCell: {
+        border: 'none'
     }
 });

@@ -1,15 +1,17 @@
 import * as Prism from 'prismjs';
 import * as React from 'react';
 
-import { Button, Grid, TextField, Theme, createStyles } from '@material-ui/core';
+import { Button, Theme, createStyles } from '@material-ui/core';
 import { ISimpleObjectParameter, ISpaceChartData, IStatsTableData, ITimeChartData } from 'src/types';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 import { dpCoins, dpCoinsSpace, recCoinsSpace, recCoinsTime, recursiveCoins } from 'src/dpProblemsStuff/coins/CoinsSolutions';
 
+import FlexRow from 'src/containers/FlexRow';
 import { GetNumbers } from 'src/helpers/Helpers';
-import SpaceChart from 'src/components/fields/SpaceChart';
-import StatsTable from 'src/components/fields/StatsTable';
-import TimeChart from 'src/components/fields/TimeChart';
+import MyTextField from 'src/components/fields/MyTextField';
+import SpaceChart from 'src/components/charts/SpaceChart';
+import StatsTable from 'src/components/tables/StatsTable';
+import TimeChart from 'src/components/charts/TimeChart';
 import { coinsExamples } from 'src/dpProblemsStuff/coins/CoinsConsts';
 import myTheme from './../../../styles/index';
 import { strings } from 'src/strings/languages';
@@ -86,28 +88,10 @@ class CoinsCharts extends React.Component<AllProps, ICoinsChartsState> {
 
         return (
             <div>
-                <Grid className={[classes.container, classes.bottomMargin].join(' ')}>
-                    <form className={classes.container} autoComplete="off">
-                        <TextField
-                            id="givenValueTF"
-                            label={strings.coins.value}
-                            className={classes.textField}
-                            value={this.state.givenValue}
-                            onChange={this.handleValue}
-                            margin="normal"
-                        />
-                    </form>
-                    <form className={classes.container} autoComplete="off">
-                        <TextField
-                            id="givenCoinsTF"
-                            label={strings.coins.coins}
-                            className={classes.textField}
-                            value={this.state.givenCoins}
-                            onChange={this.handleCoins}
-                            margin="normal"
-                        />
-                    </form>
-                </Grid>
+                <FlexRow>
+                    <MyTextField label={`${strings.coins.value} (1-20)`} value={this.state.givenValue.toString()} onChange={this.handleValue} />
+                    <MyTextField label={`${strings.coins.coins} (max. 5)`} value={this.state.givenCoins} onChange={this.handleCoins} />
+                </FlexRow>
                 <Button variant="contained" color="primary" className={classes.buttonDark} onClick={this.drawCharts}>
                     {strings.global.drawCharts}
                 </Button>

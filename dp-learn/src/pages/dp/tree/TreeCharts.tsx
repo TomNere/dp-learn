@@ -1,19 +1,14 @@
-import * as Prism from 'prismjs';
 import * as React from 'react';
 
-import { Grid, Theme, createStyles } from '@material-ui/core';
 import { ISimpleObjectParameter, ISpaceChartData, IStatsTableData, ITimeChartData } from 'src/types';
-import { WithStyles, withStyles } from '@material-ui/core/styles';
 import { dpTree, dpTreeSpace, recTreeSpace, recTreeTime, recursiveTree, treeExamples } from 'src/dpProblemsStuff/tree/TreeStatsHelper';
 
 import ChartsAndTable from 'src/components/fields/ChartsAndTable';
+import FlexRow from 'src/containers/FlexRow';
 import MyButton from 'src/components/buttons/MyButton';
-import NumbersField from 'src/components/fields/NumbersField';
+import MyTextField from 'src/components/fields/MyTextField';
 import { StrToNumArray } from 'src/helpers/Helpers';
 import { strings } from 'src/strings/languages';
-
-type AllProps =
-    WithStyles<typeof styles>;
 
 interface ITreeChartsState {
     givenKeys: string
@@ -21,17 +16,7 @@ interface ITreeChartsState {
     chartsVisible: boolean
 }
 
-const styles = (theme: Theme) => createStyles({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    bottomMargin: {
-        marginBottom: 15,
-    },
-});
-
-class TreeCharts extends React.Component<AllProps, ITreeChartsState> {
+class TreeCharts extends React.Component<any, ITreeChartsState> {
     private spaceStats: ISpaceChartData[];
     private timeStats: ITimeChartData[];
     private tableStats: IStatsTableData[];
@@ -39,7 +24,7 @@ class TreeCharts extends React.Component<AllProps, ITreeChartsState> {
     // private keys: number[];
     private freqs: number[];
 
-    public constructor(props: AllProps) {
+    public constructor(props: any) {
         super(props)
         this.state = {
             givenKeys: '1,2,3,4',
@@ -48,20 +33,16 @@ class TreeCharts extends React.Component<AllProps, ITreeChartsState> {
         }
     }
 
-    public componentDidMount() {
-        Prism.highlightAll();
-    }
-
     public render() {
-        const { classes } = this.props;
-
         return (
             <div>
-                <Grid className={[classes.container, classes.bottomMargin].join(' ')}>
-                    <NumbersField label={strings.tree.arrayOfK} numbers={this.state.givenKeys} onChange={this.handleKeys} />
-                    <NumbersField label={strings.tree.arrayOfF} numbers={this.state.givenFreqs} onChange={this.handleFreqs} />
-                </Grid>
+                <FlexRow>
+                    <MyTextField label={strings.tree.arrayOfK} value={this.state.givenKeys} onChange={this.handleKeys} />
+                    <MyTextField label={strings.tree.arrayOfF} value={this.state.givenFreqs} onChange={this.handleFreqs} />
+                </FlexRow>
+
                 <MyButton label={strings.global.drawCharts} color='dark' onClick={this.drawCharts} visible={true} />
+
                 <ChartsAndTable timeStats={this.timeStats} spaceStats={this.spaceStats} tableStats={this.tableStats} visible={this.state.chartsVisible} />
             </div>
         );
@@ -113,29 +94,28 @@ class TreeCharts extends React.Component<AllProps, ITreeChartsState> {
         this.timeStats.push({ name, recTheoretical: data.recTheorTime, rec: recCalls, dp: dpCalls });
         this.tableStats.push(data);
 
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < treeExamples.length; i++) {
+        for (const example of treeExamples) {
             calls = { value: 0 };
-            recursiveTree(treeExamples[i].freqs,
+            recursiveTree(example.freqs,
                 0,
-                treeExamples[i].freqs.length - 1,
+                example.freqs.length - 1,
                 calls);
 
             recCalls = calls.value;
 
             calls = { value: 0 };
-            dpTree(treeExamples[i].freqs, calls);
+            dpTree(example.freqs, calls);
 
             dpCalls = calls.value;
 
-            name = `Freqs: ${treeExamples[i].freqs}`;
+            name = `Freqs: ${example.freqs}`;
             data = {
                 name,
-                recTheorTime: recTreeTime(treeExamples[i].freqs.length),
+                recTheorTime: recTreeTime(example.freqs.length),
                 recTime: recCalls,
                 dpTime: dpCalls,
-                dpSpace: dpTreeSpace(treeExamples[i].freqs.length),
-                recSpace: recTreeSpace(treeExamples[i].freqs.length)
+                dpSpace: dpTreeSpace(example.freqs.length),
+                recSpace: recTreeSpace(example.freqs.length)
             }
 
             this.spaceStats.push({ name, rec: data.recSpace, dp: data.dpSpace });
@@ -155,4 +135,4 @@ class TreeCharts extends React.Component<AllProps, ITreeChartsState> {
     }
 }
 
-export default withStyles(styles)(TreeCharts);
+export default TreeCharts;

@@ -1,15 +1,15 @@
 import * as React from 'react';
 
-import { Animation, ArgumentScale, EventTracker, Stack, ValueScale } from '@devexpress/dx-react-chart';
+import { Animation, ArgumentScale, Stack, ValueScale } from '@devexpress/dx-react-chart';
 import {
     ArgumentAxis,
     Chart,
     Legend,
     LineSeries,
-    Tooltip,
     ValueAxis
 } from '@devexpress/dx-react-chart-material-ui';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
+import { dpColor, recColor, recTheorColor } from 'src/styles/colors';
 
 import { ITimeChartData } from 'src/types';
 import Paper from '@material-ui/core/Paper';
@@ -57,38 +57,39 @@ class TimeChart extends React.Component<AllProps> {
                     {strings.components.timeComplex}
                 </Typography>
                 <Chart data={data}>
-                    <ValueScale name="rec" />
+                    <ValueScale name='rec' />
                     <ArgumentScale />
                     <ArgumentAxis />
 
-                    <ValueAxis scaleName="rec" showGrid={false} showLine={true} showTicks={true} labelComponent={Label(` ${strings.components.calls}`)} />
+                    <ValueAxis scaleName='rec' showGrid={false} showLine={true} showTicks={true} labelComponent={Label(` ${strings.components.calls}`)} />
 
                     <LineSeries
-                        name={`${global.recursiveSolution} - ${components.theoreticValue}`}
-                        valueField="recTheoretical"
-                        argumentField="name"
-                        scaleName="rec"
+                        name={`${global.recursiveSolution} (${components.theoreticValue})`}
+                        valueField='recTheoretical'
+                        argumentField='name'
+                        scaleName='rec'
+                        color={recTheorColor}
                     />
 
                     <LineSeries
                         name={`${global.recursiveSolution}`}
-                        valueField="rec"
-                        argumentField="name"
-                        scaleName="rec"
+                        valueField='rec'
+                        argumentField='name'
+                        scaleName='rec'
+                        color={recColor}
                     />
 
                     <LineSeries
                         name={`${global.dynProgSolution}`}
-                        valueField="dp"
-                        argumentField="name"
-                        scaleName="rec"
+                        valueField='dp'
+                        argumentField='name'
+                        scaleName='rec'
+                        color={dpColor}
                     />
 
                     <Legend position='bottom' />
                     <Animation />
                     <Stack />
-                    <EventTracker />
-                    <Tooltip />
                 </Chart>
             </Paper>
         );
