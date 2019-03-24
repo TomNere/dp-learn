@@ -6,18 +6,16 @@ import AppBar from '@material-ui/core/AppBar';
 import { Button } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import logo from '../resources/dp_transparent.png';
-import myTheme from '../styles/index';
-import slovak from '../resources/slovakFlag.png';
+import myTheme from './styles/index';
+import slovak from './resources/slovakFlag.png';
 import { strings } from 'src/strings/languages';
-import uk from '../resources/ukFlag.png';
+import uk from './resources/ukFlag.png';
 
 type AllProps =
-    IHeaderProps &
+    IOnLanguageChangeProps &
     WithStyles<typeof styles>;
 
-interface IHeaderProps {
-    location: any,
+export interface IOnLanguageChangeProps {
     onLanguageChange: any
 }
 
@@ -56,30 +54,25 @@ class Header extends React.Component<AllProps> {
 
     public render() {
         const { classes } = this.props;
-        const welcomePage = (location.pathname === "/");
 
         return (
             <AppBar position="absolute" className={classes.appBar}>
                 <div>
-                    {!welcomePage &&
-                        <Toolbar className={classes.flex}>
-                            <span className={classes.logo}>
-                                <img src={logo} height='50' width='50' />
-                            </span>
-                            <Typography variant="h6" color="inherit" noWrap={true}>
-                                {strings.global.dynProg}
-                            </Typography>
+                    <Toolbar className={classes.flex}>
+                        <Typography variant="h6" color="inherit" noWrap={true}>
+                            {strings.global.dynamic} <br />
+                            {strings.global.programming}
+                        </Typography>
 
-                            <Button className={classes.right} onClick={this.props.onLanguageChange}>
-                                {strings.getLanguage() === 'en' &&
-                                    <img src={slovak} height='60' width='60' />
-                                }
-                                {strings.getLanguage() === 'sk' &&
-                                    <img src={uk} height='60' width='60' />
-                                }
-                            </Button>
-                        </Toolbar>
-                    }
+                        <Button className={classes.right} onClick={this.props.onLanguageChange}>
+                            {strings.getLanguage() === 'en' &&
+                                <img src={slovak} height='60' width='60' />
+                            }
+                            {strings.getLanguage() === 'sk' &&
+                                <img src={uk} height='60' width='60' />
+                            }
+                        </Button>
+                    </Toolbar>
                 </div>
             </AppBar>
         );

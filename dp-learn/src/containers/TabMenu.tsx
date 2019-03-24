@@ -4,6 +4,7 @@ import { AppBar, Tab, Tabs } from '@material-ui/core';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
 import TabContainer from 'src/containers/TabContainer';
+import myTheme from '../styles/index';
 import { strings } from 'src/strings/languages';
 
 type AllProps =
@@ -32,8 +33,11 @@ const styles = (theme: Theme) => createStyles({
     appBar: {
         marginLeft: 'auto',
         marginRight: 'auto',
-        backgroundColor: "#105c9b"
+        backgroundColor: myTheme.palette.primary.main
     },
+    whiteBackground: {
+        backgroundColor: 'white'
+    }
 });
 
 class TabMenu extends React.Component<AllProps, ITabMenuState> {
@@ -50,7 +54,7 @@ class TabMenu extends React.Component<AllProps, ITabMenuState> {
         return (
             <div className={classes.root}>
                 <AppBar className={classes.appBar} position="static">
-                    <Tabs value={this.state.selected} variant={'fullWidth'} onChange={this.handleChange}>
+                    <Tabs value={this.state.selected} variant={'fullWidth'} onChange={this.handleChange} classes={{indicator: classes.whiteBackground}} >
                         <Tab label={strings.components.theory} />
                         <Tab label={strings.components.demo} />
                         <Tab label={strings.components.charts} />

@@ -1,5 +1,8 @@
 export const english = {
     global: {
+        dpLearn: 'DP learn',
+        dynamic: 'Dynamic',
+        programming: 'programming',
         letsStart: "Let's start",
         dynProg: 'Dynamic programming',
         recursiveSolution: 'Solution using recursion',

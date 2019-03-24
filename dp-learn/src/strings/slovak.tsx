@@ -1,5 +1,8 @@
 export const slovak = {
     global: {
+        dpLearn: 'DP learn',
+        dynamic: 'Dynamické',
+        programming: 'programovanie',
         letsStart: 'Začnime',
         dynProg: 'Dynamické programovanie',
         recursiveSolution: 'Rekurzívne riešenie',

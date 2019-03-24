@@ -1,19 +1,13 @@
 import * as React from 'react';
 
-import Container from 'src/containers/Container';
-import Header from 'src/containers/Header';
-import { BrowserRouter as Router } from 'react-router-dom'
+import MainPage from './MainPage';
 import { strings } from 'src/strings/languages';
 
 class App extends React.Component {
     public render() {
         return (
-            <Router>
-                <div>
-                    <Header location={this.props} onLanguageChange={this.languageSwitch} />
-                    <Container location={this.props} />
-                </div>
-            </Router>
+            // This app is single page app
+            <MainPage onLanguageChange={this.languageSwitch} />
         );
     }
 
