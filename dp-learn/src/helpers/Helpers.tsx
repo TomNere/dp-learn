@@ -1,4 +1,5 @@
-import { ITimeConverter } from 'src/types';
+// Converter between time units
+type ITimeConverter = (n: number) => number;
 
 export const MilliToMicro : ITimeConverter = (n: number) => {
     return n * 1000;

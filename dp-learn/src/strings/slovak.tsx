@@ -1,3 +1,5 @@
+// Strings for slovak localization
+
 export const slovak = {
     global: {
         dpLearn: 'DP learn',

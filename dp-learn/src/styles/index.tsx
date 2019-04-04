@@ -1,30 +1,26 @@
 import { createMuiTheme } from "@material-ui/core";
 
+// Custom Mui theme definition
 export default createMuiTheme({
     palette: {
         primary: {
-            // light: will be calculated from palette.primary.main,
             main: '#263238',
-            // dark: will be calculated from palette.primary.main,
-            // contrastText: will be calculated from palette.primary.main,
         },
         secondary: {
             light: '#c8b900',
             main: '#0069c0',
-            // dark: will be calculated from palette.primary.main,
-            // contrastText: will be calculated from palette.primary.main,
         }
     },
-    overrides: {
-        MuiButton: {
-          root: {
-            color: 'red',
-            '&:hover': {
-              backgroundColor: 'purple'
-            }
-          }
-        }
-      },
+    // overrides: {
+    //     MuiButton: {
+    //       root: {
+    //         color: 'red',
+    //         '&:hover': {
+    //           backgroundColor: 'purple'
+    //         }
+    //       }
+    //     }
+    //   },
     shape: {
         borderRadius: 2
     },

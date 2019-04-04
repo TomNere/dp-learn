@@ -3,8 +3,8 @@ import { english } from './english';
 import { slovak } from './slovak';
 
 export const strings = new LocalizedStrings({
-    // Slovak
+    // Slovak strings
     sk: slovak,
-    // English
+    // English strings
     en: english
 });

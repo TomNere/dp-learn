@@ -1,3 +1,5 @@
+// Strings for english localization
+
 export const english = {
     global: {
         dpLearn: 'DP learn',
