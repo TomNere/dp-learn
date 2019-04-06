@@ -76,3 +76,23 @@ export const recCoinsSpace : ICoinsSpace = (coinsLength: number) => {
 export const dpCoinsSpace : ICoinsSpace = (coinsLength: number, value: number) => {
     return coinsLength + (value + 1) + 1;    // Store coins, coins array for DP (size is coins number +1), +1 to store given value
 }
+
+export interface ICoinsExample {
+    coins: number[],
+    value: number
+}
+
+export const coinsExamples: ICoinsExample[] = [
+    {
+        coins: [1, 2],
+        value: 15
+    },
+    {
+        coins: [2, 3, 4],
+        value: 20
+    },
+    {
+        coins: [3, 5, 7],
+        value: 40
+    },
+];

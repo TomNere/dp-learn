@@ -6,13 +6,12 @@ import SpaceChart, { ISpaceChartData } from 'src/components/dpComponents/SpaceCh
 import StatsTable, { IStatsTableData } from 'src/components/dpComponents/StatsTable';
 import TimeChart, { ITimeChartData } from 'src/components/dpComponents/TimeChart';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
-import { dpCoins, dpCoinsSpace, recCoinsSpace, recCoinsTime, recursiveCoins } from 'src/dp/helpers/coins/CoinsSolutions';
+import { coinsExamples, dpCoins, dpCoinsSpace, recCoinsSpace, recCoinsTime, recursiveCoins } from 'src/dp/helpers/coins/CoinsStatsHelper';
 
 import CustomTextField from 'src/components/customComponents/CustomTextField';
 import FlexRowContainer from 'src/hoc/FlexRowContainer';
 import { GetNumbers } from 'src/helpers/Helpers';
 import { ISimpleObjectParameter } from 'src/helpers/TypesDefinitions';
-import { coinsExamples } from 'src/dp/helpers/coins/CoinsConsts';
 import myTheme from './../../../styles/index';
 import { strings } from 'src/strings/languages';
 

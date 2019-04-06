@@ -21,7 +21,8 @@ export const slovak = {
         nanoSeconds: 'Nanoseconds',
         skipping: 'Preskakujem...',
         recursion: 'Rekurzia',
-        dp: 'DP'
+        dp: 'DP',
+        invalidArg: 'Chyba pri validácii vstupných hodnôt'
     },
     components: {
         srcCode: 'Zdrojový kód',
@@ -45,6 +46,10 @@ export const slovak = {
         editDistance: 'Editačná vzdialenosť',
         tree: 'Optimalizovaný binárny vyhľadávací strom'
     },
+    demoGlobal:{
+        assigning: 'Priradzujem!',
+        cycle: 'Cyklus',
+    },
     coins: {
         title: 'Minimálny počet mincí na vytvorenie danej hodnoty',
         coin: 'Minca',
@@ -61,7 +66,9 @@ export const slovak = {
         },
         demo: {
             title: 'Minimálny počet mincí na vytvorenie danej hodnoty - demo',
-            brief: 'Riešenie problému pomocou dynamického programovania. Zadajte hodnotu, ktorú treba vytvoriť a mince oddelené znakom \',\' (čiarka).',
+            brief: 'Zadajte hodnotu (od 1 po 20), ktorú treba vytvoriť súčtom hodnôt mincí a hodnoty mincí oddelené znakom \',\'(maximálny počet je 5).',
+            isNeeded: 'Potrebný počet mincí: ',
+            evalCoinsFor: 'Výpočet mincí pre vytvorenie hodnoty ',
         }
     },
     substring: {
@@ -105,7 +112,6 @@ export const slovak = {
             evalChainLength: 'Výpočet hodnôt pre reťaz dlžky ',
             assignedIntMax: 'Priradené INT_MAX',
             selectedToSum: 'Vybrané bunky pre sčítanie',
-            assigning: 'priradzujem!',
             nothingToDo: 'žiadna akcia.',
             nextCell: 'Výber ďalšej bunky',
             done: 'Hotovo.'

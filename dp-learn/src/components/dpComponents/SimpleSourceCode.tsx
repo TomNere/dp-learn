@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
-import { Typography } from '@material-ui/core';
 import myTheme from 'src/styles/index';
 
 type AllProps =
@@ -14,7 +13,7 @@ interface ISimpleSourceCodeProps {
 }
 
 const styles = () => createStyles({
-    typography: {
+    code: {
         background: myTheme.palette.primary.main,
         marginLeft: 20,
         color: 'white',
@@ -26,17 +25,17 @@ class SimpleSourceCode extends React.Component<AllProps> {
     public static defaultProps: ISimpleSourceCodeProps = {
         code: "",
     }
-    
+
     public render() {
         const { classes } = this.props;
         return (
-            <Typography className={classes.typography}>
-                <pre>
+            <div className={classes.code}>
+                <pre >
                     <code className="language-clike">
                         {this.props.code}
                     </code>
                 </pre>
-            </Typography>
+            </div>
         );
     }
 }

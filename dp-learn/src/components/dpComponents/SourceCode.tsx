@@ -46,13 +46,11 @@ class SourceCode extends React.Component<AllProps> {
                     <Typography className={[classes.heading, classes.whiteText].join(' ')}>{strings.components.srcCode}</Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
-                    <Typography className={classes.leftMargin}>
-                        <pre>
-                            <code className="language-clike">
-                                {this.props.code}
-                            </code>
-                        </pre>
-                    </Typography>
+                    <pre className={classes.leftMargin}>
+                        <code className="language-clike">
+                            {this.props.code}
+                        </code>
+                    </pre>
                 </ExpansionPanelDetails>
             </ExpansionPanel>
         );

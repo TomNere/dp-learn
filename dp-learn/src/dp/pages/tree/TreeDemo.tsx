@@ -14,14 +14,14 @@ import { demoStyle } from 'src/styles/demoStyle';
 import { strings } from 'src/strings/languages';
 
 interface ITreeDemoState {
-    givenKeys: string
-    givenFreqs: string
     speed: number
     inProgress: boolean
     tableVisible: boolean
+    table: number[][]
     result: string
     currentState: string
-    table: number[][]
+    givenKeys: string
+    givenFreqs: string
     highlightCurrent: boolean
     highlightedToSum: Array<[number, number]>
     highlightFreqs: boolean
@@ -274,7 +274,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
 
             this.setState({
                 table,
-                currentState: `${this.valueToAssign} < ${ValueOrIntMax(currentVal)}, ${strings.tree.demo.assigning}`
+                currentState: `${this.valueToAssign} < ${ValueOrIntMax(currentVal)}. ${strings.demoGlobal.assigning}`
             });
         }
         else {
@@ -329,7 +329,6 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
         /* Create an auxiliary 2D matrix to store results  
         of subproblems */
         const table: number[][] = [];
-
 
         /* table[i][j] = Optimal cost of binary search tree 
            that can be  formed from keys[i] to keys[j]. 

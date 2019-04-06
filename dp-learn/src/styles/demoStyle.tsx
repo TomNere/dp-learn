@@ -70,26 +70,7 @@ export const demoStyle = (theme: Theme) => createStyles({
     blueCell: {
         backgroundColor: '#1dd8ff'
     },
-    avatar: {
-        margin: 10,
-        height: 70,
-        width: 70,
-        display: 'flex',
-        color: '#fff',
-        fontSize: 30
-    },
-    avatars: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    defaultAvatar: {
-        backgroundColor: myTheme.palette.secondary.main
-    },
-    greenAvatar: {
-        backgroundColor: 'green'
-    },
-    redAvatar: {
+    redCell: {
         backgroundColor: 'red'
     },
     incCell: {

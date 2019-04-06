@@ -3,7 +3,7 @@ import * as Prism from 'prismjs';
 import * as React from 'react';
 
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
-import { coinsDynCode, coinsRecCode } from 'src/dp/helpers/coins/CoinsConsts';
+import { coinsDynCode, coinsRecCode } from 'src/dp/helpers/coins/CoinsCodes';
 
 import CoinsTree from 'src/resources/coins/coinsTree.png';
 import Complexity from 'src/components/dpComponents/Complexity';

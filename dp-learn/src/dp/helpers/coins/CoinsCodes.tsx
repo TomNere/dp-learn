@@ -108,23 +108,3 @@ while(start != 0) {
     start = start - coins[j];
 }
 printf("\\n");`;
-
-export interface ICoinsExample {
-    coins: number[],
-    value: number
-}
-
-export const coinsExamples: ICoinsExample[] = [
-    {
-        coins: [1, 2],
-        value: 15
-    },
-    {
-        coins: [2, 3, 4],
-        value: 20
-    },
-    {
-        coins: [3, 5, 7],
-        value: 40
-    },
-];

@@ -41,20 +41,23 @@ const styles = (theme: Theme) => createStyles({
     toolbar: theme.mixins.toolbar,
     selectedItem: {
         backgroundColor: myTheme.palette.primary.main,
-        '& $span': {
+        '& span': {
             color: theme.palette.common.white,
         },
         "&:focus": {
             backgroundColor: myTheme.palette.primary.main,
-            '& $span': {
+            '& span': {
                 color: theme.palette.common.white,
             },
+        },
+        "&:hover": {
+            backgroundColor: myTheme.palette.primary.main,
         },
     },
     nonSelectedItem: {
         "&:hover": {
             backgroundColor: myTheme.palette.primary.main,
-            '& $span': {
+            '& span': {
                 color: theme.palette.common.white,
             },
         },

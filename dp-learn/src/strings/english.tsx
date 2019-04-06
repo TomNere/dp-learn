@@ -22,7 +22,8 @@ export const english = {
         nanoSeconds: 'Nanoseconds',
         skipping: 'Skipping...',
         recursion: 'Recursion',
-        dp: 'DP'
+        dp: 'DP',
+        invalidArg: 'Input values validation error'
     },
     components: {
         srcCode: 'Source code',
@@ -38,6 +39,10 @@ export const english = {
         theoreticValue: 'theoretical value',
         tableComparison: 'Table comparison',
         string: 'String'
+    },
+    demoGlobal:{
+        assigning: 'Assigning!',
+        cycle: 'Cycle',
     },
     menu: {
         coins: 'Minimum coins',
@@ -63,6 +68,8 @@ export const english = {
         demo: {
             title: 'Minimum number of coins that make a given value - demo',
             brief: 'Dynamic programming solution. Please provide value to make and coins separated by \',\' (comma)',
+            isNeeded: 'Number of coins: ',
+            evalCoinsFor: 'Evaluating coins needed for value ',
         }
     },
     substring: {
@@ -106,7 +113,6 @@ export const english = {
             evalChainLength: 'Evaluating values for chain of length ',
             assignedIntMax: 'Assigned INT_MAX',
             selectedToSum: 'Selected cells to sum',
-            assigning: 'assigning!',
             nothingToDo: 'nothing to do.',
             nextCell: 'Moving to next cell',
             done: 'Hotovo.'
