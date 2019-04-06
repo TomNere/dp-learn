@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Drawer, List, ListItem, ListItemText } from '@material-ui/core';
+import { Divider, Drawer, List, ListItem, ListItemText, } from '@material-ui/core';
 import MenuHeader, { IOnLanguageChangeProps } from './MenuHeader';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
@@ -37,17 +37,27 @@ const styles = (theme: Theme) => createStyles({
     },
     content: {
         flexGrow: 1,
-        // minWidth: 0, // So the Typography noWrap works
     },
     toolbar: theme.mixins.toolbar,
     selectedItem: {
         backgroundColor: myTheme.palette.primary.main,
-        "&:hover": {
-            backgroundColor: myTheme.palette.primary.dark,
-        }
+        '& $span': {
+            color: theme.palette.common.white,
+        },
+        "&:focus": {
+            backgroundColor: myTheme.palette.primary.main,
+            '& $span': {
+                color: theme.palette.common.white,
+            },
+        },
     },
-    selectedText: {
-        color: 'white',
+    nonSelectedItem: {
+        "&:hover": {
+            backgroundColor: myTheme.palette.primary.main,
+            '& $span': {
+                color: theme.palette.common.white,
+            },
+        },
     },
     drawerPaper: {
         position: 'relative',
@@ -75,28 +85,33 @@ class Page extends React.Component<AllProps, IPageState> {
                     <MenuHeader onLanguageChange={this.props.onLanguageChange} />
                     <List className={classes.noPadding}>
                         {/* About DP */}
-                        <ListItem className={this.isSelected('aboutDP', true)} button={true} onClick={this.handleSelectHome}>
-                            <ListItemText classes={{ primary: this.isSelected('aboutDP', false) }} primary={strings.menu.coins} />
+                        <ListItem className={this.isSelected('aboutDP')} button={true} onClick={this.handleSelectHome}>
+                            <ListItemText primary={strings.global.dynProg} />
                         </ListItem>
+                        <Divider />
                         {/* Coins */}
-                        <ListItem className={this.isSelected('coins', true)} button={true} onClick={this.handleSelectCoins}>
-                            <ListItemText classes={{ primary: this.isSelected('coins', false) }} primary={strings.menu.coins} />
+                        <ListItem className={this.isSelected('coins')} button={true} onClick={this.handleSelectCoins}>
+                            <ListItemText primary={strings.menu.coins} />
                         </ListItem>
+                        <Divider />
                         {/* Substring */}
-                        <ListItem className={this.isSelected('substring', true)} button={true} onClick={this.handleSelectSubstring}>
-                            <ListItemText classes={{ primary: this.isSelected('substring', false) }} primary={strings.menu.substring} />
+                        <ListItem className={this.isSelected('substring')} button={true} onClick={this.handleSelectSubstring}>
+                            <ListItemText primary={strings.menu.substring} />
                         </ListItem>
+                        <Divider />
                         {/* Rod */}
-                        <ListItem className={this.isSelected('rod', true)} button={true} onClick={this.handleSelectRod}>
-                            <ListItemText classes={{ primary: this.isSelected('rod', false) }} primary={strings.menu.rod} />
+                        <ListItem className={this.isSelected('rod')} button={true} onClick={this.handleSelectRod}>
+                            <ListItemText primary={strings.menu.rod} />
                         </ListItem>
+                        <Divider />
                         {/* Edit distance */}
-                        <ListItem className={this.isSelected('editDistance', true)} button={true} onClick={this.handleSelectEditDistance}>
-                            <ListItemText classes={{ primary: this.isSelected('editDistance', false) }} primary={strings.menu.editDistance} />
+                        <ListItem className={this.isSelected('editDistance')} button={true} onClick={this.handleSelectEditDistance}>
+                            <ListItemText primary={strings.menu.editDistance} />
                         </ListItem>
+                        <Divider />
                         {/* Optimal search binary tree */}
-                        <ListItem className={this.isSelected('tree', true)} button={true} onClick={this.handleSelectTree}>
-                            <ListItemText classes={{ primary: this.isSelected('tree', false) }} primary={strings.menu.tree} />
+                        <ListItem className={this.isSelected('tree')} button={true} onClick={this.handleSelectTree}>
+                            <ListItemText primary={strings.menu.tree} />
                         </ListItem>
                     </List>
                 </Drawer>
@@ -114,13 +129,9 @@ class Page extends React.Component<AllProps, IPageState> {
     }
 
     // Check if item is selected
-    private isSelected = (which: selectedItem, isItem: boolean) => {
+    private isSelected = (which: selectedItem) => {
         const { classes } = this.props;
-
-        if (this.state.selected === which) {
-            return isItem ? classes.selectedItem : classes.selectedText
-        }
-        return '';
+        return this.state.selected === which ? classes.selectedItem : classes.nonSelectedItem;
     }
 
     // Handlers for item selection
