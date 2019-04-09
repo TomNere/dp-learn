@@ -1,30 +1,30 @@
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
-import { TableCell, TableRow, Typography } from '@material-ui/core';
+import { TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from "@material-ui/core/styles";
 
 import CustomButton from 'src/components/customComponents/CustomButton';
 import CustomTextField from 'src/components/customComponents/CustomTextField';
+import CustomTitle from 'src/hoc/CustomTitle';
 import DemoTable from 'src/components/dpComponents/DemoTable';
 import FlexRowContainer from 'src/hoc/FlexRowContainer';
 import SpeedSelector from 'src/components/customComponents/SpeedSelector';
+import { ValueOrUndefined } from 'src/helpers/Helpers';
 import { demoStyle } from 'src/styles/demoStyle';
 import { strings } from 'src/strings/languages';
 
 interface ISubstringDemoState {
-    stringX: string
-    stringY: string
-    charX: string
-    charY: string
     speed: number
     inProgress: boolean
     tableVisible: boolean
-    result: string
     table: number[][]
-    selectedCol: number
-    selectedRow: number
-    highlitedCells: string[]
+    result: string
+    currentState: string
+    stringX: string
+    stringY: string
+    match: boolean | undefined
+    highlitingOn: boolean
 }
 
 type AllProps =
@@ -37,19 +37,19 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
     private outerCounter: number;
     private innerCounter: number;
 
-    // To store table position of the result
-    private tableRow: number;
-    private tableCol: number;
+    private nextAutomataState:
+        'doInnerCycle' |
+        'nextInnerCycle' |
+        'assignZero' |
+        'assignOne' |
+        'assignIncremented' |
+        'done'
+        = 'done';
 
-    // Create a table to store lengths of  
-    // longest common suffixes of substrings. 
-    // Note that table[i][j] contains length 
-    // of longest common suffix of X[0..i-1]  
-    // and Y[0..j-1]. The first row and first 
-    // column entries have no logical meaning, 
-    // they are used only for simplicity of  
-    // program 
-    private table: number[][];
+    // Tuple for result position
+    private resultPos: [number, number];
+
+    private solution: Array<[number, number]>;
 
     // Length of strings
     private LENGTH1: number;
@@ -58,26 +58,19 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
     // Timeout
     private timeout: any;
 
-    // Delay helper
-    private delayHelper = 1500;
-
-    ////////////////////////////////////////////////////////////////////////////
-
     public constructor(props: AllProps) {
         super(props)
         this.state = {
-            stringX: "String",
-            stringY: "Testing",
-            charX: "",
-            charY: "",
             speed: 1,
             inProgress: false,
             tableVisible: false,
-            result: "",
             table: [],
-            selectedCol: 0,
-            selectedRow: 0,
-            highlitedCells: []
+            result: "",
+            currentState: '...',
+            stringX: "String",
+            stringY: "Testing",
+            match: undefined,
+            highlitingOn: false
         }
     }
 
@@ -86,9 +79,10 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
 
         return (
             <div>
-                <Typography variant={'h4'} align={'center'} className={classes.bottomMargin}>
+                <CustomTitle>
                     {strings.substring.demo.title}
-                </Typography>
+                </CustomTitle>
+
                 <div className={classes.bottomMargin}>
                     <Markdown source={strings.substring.demo.brief} />
                 </div>
@@ -96,7 +90,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
                     <CustomTextField label={`${strings.components.string} X`} value={this.state.stringX} onChange={this.handlestrXChange} />
                     <CustomTextField label={`${strings.components.string} Y`} value={this.state.stringY} onChange={this.handlestrYChange} />
                 </FlexRowContainer>
-                
+
                 {/* Speed select */}
                 <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
                 <br />
@@ -105,13 +99,13 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
                 <CustomButton color='dark' label={strings.global.start} onClick={this.onStartClick} visible={true} />
 
                 {/* Step button */}
-                <CustomButton color='light' label={strings.global.step} onClick={this.onStepClick} visible={this.state.inProgress && this.state.speed === 0} />
+                <CustomButton color='light' label={strings.global.step} onClick={this.finiteAutomata} visible={this.state.inProgress && this.state.speed === 0} />
 
                 {/* Finish button */}
                 <CustomButton color='light' label={strings.global.finish} onClick={this.onFinishClick} visible={this.state.inProgress} />
 
                 {/* Table and result */}
-                <DemoTable subRes="" cols={this.LENGTH2 + 1} visible={this.state.tableVisible} result={this.state.result} head={this.tableHead} body={this.tableBody} />
+                <DemoTable currentState={this.state.currentState} cols={this.LENGTH2 + 1} visible={this.state.tableVisible} result={this.state.result} head={this.tableHead} body={this.tableBody} />
             </div>
         );
     }
@@ -128,171 +122,206 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
         this.setState({ speed: +e.target.value });
     };
 
-    private onStartClick = () => {
-        this.setState({
-            charX: "",
-            charY: ""
-        });
+    private setTimeout = (func: () => void) => {
+        this.timeout = setTimeout(func, 5000 / this.state.speed);
+    }
 
-        this.table = [];
-        this.tableCol = this.tableRow = 0;
+    private onStartClick = () => {
+        clearTimeout(this.timeout);
+
+        const table: number[][] = [];
 
         this.LENGTH1 = this.state.stringX.length;
         this.LENGTH2 = this.state.stringY.length;
 
-        // Initialize all table 
-        // values as Infinite 
-        for (let i = 0; i <= this.LENGTH1; i++) {
-            this.table[i] = [];
-            for (let j = 0; j <= this.LENGTH2; j++) {
-                this.table[i][j] = Number.MAX_VALUE;
-            }
+        this.resultPos = [0, 0];
+
+        // Initialize two dimensional array
+        for (let i = 0; i < this.LENGTH1; i++) {
+            table[i] = [];
         }
 
-        // Initialize first row
-        for (let j = 0; j <= this.LENGTH2; j++) {
-            this.table[0][j] = 0;
-        }
-
-        this.outerCounter = 1;
+        this.outerCounter = 0;
+        this.innerCounter = 0;
 
         this.setState({
             tableVisible: true,
             inProgress: true,
-            table: this.table,
-            result: "Current result: 0"
+            table,
+            result: '',
+            currentState: strings.substring.demo.start,
+            match: undefined,
+            highlitingOn: false
         });
 
-        this.innerCounter = 0;
 
-        // Check if auto play or debugging
+        this.nextAutomataState = 'doInnerCycle';
+        // Check if auto play or step by step
         if (this.state.speed !== 0) {
-            this.timeout = setTimeout(this.onStepClick, this.delayHelper / this.state.speed);
+            this.setTimeout(this.finiteAutomata);
+        }
+    }
+
+    private finiteAutomata = () => {
+        // Finite automata
+        switch (this.nextAutomataState) {
+            case 'doInnerCycle':
+                this.doInnerCycle();
+                break;
+            case 'nextInnerCycle':
+                this.nextInnerCycle();
+                break;
+            case 'assignZero':
+                this.assignZero();
+                break;
+            case 'assignOne':
+                this.assignOne();
+                break;
+            case 'assignIncremented':
+                this.assignIncremented();
+                break;
+        }
+
+        // if speed != 0, setTimeout is needed
+        const auto: boolean = this.state.speed !== 0;
+
+        if (auto && this.nextAutomataState !== 'done') {
+            this.setTimeout(this.finiteAutomata);
+        }
+    }
+
+    private doInnerCycle = () => {
+        this.setState({ highlitingOn: true });
+        if (this.state.stringX[this.outerCounter] === this.state.stringY[this.innerCounter]) {
+            this.setState({
+                currentState: `${this.state.stringX[this.outerCounter]} == ${this.state.stringY[this.innerCounter]}, ${strings.substring.demo.match}`,
+                match: true
+            });
+            if (this.innerCounter === 0 || this.outerCounter === 0) {
+                this.nextAutomataState = 'assignOne';
+            }
+            else {
+                this.nextAutomataState = 'assignIncremented';
+            }
         }
         else {
-            this.onStepClick();
+            this.setState({ currentState: `${this.state.stringX[this.outerCounter]} != ${this.state.stringY[this.innerCounter]}, ${strings.substring.demo.noMatch}${strings.substring.demo.assignZero} ` });
+            this.nextAutomataState = 'assignZero';
         }
     }
 
-    private transitionHelper = () => {
-        if (this.state.speed !== 0) {
-            this.setState({ charY: "" });
-            this.timeout = setTimeout(this.onStepClick, 500 / this.state.speed);
-        }
+    private assignZero = () => {
+        const table = [...this.state.table];
+        table[this.outerCounter][this.innerCounter] = 0;
+
+        this.setState({
+            table,
+        });
+
+        this.nextAutomataState = 'nextInnerCycle';
     }
 
-    private onStepClick = () => {
-        // Only for speed === 0
-        if (this.outerCounter > this.LENGTH1) {
-            this.setFinalState();
-            return;
+    private assignOne = () => {
+        const table = [...this.state.table];
+        table[this.outerCounter][this.innerCounter] = 1;
+
+        this.setState({
+            table,
+        });
+
+        if (table[this.outerCounter][this.innerCounter] > this.state.table[this.resultPos[0]][this.resultPos[1]]) {
+            this.resultPos[0] = this.outerCounter;
+            this.resultPos[1] = this.innerCounter;
+        }
+
+        this.nextAutomataState = 'nextInnerCycle';
+    }
+
+    private assignIncremented = () => {
+        this.setState({ match: true });
+
+        const table = [...this.state.table];
+        table[this.outerCounter][this.innerCounter] = table[this.outerCounter - 1][this.innerCounter - 1] + 1;
+
+        this.setState({
+            table,
+        });
+
+        if (table[this.outerCounter][this.innerCounter] > this.state.table[this.resultPos[0]][this.resultPos[1]]) {
+            this.resultPos[0] = this.outerCounter;
+            this.resultPos[1] = this.innerCounter;
+        }
+
+        this.nextAutomataState = 'nextInnerCycle';
+    }
+
+    private nextInnerCycle = () => {
+        if (this.innerCounter + 1 >= this.LENGTH2) {
+            if (this.outerCounter + 1 >= this.LENGTH1) {
+                this.nextAutomataState = 'done';
+                this.setFinalState();
+                return;
+            }
+            else {
+                this.outerCounter++;
+                this.innerCounter = 0;
+            }
+        }
+        else {
+            this.innerCounter++;
         }
 
         this.setState({
-            charX: this.state.stringX[this.outerCounter - 1],
-            charY: this.state.stringY[this.innerCounter - 1],
-            selectedCol: this.innerCounter,
-            selectedRow: this.outerCounter,
-            highlitedCells: []
+            match: undefined,
         });
 
-        if (this.innerCounter === 0) {
-            this.table[this.outerCounter][this.innerCounter] = 0;
-            this.setState({ charY: "" });
-        }
-        else if (this.state.stringX[this.outerCounter - 1] === this.state.stringY[this.innerCounter - 1]) {
-            this.table[this.outerCounter][this.innerCounter] = this.table[this.outerCounter - 1][this.innerCounter - 1] + 1;
-
-            // Flash
-            if (this.outerCounter > 1 && this.innerCounter > 1) {
-                this.incrementOn();
-            }
-
-            if (this.table[this.outerCounter][this.innerCounter] > this.table[this.tableRow][this.tableCol]) {
-                this.tableRow = this.outerCounter;
-                this.tableCol = this.innerCounter;
-            }
-        }
-        else {
-            this.table[this.outerCounter][this.innerCounter] = 0;
-        }
-
-        this.setState({ table: this.table });
-
-        this.innerCounter++;
-
-        if (this.innerCounter === 1) {
-            if (this.state.speed !== 0) {
-                this.onStepClick();
-            }
-            return;
-        }
-
-        if (this.innerCounter <= this.LENGTH2) {
-            this.setState({ result: "Current max. length: " + this.table[this.tableRow][this.tableCol].toString() });
-
-            if (this.state.speed !== 0) {
-                this.timeout = setTimeout(this.transitionHelper, this.delayHelper / this.state.speed);
-            }
-        }
-        else {
-            this.outerCounter++;
-            if (this.outerCounter > this.LENGTH1) {
-                this.timeout = setTimeout(this.setFinalState, this.delayHelper / this.state.speed);
-            }
-            else {
-                this.setState({ result: "Current max. length: " + this.table[this.tableRow][this.tableCol].toString() });
-                this.innerCounter = 0;
-                this.timeout = setTimeout(this.transitionHelper, this.delayHelper / this.state.speed);
-            }
-        }
+        this.doInnerCycle();
     }
 
     private onFinishClick = () => {
         clearTimeout(this.timeout);
         this.setState({ speed: 0 });
 
-        while (this.outerCounter <= this.LENGTH1) {
-            this.onStepClick();
+        const table: number[][] = [];
+
+        for (let i = 0; i <= this.LENGTH1; i++) {
+            table[i] = [];
+            for (let j = 0; j <= this.LENGTH2; j++) {
+                if (this.state.stringX[i] === this.state.stringY[j]) {
+                    if (i === 0 || j === 0) {
+                        table[i][j] = 1;
+                    }
+                    else {
+                        table[i][j] = table[i - 1][j - 1];
+                    }
+                }
+                else {
+                    table[i][j] = 0;
+                }
+                if (table[i][j] > this.state.table[this.resultPos[0]][this.resultPos[1]]) {
+                    this.resultPos[0] = i;
+                    this.resultPos[1] = j;
+                }
+            }
         }
 
-        this.setState({ speed: 1 });
+        this.setFinalState();
     };
 
-    private incrementOn = () => {
-
-        const cells = [`row ${this.outerCounter - 1},column ${this.innerCounter - 1}`];
-
-        this.setState({
-            highlitedCells: cells
-        });
-
-        if (this.state.speed !== 0) {
-            setTimeout(this.incrementOff, (this.delayHelper / 2) / this.state.speed);
-        }
-    }
-
-    private incrementOff = () => {
-        this.setState({ highlitedCells: [] });
-    }
-
     private setFinalState = () => {
-        const cells: string[] = [];
-        let finalString = "";
+        const cells: Array<[number, number]> = [];
+        let finalString = '';
 
-        for (let i = this.table[this.tableRow][this.tableCol] - 1; i >= 0; i--) {
-            cells.push(`row ${this.tableRow - i},column ${this.tableCol - i}`);
-            finalString += this.state.stringX[this.tableRow - i - 1];
+        for (let i = this.state.table[this.resultPos[0]][this.resultPos[1]] - 1; i >= 0; i--) {
+            cells.push([this.resultPos[0] - i, this.resultPos[1] - i]);
+            finalString += this.state.stringX[this.resultPos[0] - i];
         }
+        this.solution = cells;
 
         this.setState({
             inProgress: false,
-            result: `Longest common substring: "${finalString}", length is ${this.table[this.tableRow][this.tableCol]}.`,
-            highlitedCells: cells,
-            charX: "",
-            charY: "",
-            selectedCol: 0,
-            selectedRow: 0
+            result: `${strings.substring.demo.longestSubr}: "${finalString}", ${strings.substring.demo.length}: ${this.state.table[this.resultPos[0]][this.resultPos[1]]}.`,
+            currentState: '...'
         });
     }
 
@@ -302,18 +331,26 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
 
         const heading = [];
 
-        heading.push(<TableCell key='tableHeading' className={[classes.tableHeading, classes.caption].join(' ')}>Table</TableCell>)
+        heading.push(<TableCell key='tableHeading' className={[classes.tableHeading, classes.caption].join(' ')} />)
 
-        for (let i = 1; i < this.LENGTH2 + 1; i++) {
-            const classNames = [classes.columnCaption, classes.caption];
+        for (let i = 0; i < this.LENGTH2; i++) {
+            const classNames = [classes.columnCaption];
 
-            if (i === this.state.selectedCol) {
-                classNames.push(classes.yellowCell);
+            // Highlight solution
+            if (this.state.inProgress === false) {
+                this.solution.forEach(element => {
+                    if (element[0] === i) {
+                        classNames.push(classes.blueCaption);
+                    }
+                });
+            }
+            else {
+                classNames.push(classes.caption);
             }
 
             heading.push(
                 <TableCell key={'columnName' + i.toString()} className={classNames.join(' ')}>
-                    {`Y[${i - 1}] - ${this.state.stringY[i - 1]}`}
+                    {this.state.stringY[i]}
                 </TableCell>);
         }
 
@@ -326,34 +363,45 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
 
         const body = [];
         let classNames = [];
+
         // i = 1 because 0 is heading
-        for (let i = 1; i <= this.LENGTH1; i++) {
+        for (let i = 0; i < this.LENGTH1; i++) {
             const row = [];
 
             classNames = [classes.rowCaption, classes.caption];
-            if (i === this.state.selectedRow) {
-                classNames.push(classes.yellowCell);
-            }
 
             // Row names
             row.push(
                 <TableCell key={`rowName ${i.toString()}`} className={classNames.join(' ')}>
-                    {`X[${i - 1}] - ${this.state.stringX[i - 1]}`}
+                    {this.state.stringX[i]}
                 </TableCell>
             );
 
-            // Table body(content), j = 1 because 0 is row name
-            for (let j = 1; j <= this.LENGTH2; j++) {
+            // Table body(content)
+            for (let j = 0; j < this.LENGTH2; j++) {
                 classNames = [classes.tableCell];
                 const key = `row ${i}, column ${j}`;
 
-                let value = this.state.table[i][j] === Number.MAX_VALUE ? "-" : this.state.table[i][j].toString();
+                let value = ValueOrUndefined(this.state.table[i][j]);
 
-                for (const highlitedKey in this.state.highlitedCells) {
-                    if (this.state.highlitedCells[highlitedKey] === key) {
-                        classNames.push(classes.incCell);
+                if (this.state.highlitingOn) {
+                    // Highlight solution
+                    if (this.state.inProgress === false) {
+                        this.solution.forEach(element => {
+                            if (element[0] === i && element[1] === j) {
+                                classNames.push(classes.blueCell);
+                            }
+                        });
+                    }
+                    else {
+                        // Highlight current
+                        if (i === this.outerCounter && j === this.innerCounter) {
+                            classNames.push(classes.blueCell);
+                        }
 
-                        if (this.state.inProgress) {
+                        // Highlight previous
+                        if (this.state.match && i === this.outerCounter - 1 && j === this.innerCounter - 1 && this.nextAutomataState === 'nextInnerCycle') {
+                            classNames.push(classes.yellowCell);
                             value += ' + 1';
                         }
                     }

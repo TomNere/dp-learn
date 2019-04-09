@@ -77,7 +77,13 @@ export const slovak = {
         },
         demo: {
             title: 'Najdlhší spoločný podreťazec - demo',
-            brief: 'Riešenie problému pomocou dynamického programovania - jednoduchá verzia s tabuľkou **M x N**.'
+            brief: 'Riešenie problému pomocou dynamického programovania - jednoduchá verzia s tabuľkou **M x N**.',
+            start: 'Štart',
+            assignZero: 'Priradzujem hodnotu 0.',
+            noMatch: 'žiadna zhoda. ',
+            match: 'zhoda!',
+            longestSubr: 'Najdlhší spoločný podreťazec',
+            length: 'dĺžka'
         },
     },
     rod: {

@@ -44,7 +44,6 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
         'nextRootCycle' |
         'nextInnerCycle' |
         'showSumRes' |
-        'final' |
         'done'
         = 'done';
 
@@ -108,7 +107,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
                 <CustomButton color='light' label={strings.global.finish} onClick={this.onFinishClick} visible={this.state.inProgress} />
 
                 {/* Table and result */}
-                <DemoTable cols={this.LENGTH + 1} visible={this.state.tableVisible} result={this.state.result} head={this.tableHead} body={this.tableBody} subRes={this.state.currentState} />
+                <DemoTable cols={this.LENGTH + 1} visible={this.state.tableVisible} result={this.state.result} head={this.tableHead} body={this.tableBody} currentState={this.state.currentState} />
             </div>
         );
     }
@@ -206,9 +205,6 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
             case 'showSumRes':
                 this.showSumRes();
                 break;
-            case 'final':
-                this.setFinalState();
-                this.nextAutomataState = 'done';
         }
 
         // if speed != 0, setTimeout is needed

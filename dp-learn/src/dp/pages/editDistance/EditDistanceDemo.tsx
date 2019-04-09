@@ -112,7 +112,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
                 <CustomButton color='light' label={strings.global.finish} onClick={this.onFinishClick} visible={this.state.inProgress} />
 
                 {/* Table and result */}
-                <DemoTable subRes="" cols={this.LENGTH2 + 1} visible={this.state.tableVisible} result={this.state.result} head={this.tableHead} body={this.tableBody} />
+                <DemoTable currentState="" cols={this.LENGTH2 + 1} visible={this.state.tableVisible} result={this.state.result} head={this.tableHead} body={this.tableBody} />
             </div>
         );
     }

@@ -26,6 +26,11 @@ export const demoStyle = (theme: Theme) => createStyles({
         backgroundColor: myTheme.palette.primary.main,
         borderRight: 'solid 1px gray',
     },
+    blueCaption: {
+        borderRight: 'solid 1px gray',
+        backgroundColor: '#1dd8ff',
+        padding: '4px 24px 4px 14px',
+    },
     caption: {
         color: 'white',
         borderRight: 'solid 1px gray',

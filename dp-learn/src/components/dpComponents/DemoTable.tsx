@@ -12,7 +12,7 @@ type AllProps =
 interface IDemoTableProps {
     visible: boolean,
     result: string,
-    subRes: string,
+    currentState: string,
     cols: number,
     head: () => any,
     body: () => any
@@ -40,6 +40,7 @@ const styles = (theme: Theme) => createStyles({
         color: 'white',
         backgroundColor: myTheme.palette.primary.main,
         padding: '4px 24px 4px 14px',
+        borderRight: 'solid 1px gray',
     }
 })
 
@@ -59,10 +60,10 @@ class DemoTable extends React.Component<AllProps> {
                         }
                         <Table className={classes.table}>
                             <TableBody>
-                                {this.props.subRes !== "" &&
+                                {this.props.currentState !== "" &&
                                     <TableRow >
                                         <TableCell className={classes.subRes} colSpan={this.props.cols}>
-                                            {this.props.subRes}
+                                            {this.props.currentState}
                                         </TableCell>
                                     </TableRow>
                                 }

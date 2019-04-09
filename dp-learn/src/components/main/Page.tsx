@@ -92,6 +92,11 @@ class Page extends React.Component<AllProps, IPageState> {
                             <ListItemText primary={strings.global.dynProg} />
                         </ListItem>
                         <Divider />
+                        {/* Rod */}
+                        <ListItem className={this.isSelected('rod')} button={true} onClick={this.handleSelectRod}>
+                            <ListItemText primary={strings.menu.rod} />
+                        </ListItem>
+                        <Divider />
                         {/* Coins */}
                         <ListItem className={this.isSelected('coins')} button={true} onClick={this.handleSelectCoins}>
                             <ListItemText primary={strings.menu.coins} />
@@ -100,11 +105,6 @@ class Page extends React.Component<AllProps, IPageState> {
                         {/* Substring */}
                         <ListItem className={this.isSelected('substring')} button={true} onClick={this.handleSelectSubstring}>
                             <ListItemText primary={strings.menu.substring} />
-                        </ListItem>
-                        <Divider />
-                        {/* Rod */}
-                        <ListItem className={this.isSelected('rod')} button={true} onClick={this.handleSelectRod}>
-                            <ListItemText primary={strings.menu.rod} />
                         </ListItem>
                         <Divider />
                         {/* Edit distance */}

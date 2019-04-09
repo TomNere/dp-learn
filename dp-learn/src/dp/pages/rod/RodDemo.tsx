@@ -97,7 +97,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
                 <br />
 
                 {/* Table and result */}
-                <DemoTable visible={this.state.tableVisible} cols={this.LENGTH + 2} result={this.state.result} subRes='' head={this.tableHead} body={this.tableBody} />
+                <DemoTable visible={this.state.tableVisible} cols={this.LENGTH + 2} result={this.state.result} currentState='' head={this.tableHead} body={this.tableBody} />
             </div>
         );
     }

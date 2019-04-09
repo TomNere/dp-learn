@@ -45,7 +45,6 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         'nextInnerCycle' |
         'assignNewValue' |
         'dontAssignNewValue' |
-        'final' |
         'done'
         = 'done';
 
@@ -90,7 +89,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
                 <div className={classes.container}>
                     <div className={classes.flexChild}>
                         <FlexRowContainer>
-                            <CustomTextField label={`${strings.coins.value} (1-20)`} value={this.state.givenValue.toString()} onChange={this.handleValue} />
+                            <CustomTextField label={`${strings.coins.value} (0-20)`} value={this.state.givenValue.toString()} onChange={this.handleValue} />
                             <CustomTextField label={`${strings.coins.coins} (max. 5)`} value={this.state.givenCoins} onChange={this.handleCoins} />
                         </FlexRowContainer>
 
@@ -118,13 +117,13 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
                 <br />
 
                 {/* Table and result */}
-                <DemoTable visible={this.state.tableVisible} cols={this.state.givenValue + 2} result={this.state.result} subRes={this.state.currentState} head={this.tableHead} body={this.tableBody} />
+                <DemoTable visible={this.state.tableVisible} cols={this.state.givenValue + 2} result={this.state.result} currentState={this.state.currentState} head={this.tableHead} body={this.tableBody} />
             </div>
         );
     }
 
     private handleValue = (e: any) => {
-        if (!Number.isNaN(+e.target.value) && +e.target.value > 0 && +e.target.value <= 20) {
+        if (!Number.isNaN(+e.target.value) && +e.target.value >= 0 && +e.target.value <= 20) {
             this.setState({ givenValue: +e.target.value, tableVisible: false, inProgress: false });
         }
     }
@@ -146,7 +145,6 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
     private onStartClick = () => {
         clearTimeout(this.timeout);
-        this.disableHighlighting();
         this.coins = GetNumbers(this.state.givenCoins);
 
         if (this.coins.length === 0) {
@@ -154,18 +152,17 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             return;
         }
 
-        const localTable: number[] = []
+        const table: number[] = []
 
         this.backtrackHelp = [];
 
         // Base case (If given value is 0) 
-        localTable[0] = 0;
+        table[0] = 0;
         this.backtrackHelp[0] = 0;
 
-        // Initialize all table
-        // values as Infinite
+        // Initialize all table values as Infinite
         for (let i = 1; i <= this.state.givenValue; i++) {
-            localTable[i] = Number.MAX_VALUE;
+            table[i] = Number.MAX_VALUE;
             this.backtrackHelp[i] = -1;
         }
 
@@ -177,7 +174,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             inProgress: true,
             result: '',
             currentState: `${strings.coins.demo.evalCoinsFor} ${this.outerCounter}`,
-            table: localTable,
+            table,
             match: undefined,
             currentCol: undefined
         });
@@ -204,9 +201,6 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             case 'dontAssignNewValue':
                 this.dontAssignNewValue();
                 break;
-            case 'final':
-                this.setFinalState();
-                this.nextAutomataState = 'done';
         }
 
         // if speed != 0, setTimeout is needed
@@ -316,6 +310,8 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
                 }
             }
         }
+        this.outerCounter = -1;
+        this.nextAutomataState = 'done';
 
         this.setState({
             inProgress: false,
@@ -326,7 +322,8 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
     };
 
     private setFinalState = () => {
-        this.disableHighlighting();
+        this.outerCounter = -1;
+        this.nextAutomataState = 'done';
 
         this.setState({
             inProgress: false,
@@ -346,12 +343,6 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         }
 
         return coins;
-    }
-
-    private disableHighlighting = () => {
-        this.setState({
-            // todo
-        });
     }
 
     // Return table heading

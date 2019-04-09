@@ -79,6 +79,12 @@ export const english = {
         demo: {
             title: 'Longest common substring - demo',
             brief: 'Dynamic programming solution - simple version with **M x N** table.',
+            start: 'Start',
+            assignZero: 'Assigning value 0.',
+            noMatch: 'no match. ',
+            match: 'match!',
+            longestSubr: 'Longest common substring',
+            length: 'length'
         },
     },
     rod: {
