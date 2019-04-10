@@ -5,6 +5,7 @@ import MenuHeader, { IOnLanguageChangeProps } from './MenuHeader';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
 import Coins from 'src/dp/pages/coins/Coins';
+import DynamicProgramming from 'src/dp/pages/DynamicProgramming';
 import EditDistance from 'src/dp/pages/editDistance/EditDistance';
 import Rod from 'src/dp/pages/rod/Rod';
 import Substring from 'src/dp/pages/substring/Substring';
@@ -120,7 +121,7 @@ class Page extends React.Component<AllProps, IPageState> {
                 </Drawer>
                 {/* Right window */}
                 <main className={classes.content}>
-                    {this.state.selected === 'aboutDP' && <Coins />}
+                    {this.state.selected === 'aboutDP' && <DynamicProgramming />}
                     {this.state.selected === 'coins' && <Coins />}
                     {this.state.selected === 'rod' && <Rod />}
                     {this.state.selected === 'substring' && <Substring />}

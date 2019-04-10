@@ -32,7 +32,13 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
     /////////////////////// private variables /////////////////////////////////
 
     private outerCounter: number;
-    private nextAutomataState: 'evalMaxVal' | 'highlightMaxIndex' | 'assignValue' | 'nextIteration' | 'final' | 'done' = 'evalMaxVal';
+    private nextAutomataState: 
+        'evalMaxVal' | 
+        'highlightMaxIndex' | 
+        'assignValue' | 
+        'nextIteration' | 
+        'final' | 
+        'done' = 'evalMaxVal';
 
 
     // Given prices
