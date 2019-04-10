@@ -49,6 +49,9 @@ export const slovak = {
     demoGlobal:{
         assigning: 'Priradzujem!',
         cycle: 'Cyklus',
+        start: 'Štart',
+        array: 'Pole',
+        nextCycle: 'Ďalší cyklus',
     },
     dp: {
         whatIsDpTitle: 'Čo je to dynamické programovanie',
@@ -63,7 +66,6 @@ export const slovak = {
         prosAndConsText: 'Hlavná výhoda DP spočíva v tom, že využíva opakovanie sa podproblémov a preto vedie často k oveľa efektívnejšiemu a rýchlejšiemu riešeniu. Výsledky menších podproblémov sú ukladané do dátovej štruktúry (poľa alebo tabuľky). Ak algoritmus narazí znovu na podproblém, ktorý už bol predtým vyriešený, použije sa uložený výsledok. Rekurzívny algoritmus pri jednoduchom vstupe výsledok skôr ako DP algoritmus. Pri zložitom vstupe je ale DP algoritmus výrazne efektívnejší. **Exponenciálna** časová zložitosť rekurzívneho algoritmu môže byť znížená na **polynomickú**. Nevýhodou je vyššia pamäťová náročnosť z dôvodu vytvárania dátovej štruktúry na ukladanie výsledkov podproblémov.'
     },
     coins: {
-        title: 'Minimálny počet mincí na vytvorenie danej hodnoty',
         coin: 'Minca',
         coins: 'Mince',
         value: 'Hodnota',
@@ -73,6 +75,7 @@ export const slovak = {
             b3: 'Obe možnosti dávajú správnu hodnotu, ale správny výsledok je 2. riešienie. Udáva minimálny počet mincí a to **2**.'
         },
         theory: {
+            title: 'Minimálny počet mincí na vytvorenie danej hodnoty - teória',
             recursion1: 'Pre každú hodnotu mince, menšiu alebo rovnú **V**, sa bude rekurzívne volať rovnaká funkcia, pričom parameter **V** bude zmenšený o hodnotu mince. Časová zložitosť je preto exponenciálna. Priestorová zložitosť je zrejmá - **N + 1**, kde **N** je počet typov mincí a **1** potrebujeme na uloženie hodnoty **V**.',
             dynProg1: 'V strome rekurzie je vidieť, že niektoré podproblémy sú počítané znovu a znovu. Časovú zložitosť môžeme výrazne znížiť ukladaním výsledkov podvýsledkov a teda využijeme dynamické programovanie! V tomto príklade nám na ukladanie hodnôt postačí jedno-dimenzionálne pole. Nová hodnota bunky je vždy inkrementovaná hodnota niektorej z predchádzajúcich buniek. Vzialenosť medzi počítanou bunkou, a bunkou z ktorej berie hodnotu závisí od toho, aké máme mince. Ak máme dostať hodnotu 4 a máme aj mincu s hodnotou 4, maximálna vzdialenosť, na ktorú sa vypočítava nová hodnota je 4.'
         },
@@ -90,7 +93,6 @@ export const slovak = {
         demo: {
             title: 'Najdlhší spoločný podreťazec - demo',
             brief: 'Riešenie problému pomocou dynamického programovania - jednoduchá verzia s tabuľkou **M x N**.',
-            start: 'Štart',
             assignZero: 'Priradzujem hodnotu 0.',
             noMatch: 'žiadna zhoda. ',
             match: 'zhoda!',
@@ -101,11 +103,15 @@ export const slovak = {
     rod: {
         prices: 'Ceny',
         theory: {
-
+            title: 'Rezanie tyče - teória',
         },
         demo: {
             title: 'Rezanie tyče - demo',
             brief: 'Zadajte ceny jednotlivých dĺžok tyče oddelené čiarkami (dĺžky sú 1, 2, 3, ...).',
+            start: 'Priradzujem hodnotu 0 na pozíciu 0',
+            candidates: 'Výber kandidátov',
+            best: 'Výber najlepšieho',
+            result: 'Najvyššia dosiahnuteľná hodnota: ',
         },
     },
     editDistance: {

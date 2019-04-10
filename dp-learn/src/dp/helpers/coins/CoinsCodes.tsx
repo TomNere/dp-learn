@@ -90,14 +90,15 @@ int minCoins(int coins[], int arrSize, int value)
 }`;
 
 export const coinsSmallDynCode = `// Inner cycle part of coins DP solution
-for (int j = 0; j < arrSize; j++)
+for (int j = 0; j < arrSize; j++) {
     if (coins[j] <= i) {
         int subRes = array[i - coins[j]];
         if (subRes != INT_MAX && subRes + 1 < array[i]) {
             array[i] = subRes + 1;
             result[i] = j;
         }
-    }`;
+    }
+}`;
 
 export const coinsBacktrack = `// Print exact solution
 int start = V;

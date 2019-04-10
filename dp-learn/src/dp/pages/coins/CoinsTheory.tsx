@@ -7,6 +7,7 @@ import { coinsDynCode, coinsRecCode } from 'src/dp/helpers/coins/CoinsCodes';
 
 import CoinsTree from 'src/resources/coins/coinsTree.png';
 import Complexity from 'src/components/dpComponents/Complexity';
+import CustomSubtitle from 'src/hoc/CustomSubtitle';
 import SourceCode from 'src/components/dpComponents/SourceCode';
 import Table1 from 'src/resources/coins/coinsTable1.png';
 import Table2 from 'src/resources/coins/coinsTable2.png';
@@ -58,9 +59,9 @@ class CoinsTheory extends React.Component<AllProps> {
                 {/* Brief */}
                     <div className={classes.bottomMargin}>
                         {/* Title */}
-                        <Typography variant={'h5'}>
-                            {strings.coins.title}
-                        </Typography>
+                        <CustomSubtitle variant='h5'>
+                            {strings.coins.theory.title}
+                        </CustomSubtitle>
                         <Markdown source={strings.coins.brief.b1} />
                         <div className={[classes.leftMargin, classes.bottomMargin].join(' ')}>
                             C = {'{ 2, 3, 5 }'}<br />

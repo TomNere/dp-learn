@@ -30,7 +30,8 @@ const styles = (theme: Theme) => createStyles({
         marginRight: 'auto',
     },
     padding: {
-        padding: theme.spacing.unit * 3
+        paddingLeft: theme.spacing.unit * 2,
+        paddingRight: theme.spacing.unit * 2
     },
     whiteBackground: {
         backgroundColor: 'white'

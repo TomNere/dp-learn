@@ -7,8 +7,8 @@ import { WithStyles, withStyles } from '@material-ui/core/styles';
 import { coinsBacktrack, coinsSmallDynCode } from 'src/dp/helpers/coins/CoinsCodes';
 
 import CustomButton from 'src/components/customComponents/CustomButton';
+import CustomSubtitle from 'src/hoc/CustomSubtitle';
 import CustomTextField from 'src/components/customComponents/CustomTextField';
-import CustomTitle from 'src/hoc/CustomTitle';
 import DemoTable from 'src/components/dpComponents/DemoTable';
 import FlexRowContainer from 'src/hoc/FlexRowContainer';
 import SimpleSourceCode from 'src/components/dpComponents/SimpleSourceCode';
@@ -80,9 +80,9 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         const { classes } = this.props;
         return (
             <div>
-                <CustomTitle>
+                <CustomSubtitle variant='h5'>
                     {strings.coins.demo.title}
-                </CustomTitle>
+                </CustomSubtitle>
                 <div className={classes.bottomMargin}>
                     {strings.coins.demo.brief}
                 </div>
@@ -219,7 +219,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
                 currentCol: this.outerCounter - this.coins[this.innerCounter],
                 currentState: `(${ValueOrIntMax(subRes)} != INT_MAX) && (${ValueOrIntMax(subRes)} + 1 < ${ValueOrIntMax(this.state.table[this.outerCounter])}) ?`
             });
-    
+
             if (subRes !== Number.MAX_VALUE && subRes + 1 < this.state.table[this.outerCounter]) {
                 this.nextAutomataState = 'assignNewValue'
             }
@@ -355,7 +355,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
         for (let i = 0; i <= this.state.givenValue; i++) {
             const classNames = [];
-            
+
             classNames.push(classes.columnCaption, classes.caption);
 
             heading.push(
@@ -391,8 +391,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
             classNames = [classes.tableCell];
 
-            if (this.outerCounter === j)
-            {
+            if (this.outerCounter === j) {
                 classNames.push(classes.blueCell);
             }
 

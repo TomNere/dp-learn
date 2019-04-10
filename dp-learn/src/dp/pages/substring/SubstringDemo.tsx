@@ -111,11 +111,11 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
     }
 
     private handlestrXChange = (e: any) => {
-        this.setState({ stringX: e.target.value });
+        this.setState({ stringX: e.target.value, tableVisible: false });
     };
 
     private handlestrYChange = (e: any) => {
-        this.setState({ stringY: e.target.value });
+        this.setState({ stringY: e.target.value, tableVisible: false });
     };
 
     private speedChange = (e: any) => {
@@ -149,7 +149,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
             inProgress: true,
             table,
             result: '',
-            currentState: strings.substring.demo.start,
+            currentState: strings.demoGlobal.start,
             match: undefined,
             highlitingOn: false
         });

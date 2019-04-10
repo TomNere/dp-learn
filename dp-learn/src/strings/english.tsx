@@ -43,6 +43,9 @@ export const english = {
     demoGlobal:{
         assigning: 'Assigning!',
         cycle: 'Cycle',
+        start: 'Start',
+        array: 'Array',
+        nextCycle: 'Next cycle',
     },
     menu: {
         coins: 'Minimum coins',
@@ -64,7 +67,6 @@ export const english = {
         prosAndConsText: 'Hlavná výhoda DP spočíva v tom, že využíva opakovanie sa podproblémov a preto vedie často k oveľa efektívnejšiemu a rýchlejšiemu riešeniu. Výsledky menších podproblémov sú ukladané do dátovej štruktúry (poľa alebo tabuľky). Ak algoritmus narazí znovu na podproblém, ktorý už bol predtým vyriešený, použije sa uložený výsledok. Rekurzívny algoritmus pri jednoduchom vstupe výsledok skôr ako DP algoritmus. Pri zložitom vstupe je ale DP algoritmus výrazne efektívnejší. **Exponenciálna** časová zložitosť rekurzívneho algoritmu môže byť znížená na **polynomickú**. Nevýhodou je vyššia pamäťová náročnosť z dôvodu vytvárania dátovej štruktúry na ukladanie výsledkov podproblémov.'
     },
     coins: {
-        title: 'Minimum number of coins that make a given value',
         coin: 'Coin',
         coins: 'Coins',
         value: 'Value',
@@ -74,6 +76,7 @@ export const english = {
             b3: 'Both options are valid. 2. option needs only 2 coins, so this is our result. Minimum number of coins is **2**.',
         },
         theory: {
+            title: 'Minimum number of coins that make a given value - theory',
             recursion1: 'Program will loop through **N** coin values. For each coin which value is less or equal given value **V**, we will call the same method recursively with value **V** substracted by current coin\'s value. So, time complexity of this solution is exponential. Space complexity is pretty obvious - **N + 1**, where **N** is the number of coin types and **1** to store given value **V**.',
             dynProg1: 'As can you see in recursion tree, some subproblems are recomputed again and again. Time complexity can be significantly minimize by storing partial results. So, let\'s try solve this problem by dynamic programming! In this example, we will need simple one-dimensional array.\n New value of the cell is incremented value of some previous cell. Distance between cell which is computed and cell which value is incremented depends on coins. If value is 4 for and there is coins 4, max distance is 4.'
         },
@@ -91,7 +94,6 @@ export const english = {
         demo: {
             title: 'Longest common substring - demo',
             brief: 'Dynamic programming solution - simple version with **M x N** table.',
-            start: 'Start',
             assignZero: 'Assigning value 0.',
             noMatch: 'no match. ',
             match: 'match!',
@@ -102,11 +104,15 @@ export const english = {
     rod: {
         prices: 'Prices',
         theory: {
-
+            title: 'Cutting a rod - theory',
         },
         demo: {
             title: 'Cutting a rod - demo',
             brief: 'Provide comma separated prices of lengths (lengths are 1, 2, 3, ...).',
+            start: 'Assigning value 0 at position 0',
+            candidates: 'Selection of candidates',
+            best: 'Selection of the best',
+            result: 'Highest obtainable value: ',
         },
     },
     editDistance: {

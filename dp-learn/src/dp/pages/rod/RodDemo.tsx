@@ -1,15 +1,18 @@
 import * as Prism from 'prismjs';
 import * as React from 'react';
 
-import { TableCell, TableRow, Typography } from '@material-ui/core';
+import { TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 
 import CustomButton from 'src/components/customComponents/CustomButton';
+import CustomSubtitle from 'src/hoc/CustomSubtitle';
 import CustomTextField from 'src/components/customComponents/CustomTextField';
 import DemoTable from 'src/components/dpComponents/DemoTable';
 import { GetNumbers } from 'src/helpers/Helpers';
+import SimpleSourceCode from 'src/components/dpComponents/SimpleSourceCode';
 import SpeedSelector from 'src/components/customComponents/SpeedSelector';
 import { demoStyle } from 'src/styles/demoStyle';
+import { rodSmallDynCode } from 'src/dp/helpers/rod/RodCodes';
 import { strings } from 'src/strings/languages';
 
 interface ICoinsDemoState {
@@ -18,10 +21,11 @@ interface ICoinsDemoState {
     tableVisible: boolean
     result: string
     speed: number
-    array: number[]
+    table: number[]
     highlightCandidates: boolean
     highlightMax: boolean
-    highlightCurrent: boolean
+    currentState: string
+    highlightingOn: boolean
 }
 
 type AllProps =
@@ -32,19 +36,18 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
     /////////////////////// private variables /////////////////////////////////
 
     private outerCounter: number;
-    private nextAutomataState: 
-        'evalMaxVal' | 
-        'highlightMaxIndex' | 
-        'assignValue' | 
-        'nextIteration' | 
-        'final' | 
+    private nextAutomataState:
+        'evalMaxVal' |
+        'highlightMaxIndex' |
+        'assignValue' |
+        'nextIteration' |
+        'final' |
         'done' = 'evalMaxVal';
-
 
     // Given prices
     private prices: number[];
 
-    private array: number[];
+    private table: number[];
 
     private LENGTH: number;
     private maxIndex: number;
@@ -60,10 +63,11 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
             inProgress: false,
             tableVisible: false,
             result: "",
-            array: [],
+            table: [],
             highlightCandidates: false,
             highlightMax: false,
-            highlightCurrent: false,
+            currentState: '...',
+            highlightingOn: false
         }
     }
 
@@ -76,15 +80,17 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
 
         return (
             <div>
-                <Typography variant={'h4'} align={'center'} className={classes.bottomMargin}>
+                <CustomSubtitle variant='h5'>
                     {strings.rod.demo.title}
-                </Typography>
+                </CustomSubtitle>
                 <div className={classes.bottomMargin}>
                     {strings.rod.demo.brief}
                 </div>
                 <div className={classes.container}>
                     <div className={classes.flexChild}>
-                        <CustomTextField label={strings.rod.prices} value={this.state.givenPrices} onChange={this.handlePrices} />
+                        <div className={classes.bottomMargin}>
+                            <CustomTextField label={strings.rod.prices} value={this.state.givenPrices} onChange={this.handlePrices} />
+                        </div>
 
                         {/* Speed select */}
                         <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
@@ -99,11 +105,14 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
                         {/* Finish button */}
                         <CustomButton color='light' label={strings.global.finish} onClick={this.onFinishClick} visible={this.state.inProgress} />
                     </div>
+                    <div className={classes.flexChild}>
+                        <SimpleSourceCode code={rodSmallDynCode} />
+                    </div>
                 </div>
                 <br />
 
                 {/* Table and result */}
-                <DemoTable visible={this.state.tableVisible} cols={this.LENGTH + 2} result={this.state.result} currentState='' head={this.tableHead} body={this.tableBody} />
+                <DemoTable visible={this.state.tableVisible} cols={this.LENGTH + 2} result={this.state.result} currentState={this.state.currentState} head={this.tableHead} body={this.tableBody} />
             </div>
         );
     }
@@ -132,28 +141,33 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
     private onStartClick = () => {
         clearTimeout(this.timeout);
 
-        this.array = [];
+        this.table = [];
 
         this.prices = GetNumbers(this.state.givenPrices);
         this.LENGTH = this.prices.length;
 
         if (this.prices.length === 0) {
-            this.setState({ result: 'Error parsing prices.' });
+            this.setState({ result: strings.global.invalidArg });
             return;
         }
 
-        this.array[0] = 0;
+        this.table[0] = 0;
+        this.maxIndex = 0;
 
         this.setState({
             tableVisible: true,
             inProgress: true,
             result: '',
-            array: [0],
+            currentState: strings.rod.demo.start,
+            table: [0],
+            highlightingOn: true,
+            highlightMax: true,
         });
 
         this.outerCounter = 0;
 
         this.nextAutomataState = 'evalMaxVal';
+
         // Check if auto play or step by step
         if (this.state.speed !== 0) {
             this.setTimeout(this.finiteAutomata);
@@ -177,20 +191,13 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
                 break;
             case 'nextIteration':
                 this.nextIteration();
-
-                if (this.outerCounter + 1 > this.LENGTH) {
-                    this.nextAutomataState = 'final';
-                }
-                else {
-                    this.nextAutomataState = 'evalMaxVal';
-                }
                 break;
             case 'final':
                 this.setFinalState();
                 this.nextAutomataState = 'done';
         }
 
-        // if speed != 0, setTimeout is needed
+        // If speed != 0, setTimeout is needed
         const auto: boolean = this.state.speed !== 0;
 
         if (auto && this.nextAutomataState !== 'done') {
@@ -200,70 +207,83 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
 
     /****************************** Finite automata operations ************************/
 
-    // Do 1 inner cycle (maxVal is evaluated) and enable candidates highliting
+    // Do 1 inner cycle (maxVal is evaluated) and enable candidates highlighting
     private evalMaxVal = () => {
         this.outerCounter++;
 
         let maxVal: number = Number.MIN_VALUE;
 
         for (let i = 0; i < this.outerCounter; i++) {
-            if (this.prices[i] + this.array[this.outerCounter - i - 1] > maxVal) {
-                maxVal = this.prices[i] + this.array[this.outerCounter - i - 1];
+            if (this.prices[i] + this.table[this.outerCounter - i - 1] > maxVal) {
+                maxVal = this.prices[i] + this.table[this.outerCounter - i - 1];
                 this.maxIndex = this.outerCounter - i - 1;
             }
         }
 
-        this.setState({ highlightCandidates: true });
-        this.array[this.outerCounter] = maxVal;
+        this.setState({ highlightCandidates: true, highlightMax: false, currentState: strings.rod.demo.candidates });
+        this.table[this.outerCounter] = maxVal;
     }
 
     // Just enable higliting on max index (evaluated max value)
     private highlightMaxIndex = () => {
-        this.setState({ highlightMax: true });
+        this.setState({ highlightMax: true, currentState: strings.rod.demo.best });
     }
 
     private assignValue = () => {
         this.setState(prevState => ({
-            array: [...prevState.array, this.array[this.outerCounter]],
-            highlightCurrent: true,
+            table: [...prevState.table, this.table[this.outerCounter]],
+            currentState: strings.demoGlobal.assigning
         }));
     }
 
     private nextIteration = () => {
+        let currentState: string;
+
+        if (this.outerCounter + 1 > this.LENGTH) {
+            this.nextAutomataState = 'final';
+            currentState = '...';
+        }
+        else {
+            this.nextAutomataState = 'evalMaxVal';
+            currentState = strings.demoGlobal.nextCycle;
+        }
+
         this.setState({
             highlightCandidates: false,
             highlightMax: false,
-            highlightCurrent: false
+            currentState
         });
     }
 
     private setFinalState = () => {
         this.setState({
             inProgress: false,
-            result: `Result: ${this.array[this.LENGTH]}`,
+            result: `${strings.rod.demo.result} ${this.table[this.LENGTH]}`,
+            currentState: '...',
+            highlightingOn: false
         });
     }
 
     private onFinishClick = () => {
         clearTimeout(this.timeout);
-        this.array = [0];
+        this.table = [0];
 
         for (let outerLocal = 1; outerLocal <= this.LENGTH; outerLocal++) {
             let maxVal = Number.MIN_VALUE;
             for (let i = 0; i < outerLocal; i++) {
-                if (this.prices[i] + this.array[outerLocal - i - 1] > maxVal) {
-                    maxVal = this.prices[i] + this.array[outerLocal - i - 1];
+                if (this.prices[i] + this.table[outerLocal - i - 1] > maxVal) {
+                    maxVal = this.prices[i] + this.table[outerLocal - i - 1];
                 }
             }
-            this.array[outerLocal] = maxVal;
+            this.table[outerLocal] = maxVal;
         }
 
         this.outerCounter = this.LENGTH;    // To show proper value in table
         this.setState({
             highlightCandidates: false,
             highlightMax: false,
-            highlightCurrent: false,
-            array: this.array
+            highlightingOn: false,
+            table: this.table
         });
         this.setFinalState();
     };
@@ -279,13 +299,9 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
         for (let i = 0; i <= this.LENGTH; i++) {
             const classNames = [classes.columnCaption, classes.caption];
 
-            if (i === this.outerCounter) {
-                classNames.push(classes.blueCell);
-            }
-
             heading.push(
                 <TableCell key={'columnName' + i.toString()} className={classNames.join(' ')}>
-                    {`Array[${i}]`}
+                    {`${strings.demoGlobal.array}[${i}]`}
                 </TableCell>);
         }
 
@@ -306,29 +322,32 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
         // Row names
         row.push(
             <TableCell key={'rowName'} className={classNames.join(' ')}>
-                {this.outerCounter === 0 ? 'Initial' : `Cycle ${this.outerCounter}.`}
+                {this.outerCounter === 0 ? '' : `${strings.demoGlobal.cycle} ${this.outerCounter}.`}
             </TableCell>
         );
 
         for (let j = 0; j <= this.LENGTH; j++) {
             const key = `body column ${j}`;
-            let value = this.state.array[j] === undefined ? "-" : this.state.array[j].toString();
+            let value = this.state.table[j] === undefined ? "-" : this.state.table[j].toString();
 
             classNames = [classes.tableCell];
 
-            if (this.state.highlightCandidates) {
-                if (value !== "-" && this.outerCounter > j) {
-                    classNames.push(classes.yellowCell);
-                    value += ` + ${this.prices[this.outerCounter - j - 1]}`;
+            if (this.state.highlightingOn) {
+                if (this.state.highlightCandidates) {
+                    if (value !== "-" && this.outerCounter > j) {
+                        classNames.push(classes.yellowCell);
+                        value += ` + ${this.prices[this.outerCounter - j - 1]}`;
+                    }
                 }
-            }
 
-            if (this.state.highlightMax && j === this.maxIndex) {
-                classNames.push(classes.greenCell);
-            }
+                if (this.state.highlightMax && j === this.maxIndex) {
+                    classNames.push(classes.greenCell);
+                }
 
-            if (this.state.highlightCurrent && j === this.outerCounter) {
-                classNames.push(classes.greenCell);
+                // Current
+                if (j === this.outerCounter) {
+                    classNames.push(classes.blueCell);
+                }
             }
 
             row.push(
