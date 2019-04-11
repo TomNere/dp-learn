@@ -9,8 +9,10 @@ import CustomTextField from 'src/components/customComponents/CustomTextField';
 import CustomTitle from 'src/hoc/CustomTitle';
 import DemoTable from 'src/components/dpComponents/DemoTable';
 import FlexRowContainer from 'src/hoc/FlexRowContainer';
+import SimpleSourceCode from 'src/components/dpComponents/SimpleSourceCode';
 import SpeedSelector from 'src/components/customComponents/SpeedSelector';
 import { ValueOrUndefined } from 'src/helpers/Helpers';
+import { coinsSmallDynCode } from 'src/dp/helpers/coins/CoinsCodes';
 import { demoStyle } from 'src/styles/demoStyle';
 import { strings } from 'src/strings/languages';
 
@@ -49,6 +51,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
     // Tuple for result position
     private resultPos: [number, number];
 
+    // Helper for solution highlighting
     private solution: Array<[number, number]>;
 
     // Length of strings
@@ -79,34 +82,42 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
 
         return (
             <div>
-                <CustomTitle>
+                <CustomTitle variant='h5'>
                     {strings.substring.demo.title}
                 </CustomTitle>
-
                 <div className={classes.bottomMargin}>
                     <Markdown source={strings.substring.demo.brief} />
                 </div>
-                <FlexRowContainer>
-                    <CustomTextField label={`${strings.components.string} X`} value={this.state.stringX} onChange={this.handlestrXChange} />
-                    <CustomTextField label={`${strings.components.string} Y`} value={this.state.stringY} onChange={this.handlestrYChange} />
-                </FlexRowContainer>
+                <div className={classes.container}>
+                    <div className={classes.flexChild}>
+                        <FlexRowContainer>
+                            <CustomTextField label={`${strings.components.string} X`} value={this.state.stringX} onChange={this.handlestrXChange} />
+                            <CustomTextField label={`${strings.components.string} Y`} value={this.state.stringY} onChange={this.handlestrYChange} />
+                        </FlexRowContainer>
 
-                {/* Speed select */}
-                <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
-                <br />
+                        {/* Speed select */}
+                        <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
+                        <br />
 
-                {/* Start button */}
-                <CustomButton color='dark' label={strings.global.start} onClick={this.onStartClick} visible={true} />
+                        <FlexRowContainer>
+                            {/* Start button */}
+                            <CustomButton label={strings.global.start} onClick={this.onStartClick} disabled={false} />
 
-                {/* Step button */}
-                <CustomButton color='light' label={strings.global.step} onClick={this.finiteAutomata} visible={this.state.inProgress && this.state.speed === 0} />
+                            {/* Step button */}
+                            <CustomButton label={strings.global.step} onClick={this.finiteAutomata} disabled={!this.state.inProgress || this.state.speed !== 0} />
 
-                {/* Finish button */}
-                <CustomButton color='light' label={strings.global.finish} onClick={this.onFinishClick} visible={this.state.inProgress} />
+                            {/* Finish button */}
+                            <CustomButton label={strings.global.finish} onClick={this.onFinishClick} disabled={!this.state.inProgress} />
+                        </FlexRowContainer>
+                    </div>
+                    <div className={classes.flexChild}>
+                        <SimpleSourceCode code={coinsSmallDynCode} />
+                    </div>
+                </div>
 
                 {/* Table and result */}
                 <DemoTable currentState={this.state.currentState} cols={this.LENGTH2 + 1} visible={this.state.tableVisible} result={this.state.result} head={this.tableHead} body={this.tableBody} />
-            </div>
+            </div >
         );
     }
 
@@ -120,6 +131,13 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
 
     private speedChange = (e: any) => {
         this.setState({ speed: +e.target.value });
+
+        if (+e.target.value === 0) {
+            clearTimeout(this.timeout);
+        }
+        else if (this.state.inProgress) {
+            this.setTimeout(this.finiteAutomata);
+        }
     };
 
     private setTimeout = (func: () => void) => {
@@ -149,13 +167,13 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
             inProgress: true,
             table,
             result: '',
-            currentState: strings.demoGlobal.start,
             match: undefined,
             highlitingOn: false
         });
 
+        // Start immediately with inner cycle
+        this.doInnerCycle();
 
-        this.nextAutomataState = 'doInnerCycle';
         // Check if auto play or step by step
         if (this.state.speed !== 0) {
             this.setTimeout(this.finiteAutomata);
@@ -194,7 +212,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
         this.setState({ highlitingOn: true });
         if (this.state.stringX[this.outerCounter] === this.state.stringY[this.innerCounter]) {
             this.setState({
-                currentState: `${this.state.stringX[this.outerCounter]} == ${this.state.stringY[this.innerCounter]}, ${strings.substring.demo.match}`,
+                currentState: `'${this.state.stringX[this.outerCounter]}' == '${this.state.stringY[this.innerCounter]}', ${strings.substring.demo.incrementPrevious}`,
                 match: true
             });
             if (this.innerCounter === 0 || this.outerCounter === 0) {
@@ -205,7 +223,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
             }
         }
         else {
-            this.setState({ currentState: `${this.state.stringX[this.outerCounter]} != ${this.state.stringY[this.innerCounter]}, ${strings.substring.demo.noMatch}${strings.substring.demo.assignZero} ` });
+            this.setState({ currentState: `'${this.state.stringX[this.outerCounter]}' != '${this.state.stringY[this.innerCounter]}', ${strings.substring.demo.assignZero}` });
             this.nextAutomataState = 'assignZero';
         }
     }
@@ -259,7 +277,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
         if (this.innerCounter + 1 >= this.LENGTH2) {
             if (this.outerCounter + 1 >= this.LENGTH1) {
                 this.nextAutomataState = 'done';
-                this.setFinalState();
+                this.setFinalState(this.state.table);
                 return;
             }
             else {
@@ -280,47 +298,51 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
 
     private onFinishClick = () => {
         clearTimeout(this.timeout);
-        this.setState({ speed: 0 });
 
         const table: number[][] = [];
+        this.resultPos = [0, 0];
 
-        for (let i = 0; i <= this.LENGTH1; i++) {
+        for (let i = 0; i < this.LENGTH1; i++) {
             table[i] = [];
-            for (let j = 0; j <= this.LENGTH2; j++) {
+            for (let j = 0; j < this.LENGTH2; j++) {
                 if (this.state.stringX[i] === this.state.stringY[j]) {
                     if (i === 0 || j === 0) {
                         table[i][j] = 1;
                     }
                     else {
-                        table[i][j] = table[i - 1][j - 1];
+                        table[i][j] = table[i - 1][j - 1] + 1;
+                    }
+
+                    if (table[i][j] > table[this.resultPos[0]][this.resultPos[1]]) {
+                        this.resultPos[0] = i;
+                        this.resultPos[1] = j;
                     }
                 }
                 else {
                     table[i][j] = 0;
                 }
-                if (table[i][j] > this.state.table[this.resultPos[0]][this.resultPos[1]]) {
-                    this.resultPos[0] = i;
-                    this.resultPos[1] = j;
-                }
             }
         }
 
-        this.setFinalState();
+        this.setState({
+            table
+        });
+
+        this.setFinalState(table);
     };
 
-    private setFinalState = () => {
-        const cells: Array<[number, number]> = [];
+    private setFinalState = (table: number[][]) => {
+        this.solution = [];
         let finalString = '';
 
-        for (let i = this.state.table[this.resultPos[0]][this.resultPos[1]] - 1; i >= 0; i--) {
-            cells.push([this.resultPos[0] - i, this.resultPos[1] - i]);
+        for (let i = table[this.resultPos[0]][this.resultPos[1]] - 1; i >= 0; i--) {
+            this.solution.push([this.resultPos[0] - i, this.resultPos[1] - i]);
             finalString += this.state.stringX[this.resultPos[0] - i];
         }
-        this.solution = cells;
 
         this.setState({
             inProgress: false,
-            result: `${strings.substring.demo.longestSubr}: "${finalString}", ${strings.substring.demo.length}: ${this.state.table[this.resultPos[0]][this.resultPos[1]]}.`,
+            result: `${strings.substring.demo.longestSubr}: "${finalString}", ${strings.substring.demo.length}: ${table[this.resultPos[0]][this.resultPos[1]]}`,
             currentState: '...'
         });
     }
@@ -338,11 +360,16 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
 
             // Highlight solution
             if (this.state.inProgress === false) {
+                let isBlue: boolean = false;
                 this.solution.forEach(element => {
-                    if (element[0] === i) {
+                    if (element[1] === i) {
                         classNames.push(classes.blueCaption);
+                        isBlue = true;
                     }
                 });
+                if (!isBlue) {
+                    classNames.push(classes.caption);
+                }
             }
             else {
                 classNames.push(classes.caption);
@@ -368,7 +395,24 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
         for (let i = 0; i < this.LENGTH1; i++) {
             const row = [];
 
-            classNames = [classes.rowCaption, classes.caption];
+            classNames = [classes.rowCaption];
+
+            // Highlight solution
+            if (this.state.inProgress === false) {
+                let isBlue: boolean = false;
+                this.solution.forEach(element => {
+                    if (element[0] === i) {
+                        classNames.push(classes.blueCaption);
+                        isBlue = true;
+                    }
+                });
+                if (!isBlue) {
+                    classNames.push(classes.caption);
+                }
+            }
+            else {
+                classNames.push(classes.caption);
+            }
 
             // Row names
             row.push(

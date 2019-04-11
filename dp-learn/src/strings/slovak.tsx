@@ -47,11 +47,13 @@ export const slovak = {
         tree: 'Optimalizovaný binárny vyhľadávací strom'
     },
     demoGlobal:{
-        assigning: 'Priradzujem!',
+        assigning: 'Priradzujem',
         cycle: 'Cyklus',
         start: 'Štart',
         array: 'Pole',
         nextCycle: 'Ďalší cyklus',
+        solution: 'Riešenie',
+        start0: 'Priradzujem hodnotu 0 na pozíciu 0',
     },
     dp: {
         whatIsDpTitle: 'Čo je to dynamické programovanie',
@@ -64,6 +66,39 @@ export const slovak = {
         repeatingText: 'Druhou vlastnosťou, ktorú musí rekurzívne riešenie spĺňať je **opakovanie podproblémov**. Zistiť, či sa pri rekurzívnom riešení opakujú podproblémy sa dá napríklad nakreslením **stromu rekurzívnych volaní**:',
         prosAndConsTitle: 'Výhody a nevýhody',
         prosAndConsText: 'Hlavná výhoda DP spočíva v tom, že využíva opakovanie sa podproblémov a preto vedie často k oveľa efektívnejšiemu a rýchlejšiemu riešeniu. Výsledky menších podproblémov sú ukladané do dátovej štruktúry (poľa alebo tabuľky). Ak algoritmus narazí znovu na podproblém, ktorý už bol predtým vyriešený, použije sa uložený výsledok. Rekurzívny algoritmus pri jednoduchom vstupe výsledok skôr ako DP algoritmus. Pri zložitom vstupe je ale DP algoritmus výrazne efektívnejší. **Exponenciálna** časová zložitosť rekurzívneho algoritmu môže byť znížená na **polynomickú**. Nevýhodou je vyššia pamäťová náročnosť z dôvodu vytvárania dátovej štruktúry na ukladanie výsledkov podproblémov.'
+    },
+    substring: {
+        theory: {
+
+        },
+        demo: {
+            title: 'Najdlhší spoločný podreťazec - demo',
+            brief: 'Riešenie problému pomocou dynamického programovania - jednoduchá verzia s tabuľkou **M x N**.',
+            assignZero: 'priradzujem hodnotu 0',
+            noMatch: 'žiadna zhoda. ',
+            incrementPrevious: 'inkrementujem predchádzajúcu hodnotu',
+            longestSubr: 'Najdlhší spoločný podreťazec',
+            length: 'dĺžka'
+        },
+    },
+    rod: {
+        prices: 'Ceny',
+        theory: {
+            title: 'Rezanie tyče - teória',
+        },
+        demo: {
+            title: 'Rezanie tyče - demo',
+            brief: 'Zadajte ceny jednotlivých dĺžok tyče (maximálne 15) oddelené čiarkami (dĺžky sú 1, 2, 3, ...). Stĺpce tabuľky symbolizujú dĺžky tyče. V prvom riadku budú na konci najvyššie dosiahnuteľné ceny pre jednotlivé dĺžky. V druhom riadku budú pomocné hodnoty pre vytvorenie kompletného riešenia. Hodnota bunky je v tomto prípade dĺžka najdlhšej použitej tyče pre danú dĺžku.',
+            evalPriceFor: 'Výpočet najvyššej ceny pre dĺžku ',
+            candidates: 'Výber kandidátov',
+            best: 'Výber najlepšieho',
+            result: 'Najvyššia dosiahnuteľná cena: ',
+            usedLength: 'použitá dĺžka ',
+            usedLengths: 'použité dĺžky: ',
+            length: 'Dĺžka',
+            highestPrice: 'Najvyššia cena',
+            usedLengthBig: 'Použitá dĺžka',
+        },
     },
     coins: {
         coin: 'Minca',
@@ -81,38 +116,15 @@ export const slovak = {
         },
         demo: {
             title: 'Minimálny počet mincí na vytvorenie danej hodnoty - demo',
-            brief: 'Zadajte hodnotu (od 1 po 20), ktorú treba vytvoriť súčtom hodnôt mincí a hodnoty mincí oddelené znakom \',\'(maximálny počet je 5).',
-            isNeeded: 'Potrebný počet mincí: ',
+            brief: 'Zadajte hodnotu (od 1 po 20), ktorú treba vytvoriť súčtom hodnôt mincí a hodnoty mincí oddelené čiarkami (maximálny počet je 5). Stĺpce tabuľky symbolizujú jednotlivé hodnoty, pre ktoré treba vypočítať minimálny počet mincí. V prvom riadku budú na konci minimálne počty mincí pre jednotlivé hodnoty. V druhom riadku budú pomocné hodnoty pre vytvorenie kompletného riešenia. Hodnota bunky je v tomto prípade hodnota najväčšej použitej mince.',
+            isNeeded: 'Potrebný počet mincí',
             evalCoinsFor: 'Výpočet mincí pre vytvorenie hodnoty ',
+            usedCoin: 'použitá minca ',
+            usedCoins: 'použité mince',
+            value: 'Hodnota',
+            coinsNumber: 'Počet mincí',
+            usedCoinBig: 'Použitá minca',
         }
-    },
-    substring: {
-        theory: {
-
-        },
-        demo: {
-            title: 'Najdlhší spoločný podreťazec - demo',
-            brief: 'Riešenie problému pomocou dynamického programovania - jednoduchá verzia s tabuľkou **M x N**.',
-            assignZero: 'Priradzujem hodnotu 0.',
-            noMatch: 'žiadna zhoda. ',
-            match: 'zhoda!',
-            longestSubr: 'Najdlhší spoločný podreťazec',
-            length: 'dĺžka'
-        },
-    },
-    rod: {
-        prices: 'Ceny',
-        theory: {
-            title: 'Rezanie tyče - teória',
-        },
-        demo: {
-            title: 'Rezanie tyče - demo',
-            brief: 'Zadajte ceny jednotlivých dĺžok tyče oddelené čiarkami (dĺžky sú 1, 2, 3, ...).',
-            start: 'Priradzujem hodnotu 0 na pozíciu 0',
-            candidates: 'Výber kandidátov',
-            best: 'Výber najlepšieho',
-            result: 'Najvyššia dosiahnuteľná hodnota: ',
-        },
     },
     editDistance: {
         theory: {

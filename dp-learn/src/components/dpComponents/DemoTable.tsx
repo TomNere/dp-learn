@@ -19,9 +19,8 @@ interface IDemoTableProps {
 }
 
 const styles = (theme: Theme) => createStyles({
-    centeredContent: {
-        textAlign: 'center',
-        margin: theme.spacing.unit * 2,
+    result: {
+        marginBottom: theme.spacing.unit * 2,
         "& span": {
             fontSize: theme.typography.pxToRem(24),
             color: 'white',
@@ -36,7 +35,7 @@ const styles = (theme: Theme) => createStyles({
             paddingRight: 4
         },
     },
-    subRes: {
+    currentState: {
         color: 'white',
         backgroundColor: myTheme.palette.primary.main,
         padding: '4px 24px 4px 14px',
@@ -52,17 +51,18 @@ class DemoTable extends React.Component<AllProps> {
             <div>
                 {(this.props.visible) &&
                     <div>
-                        {this.props.result !== "" && <div className={classes.centeredContent}>
-                            <span>
-                                {this.props.result}
-                            </span>
-                        </div>
+                        {this.props.result !== "" &&
+                            <div className={classes.result}>
+                                <span>
+                                    {this.props.result}
+                                </span>
+                            </div>
                         }
                         <Table className={classes.table}>
                             <TableBody>
                                 {this.props.currentState !== "" &&
                                     <TableRow >
-                                        <TableCell className={classes.subRes} colSpan={this.props.cols}>
+                                        <TableCell className={classes.currentState} colSpan={this.props.cols}>
                                             {this.props.currentState}
                                         </TableCell>
                                     </TableRow>

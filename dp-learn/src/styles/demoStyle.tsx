@@ -78,9 +78,6 @@ export const demoStyle = (theme: Theme) => createStyles({
     redCell: {
         backgroundColor: 'red'
     },
-    incCell: {
-        backgroundColor: myTheme.palette.secondary.light
-    },
     sign: {
         fontSize: 30,
         margin: theme.spacing.unit

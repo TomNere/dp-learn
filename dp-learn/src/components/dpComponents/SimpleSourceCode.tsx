@@ -18,7 +18,7 @@ const styles = () => createStyles({
         marginLeft: 20,
         color: 'white',
     }
-})
+});
 
 // Simple Source code without expanding etc.
 class SimpleSourceCode extends React.Component<AllProps> {

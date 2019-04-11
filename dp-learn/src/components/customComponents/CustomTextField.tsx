@@ -18,7 +18,7 @@ const styles = (theme: Theme) => createStyles({
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        minWidth: 300,
+        minWidth: 380,
     },
 });
 

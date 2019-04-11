@@ -41,11 +41,13 @@ export const english = {
         string: 'String'
     },
     demoGlobal:{
-        assigning: 'Assigning!',
+        assigning: 'Assigning ',
         cycle: 'Cycle',
         start: 'Start',
         array: 'Array',
         nextCycle: 'Next cycle',
+        solution: 'Solution',
+        start0: 'Assigning value 0 at position 0',
     },
     menu: {
         coins: 'Minimum coins',
@@ -85,6 +87,11 @@ export const english = {
             brief: 'Dynamic programming solution. Please provide value to make and coins separated by \',\' (comma)',
             isNeeded: 'Number of coins: ',
             evalCoinsFor: 'Evaluating coins needed for value ',
+            usedCoin: 'used coin',
+            usedCoins: 'used coins',
+            value: 'Value',
+            coinsNumber: 'Number of coins',
+            usedCoinBig: 'Used coin',
         }
     },
     substring: {
@@ -94,9 +101,9 @@ export const english = {
         demo: {
             title: 'Longest common substring - demo',
             brief: 'Dynamic programming solution - simple version with **M x N** table.',
-            assignZero: 'Assigning value 0.',
+            assignZero: 'assigning value 0',
             noMatch: 'no match. ',
-            match: 'match!',
+            incrementPrevious: 'incrementing previous value',
             longestSubr: 'Longest common substring',
             length: 'length'
         },
@@ -109,10 +116,15 @@ export const english = {
         demo: {
             title: 'Cutting a rod - demo',
             brief: 'Provide comma separated prices of lengths (lengths are 1, 2, 3, ...).',
-            start: 'Assigning value 0 at position 0',
+            evalPriceFor: 'Evaluating biggest price for length ',
             candidates: 'Selection of candidates',
             best: 'Selection of the best',
             result: 'Highest obtainable value: ',
+            usedLength: 'used length ',
+            usedLengths: 'used lengths: ',
+            length: 'Length',
+            highestPrice: 'Highest price',
+            usedLengthBig: 'Used length',
         },
     },
     editDistance: {

@@ -10,13 +10,18 @@ type AllProps =
     WithStyles<typeof styles>;
 
 interface ITitleProps {
-    children: ReactNode
+    children: ReactNode,
+    variant: 'h5' | 'h6'
 }
 
 const styles = (theme: Theme) => createStyles({
-    bottomMargin: {
+    varianth5: {
         marginBottom: theme.spacing.unit * 2,
-    }
+        marginTop: theme.spacing.unit * 2,
+    },
+    varianth6: {
+        margin: theme.spacing.unit * 2,
+    },
 });
 
 // Custom title
@@ -25,9 +30,18 @@ class CustomTitle extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;
         return (
-            <Typography variant={'h4'} align={'center'} className={classes.bottomMargin}>
-                {this.props.children}
-            </Typography>
+            <div>
+                {this.props.variant === 'h5' &&
+                    <Typography variant={'h5'} className={classes.varianth5}>
+                        {this.props.children}
+                    </Typography>
+                }
+                {this.props.variant === 'h6' &&
+                    <Typography variant={'h6'} className={classes.varianth6}>
+                        {this.props.children}
+                    </Typography>
+                }
+            </div>
         );
     }
 }

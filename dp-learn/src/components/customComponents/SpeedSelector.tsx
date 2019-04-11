@@ -1,24 +1,31 @@
 import * as React from 'react';
 
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@material-ui/core";
+import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Theme, WithStyles, createStyles, withStyles } from "@material-ui/core";
 
 import { strings } from 'src/strings/languages';
+
+type AllProps =
+    ISpeedSelectorProps &
+    WithStyles<typeof styles>;
 
 interface ISpeedSelectorProps {
     speed: string,
     onClick: (e: any) => any
 }
 
-// Speed selector with predefined values
-class SpeedSelector extends React.Component<ISpeedSelectorProps> {
-    public constructor(props: ISpeedSelectorProps) {
-        super(props);
+const styles = (theme: Theme) => createStyles({
+    leftMargin: {
+        marginLeft: theme.spacing.unit
     }
+})
 
+// Speed selector with predefined values
+class SpeedSelector extends React.Component<AllProps> {
     public render() {
+        const { classes } = this.props;
         return (
-            <div>
-                <FormControl component={"fieldset" as "div"}>
+            <div className={classes.leftMargin}>
+                <FormControl component={"fieldset" as "div"} margin='normal'>
                     <FormLabel component="label">
                         {strings.components.speed}
                     </FormLabel>
@@ -61,4 +68,4 @@ class SpeedSelector extends React.Component<ISpeedSelectorProps> {
     }
 }
 
-export default (SpeedSelector);
+export default withStyles(styles)(SpeedSelector);

@@ -97,14 +97,16 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
                 <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
                 <br />
 
-                {/* Start button */}
-                <CustomButton color='dark' label={strings.global.start} onClick={this.onStartClick} visible={true} />
+                <FlexRowContainer>
+                    {/* Start button */}
+                    <CustomButton label={strings.global.start} onClick={this.onStartClick} disabled={false} />
 
-                {/* Step button */}
-                <CustomButton color='light' label={strings.global.step} onClick={this.finiteAutomata} visible={this.state.inProgress && this.state.speed === 0} />
+                    {/* Step button */}
+                    <CustomButton label={strings.global.step} onClick={this.finiteAutomata} disabled={!this.state.inProgress || this.state.speed !== 0} />
 
-                {/* Finish button */}
-                <CustomButton color='light' label={strings.global.finish} onClick={this.onFinishClick} visible={this.state.inProgress} />
+                    {/* Finish button */}
+                    <CustomButton label={strings.global.finish} onClick={this.onFinishClick} disabled={!this.state.inProgress} />
+                </FlexRowContainer>
 
                 {/* Table and result */}
                 <DemoTable cols={this.LENGTH + 1} visible={this.state.tableVisible} result={this.state.result} head={this.tableHead} body={this.tableBody} currentState={this.state.currentState} />
@@ -140,6 +142,13 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
 
     private speedChange = (e: any) => {
         this.setState({ speed: +e.target.value });
+
+        if (+e.target.value === 0) {
+            clearTimeout(this.timeout);
+        }
+        else if (this.state.inProgress) {
+            this.setTimeout(this.finiteAutomata);
+        }
     };
 
     private setTimeout = (func: () => void) => {

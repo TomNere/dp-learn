@@ -4,15 +4,16 @@ import * as React from 'react';
 import { GetNumbers, ValueOrIntMax } from 'src/helpers/Helpers';
 import { TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
-import { coinsBacktrack, coinsSmallDynCode } from 'src/dp/helpers/coins/CoinsCodes';
 
 import CustomButton from 'src/components/customComponents/CustomButton';
-import CustomSubtitle from 'src/hoc/CustomSubtitle';
 import CustomTextField from 'src/components/customComponents/CustomTextField';
+import CustomTitle from 'src/hoc/CustomTitle';
 import DemoTable from 'src/components/dpComponents/DemoTable';
 import FlexRowContainer from 'src/hoc/FlexRowContainer';
 import SimpleSourceCode from 'src/components/dpComponents/SimpleSourceCode';
 import SpeedSelector from 'src/components/customComponents/SpeedSelector';
+import { __makeTemplateObject } from 'tslib';
+import { coinsSmallDynCode } from 'src/dp/helpers/coins/CoinsCodes';
 import { demoStyle } from 'src/styles/demoStyle';
 import { strings } from 'src/strings/languages';
 
@@ -41,6 +42,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
     private innerCounter: number;
 
     private nextAutomataState:
+        'start' |
         'doInnerCycle' |
         'nextInnerCycle' |
         'assignNewValue' |
@@ -51,7 +53,10 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
     private coins: number[];
 
     // Helper for solution building
-    private backtrackHelp: number[];
+    private solutionHelper: number[];
+
+    // Helper for solution highlighting
+    private solution: number[];
 
     // Timeout
     private timeout: any;
@@ -80,9 +85,9 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         const { classes } = this.props;
         return (
             <div>
-                <CustomSubtitle variant='h5'>
+                <CustomTitle variant='h5'>
                     {strings.coins.demo.title}
-                </CustomSubtitle>
+                </CustomTitle>
                 <div className={classes.bottomMargin}>
                     {strings.coins.demo.brief}
                 </div>
@@ -97,24 +102,21 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
                         <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
                         <br />
 
-                        {/* Start button */}
-                        <CustomButton color='dark' label={strings.global.start} onClick={this.onStartClick} visible={true} />
+                        <FlexRowContainer>
+                            {/* Start button */}
+                            <CustomButton label={strings.global.start} onClick={this.onStartClick} disabled={false} />
 
-                        {/* Step button */}
-                        <CustomButton color='light' label={strings.global.step} onClick={this.finiteAutomata} visible={this.state.inProgress && this.state.speed === 0} />
+                            {/* Step button */}
+                            <CustomButton label={strings.global.step} onClick={this.finiteAutomata} disabled={!this.state.inProgress || this.state.speed !== 0} />
 
-                        {/* Finish button */}
-                        <CustomButton color='light' label={strings.global.finish} onClick={this.onFinishClick} visible={this.state.inProgress} />
-
+                            {/* Finish button */}
+                            <CustomButton label={strings.global.finish} onClick={this.onFinishClick} disabled={!this.state.inProgress} />
+                        </FlexRowContainer>
                     </div>
                     <div className={classes.flexChild}>
                         <SimpleSourceCode code={coinsSmallDynCode} />
                     </div>
-                    <div className={classes.flexChild}>
-                        <SimpleSourceCode code={coinsBacktrack} />
-                    </div>
                 </div>
-                <br />
 
                 {/* Table and result */}
                 <DemoTable visible={this.state.tableVisible} cols={this.state.givenValue + 2} result={this.state.result} currentState={this.state.currentState} head={this.tableHead} body={this.tableBody} />
@@ -137,6 +139,13 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
     private speedChange = (e: any) => {
         this.setState({ speed: +e.target.value });
+
+        if (+e.target.value === 0) {
+            clearTimeout(this.timeout);
+        }
+        else if (this.state.inProgress) {
+            this.setTimeout(this.finiteAutomata);
+        }
     };
 
     private setTimeout = (func: () => void) => {
@@ -148,32 +157,31 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         this.coins = GetNumbers(this.state.givenCoins);
 
         if (this.coins.length === 0) {
-            this.setState({ result: '' });
+            this.setState({ result: strings.global.invalidArg });
             return;
         }
 
         const table: number[] = []
 
-        this.backtrackHelp = [];
+        this.solutionHelper = [];
 
         // Base case (If given value is 0) 
         table[0] = 0;
-        this.backtrackHelp[0] = 0;
+        this.solutionHelper[0] = 0;
 
         // Initialize all table values as Infinite
         for (let i = 1; i <= this.state.givenValue; i++) {
             table[i] = Number.MAX_VALUE;
-            this.backtrackHelp[i] = -1;
         }
 
-        this.outerCounter = 1;
+        this.outerCounter = 0;
         this.innerCounter = 0;
 
         this.setState({
             tableVisible: true,
             inProgress: true,
             result: '',
-            currentState: `${strings.coins.demo.evalCoinsFor} ${this.outerCounter}`,
+            currentState: strings.demoGlobal.start0,
             table,
             match: undefined,
             currentCol: undefined
@@ -189,6 +197,9 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
     private finiteAutomata = () => {
         // Finite automata
         switch (this.nextAutomataState) {
+            case 'start':
+                this.start();
+                break;
             case 'doInnerCycle':
                 this.doInnerCycle();
                 break;
@@ -211,6 +222,15 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         }
     }
 
+    private start = () => {
+        this.outerCounter = 1;
+
+        this.setState({
+            currentState: `${strings.coins.demo.evalCoinsFor} ${this.outerCounter}`,
+        });
+        this.nextAutomataState = 'doInnerCycle';
+    }
+
     private doInnerCycle = () => {
         if (this.coins[this.innerCounter] <= this.outerCounter) {
             const subRes = this.state.table[this.outerCounter - this.coins[this.innerCounter]];
@@ -231,12 +251,13 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
     private assignNewValue = () => {
         const table = [...this.state.table];
-        table[this.outerCounter] = this.state.table[this.outerCounter - this.coins[this.innerCounter]] + 1;
-        this.backtrackHelp[this.outerCounter] = this.innerCounter;
+        const value = this.state.table[this.outerCounter - this.coins[this.innerCounter]] + 1;
+        table[this.outerCounter] = value;
+        this.solutionHelper[this.outerCounter] = this.coins[this.innerCounter];
 
         this.setState({
             table,
-            currentState: strings.demoGlobal.assigning
+            currentState: `${strings.demoGlobal.assigning} ${value}, ${strings.coins.demo.usedCoin} ${this.solutionHelper[this.outerCounter]}`
         });
 
         this.setState({ match: true });
@@ -253,7 +274,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
         if (this.innerCounter + 1 >= this.coins.length) {
             if (this.outerCounter + 1 > this.state.givenValue) {
-                this.setFinalState();
+                this.setFinalState(this.state.table);
                 return;
             }
             else {
@@ -286,63 +307,60 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
     private onFinishClick = () => {
         clearTimeout(this.timeout);
 
-        this.backtrackHelp = [0];
+        this.solutionHelper = [0];
         const table: number[] = [];
 
         table[0] = 0;
 
         for (let i = 1; i <= this.state.givenValue; i++) {
             table[i] = Number.MAX_VALUE;
-            this.backtrackHelp[i] = -1;
         }
 
         // Compute minimum coins required for all
         // values from 1 to value
         for (let i = 1; i <= this.state.givenValue; i++) {
             // Go through all coins smaller than i
-            for (let j = 0; j < this.coins.length; j++) {
-                if (this.coins[j] <= i) {
-                    const subRes = table[i - this.coins[j]];
+            for (const coin of this.coins) {
+                if (coin <= i) {
+                    const subRes = table[i - coin];
                     if (subRes !== Number.MAX_VALUE && subRes + 1 < table[i]) {
                         table[i] = subRes + 1;
-                        this.backtrackHelp[i] = j;
+                        this.solutionHelper[i] = coin;
                     }
                 }
             }
         }
-        this.outerCounter = -1;
-        this.nextAutomataState = 'done';
 
         this.setState({
-            inProgress: false,
             table,
-            result: `${strings.coins.demo.isNeeded}${table[this.state.givenValue]}: ${this.getFullSolution(this.backtrackHelp)}.`,
-            currentState: "...",
         });
+
+        this.setFinalState(table);
     };
 
-    private setFinalState = () => {
+    private setFinalState = (table: number[]) => {
         this.outerCounter = -1;
         this.nextAutomataState = 'done';
 
         this.setState({
             inProgress: false,
-            result: `${strings.coins.demo.isNeeded}${this.state.table[this.state.givenValue]}: ${this.getFullSolution(this.backtrackHelp)}.`,
+            result: `${strings.coins.demo.isNeeded}: ${table[this.state.givenValue]}, ${strings.coins.demo.usedCoins}: ${this.getFullSolution()}`,
             currentState: "...",
         });
     }
 
-    private getFullSolution = (backtrackHelp: number[]) => {
+    private getFullSolution = () => {
         let start = this.state.givenValue;
         let coins = '';
 
-        while (start !== 0) {
-            const j = backtrackHelp[start];
-            coins += `${this.coins[j]}, `;
-            start = start - this.coins[j];
+        this.solution = []
+        while (start > 0) {
+            this.solution.push(start);
+            coins += `${this.solutionHelper[start]}, `;
+            start -= this.solutionHelper[start];
         }
 
-        return coins;
+        return coins.slice(0, -2);
     }
 
     // Return table heading
@@ -360,7 +378,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
             heading.push(
                 <TableCell key={'columnName' + i.toString()} className={classNames.join(' ')}>
-                    {i}
+                    {`${strings.coins.demo.value} ${i}`}
                 </TableCell>);
         }
 
@@ -381,7 +399,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         // Row names
         row.push(
             <TableCell key={'tableRow name'} className={classNames.join(' ')}>
-                {`${strings.demoGlobal.cycle} ${this.outerCounter}.`}
+                {strings.coins.demo.coinsNumber}
             </TableCell>
         );
 
@@ -405,7 +423,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
                     classNames.push(classes.redCell);
                 }
                 else {
-                    classNames.push(classes.incCell);
+                    classNames.push(classes.yellowCell);
                 }
             }
 
@@ -425,8 +443,8 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
         row = [];
         row.push(
-            <TableCell key={'backtrackHelp name'} className={[classes.rowCaption, classes.caption].join(' ')}>
-                {'Backtrac helper'}
+            <TableCell key={'solution name'} className={[classes.rowCaption, classes.caption].join(' ')}>
+                {strings.coins.demo.usedCoinBig}
             </TableCell>
         );
 
@@ -437,9 +455,18 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
                 classNames.push(classes.blueCell);
             }
 
+            // Highlight solution
+            if (this.state.inProgress === false) {
+                this.solution.forEach(element => {
+                    if (element === j) {
+                        classNames.push(classes.blueCell);
+                    }
+                });
+            }
+
             row.push(
-                <TableCell key={`backtrack${j}`} className={classNames.join(' ')}>
-                    {this.backtrackHelp[j]}
+                <TableCell key={`solution${j}`} className={classNames.join(' ')}>
+                    {this.solutionHelper[j]}
                 </TableCell>
             );
         }

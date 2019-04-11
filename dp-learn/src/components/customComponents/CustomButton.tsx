@@ -10,8 +10,7 @@ type AllProps =
     WithStyles<typeof styles>;
 
 interface ICustomButtonProps {
-    visible: boolean,
-    color: 'light' | 'dark',
+    disabled: boolean,
     onClick: (e: any) => any,
     label: string
 }
@@ -25,37 +24,30 @@ export const styles = (theme: Theme) => createStyles({
             backgroundColor: myTheme.palette.primary.main
         }
     },
-    buttonDark: {
-        margin: theme.spacing.unit,
-        color: 'white',
-        backgroundColor: myTheme.palette.primary.main,
-        "&:hover": {
-            backgroundColor: myTheme.palette.secondary.main
-        }
-    },
+    // buttonDark: {
+    //     margin: theme.spacing.unit,
+    //     color: 'white',
+    //     backgroundColor: myTheme.palette.primary.main,
+    //     "&:hover": {
+    //         backgroundColor: myTheme.palette.secondary.main
+    //     }
+    // },
 });
 
 // Light or dark colored button
 class CustomButton extends React.Component<AllProps> {
-    public constructor(props: AllProps) {
-        super(props);
-    }
-    
     public render() {
         const { classes } = this.props;
         return (
-            <div>
-                {(this.props.visible) &&
-                    <Button 
-                        variant='contained' 
-                        color='primary'
-                        className={this.props.color === 'light' ? classes.buttonLight : classes.buttonDark} 
-                        onClick={this.props.onClick}
-                    >
-                        {this.props.label}
-                    </Button>
-                }
-            </div>
+            <Button
+                variant='contained'
+                color='primary'
+                disabled={this.props.disabled}
+                className={classes.buttonLight}
+                onClick={this.props.onClick}
+            >
+                {this.props.label}
+            </Button>
         )
     }
 }

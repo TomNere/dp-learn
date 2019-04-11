@@ -44,7 +44,7 @@ class TreeCharts extends React.Component<any, ITreeChartsState> {
                     <CustomTextField label={strings.tree.arrayOfF} value={this.state.givenFreqs} onChange={this.handleFreqs} />
                 </FlexRowContainer>
 
-                <CustomButton label={strings.global.drawCharts} color='dark' onClick={this.drawCharts} visible={true} />
+                <CustomButton label={strings.global.drawCharts} onClick={this.drawCharts} disabled={false} />
 
                 <ChartsAndTable timeStats={this.timeStats} spaceStats={this.spaceStats} tableStats={this.tableStats} visible={this.state.chartsVisible} />
             </div>
