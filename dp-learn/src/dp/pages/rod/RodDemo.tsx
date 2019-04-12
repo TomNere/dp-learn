@@ -240,12 +240,12 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
             }
         }
 
-        this.setState({ highlightCandidates: true, highlightMax: false, currentState: strings.rod.demo.candidates });
+        this.setState({ highlightCandidates: true, highlightMax: false, currentState: strings.demoGlobal.candidates });
     }
 
     // Just enable higliting on max index (evaluated max value)
     private highlightMaxIndex = () => {
-        this.setState({ highlightMax: true, currentState: strings.rod.demo.best });
+        this.setState({ highlightMax: true, currentState: strings.demoGlobal.best });
     }
 
     private assignValue = () => {

@@ -48,6 +48,8 @@ export const english = {
         nextCycle: 'Next cycle',
         solution: 'Solution',
         start0: 'Assigning value 0 at position 0',
+        candidates: 'Selection of candidates',
+        best: 'Selection of the best',
     },
     menu: {
         coins: 'Minimum coins',
@@ -67,6 +69,23 @@ export const english = {
         repeatingText: 'Druhou vlastnosťou, ktorú musí rekurzívne riešenie spĺňať je **opakovanie podproblémov**. Zistiť, či sa pri rekurzívnom riešení opakujú podproblémy sa dá napríklad nakreslením **stromu rekurzívnych volaní**:',
         prosAndConsTitle: 'Výhody a nevýhody',
         prosAndConsText: 'Hlavná výhoda DP spočíva v tom, že využíva opakovanie sa podproblémov a preto vedie často k oveľa efektívnejšiemu a rýchlejšiemu riešeniu. Výsledky menších podproblémov sú ukladané do dátovej štruktúry (poľa alebo tabuľky). Ak algoritmus narazí znovu na podproblém, ktorý už bol predtým vyriešený, použije sa uložený výsledok. Rekurzívny algoritmus pri jednoduchom vstupe výsledok skôr ako DP algoritmus. Pri zložitom vstupe je ale DP algoritmus výrazne efektívnejší. **Exponenciálna** časová zložitosť rekurzívneho algoritmu môže byť znížená na **polynomickú**. Nevýhodou je vyššia pamäťová náročnosť z dôvodu vytvárania dátovej štruktúry na ukladanie výsledkov podproblémov.'
+    },
+    rod: {
+        prices: 'Prices',
+        theory: {
+            title: 'Cutting a rod - theory',
+        },
+        demo: {
+            title: 'Cutting a rod - demo',
+            brief: 'Provide comma separated prices of lengths (lengths are 1, 2, 3, ...).',
+            evalPriceFor: 'Evaluating biggest price for length ',
+            result: 'Highest obtainable value: ',
+            usedLength: 'used length ',
+            usedLengths: 'used lengths: ',
+            length: 'Length',
+            highestPrice: 'Highest price',
+            usedLengthBig: 'Used length',
+        },
     },
     coins: {
         coin: 'Coin',
@@ -108,25 +127,6 @@ export const english = {
             length: 'length'
         },
     },
-    rod: {
-        prices: 'Prices',
-        theory: {
-            title: 'Cutting a rod - theory',
-        },
-        demo: {
-            title: 'Cutting a rod - demo',
-            brief: 'Provide comma separated prices of lengths (lengths are 1, 2, 3, ...).',
-            evalPriceFor: 'Evaluating biggest price for length ',
-            candidates: 'Selection of candidates',
-            best: 'Selection of the best',
-            result: 'Highest obtainable value: ',
-            usedLength: 'used length ',
-            usedLengths: 'used lengths: ',
-            length: 'Length',
-            highestPrice: 'Highest price',
-            usedLengthBig: 'Used length',
-        },
-    },
     editDistance: {
         theory: {
 
@@ -134,6 +134,16 @@ export const english = {
         demo: {
             title: 'Edit distance - demo',
             brief: 'Provide 2 strings, which will be edit distance calculated for.',
+            empty: 'Empty',
+            stringXEmpty: 'String X is empty, insert all characters of stringY',
+            stringYEmpty: 'String Y is empty, remove all characters of string X',
+            charactersSame: 'Last characters are same, no operation needed',
+            charactersDiff: 'Last characters are different, selection of candidates',
+            opNumber: 'Number of operations',
+            usedOps: 'used operations',
+            insert: 'insert',
+            remove: 'remove',
+            replace: 'replace',
         },
     },
     tree: {

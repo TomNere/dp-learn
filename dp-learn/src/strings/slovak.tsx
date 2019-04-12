@@ -54,6 +54,8 @@ export const slovak = {
         nextCycle: 'Ďalší cyklus',
         solution: 'Riešenie',
         start0: 'Priradzujem hodnotu 0 na pozíciu 0',
+        candidates: 'Výber kandidátov',
+        best: 'Výber najlepšieho',
     },
     dp: {
         whatIsDpTitle: 'Čo je to dynamické programovanie',
@@ -67,20 +69,7 @@ export const slovak = {
         prosAndConsTitle: 'Výhody a nevýhody',
         prosAndConsText: 'Hlavná výhoda DP spočíva v tom, že využíva opakovanie sa podproblémov a preto vedie často k oveľa efektívnejšiemu a rýchlejšiemu riešeniu. Výsledky menších podproblémov sú ukladané do dátovej štruktúry (poľa alebo tabuľky). Ak algoritmus narazí znovu na podproblém, ktorý už bol predtým vyriešený, použije sa uložený výsledok. Rekurzívny algoritmus pri jednoduchom vstupe výsledok skôr ako DP algoritmus. Pri zložitom vstupe je ale DP algoritmus výrazne efektívnejší. **Exponenciálna** časová zložitosť rekurzívneho algoritmu môže byť znížená na **polynomickú**. Nevýhodou je vyššia pamäťová náročnosť z dôvodu vytvárania dátovej štruktúry na ukladanie výsledkov podproblémov.'
     },
-    substring: {
-        theory: {
-
-        },
-        demo: {
-            title: 'Najdlhší spoločný podreťazec - demo',
-            brief: 'Riešenie problému pomocou dynamického programovania - jednoduchá verzia s tabuľkou **M x N**.',
-            assignZero: 'priradzujem hodnotu 0',
-            noMatch: 'žiadna zhoda. ',
-            incrementPrevious: 'inkrementujem predchádzajúcu hodnotu',
-            longestSubr: 'Najdlhší spoločný podreťazec',
-            length: 'dĺžka'
-        },
-    },
+    
     rod: {
         prices: 'Ceny',
         theory: {
@@ -90,8 +79,6 @@ export const slovak = {
             title: 'Rezanie tyče - demo',
             brief: 'Zadajte ceny jednotlivých dĺžok tyče (maximálne 15) oddelené čiarkami (dĺžky sú 1, 2, 3, ...). Stĺpce tabuľky symbolizujú dĺžky tyče. V prvom riadku budú na konci najvyššie dosiahnuteľné ceny pre jednotlivé dĺžky. V druhom riadku budú pomocné hodnoty pre vytvorenie kompletného riešenia. Hodnota bunky je v tomto prípade dĺžka najdlhšej použitej tyče pre danú dĺžku.',
             evalPriceFor: 'Výpočet najvyššej ceny pre dĺžku ',
-            candidates: 'Výber kandidátov',
-            best: 'Výber najlepšieho',
             result: 'Najvyššia dosiahnuteľná cena: ',
             usedLength: 'použitá dĺžka ',
             usedLengths: 'použité dĺžky: ',
@@ -126,6 +113,20 @@ export const slovak = {
             usedCoinBig: 'Použitá minca',
         }
     },
+    substring: {
+        theory: {
+
+        },
+        demo: {
+            title: 'Najdlhší spoločný podreťazec - demo',
+            brief: 'Zadajte 2 reťazce - **X** a **Y** s maximálnou dĺžkou 20 znakov. Riadky tabuľky symbolizujú znaky reťazca **X**. Stĺpce tabuľky reprezentujú znaky reťazca **Y**. Ak sa rovná znak v riadku s riadkom v stĺpci, hodnota budnky bude nastavená na 1, alebo inkrementovaná, ak sa rovnali aj predchádzajúce znaky. K získaniu kompletného riešenia v tejto úlohe nie je potrebná žiadna dátová štruktúra navyše. Na konci bunka s najvyššou hodnotou predstavuje posledný znak najdlhšieho spoločného podreťazca. Stačí už len zobrať daný počet predchádzajúcich znakov z riadku alebo stĺpca.',
+            assignZero: 'priradzujem hodnotu 0',
+            noMatch: 'žiadna zhoda. ',
+            incrementPrevious: 'inkrementujem predchádzajúcu hodnotu',
+            longestSubr: 'Najdlhší spoločný podreťazec',
+            length: 'dĺžka'
+        },
+    },
     editDistance: {
         theory: {
 
@@ -133,6 +134,16 @@ export const slovak = {
         demo: {
             title: 'Editačná vzdialenosť - demo',
             brief: 'Zadajte 2 reťazce, pre ktoré bude následne vypočítaná editačná vzdialenosť.',
+            empty: 'Prázdny',
+            stringXEmpty: 'Reťazec X je prázdny, vložíme všetky znaky stringu Y',
+            stringYEmpty: 'Reťazec Y je prázdny, odstránime všetky znaky stringu X',
+            charactersSame: 'Posledné znaky sa rovnajú, nie je potrebná operácia',
+            charactersDiff: 'Posledné znaky sa nerovnajú, výber kandidátov',
+            opNumber: 'Potrebný počet operácii',
+            usedOps: 'použité operácie',
+            insert: 'vlož',
+            remove: 'odstráň',
+            replace: 'nahraď',
         },
     },
     tree: {

@@ -91,8 +91,8 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
                 <div className={classes.container}>
                     <div className={classes.flexChild}>
                         <FlexRowContainer>
-                            <CustomTextField label={`${strings.components.string} X`} value={this.state.stringX} onChange={this.handlestrXChange} />
-                            <CustomTextField label={`${strings.components.string} Y`} value={this.state.stringY} onChange={this.handlestrYChange} />
+                            <CustomTextField label={`${strings.components.string} X (max. 20)`} value={this.state.stringX} onChange={this.handlestrXChange} />
+                            <CustomTextField label={`${strings.components.string} Y (max. 20)`} value={this.state.stringY} onChange={this.handlestrYChange} />
                         </FlexRowContainer>
 
                         {/* Speed select */}
@@ -122,11 +122,15 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
     }
 
     private handlestrXChange = (e: any) => {
-        this.setState({ stringX: e.target.value, tableVisible: false });
+        if (e.target.value.length <= 20) {
+            this.setState({ stringX: e.target.value, tableVisible: false });
+        }
     };
 
     private handlestrYChange = (e: any) => {
-        this.setState({ stringY: e.target.value, tableVisible: false });
+        if (e.target.value.length <= 20) {
+            this.setState({ stringY: e.target.value, tableVisible: false });
+        }
     };
 
     private speedChange = (e: any) => {
