@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
-import CoinsCharts from './CoinsCharts';
 import CoinsDemo from './CoinsDemo';
+import CoinsStats from './CoinsStats';
 import CoinsTheory from './CoinsTheory';
 import TabMenu from 'src/hoc/TabMenu';
 
@@ -34,7 +34,7 @@ class Coins extends React.Component<AllProps, ICoinsState> {
         const { classes } = this.props;
         return (
             <div className={classes.root}>
-                <TabMenu theory={<CoinsTheory />} demo={<CoinsDemo />} charts={<CoinsCharts />} />
+                <TabMenu theory={<CoinsTheory />} demo={<CoinsDemo />} charts={<CoinsStats />} />
             </div>
         );
     }

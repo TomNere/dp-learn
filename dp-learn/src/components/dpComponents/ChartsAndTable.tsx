@@ -4,8 +4,6 @@ import SpaceChart, { ISpaceChartData } from './SpaceChart';
 import StatsTable, { IStatsTableData } from './StatsTable';
 import TimeChart, { ITimeChartData } from './TimeChart';
 
-import CenteredContainer from 'src/hoc/CenteredContainer';
-
 interface IStateProps {
     visible: boolean,
     timeStats: ITimeChartData[];
@@ -16,10 +14,6 @@ interface IStateProps {
 // Component contains time and space chart, table and some text
 // Props are visibility, data and text
 class ChartsAndTable extends React.Component<IStateProps> {
-    public constructor(props: IStateProps) {
-        super(props)
-    }
-
     public render() {
         return (
             <div>
@@ -27,9 +21,7 @@ class ChartsAndTable extends React.Component<IStateProps> {
                     <div>
                         <TimeChart data={this.props.timeStats} />
                         <SpaceChart data={this.props.spaceStats} />
-                        <CenteredContainer>
-                            <StatsTable data={this.props.tableStats} />
-                        </CenteredContainer>
+                        <StatsTable data={this.props.tableStats} />
                         {/* TODO zhrnutie */}
                     </div>
                 }

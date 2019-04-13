@@ -9,7 +9,7 @@ import {
     ValueAxis
 } from '@devexpress/dx-react-chart-material-ui';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
-import { dpColor, recColor, recTheorColor } from 'src/styles/colors';
+import { dpColor, dpTheorColor, recColor, recTheorColor } from 'src/styles/colors';
 
 import Paper from '@material-ui/core/Paper';
 import { Typography } from '@material-ui/core';
@@ -25,8 +25,9 @@ interface ITimeChartProps {
 
 export interface ITimeChartData {
     name: string,
-    recTheoretical: number,
+    recTheor: number,
     rec: number,
+    dpTheor: number,
     dp: number,
 }
 
@@ -41,10 +42,6 @@ const styles = (theme: Theme) => createStyles({
 
 // Chart showing time complexity stats
 class TimeChart extends React.Component<AllProps> {
-    public constructor(props: AllProps) {
-        super(props)
-    }
-
     public render() {
         const { data, classes } = this.props;
         const { global, components } = strings;
@@ -74,6 +71,14 @@ class TimeChart extends React.Component<AllProps> {
                         argumentField='name'
                         scaleName='rec'
                         color={recColor}
+                    />
+
+                    <LineSeries
+                        name={`${global.dynProgSolution} (${components.theoreticValue})`}
+                        valueField='dpTheor'
+                        argumentField='name'
+                        scaleName='rec'
+                        color={dpTheorColor}
                     />
 
                     <LineSeries

@@ -35,6 +35,7 @@ export const english = {
         theory: 'Theory',
         demo: 'Demo',
         charts: 'Charts',
+        stats: 'Statistics',
         calls: 'calls',
         theoreticValue: 'theoretical value',
         tableComparison: 'Table comparison',
@@ -86,6 +87,10 @@ export const english = {
             highestPrice: 'Highest price',
             usedLengthBig: 'Used length',
         },
+        stats: {
+            title: 'Cutting a rod - statistics',
+            brief: 'Zadajte ceny jednotlivých dĺžok tyče (maximálne 30) oddelené čiarkami (dĺžky sú 1, 2, 3, ...).',
+        }
     },
     coins: {
         coin: 'Coin',

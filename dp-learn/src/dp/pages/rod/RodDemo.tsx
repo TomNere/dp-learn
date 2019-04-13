@@ -1,19 +1,20 @@
-import * as Prism from 'prismjs';
 import * as React from 'react';
 
 import { GetNumbers, ValueOrUndefined } from 'src/helpers/Helpers';
-import { TableCell, TableRow } from '@material-ui/core';
+import { Grid, TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 
+import BottomedDiv from 'src/hoc/BottomedDiv';
 import CustomButton from 'src/components/customComponents/CustomButton';
 import CustomTextField from 'src/components/customComponents/CustomTextField';
 import CustomTitle from 'src/hoc/CustomTitle';
 import DemoTable from 'src/components/dpComponents/DemoTable';
-import FlexRowContainer from 'src/hoc/FlexRowContainer';
-import SimpleSourceCode from 'src/components/dpComponents/SimpleSourceCode';
+import FlexOne from 'src/hoc/FlexOne';
+import FlexTwo from 'src/hoc/FlexTwo';
+import Formula from 'src/hoc/Formula';
 import SpeedSelector from 'src/components/customComponents/SpeedSelector';
-import { demoStyle } from 'src/styles/demoStyle';
-import { rodSmallDynCode } from 'src/dp/helpers/rod/RodCodes';
+import { demoStyle } from 'src/styles/globalStyles';
+import { rodFormula } from 'src/dp/helpers/rod/RodStrings';
 import { strings } from 'src/strings/languages';
 
 interface ICoinsDemoState {
@@ -43,7 +44,6 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
         'highlightMaxIndex' |
         'assignValue' |
         'nextInnerCycle' |
-        'final' |
         'done' = 'done';
 
     // Given prices
@@ -81,32 +81,26 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
         }
     }
 
-    public componentDidMount() {
-        Prism.highlightAll();
-    }
-
     public render() {
-        const { classes } = this.props;
-
         return (
             <div>
                 <CustomTitle variant='h5'>
                     {strings.rod.demo.title}
                 </CustomTitle>
-                <div className={classes.bottomMargin}>
+                <BottomedDiv>
                     {strings.rod.demo.brief}
-                </div>
-                <div className={classes.container}>
-                    <div className={classes.flexChild}>
-                        <div className={classes.bottomMargin}>
+                </BottomedDiv>
+                <Grid container={true} direction='row'>
+                    <FlexOne>
+                        <BottomedDiv>
                             <CustomTextField label={`${strings.rod.prices} (max. 15)`} value={this.state.givenPrices} onChange={this.handlePrices} />
-                        </div>
+                        </BottomedDiv>
 
                         {/* Speed select */}
                         <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
                         <br />
 
-                        <FlexRowContainer>
+                        <Grid container={true} direction='row'>
                             {/* Start button */}
                             <CustomButton label={strings.global.start} onClick={this.onStartClick} disabled={false} />
 
@@ -115,12 +109,15 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
 
                             {/* Finish button */}
                             <CustomButton label={strings.global.finish} onClick={this.onFinishClick} disabled={!this.state.inProgress} />
-                        </FlexRowContainer>
-                    </div>
-                    <div className={classes.flexChild}>
-                        <SimpleSourceCode code={rodSmallDynCode} />
-                    </div>
-                </div>
+                        </Grid>
+                    </FlexOne>
+                    <FlexTwo>
+                        <Formula>
+                            {rodFormula}
+                        </Formula>
+                    </FlexTwo>
+                </Grid>
+                <br />
 
                 {/* Table and result */}
                 <DemoTable visible={this.state.tableVisible} cols={this.LENGTH + 2} result={this.state.result} currentState={this.state.currentState} head={this.tableHead} body={this.tableBody} />
@@ -192,22 +189,16 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
                 break;
             case 'doInnerCycle':
                 this.doInnerCycle();
-                this.nextAutomataState = 'highlightMaxIndex';
                 break;
             case 'highlightMaxIndex':
                 this.highlightMaxIndex();
-                this.nextAutomataState = 'assignValue';
                 break;
             case 'assignValue':
                 this.assignValue();
-                this.nextAutomataState = 'nextInnerCycle';
                 break;
             case 'nextInnerCycle':
                 this.nextInnerCycle();
                 break;
-            case 'final':
-                this.setFinalState(this.state.table);
-                this.nextAutomataState = 'done';
         }
 
         // If speed != 0, setTimeout is needed
@@ -241,11 +232,13 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
         }
 
         this.setState({ highlightCandidates: true, highlightMax: false, currentState: strings.demoGlobal.candidates });
+        this.nextAutomataState = 'highlightMaxIndex';
     }
 
     // Just enable higliting on max index (evaluated max value)
     private highlightMaxIndex = () => {
         this.setState({ highlightMax: true, currentState: strings.demoGlobal.best });
+        this.nextAutomataState = 'assignValue';
     }
 
     private assignValue = () => {
@@ -258,17 +251,17 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
             table,
             currentState: `${strings.demoGlobal.assigning} ${value}, ${strings.rod.demo.usedLength} ${this.solutionHelper[this.outerCounter]}`
         });
+        this.nextAutomataState = 'nextInnerCycle';
     }
 
     private nextInnerCycle = () => {
-        let currentState: string;
+        let currentState: string = '...';
 
         if (this.outerCounter + 1 > this.LENGTH) {
-            this.nextAutomataState = 'final';
-            currentState = '...';
+            this.setFinalState(this.state.table);
+            return;
         }
         else {
-            this.nextAutomataState = 'doInnerCycle';
             this.outerCounter++;
             currentState = `${strings.rod.demo.evalPriceFor} ${this.outerCounter}`
         }
@@ -278,6 +271,8 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
             highlightMax: false,
             currentState
         });
+
+        this.nextAutomataState = 'doInnerCycle';
     }
 
     private setFinalState = (table: number[]) => {

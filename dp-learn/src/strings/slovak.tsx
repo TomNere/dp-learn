@@ -34,6 +34,7 @@ export const slovak = {
         theory: 'Teória',
         demo: 'Demo',
         charts: 'Grafy',
+        stats: 'Štatistiky',
         calls: 'volaní',
         theoreticValue: 'teoretická hodnota',
         tableComparison: 'Porovnanie v tabuľke',
@@ -86,6 +87,10 @@ export const slovak = {
             highestPrice: 'Najvyššia cena',
             usedLengthBig: 'Použitá dĺžka',
         },
+        stats: {
+            title: 'Rezanie tyče - štatistiky',
+            brief: 'Zadajte ceny jednotlivých dĺžok tyče (maximálne 30) oddelené čiarkami (dĺžky sú 1, 2, 3, ...).',
+        }
     },
     coins: {
         coin: 'Minca',
@@ -133,7 +138,7 @@ export const slovak = {
         },
         demo: {
             title: 'Editačná vzdialenosť - demo',
-            brief: 'Zadajte 2 reťazce, pre ktoré bude následne vypočítaná editačná vzdialenosť.',
+            brief: 'Zadajte 2 reťazce - **X** a **Y** s maximálnou dĺžkou 20 znakov. Riadky tabuľky symbolizujú znaky reťazca **X**. Stĺpce tabuľky reprezentujú znaky reťazca **Y**. Prvý riadok a stĺpec symbolizujú prázdny reťazec. ',
             empty: 'Prázdny',
             stringXEmpty: 'Reťazec X je prázdny, vložíme všetky znaky stringu Y',
             stringYEmpty: 'Reťazec Y je prázdny, odstránime všetky znaky stringu X',
@@ -156,7 +161,7 @@ export const slovak = {
             title: 'Optimalizovaný binárny vyhľadávací strom - demo',
             brief: 'Zadajte pole vyhľadávacích kľúčov a pole počtu vyhľadávaní jednotlivých kľúčov (v oboch prípadoch ide o čísla oddelené čiarkami).',
             initialState: 'Počiatočný stav',
-            evalChainLength: 'Výpočet hodnôt pre reťaz dlžky ',
+            evalChainLength: 'Výpočet hodnôt pre reťaz dĺžky ',
             assignedIntMax: 'Priradené INT_MAX',
             selectedToSum: 'Vybrané bunky pre sčítanie',
             nothingToDo: 'žiadna akcia.',

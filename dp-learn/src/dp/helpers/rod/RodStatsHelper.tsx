@@ -1,68 +1,66 @@
 import { ISimpleObjectParameter } from 'src/helpers/TypesDefinitions';
 
-export type ISolutionRod = (prices: number[], arrSize: number, calls: ISimpleObjectParameter) => number;
-
-export const recursiveRod : ISolutionRod = (prices: number[], arrSize: number, calls: ISimpleObjectParameter) => {
+export const recursiveRod = (prices: number[], arrSize: number, calls: ISimpleObjectParameter) => {
     ++calls.value;
 
-    if (arrSize <= 0) {
+    if (arrSize === 0) {
         return 0; 
     }
 
-    let maxVal = Number.MIN_VALUE;
+    let result = Number.MIN_VALUE;
   
-    // Recursively cut the rod in different pieces and compare different
-    // configurations
     for (let i = 0; i < arrSize; i++) {
-        maxVal = Math.max(maxVal, prices[i] + recursiveRod(prices, arrSize - i - 1, calls)); 
+        result = Math.max(result, prices[i] + recursiveRod(prices, arrSize - i - 1, calls)); 
     }
   
-    return maxVal;
+    return result;
 }
 
-export const dpRod : ISolutionRod = (prices: number[], arrSize: number, calls: ISimpleObjectParameter) => {
-    const array: number[] = [];
-    array[0] = 0;
+export const dpRod = (prices: number[], arrSize: number, calls: ISimpleObjectParameter) => {
+    const table: number[] = [];
+    table[0] = 0;
     calls.value = 0;
 
-    // Build the table val[] in bottom up manner and return the last entry 
-    // from the table 
     for (let i = 1; i <= arrSize; i++) {
         let maxVal = Number.MIN_VALUE;
         
         for (let j = 0; j < i; j++) {
             calls.value++;
-            maxVal = Math.max(maxVal, prices[j] + array[i - j - 1]);
+            maxVal = Math.max(maxVal, prices[j] + table[i - j - 1]);
         }
-        array[i] = maxVal; 
+        table[i] = maxVal; 
     }
 
-    return array[arrSize];
+    return table[arrSize];
 }
 
-export type IRodSpace = (arrSize: number) => number;
-
-export const recRodTime = (arrSize: number) => {
-    // TODO right algorithm
+export const dpRodTime = (arrSize: number) => {
     return arrSize * arrSize;
 }
 
-export const recRodSpace : IRodSpace = (arrSize: number) => {
+export const recRodTime = (arrSize: number) => {
+    return Math.pow(2, arrSize);
+}
+
+export const recRodSpace = (arrSize: number) => {
     return arrSize;     // Store only prices
 }
 
-export const dpRodSpace : IRodSpace = (arrSize: number) => {
+export const dpRodSpace = (arrSize: number) => {
     return arrSize + (arrSize + 1);     // Store prices and array for DP solution
 }
 
 export const rodExamples = [
     {
-        prices: [1, 2, 3, 4],
+        prices: [1,2],
     },
     {
-        prices: [2, 3, 4, 4, 6],
+        prices: [2, 3, 4, 4, 6, 6, 11, 13, 15],
     },
     {
-        prices: [3, 5, 6, 7, 9 , 11, 12],
+        prices: [3, 5, 6, 7, 9 , 11, 12, 20, 30],
+    },
+    {
+        prices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
     },
 ];

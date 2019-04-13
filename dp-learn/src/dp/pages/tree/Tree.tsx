@@ -3,8 +3,8 @@ import * as React from 'react';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
 import TabMenu from 'src/hoc/TabMenu';
-import TreeCharts from './TreeCharts';
 import TreeDemo from './TreeDemo';
+import TreeStats from './TreeStats';
 import TreeTheory from './TreeTheory';
 
 type AllProps =
@@ -27,7 +27,7 @@ class Tree extends React.Component<AllProps> {
 
         return (
             <div className={classes.root}>
-                <TabMenu theory={<TreeTheory />} demo={<TreeDemo />} charts={<TreeCharts />} />
+                <TabMenu theory={<TreeTheory />} demo={<TreeDemo />} charts={<TreeStats />} />
             </div>
         );
     }

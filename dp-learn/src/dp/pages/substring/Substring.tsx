@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
-import SubstringCharts from './SubstringCharts';
+import SubstringCharts from './SubstringStats';
 import SubstringDemo from './SubstringDemo';
 import SubstringTheory from './SubstringTheory';
 import TabMenu from 'src/hoc/TabMenu';

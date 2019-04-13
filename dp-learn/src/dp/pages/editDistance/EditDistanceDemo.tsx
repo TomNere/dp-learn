@@ -1,19 +1,21 @@
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
+import { Grid, TableCell, TableRow } from '@material-ui/core';
 import { Min, MinPosition } from 'src/helpers/Helpers';
-import { TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from "@material-ui/core/styles";
 
+import BottomedDiv from 'src/hoc/BottomedDiv';
 import CustomButton from 'src/components/customComponents/CustomButton';
 import CustomTextField from 'src/components/customComponents/CustomTextField';
 import CustomTitle from 'src/hoc/CustomTitle';
 import DemoTable from 'src/components/dpComponents/DemoTable';
-import FlexRowContainer from 'src/hoc/FlexRowContainer';
-import SimpleSourceCode from 'src/components/dpComponents/SimpleSourceCode';
+import FlexOne from 'src/hoc/FlexOne';
+import FlexTwo from 'src/hoc/FlexTwo';
+import Formula from 'src/hoc/Formula';
 import SpeedSelector from 'src/components/customComponents/SpeedSelector';
-import { coinsSmallDynCode } from 'src/dp/helpers/coins/CoinsCodes';
-import { demoStyle } from 'src/styles/demoStyle';
+import { demoStyle } from 'src/styles/globalStyles';
+import { editDistFormula } from 'src/dp/helpers/editDistance/EditDistanceStrings';
 import { strings } from 'src/strings/languages';
 
 interface ISubstringDemoState {
@@ -88,28 +90,26 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
     }
 
     public render() {
-        const { classes } = this.props;
-
         return (
             <div>
                 <CustomTitle variant='h5'>
                     {strings.editDistance.demo.title}
                 </CustomTitle>
-                <div className={classes.bottomMargin}>
+                <BottomedDiv>
                     <Markdown source={strings.editDistance.demo.brief} />
-                </div>
-                <div className={classes.container}>
-                    <div className={classes.flexChild}>
-                        <FlexRowContainer>
+                </BottomedDiv>
+                <Grid container={true} direction='row'>
+                    <FlexOne>
+                        <Grid container={true} direction='column'>
                             <CustomTextField label={`${strings.components.string} X (max. 20)`} value={this.state.stringX} onChange={this.handlestrXChange} />
                             <CustomTextField label={`${strings.components.string} Y (max. 20)`} value={this.state.stringY} onChange={this.handlestrYChange} />
-                        </FlexRowContainer>
+                        </Grid>
 
                         {/* Speed select */}
                         <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
                         <br />
 
-                        <FlexRowContainer>
+                        <Grid container={true} direction='row'>
                             {/* Start button */}
                             <CustomButton label={strings.global.start} onClick={this.onStartClick} disabled={false} />
 
@@ -118,12 +118,15 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
 
                             {/* Finish button */}
                             <CustomButton label={strings.global.finish} onClick={this.onFinishClick} disabled={!this.state.inProgress} />
-                        </FlexRowContainer>
-                    </div>
-                    <div className={classes.flexChild}>
-                        <SimpleSourceCode code={coinsSmallDynCode} />
-                    </div>
-                </div>
+                        </Grid>
+                    </FlexOne>
+                    <FlexTwo>
+                        <Formula>
+                            {editDistFormula}
+                        </Formula>
+                    </FlexTwo>
+                </Grid>
+                <br />
 
                 {/* Table and result */}
                 <DemoTable currentState={this.state.currentState} cols={this.LENGTH2 + 2} visible={this.state.tableVisible} result={this.state.result} head={this.tableHead} body={this.tableBody} />

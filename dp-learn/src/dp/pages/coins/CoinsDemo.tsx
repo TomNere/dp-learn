@@ -1,20 +1,20 @@
-import * as Prism from 'prismjs';
 import * as React from 'react';
 
 import { GetNumbers, ValueOrIntMax } from 'src/helpers/Helpers';
-import { TableCell, TableRow } from '@material-ui/core';
+import { Grid, TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 
+import BottomedDiv from 'src/hoc/BottomedDiv';
 import CustomButton from 'src/components/customComponents/CustomButton';
 import CustomTextField from 'src/components/customComponents/CustomTextField';
 import CustomTitle from 'src/hoc/CustomTitle';
 import DemoTable from 'src/components/dpComponents/DemoTable';
-import FlexRowContainer from 'src/hoc/FlexRowContainer';
-import SimpleSourceCode from 'src/components/dpComponents/SimpleSourceCode';
+import FlexOne from 'src/hoc/FlexOne';
+import FlexTwo from 'src/hoc/FlexTwo';
+import Formula from 'src/hoc/Formula';
 import SpeedSelector from 'src/components/customComponents/SpeedSelector';
-import { __makeTemplateObject } from 'tslib';
-import { coinsSmallDynCode } from 'src/dp/helpers/coins/CoinsCodes';
-import { demoStyle } from 'src/styles/demoStyle';
+import { coinsFormula } from 'src/dp/helpers/coins/CoinsStrings';
+import { demoStyle } from 'src/styles/globalStyles';
 import { strings } from 'src/strings/languages';
 
 interface ICoinsDemoState {
@@ -77,32 +77,27 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         }
     }
 
-    public componentDidMount() {
-        Prism.highlightAll();
-    }
-
     public render() {
-        const { classes } = this.props;
         return (
             <div>
                 <CustomTitle variant='h5'>
                     {strings.coins.demo.title}
                 </CustomTitle>
-                <div className={classes.bottomMargin}>
+                <BottomedDiv>
                     {strings.coins.demo.brief}
-                </div>
-                <div className={classes.container}>
-                    <div className={classes.flexChild}>
-                        <FlexRowContainer>
+                </BottomedDiv>
+                <Grid direction='row' container={true}>
+                    <FlexOne>
+                        <Grid direction='column' container={true}>
                             <CustomTextField label={`${strings.coins.value} (0-20)`} value={this.state.givenValue.toString()} onChange={this.handleValue} />
                             <CustomTextField label={`${strings.coins.coins} (max. 5)`} value={this.state.givenCoins} onChange={this.handleCoins} />
-                        </FlexRowContainer>
+                        </Grid>
 
                         {/* Speed select */}
                         <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
                         <br />
 
-                        <FlexRowContainer>
+                        <Grid direction='row' container={true}>
                             {/* Start button */}
                             <CustomButton label={strings.global.start} onClick={this.onStartClick} disabled={false} />
 
@@ -111,12 +106,15 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
                             {/* Finish button */}
                             <CustomButton label={strings.global.finish} onClick={this.onFinishClick} disabled={!this.state.inProgress} />
-                        </FlexRowContainer>
-                    </div>
-                    <div className={classes.flexChild}>
-                        <SimpleSourceCode code={coinsSmallDynCode} />
-                    </div>
-                </div>
+                        </Grid>
+                    </FlexOne>
+                    <FlexTwo>
+                        <Formula>
+                            {coinsFormula}
+                        </Formula>
+                    </FlexTwo>
+                </Grid>
+                <br /> 
 
                 {/* Table and result */}
                 <DemoTable visible={this.state.tableVisible} cols={this.state.givenValue + 2} result={this.state.result} currentState={this.state.currentState} head={this.tableHead} body={this.tableBody} />
@@ -165,7 +163,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
         this.solutionHelper = [];
 
-        // Base case (If given value is 0) 
+        // Base case (If given value is 0)
         table[0] = 0;
         this.solutionHelper[0] = 0;
 

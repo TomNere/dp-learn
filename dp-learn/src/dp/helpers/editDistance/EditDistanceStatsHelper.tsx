@@ -1,108 +1,88 @@
 import { ISimpleObjectParameter } from 'src/helpers/TypesDefinitions';
 import { Min } from 'src/helpers/Helpers';
 
-export type ISolutionEditDistance = (stringX: string, stringY: string, LENGTH1: number, LENGTH2: number, calls: ISimpleObjectParameter) => number;
-
-export const recursiveEditDistance: ISolutionEditDistance = (stringX: string, stringY: string, LENGTH1: number, LENGTH2: number, calls: ISimpleObjectParameter) => {
+export const recursiveEditDistance = (stringX: string, stringY: string, length1: number, length2: number, calls: ISimpleObjectParameter): number => {
     ++calls.value;
 
     if (calls.value >= 100000) {
         return -1;
     }
 
-    // If first string is empty, the only option is to 
-    // insert all characters of second string into first 
-    if (LENGTH1 === 0) {
-        return LENGTH2;
+    if (length1 === 0) {
+        return length2;
     }
 
-    // If second string is empty, the only option is to 
-    // remove all characters of first string 
-    if (LENGTH2 === 0) {
-        return LENGTH1;
+    if (length2 === 0) {
+        return length1;
     }
 
-    // If last characters of two strings are same, nothing 
-    // much to do. Ignore last characters and get count for 
-    // remaining strings. 
-    if (stringX[LENGTH1 - 1] === stringY[LENGTH2 - 1]) {
-        return recursiveEditDistance(stringX, stringY, LENGTH1 - 1, LENGTH2 - 1, calls);
+    if (stringX[length1 - 1] === stringY[length2 - 1]) {
+        return recursiveEditDistance(stringX, stringY, length1 - 1, length2 - 1, calls);
     }
 
-    // If last characters are not same, consider all three 
-    // operations on last character of first string, recursively 
-    // compute minimum cost for all three operations and take 
-    // minimum of three values. 
-    return 1 + Min(recursiveEditDistance(stringX, stringY, LENGTH1, LENGTH2 - 1, calls),     // Insert 
-        recursiveEditDistance(stringX, stringY, LENGTH1 - 1, LENGTH2, calls),     // Remove 
-        recursiveEditDistance(stringX, stringY, LENGTH1 - 1, LENGTH2 - 1, calls)  // Replace 
+    return 1 + Min(recursiveEditDistance(stringX, stringY, length1, length2 - 1, calls),
+        recursiveEditDistance(stringX, stringY, length1 - 1, length2, calls),
+        recursiveEditDistance(stringX, stringY, length1 - 1, length2 - 1, calls)
     );
 }
 
-export const dpEditDistance: ISolutionEditDistance = (stringX: string, stringY: string, LENGTH1: number, LENGTH2: number, calls: ISimpleObjectParameter) => {
+export const dpEditDistance = (stringX: string, stringY: string, length1: number, length2: number, calls: ISimpleObjectParameter) => {
     const table: number[][] = [];
 
-    for (let i = 0; i <= LENGTH1; i++) {
+    for (let i = 0; i <= length1; i++) {
         table[i] = [];
-        for (let j = 0; j <= LENGTH2; j++) {
+        for (let j = 0; j <= length2; j++) {
             ++calls.value;
-            // If first string is empty, only option is to 
-            // insert all characters of second string 
             if (i === 0) {
-                table[i][j] = j;  // Min. operations = j 
+                table[i][j] = j;
             }
 
-            // If second string is empty, only option is to 
-            // remove all characters of second string 
             else if (j === 0) {
-                table[i][j] = i; // Min. operations = i 
+                table[i][j] = i;
             }
 
-            // If last characters are same, ignore last char 
-            // and recur for remaining string 
             else if (stringX[i - 1] === stringY[j - 1]) {
                 table[i][j] = table[i - 1][j - 1];
             }
 
-            // If the last character is different, consider all 
-            // possibilities and find the minimum 
             else {
-                table[i][j] = 1 + Min(table[i][j - 1],  // Insert 
-                    table[i - 1][j],  // Remove 
-                    table[i - 1][j - 1]); // Replace
+                table[i][j] = 1 + Min(table[i][j - 1],
+                    table[i - 1][j],
+                    table[i - 1][j - 1]);
             }
         }
     }
 
-    return table[LENGTH1][LENGTH2];
+    return table[length1][length2];
 }
 
-export type IEditDistanceSpace = (stringX: string, stringY: string) => number;
-
-export const recEditDistanceTime = (stringX: string, stringY: string) => {
-    // TODO right formula
-    return stringX.length * stringY.length;
+export const dpEditDistanceTime = (length1: number, length2: number) => {
+    return length1 * length2;
 }
 
-export const recEditDistanceSpace: IEditDistanceSpace = (stringX: string, stringY: string) => {
-    return stringX.length + stringY.length;     // Store only prices
+export const recEditDistanceTime = (length: number) => {
+    return Math.pow(3, length);
 }
 
-export const dpEditDistanceSpace: IEditDistanceSpace = (stringX: string, stringY: string) => {
-    return stringX.length + stringY.length + ((stringX.length + 1) * (stringY.length + 1));
+export const recEditDistanceSpace = (length1: number, length2: number) => {
+    return length1 + length2;     // Store only strings
+}
+
+export const dpEditDistanceSpace = (length1: number, length2: number) => {
+    return length1 + length2 + ((length1 + 1) * (length2 + 1)); // strings and table
 }
 
 export const editDistanceExamples = [
     {
-        stringX: 'someString',
-        stringY: 'SomeOString'
+        strX: 'someString',
+        strY: 'SomeOString'
     },
     {
-        stringX: 'test',
-        stringY: 'quest'
+        strX: 'test',
+        strY: 'quest'
     },
     {
-        stringX: 'dpIsBest',
-        stringY: 'INeedRest'
+        strX: 'dpIsBest',
+        strY: 'INeedRest'
     },
 ];

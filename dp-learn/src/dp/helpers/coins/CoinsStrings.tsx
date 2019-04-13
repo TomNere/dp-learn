@@ -109,3 +109,7 @@ while(start != 0) {
     start = start - coins[j];
 }
 printf("\\n");`;
+
+export const coinsFormula = `T[v] = {(0,; v = 0),
+    (min{1 + T[i - C[i]]}\ \ ;
+    \ \ \ i:\ \ C[i] < v,; v > 0):}`;

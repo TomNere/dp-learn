@@ -105,3 +105,9 @@ int CommonSubstrLength(char* x, char* y)
   
     return result; 
 }`;
+
+export const substringFormula = `T[i][j] = {(0,; i=0 ),
+    (0,; j=0),
+    (0,; X[i-1] != Y[j-1]),
+    (T[i-1][j-1] + 1,;
+    X[i-1] = Y[j-1]):}`;

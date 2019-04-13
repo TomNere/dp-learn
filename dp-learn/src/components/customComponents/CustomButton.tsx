@@ -24,18 +24,14 @@ export const styles = (theme: Theme) => createStyles({
             backgroundColor: myTheme.palette.primary.main
         }
     },
-    // buttonDark: {
-    //     margin: theme.spacing.unit,
-    //     color: 'white',
-    //     backgroundColor: myTheme.palette.primary.main,
-    //     "&:hover": {
-    //         backgroundColor: myTheme.palette.secondary.main
-    //     }
-    // },
 });
 
 // Light or dark colored button
 class CustomButton extends React.Component<AllProps> {
+    public static defaultProps: any = {
+        disabled: false,
+    }
+
     public render() {
         const { classes } = this.props;
         return (

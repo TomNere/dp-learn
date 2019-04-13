@@ -2,16 +2,21 @@ import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
 import { FreqArraySum, GetNumbers, ValueOrIntMax, ValueOrUndefined } from 'src/helpers/Helpers';
-import { TableCell, TableRow, Typography } from '@material-ui/core';
+import { Grid, TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from "@material-ui/core/styles";
 
+import BottomedDiv from 'src/hoc/BottomedDiv';
 import CustomButton from 'src/components/customComponents/CustomButton';
 import CustomTextField from 'src/components/customComponents/CustomTextField';
+import CustomTitle from 'src/hoc/CustomTitle';
 import DemoTable from 'src/components/dpComponents/DemoTable';
-import FlexRowContainer from 'src/hoc/FlexRowContainer';
+import FlexOne from 'src/hoc/FlexOne';
+import FlexTwo from 'src/hoc/FlexTwo';
+import Formula from 'src/hoc/Formula';
 import SpeedSelector from 'src/components/customComponents/SpeedSelector';
-import { demoStyle } from 'src/styles/demoStyle';
+import { demoStyle } from 'src/styles/globalStyles';
 import { strings } from 'src/strings/languages';
+import { treeFormula } from 'src/dp/helpers/tree/treeStrings';
 
 interface ITreeDemoState {
     speed: number
@@ -79,34 +84,43 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
     }
 
     public render() {
-        const { classes } = this.props;
         return (
             <div>
-                <Typography variant={'h4'} align={'center'} className={classes.bottomMargin}>
+                <CustomTitle variant='h5'>
                     {strings.tree.demo.title}
-                </Typography>
-                <div className={classes.bottomMargin}>
+                </CustomTitle>
+                <BottomedDiv>
                     <Markdown source={strings.tree.demo.brief} />
-                </div>
-                <FlexRowContainer>
-                    <CustomTextField label={strings.tree.arrayOfK} value={this.state.givenKeys} onChange={this.handleKeys} />
-                    <CustomTextField label={strings.tree.arrayOfF} value={this.state.givenFreqs} onChange={this.handleFreqs} />
-                </FlexRowContainer>
+                </BottomedDiv>
+                <Grid container={true} direction='row'>
+                    <FlexOne>
+                        <Grid container={true} direction='column'>
+                            <CustomTextField label={`${strings.tree.arrayOfK} (max. 15)`} value={this.state.givenKeys} onChange={this.handleKeys} />
+                            <CustomTextField label={`${strings.tree.arrayOfF} (max. 15)`} value={this.state.givenFreqs} onChange={this.handleFreqs} />
+                        </Grid>
 
-                {/* Speed select */}
-                <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
+                        {/* Speed select */}
+                        <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
+                        <br />
+
+                        <Grid container={true} direction='row'>
+                            {/* Start button */}
+                            <CustomButton label={strings.global.start} onClick={this.onStartClick} disabled={false} />
+
+                            {/* Step button */}
+                            <CustomButton label={strings.global.step} onClick={this.finiteAutomata} disabled={!this.state.inProgress || this.state.speed !== 0} />
+
+                            {/* Finish button */}
+                            <CustomButton label={strings.global.finish} onClick={this.onFinishClick} disabled={!this.state.inProgress} />
+                        </Grid>
+                    </FlexOne>
+                    <FlexTwo>
+                        <Formula>
+                            {treeFormula}
+                        </Formula>
+                    </FlexTwo>
+                </Grid>
                 <br />
-
-                <FlexRowContainer>
-                    {/* Start button */}
-                    <CustomButton label={strings.global.start} onClick={this.onStartClick} disabled={false} />
-
-                    {/* Step button */}
-                    <CustomButton label={strings.global.step} onClick={this.finiteAutomata} disabled={!this.state.inProgress || this.state.speed !== 0} />
-
-                    {/* Finish button */}
-                    <CustomButton label={strings.global.finish} onClick={this.onFinishClick} disabled={!this.state.inProgress} />
-                </FlexRowContainer>
 
                 {/* Table and result */}
                 <DemoTable cols={this.LENGTH + 1} visible={this.state.tableVisible} result={this.state.result} head={this.tableHead} body={this.tableBody} currentState={this.state.currentState} />

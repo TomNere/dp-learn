@@ -1,4 +1,4 @@
-import { dpColor, recColor, recTheorColor } from './colors'
+import { dpColor, dpTheorColor, recColor, recTheorColor } from './colors'
 
 import { Theme } from "@material-ui/core";
 import { createStyles } from "@material-ui/core/styles";
@@ -6,10 +6,6 @@ import myTheme from './index';
 
 // Style definition for all "Demo" components
 export const demoStyle = (theme: Theme) => createStyles({
-    container: {
-        display: 'flex',
-        flexDirection: 'row',
-    },
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
@@ -42,6 +38,9 @@ export const demoStyle = (theme: Theme) => createStyles({
     },
     recBackground: {
         backgroundColor: recColor
+    },
+    dpTheorBackground: {
+        backgroundColor: dpTheorColor
     },
     dpBackground: {
         backgroundColor: dpColor
@@ -82,9 +81,6 @@ export const demoStyle = (theme: Theme) => createStyles({
         fontSize: 30,
         margin: theme.spacing.unit
     },
-    flexChild: {
-        flex: 1,
-    },
     centeredContent: {
         textAlign: 'center',
         margin: theme.spacing.unit * 2,
@@ -97,8 +93,9 @@ export const demoStyle = (theme: Theme) => createStyles({
         }
     },
     table: {
+        width: 'auto',
         "& td:last-child, th:last-child": {
-            paddingRight: theme.spacing.unit
+            paddingRight: 4
         },
     },
     subRes: {
@@ -108,5 +105,8 @@ export const demoStyle = (theme: Theme) => createStyles({
     },
     emptyCell: {
         border: 'none'
+    },
+    container: {
+        display: 'flex'
     }
 });

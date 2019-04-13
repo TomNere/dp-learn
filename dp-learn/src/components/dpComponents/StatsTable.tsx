@@ -3,7 +3,8 @@ import * as React from 'react';
 import { Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 
-import { demoStyle } from 'src/styles/demoStyle';
+import BottomedDiv from 'src/hoc/BottomedDiv';
+import { demoStyle } from 'src/styles/globalStyles';
 import { strings } from 'src/strings/languages';
 
 type AllProps =
@@ -19,6 +20,7 @@ export interface IStatsTableData {
     recTheorTime: number,
     recTime: number,
     dpTime: number,
+    dpTheorTime: number,
     dpSpace: number,
     recSpace: number
 }
@@ -28,13 +30,15 @@ class StatsTable extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;
         return (
-            <Table className={[classes.table, classes.bottomMargin].join(' ')}>
-                <TableBody>
-                    {this.getTimeAndSpace()}
-                    {this.getColsBrief()}
-                    {this.getValues()}
-                </TableBody>
-            </Table>
+            <BottomedDiv>
+                <Table className={classes.table}>
+                    <TableBody>
+                        {this.getTimeAndSpace()}
+                        {this.getColsBrief()}
+                        {this.getValues()}
+                    </TableBody>
+                </Table>
+            </BottomedDiv>
         );
     }
 
@@ -78,6 +82,11 @@ class StatsTable extends React.Component<AllProps> {
                     {`${strings.global.recursion}`}
                 </TableCell>
 
+                {/* dpTheorTime */}
+                <TableCell className={[classes.columnCaption, classes.dpTheorBackground].join(' ')} >
+                    {`${strings.global.dp} (${strings.components.theoreticValue})`}
+                </TableCell>
+
                 {/* dpTime */}
                 <TableCell className={[classes.columnCaption, classes.dpBackground].join(' ')} >
                     {`${strings.global.dp}`}
@@ -117,6 +126,11 @@ class StatsTable extends React.Component<AllProps> {
                     {/* recTime */}
                     <TableCell className={classes.tableCell}>
                         {item.recTime}
+                    </TableCell>
+
+                    {/* dpTheorTime */}
+                    <TableCell className={classes.tableCell}>
+                        {item.dpTheorTime}
                     </TableCell>
 
                     {/* dpTime */}

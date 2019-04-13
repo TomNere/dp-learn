@@ -1,20 +1,22 @@
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
-import { TableCell, TableRow } from '@material-ui/core';
+import { Grid, TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from "@material-ui/core/styles";
 
+import BottomedDiv from 'src/hoc/BottomedDiv';
 import CustomButton from 'src/components/customComponents/CustomButton';
 import CustomTextField from 'src/components/customComponents/CustomTextField';
 import CustomTitle from 'src/hoc/CustomTitle';
 import DemoTable from 'src/components/dpComponents/DemoTable';
-import FlexRowContainer from 'src/hoc/FlexRowContainer';
-import SimpleSourceCode from 'src/components/dpComponents/SimpleSourceCode';
+import FlexOne from 'src/hoc/FlexOne';
+import FlexTwo from 'src/hoc/FlexTwo';
+import Formula from 'src/hoc/Formula';
 import SpeedSelector from 'src/components/customComponents/SpeedSelector';
 import { ValueOrUndefined } from 'src/helpers/Helpers';
-import { coinsSmallDynCode } from 'src/dp/helpers/coins/CoinsCodes';
-import { demoStyle } from 'src/styles/demoStyle';
+import { demoStyle } from 'src/styles/globalStyles';
 import { strings } from 'src/strings/languages';
+import { substringFormula } from 'src/dp/helpers/substring/SubstringStrings';
 
 interface ISubstringDemoState {
     speed: number
@@ -78,28 +80,26 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
     }
 
     public render() {
-        const { classes } = this.props;
-
         return (
             <div>
                 <CustomTitle variant='h5'>
                     {strings.substring.demo.title}
                 </CustomTitle>
-                <div className={classes.bottomMargin}>
+                <BottomedDiv>
                     <Markdown source={strings.substring.demo.brief} />
-                </div>
-                <div className={classes.container}>
-                    <div className={classes.flexChild}>
-                        <FlexRowContainer>
+                </BottomedDiv>
+                <Grid container={true} direction='row'>
+                    <FlexOne>
+                        <Grid container={true} direction='column'>
                             <CustomTextField label={`${strings.components.string} X (max. 20)`} value={this.state.stringX} onChange={this.handlestrXChange} />
                             <CustomTextField label={`${strings.components.string} Y (max. 20)`} value={this.state.stringY} onChange={this.handlestrYChange} />
-                        </FlexRowContainer>
+                        </Grid>
 
                         {/* Speed select */}
                         <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
                         <br />
 
-                        <FlexRowContainer>
+                        <Grid container={true} direction='row'>
                             {/* Start button */}
                             <CustomButton label={strings.global.start} onClick={this.onStartClick} disabled={false} />
 
@@ -108,12 +108,15 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
 
                             {/* Finish button */}
                             <CustomButton label={strings.global.finish} onClick={this.onFinishClick} disabled={!this.state.inProgress} />
-                        </FlexRowContainer>
-                    </div>
-                    <div className={classes.flexChild}>
-                        <SimpleSourceCode code={coinsSmallDynCode} />
-                    </div>
-                </div>
+                        </Grid>
+                    </FlexOne>
+                    <FlexTwo>
+                        <Formula>
+                            {substringFormula}
+                        </Formula>
+                    </FlexTwo>
+                </Grid>
+                <br />
 
                 {/* Table and result */}
                 <DemoTable currentState={this.state.currentState} cols={this.LENGTH2 + 1} visible={this.state.tableVisible} result={this.state.result} head={this.tableHead} body={this.tableBody} />
@@ -123,13 +126,13 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
 
     private handlestrXChange = (e: any) => {
         if (e.target.value.length <= 20) {
-            this.setState({ stringX: e.target.value, tableVisible: false });
+            this.setState({ stringX: e.target.value, tableVisible: false, inProgress: false });
         }
     };
 
     private handlestrYChange = (e: any) => {
         if (e.target.value.length <= 20) {
-            this.setState({ stringY: e.target.value, tableVisible: false });
+            this.setState({ stringY: e.target.value, tableVisible: false, inProgress: false });
         }
     };
 

@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
-import RodCharts from './RodCharts';
 import RodDemo from './RodDemo';
+import RodStats from './RodStats';
 import RodTheory from './RodTheory';
 import TabMenu from 'src/hoc/TabMenu';
 
@@ -27,7 +27,7 @@ class Rod extends React.Component<AllProps> {
 
         return (
             <div className={classes.root}>
-                <TabMenu theory={<RodTheory />} demo={<RodDemo />} charts={<RodCharts />} />
+                <TabMenu theory={<RodTheory />} demo={<RodDemo />} charts={<RodStats />} />
             </div>
         );
     }

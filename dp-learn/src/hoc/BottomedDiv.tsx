@@ -2,22 +2,17 @@ import * as React from 'react';
 
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
-import { Grid } from '@material-ui/core';
 import { ReactNode } from 'react';
 
 type AllProps =
-    IFlexRowContainerProps &
+    IBottomedDivProps &
     WithStyles<typeof styles>;
 
-interface IFlexRowContainerProps {
-    children: ReactNode[]
+interface IBottomedDivProps {
+    children: ReactNode
 }
 
 const styles = (theme: Theme) => createStyles({
-    flexRowContainer: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
     bottomMargin: {
         marginBottom: theme.spacing.unit * 2,
     },
@@ -25,19 +20,15 @@ const styles = (theme: Theme) => createStyles({
 
 // Container with flex row displayed content and bottom margin
 // Takes multiple children
-class FlexRowContainer extends React.Component<AllProps> {
-    public constructor(props: AllProps) {
-        super(props);
-    }
-
+class BottomedDiv extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;
         return (
-            <Grid className={[classes.flexRowContainer, classes.bottomMargin].join(' ')}>
+            <div className={classes.bottomMargin}>
                 {this.props.children}
-            </Grid>
+            </div>
         );
     }
 }
 
-export default withStyles(styles)(FlexRowContainer);
+export default withStyles(styles)(BottomedDiv);

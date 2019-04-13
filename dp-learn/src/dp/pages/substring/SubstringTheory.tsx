@@ -3,11 +3,13 @@ import '../../../styles/prism.css';
 import * as Prism from 'prismjs';
 import * as React from 'react';
 
-import { Paper, Typography } from '@material-ui/core';
+import { Grid, Paper, Typography } from '@material-ui/core';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
-import { substrDynCode, substrEnhCode, substrRecCode } from 'src/dp/helpers/substring/SubstringCodes';
+import { substrDynCode, substrEnhCode, substrRecCode } from 'src/dp/helpers/substring/SubstringStrings';
 
+import BottomedDiv from 'src/hoc/BottomedDiv';
 import Complexity from 'src/components/dpComponents/Complexity';
+import FlexOne from 'src/hoc/FlexOne';
 import SourceCode from 'src/components/dpComponents/SourceCode';
 
 type AllProps =
@@ -53,14 +55,14 @@ class SubstringTheory extends React.Component<AllProps> {
                 </Typography>
                 {/* Brief */}
                 <Paper className={classes.paper}>
-                    <div className={classes.bottomMargin}>
+                    <BottomedDiv>
                         There are two strings <b>X</b> and <b>Y</b>. We want to find the length of the longest common substring(subsequence), e.g.: <br />
                         <div className={classes.leftMargin}>
                             X = "I like dynamic programm<b>ing!</b>"<br />
                             Y = "Really? So tell me something about this cool th<b>ing!</b>"<br /><br />
                         </div>
                         The lenght of the longest common substring is <b>4</b> and the substring is <b>"ing!"</b>.
-                    </div>
+                    </BottomedDiv>
                     <hr />
                     {/* Simple solution */}
                     <Typography variant={'h6'} className={classes.bottomMargin}>
@@ -73,8 +75,8 @@ class SubstringTheory extends React.Component<AllProps> {
                     </div>
                     <Complexity time={'O(m^2 * n)'} />
                     <hr />
-                    <div className={classes.container}>
-                        <div className={classes.flexChild}>
+                    <Grid>
+                        <FlexOne>
                             <Typography variant={'h6'} align={'center'} className={classes.bottomMargin}>
                                 Using recursion
                             </Typography>
@@ -86,8 +88,8 @@ class SubstringTheory extends React.Component<AllProps> {
                             </div>
                             <Complexity time={'O(n^2'} space={'O(m + n)'} />
                             <SourceCode code={substrRecCode} />
-                        </div>
-                        <div className={classes.flexChild}>
+                        </FlexOne>
+                        <FlexOne>
                             <Typography variant={'h6'} align={'center'} className={classes.bottomMargin}>
                                 Dynamic programming
                             </Typography>
@@ -118,9 +120,9 @@ class SubstringTheory extends React.Component<AllProps> {
                             </div>
                             <Complexity time={'O(m * n)'} space={'O(2 * n)'} />
                             <SourceCode code={substrEnhCode} />
-                        </div>
+                        </FlexOne>
 
-                    </div>
+                    </Grid>
                 </Paper>
             </div>
         );

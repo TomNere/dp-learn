@@ -60,7 +60,7 @@ class TabMenu extends React.Component<AllProps, ITabMenuState> {
                     <Tabs value={this.state.selected} variant={'fullWidth'} onChange={this.handleTabChange} classes={{indicator: classes.whiteBackground}} >
                         <Tab className={classes.blueBackground} label={strings.components.theory} />
                         <Tab className={classes.blueBackground} label={strings.components.demo} />
-                        <Tab className={classes.blueBackground} label={strings.components.charts} />
+                        <Tab className={classes.blueBackground} label={strings.components.stats} />
                     </Tabs>
                 </AppBar>
                 <div className={classes.padding}>

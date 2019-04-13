@@ -43,3 +43,7 @@ int cutRod(int prices[], int n) {
 
     return maxVal;
 }`;
+
+export const rodFormula = `T[l] = {(0,; l = 0),
+    (max{P[i] + T[l - i - 1]}\ \ ;
+    \ \ \ i:\ \ i < l,; l > 0):}`
