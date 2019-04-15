@@ -46,11 +46,11 @@ class SpaceChart extends React.Component<AllProps> {
 
     public render() {
         const { data, classes } = this.props;
-        const { global, components } = strings;
+        const { global } = strings;
         return (
             <Paper className={classes.bottomMargin}>
                 <Typography align={'center'} className={classes.title} variant={'h6'}>
-                    {components.spaceComplex}
+                    {global.spaceComplex}
                 </Typography>
                 <Chart data={data}>
                     <ValueScale name='rec' />

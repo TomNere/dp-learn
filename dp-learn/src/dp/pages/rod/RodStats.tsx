@@ -1,13 +1,19 @@
+import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
 import { dpRod, dpRodSpace, dpRodTime, recRodSpace, recRodTime, recursiveRod, rodExamples } from 'src/dp/helpers/rod/RodStatsHelper';
+import { rodDpSpaceComplex, rodDpTimeComplex, rodRecSpaceComplex, rodRecTimeComplex } from 'src/dp/helpers/rod/RodStrings';
 
 import BottomedDiv from 'src/hoc/BottomedDiv';
 import ChartsAndTable from 'src/components/dpComponents/ChartsAndTable';
+import Complexity from 'src/components/dpComponents/Complexity';
 import CustomButton from 'src/components/customComponents/CustomButton';
 import CustomTextField from 'src/components/customComponents/CustomTextField';
 import CustomTitle from 'src/hoc/CustomTitle';
+import FlexOne from 'src/hoc/FlexOne';
+import FlexTwo from 'src/hoc/FlexTwo';
 import { GetNumbers } from 'src/helpers/Helpers';
+import { Grid } from '@material-ui/core';
 import { ISimpleObjectParameter } from 'src/helpers/TypesDefinitions';
 import { ISpaceChartData } from 'src/components/dpComponents/SpaceChart';
 import { IStatsTableData } from 'src/components/dpComponents/StatsTable';
@@ -42,18 +48,38 @@ class RodStats extends React.Component<any, IRodStatsState> {
                 <BottomedDiv>
                     {strings.rod.stats.brief}
                 </BottomedDiv>
-                <CustomTextField label={`${strings.rod.prices} (max. 30)`} value={this.state.givenPrices} onChange={this.handlePrices} />
-                <CustomButton onClick={this.drawStats} label={strings.global.drawCharts}>
-                    {strings.global.drawCharts}
-                </CustomButton>
+                <Grid container={true} direction='row'>
+                    <FlexOne>
+                        <BottomedDiv>
+                            <CustomTextField label={`${strings.rod.prices} (max. 20)`} value={this.state.givenPrices} onChange={this.handlePrices} />
+                        </BottomedDiv>
+                        <CustomButton onClick={this.drawStats} label={strings.global.evaluateStats} />
+                    </FlexOne>
+
+                    <FlexTwo>
+                        <Grid container={true} direction='row'>
+                            <Complexity time={rodRecTimeComplex} space={rodRecSpaceComplex} recOrDp='rec' />
+                            <Complexity time={rodDpTimeComplex} space={rodDpSpaceComplex} recOrDp='dp' />
+                        </Grid>
+                    </FlexTwo>
+                </Grid>
+                <br />
                 <ChartsAndTable visible={this.state.statsVisible} timeStats={this.timeStats} spaceStats={this.spaceStats} tableStats={this.tableStats} />
+                {this.state.statsVisible &&
+                    <div>
+                        <CustomTitle variant='h5'>
+                            {strings.global.conclusion}
+                        </CustomTitle>
+                        <Markdown source={strings.rod.stats.conclusion} />
+                    </div>
+                }
             </div>
         );
     }
 
     private handlePrices = (e: any) => {
         const prices = GetNumbers(e.target.value);
-        if (prices.length <= 30) {
+        if (prices.length <= 20) {
             this.setState({ givenPrices: e.target.value });
         }
     }

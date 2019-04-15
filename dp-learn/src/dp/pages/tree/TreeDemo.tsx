@@ -22,7 +22,7 @@ interface ITreeDemoState {
     speed: number
     inProgress: boolean
     tableVisible: boolean
-    table: number[][]
+    table: Array<Array<[number, number]>>
     result: string
     currentState: string
     givenKeys: string
@@ -41,7 +41,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
 
     private outerCounter: number;
     private innerCounter: number;
-    private rootCounter: number;
+    private mostInnerCounter: number;
 
     private nextAutomataState:
         'doInnerCycle' |
@@ -177,19 +177,19 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
         this.freqs = GetNumbers(this.state.givenFreqs);
 
         if (this.keys.length === 0 || this.keys.length !== this.freqs.length) {
-            this.setState({ result: 'Error parsing arguments' });
+            this.setState({ result: strings.global.invalidArg });
             return;
         }
 
         this.LENGTH = this.keys.length;
 
-        const localTable: number[][] = []
+        const localTable: Array<Array<[number, number]>> = [];
 
         // Initialize
         // For a single key, cost is equal to frequency of the key 
         for (let i = 0; i < this.LENGTH; i++) {
             localTable[i] = [];
-            localTable[i][i] = this.freqs[i];
+            localTable[i][i] = [this.freqs[i], i];
         }
 
         this.outerCounter = 2;
@@ -245,8 +245,8 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
 
     private assignIntMax = () => {
         const table = [...this.state.table];
-        table[this.innerCounter][this.columnNumber] = Number.MAX_VALUE;
-        this.rootCounter = this.innerCounter - 1;   // - 1 for proper incremented value
+        table[this.innerCounter][this.columnNumber] = [Number.MAX_VALUE, -1];
+        this.mostInnerCounter = this.innerCounter - 1;   // - 1 for proper incremented value
 
         this.setState({
             table,
@@ -257,13 +257,13 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
     }
 
     private doRootCycle = () => {
-        if (this.rootCounter <= this.columnNumber) {
+        if (this.mostInnerCounter <= this.columnNumber) {
             const highlightedToSum: Array<[number, number]> = [];
-            if (this.rootCounter > this.innerCounter) {
-                highlightedToSum.push([this.innerCounter, this.rootCounter - 1])
+            if (this.mostInnerCounter > this.innerCounter) {
+                highlightedToSum.push([this.innerCounter, this.mostInnerCounter - 1])
             }
-            if (this.rootCounter < this.columnNumber) {
-                highlightedToSum.push([this.rootCounter + 1, this.columnNumber])
+            if (this.mostInnerCounter < this.columnNumber) {
+                highlightedToSum.push([this.mostInnerCounter + 1, this.columnNumber])
             }
 
             this.setState({
@@ -280,16 +280,15 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
     private showSumRes = () => {
         this.valueToAssign = 0;
         this.state.highlightedToSum.forEach(element => {
-            this.valueToAssign += this.state.table[element[0]][element[1]];
+            this.valueToAssign += this.state.table[element[0]][element[1]][0];
         });
 
         this.valueToAssign += FreqArraySum(this.freqs, this.innerCounter, this.columnNumber);
-
-        const currentVal = this.state.table[this.innerCounter][this.columnNumber];
+        const currentVal = this.state.table[this.innerCounter][this.columnNumber][0];
 
         if (this.valueToAssign < currentVal) {
             const table = [...this.state.table];
-            table[this.innerCounter][this.columnNumber] = this.valueToAssign
+            table[this.innerCounter][this.columnNumber] = [this.valueToAssign, this.mostInnerCounter];
 
             this.setState({
                 table,
@@ -310,14 +309,14 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
             highlightedToSum: [],
         });
 
-        this.rootCounter++;
+        this.mostInnerCounter++;
         this.doRootCycle();
     }
 
     private nextInnerCycle = () => {
         if (this.innerCounter + 1 > this.LENGTH - this.outerCounter) {
             if (this.outerCounter + 1 > this.LENGTH) {
-                this.setFinalState();
+                this.setFinalState(this.state.table);
                 return;
             }
             else {
@@ -347,7 +346,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
 
         /* Create an auxiliary 2D matrix to store results  
         of subproblems */
-        const table: number[][] = [];
+        const table: Array<Array<[number, number]>> = [];
 
         /* table[i][j] = Optimal cost of binary search tree 
            that can be  formed from keys[i] to keys[j]. 
@@ -356,9 +355,8 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
         // For a single key, cost is equal to frequency of the key 
         for (let i = 0; i < this.LENGTH; i++) {
             table[i] = []
-            table[i][i] = this.freqs[i];
+            table[i][i] = [this.freqs[i], i];
         }
-
 
         // Now we need to consider chains of length 2, 3, ... . 
         // L is chain length. 
@@ -369,38 +367,33 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
                 // chain length L
 
                 const columnNumber = innerCounter + outerCounter - 1;
-                table[innerCounter][columnNumber] = Number.MAX_VALUE;
+                table[innerCounter][columnNumber] = [Number.MAX_VALUE, -1];
 
                 // Try making all keys in interval keys[i..j] as root 
-                for (let rootCounter = innerCounter; rootCounter <= columnNumber; rootCounter++) {
+                for (let mostInnerCounter = innerCounter; mostInnerCounter <= columnNumber; mostInnerCounter++) {
                     // c = cost when keys[r] becomes root of this subtree 
-                    const val = ((rootCounter > innerCounter) ? table[innerCounter][rootCounter - 1] : 0) +
-                        ((rootCounter < columnNumber) ? table[rootCounter + 1][columnNumber] : 0) +
+                    const val = ((mostInnerCounter > innerCounter) ? table[innerCounter][mostInnerCounter - 1][0] : 0) +
+                        ((mostInnerCounter < columnNumber) ? table[mostInnerCounter + 1][columnNumber][0] : 0) +
                         FreqArraySum(this.freqs, innerCounter, columnNumber);
 
-                    if (val < table[innerCounter][columnNumber]) {
-                        table[innerCounter][columnNumber] = val;
+                    if (val < table[innerCounter][columnNumber][0]) {
+                        table[innerCounter][columnNumber] = [val, mostInnerCounter];
                     }
                 }
             }
         }
 
         this.outerCounter = this.LENGTH;    // To show proper value in table
-        this.disableHighlighting();
-        this.setState({
-            table,
-            inProgress: false,
-            currentState: strings.tree.demo.done,
-            result: `Result: ${table[0][this.LENGTH - 1]}`
-        });
+        this.setState({ table });
+        this.setFinalState(table);
     };
 
-    private setFinalState = () => {
+    private setFinalState = (table: Array<Array<[number, number]>>) => {
         this.disableHighlighting();
         this.setState({
             inProgress: false,
-            currentState: strings.tree.demo.done,
-            result: `Result: ${this.state.table[0][this.LENGTH - 1]}`,
+            currentState: strings.global.done,
+            result: `${strings.tree.demo.cost}: ${table[0][this.LENGTH - 1][0]}`,
         });
     }
 
@@ -432,7 +425,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
 
             heading.push(
                 <TableCell key={'columnName' + i.toString()} className={classNames.join(' ')}>
-                    {`${this.freqs[i]}`}
+                    {`${strings.tree.demo.key} ${this.keys[i]}`}
                 </TableCell>);
         }
 
@@ -450,27 +443,30 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
             const row = [];
 
             classNames = [classes.rowCaption, classes.caption];
-            // if (this.state.highlightColRow && i === this.outerCounter) {
-            //     classNames.push(classes.blueCell);
-            // }
 
             // Row names
             row.push(
                 <TableCell key={`rowName ${i.toString()}`} className={classNames.join(' ')}>
-                    {`${this.keys[i]}`}
+                    {`${strings.tree.demo.key} ${this.keys[i]}`}
                 </TableCell>
             );
 
             for (let j = 0; j < this.LENGTH; j++) {
                 const key = `row ${i}, column ${j}`;
 
-                let value: string;
+                let value: string = '';
 
-                if (this.state.table[i][j] === Number.MAX_VALUE) {
-                    value = 'INT_MAX';
-                }
-                else {
-                    value = ValueOrUndefined(this.state.table[i][j]);
+                if (this.state.table[i][j] !== undefined) {
+                    if (this.state.table[i][j][0] === Number.MAX_VALUE) {
+                        value = 'INT_MAX';
+                    }
+                    else {
+                        value = ValueOrUndefined(this.state.table[i][j][0]);
+    
+                        if (this.state.table[i][j][1] !== -1) {
+                            value += ` (${this.state.table[i][j][1]})`;
+                        }
+                    }
                 }
 
                 classNames = [classes.tableCell];

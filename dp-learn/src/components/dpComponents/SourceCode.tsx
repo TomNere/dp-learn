@@ -43,7 +43,7 @@ class SourceCode extends React.Component<AllProps> {
         return (
             <ExpansionPanel className={classes.expPanel} defaultExpanded={this.props.expanded}>
                 <ExpansionPanelSummary expandIcon={<Code className={classes.whiteText} />}>
-                    <Typography className={[classes.heading, classes.whiteText].join(' ')}>{strings.components.srcCode}</Typography>
+                    <Typography className={[classes.heading, classes.whiteText].join(' ')}>{strings.global.srcCode}</Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                     <pre className={classes.leftMargin}>

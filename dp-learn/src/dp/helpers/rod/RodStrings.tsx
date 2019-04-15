@@ -46,4 +46,9 @@ int cutRod(int prices[], int n) {
 
 export const rodFormula = `T[l] = {(0,; l = 0),
     (max{P[i] + T[l - i - 1]}\ \ ;
-    \ \ \ i:\ \ i < l,; l > 0):}`
+    \ \ \ i:\ \ i < l,; l > 0):}`;
+
+export const rodRecTimeComplex = `2 ^ N`;
+export const rodDpTimeComplex = `N * N`;
+export const rodRecSpaceComplex = `N`;
+export const rodDpSpaceComplex = `N + (N + 1)`;

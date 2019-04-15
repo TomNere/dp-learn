@@ -113,3 +113,8 @@ printf("\\n");`;
 export const coinsFormula = `T[v] = {(0,; v = 0),
     (min{1 + T[i - C[i]]}\ \ ;
     \ \ \ i:\ \ C[i] < v,; v > 0):}`;
+
+export const coinsRecTimeComplex = `N ^ V`;
+export const coinsDpTimeComplex = `N * V`;
+export const coinsRecSpaceComplex = `N + 1`;
+export const coinsDpSpaceComplex = `N + 1 + (N + 1)`;

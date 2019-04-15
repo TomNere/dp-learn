@@ -111,3 +111,8 @@ export const substringFormula = `T[i][j] = {(0,; i=0 ),
     (0,; X[i-1] != Y[j-1]),
     (T[i-1][j-1] + 1,;
     X[i-1] = Y[j-1]):}`;
+
+export const substringRecTimeComplex = `???`;
+export const substringDpTimeComplex = `L1 * L2`;
+export const substringRecSpaceComplex = `L1 + L2`;
+export const substringDpSpaceComplex = `L1 + L2 + (L1 * L2) + 1`;

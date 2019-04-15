@@ -44,22 +44,22 @@ const styles = (theme: Theme) => createStyles({
 class TimeChart extends React.Component<AllProps> {
     public render() {
         const { data, classes } = this.props;
-        const { global, components } = strings;
+        const { global } = strings;
         return (
             <Paper className={classes.bottomMargin}>
                 <Typography align={'center'} className={classes.title} variant={'h6'}>
-                    {strings.components.timeComplex}
+                    {strings.global.timeComplex}
                 </Typography>
                 <Chart data={data}>
                     <ValueScale name='rec' />
                     <ArgumentScale />
                     <ArgumentAxis />
 
-                    <ValueAxis scaleName='rec' showGrid={false} showLine={true} showTicks={true} labelComponent={this.getLabel(` ${strings.components.calls}`)} />
+                    <ValueAxis scaleName='rec' showGrid={false} showLine={true} showTicks={true} labelComponent={this.getLabel(` ${strings.global.calls}`)} />
 
                     <LineSeries
-                        name={`${global.recursiveSolution} (${components.theoreticValue})`}
-                        valueField='recTheoretical'
+                        name={`${global.recursiveSolution} (${global.theoreticValue})`}
+                        valueField='recTheor'
                         argumentField='name'
                         scaleName='rec'
                         color={recTheorColor}
@@ -74,7 +74,7 @@ class TimeChart extends React.Component<AllProps> {
                     />
 
                     <LineSeries
-                        name={`${global.dynProgSolution} (${components.theoreticValue})`}
+                        name={`${global.dynProgSolution} (${global.theoreticValue})`}
                         valueField='dpTheor'
                         argumentField='name'
                         scaleName='rec'

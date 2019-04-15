@@ -1,10 +1,17 @@
+import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
+import { coinsDpSpaceComplex, coinsDpTimeComplex, coinsRecSpaceComplex, coinsRecTimeComplex } from 'src/dp/helpers/coins/CoinsStrings';
 import { coinsExamples, dpCoins, dpCoinsSpace, dpCoinsTime, recCoinsSpace, recCoinsTime, recursiveCoins } from 'src/dp/helpers/coins/CoinsStatsHelper';
 
+import BottomedDiv from 'src/hoc/BottomedDiv';
 import ChartsAndTable from 'src/components/dpComponents/ChartsAndTable';
+import Complexity from 'src/components/dpComponents/Complexity';
 import CustomButton from 'src/components/customComponents/CustomButton';
 import CustomTextField from 'src/components/customComponents/CustomTextField';
+import CustomTitle from 'src/hoc/CustomTitle';
+import FlexOne from 'src/hoc/FlexOne';
+import FlexTwo from 'src/hoc/FlexTwo';
 import { GetNumbers } from 'src/helpers/Helpers';
 import { Grid } from '@material-ui/core';
 import { ISimpleObjectParameter } from 'src/helpers/TypesDefinitions';
@@ -36,25 +43,50 @@ class CoinsStats extends React.Component<any, ICoinsStatsState> {
     public render() {
         return (
             <div>
+                <CustomTitle variant='h5'>
+                    {strings.coins.stats.title}
+                </CustomTitle>
+                <BottomedDiv>
+                    {strings.coins.stats.brief}
+                </BottomedDiv>
                 <Grid container={true} direction='row'>
-                    <CustomTextField label={`${strings.coins.value} (0-15)`} value={this.state.givenValue.toString()} onChange={this.handleValue} />
-                    <CustomTextField label={`${strings.coins.coins} (max. 10)`} value={this.state.givenCoins} onChange={this.handleCoins} />
+                    <FlexOne>
+                        <Grid container={true} direction='column'>
+                            <CustomTextField label={`${strings.coins.value} (0-20)`} value={this.state.givenValue.toString()} onChange={this.handleValue} />
+                            <CustomTextField label={`${strings.coins.coins} (max. 15)`} value={this.state.givenCoins} onChange={this.handleCoins} />
+                        </Grid>
+                        <CustomButton onClick={this.drawStats} label={strings.global.evaluateStats} />
+                    </FlexOne>
+                    <FlexTwo>
+                        <Grid container={true} direction='row'>
+                            <Complexity time={coinsRecTimeComplex} space={coinsRecSpaceComplex} recOrDp='rec' />
+                            <Complexity time={coinsDpTimeComplex}  space={coinsDpSpaceComplex} recOrDp='dp' />
+                        </Grid>
+                    </FlexTwo>
                 </Grid>
-                <CustomButton onClick={this.drawStats} label={strings.global.drawCharts} />
-                <ChartsAndTable timeStats={this.timeStats} spaceStats={this.spaceStats} tableStats={this.tableStats} visible={this.state.statsVisible} />
+                <br />
+                <ChartsAndTable visible={this.state.statsVisible} timeStats={this.timeStats} spaceStats={this.spaceStats} tableStats={this.tableStats} />
+                {this.state.statsVisible &&
+                    <div>
+                        <CustomTitle variant='h5'>
+                            {strings.global.conclusion}
+                        </CustomTitle>
+                        <Markdown source={strings.coins.stats.conclusion} />
+                    </div>
+                }
             </div>
         );
     }
 
     private handleValue = (e: any) => {
-        if (!Number.isNaN(+e.target.value) && +e.target.value >= 0 && +e.target.value <= 15) {
+        if (!Number.isNaN(+e.target.value) && +e.target.value >= 0 && +e.target.value <= 20) {
             this.setState({ givenValue: +e.target.value });
         }
     }
 
     private handleCoins = (e: any) => {
         const coins = GetNumbers(e.target.value);
-        if (coins.length <= 10) {
+        if (coins.length <= 15) {
             this.setState({ givenCoins: e.target.value });
         }
     }
@@ -76,7 +108,7 @@ class CoinsStats extends React.Component<any, ICoinsStatsState> {
         dpCoins(this.coins, this.coins.length, this.state.givenValue, calls);
         dpCalls = calls.value;
 
-        name = `${strings.coins.coins}: ${this.coins}`;
+        name = `${strings.coins.coins}: ${this.coins}, ${strings.coins.valueLower}: ${this.state.givenValue}`;
         data = {
             name,
             dpTime: dpCalls,
@@ -91,26 +123,25 @@ class CoinsStats extends React.Component<any, ICoinsStatsState> {
         this.timeStats.push({ name, recTheor: data.recTheorTime, rec: recCalls, dpTheor: data.dpTheorTime, dp: dpCalls });
         this.tableStats.push(data);
 
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < coinsExamples.length; i++) {
+        for (const example of coinsExamples) {
             calls = { value: 0 };
-            recursiveCoins(coinsExamples[i].coins, coinsExamples[i].coins.length, coinsExamples[i].value, calls);
+            recursiveCoins(example.coins, example.coins.length, example.value, calls);
             recCalls = calls.value;
 
             calls = { value: 0 };
-            dpCoins(coinsExamples[i].coins, coinsExamples[i].coins.length, coinsExamples[i].value, calls);
+            dpCoins(example.coins, example.coins.length, example.value, calls);
 
             dpCalls = calls.value;
 
-            name = `${strings.coins.coins}: ${coinsExamples[i].coins}`;
+            name = `${strings.coins.coins}: ${example.coins}, ${strings.coins.valueLower}: ${example.value}`;
             data = {
                 name,
                 dpTime: dpCalls,
-                dpTheorTime: dpCoinsTime(coinsExamples[i].coins.length, coinsExamples[i].value),
+                dpTheorTime: dpCoinsTime(example.coins.length, example.value),
                 recTime: recCalls,
-                recTheorTime: recCoinsTime(coinsExamples[i].coins.length, coinsExamples[i].value),
-                dpSpace: dpCoinsSpace(coinsExamples[i].coins.length, coinsExamples[i].value),
-                recSpace: recCoinsSpace(coinsExamples[i].coins.length)
+                recTheorTime: recCoinsTime(example.coins.length, example.value),
+                dpSpace: dpCoinsSpace(example.coins.length, example.value),
+                recSpace: recCoinsSpace(example.coins.length)
             }
 
             this.spaceStats.push({ name, rec: data.recSpace, dp: data.dpSpace });

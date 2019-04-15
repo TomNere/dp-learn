@@ -1,13 +1,19 @@
+import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
 import { GetNumbers, StrToNumArray } from 'src/helpers/Helpers';
 import { dpTree, dpTreeSpace, dpTreeTime, recTreeSpace, recTreeTime, recursiveTree, treeExamples } from 'src/dp/helpers/tree/TreeStatsHelper';
+import { treeDpSpaceComplex, treeDpTimeComplex, treeRecSpaceComplex, treeRecTimeComplex } from 'src/dp/helpers/tree/treeStrings';
 
 import BottomedDiv from 'src/hoc/BottomedDiv';
 import ChartsAndTable from 'src/components/dpComponents/ChartsAndTable';
+import Complexity from 'src/components/dpComponents/Complexity';
 import CustomButton from 'src/components/customComponents/CustomButton';
 import CustomTextField from 'src/components/customComponents/CustomTextField';
 import CustomTitle from 'src/hoc/CustomTitle';
+import FlexOne from 'src/hoc/FlexOne';
+import FlexTwo from 'src/hoc/FlexTwo';
+import { Grid } from '@material-ui/core';
 import { ISimpleObjectParameter } from 'src/helpers/TypesDefinitions';
 import { ISpaceChartData } from 'src/components/dpComponents/SpaceChart';
 import { IStatsTableData } from 'src/components/dpComponents/StatsTable';
@@ -39,16 +45,36 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
         return (
             <div>
                 <CustomTitle variant='h5'>
-                    {strings.rod.stats.title}
+                    {strings.tree.stats.title}
                 </CustomTitle>
                 <BottomedDiv>
-                    {strings.rod.stats.brief}
+                    {strings.tree.stats.brief}
                 </BottomedDiv>
-                <CustomTextField label={`${strings.tree.arrayOfF} (max. 30)`} value={this.state.givenFreqs} onChange={this.handleFreqs} />
-                <CustomButton onClick={this.drawStats} label={strings.global.drawCharts}>
-                    {strings.global.drawCharts}
-                </CustomButton>
+                <Grid container={true} direction='row'>
+                    <FlexOne>
+                        <BottomedDiv>
+                        <CustomTextField label={`${strings.tree.arrayOfF} (max. 30)`} value={this.state.givenFreqs} onChange={this.handleFreqs} />
+                        </BottomedDiv>
+                        <CustomButton onClick={this.drawStats} label={strings.global.evaluateStats} />
+                    </FlexOne>
+
+                    <FlexTwo>
+                        <Grid container={true} direction='row'>
+                            <Complexity time={treeRecTimeComplex} space={treeRecSpaceComplex} recOrDp='rec' />
+                            <Complexity time={treeDpTimeComplex}  space={treeDpSpaceComplex} recOrDp='dp' />
+                        </Grid>
+                    </FlexTwo>
+                </Grid>
+                <br />
                 <ChartsAndTable visible={this.state.statsVisible} timeStats={this.timeStats} spaceStats={this.spaceStats} tableStats={this.tableStats} />
+                {this.state.statsVisible &&
+                    <div>
+                        <CustomTitle variant='h5'>
+                            {strings.global.conclusion}
+                        </CustomTitle>
+                        <Markdown source={strings.rod.stats.conclusion} />
+                    </div>
+                }
             </div>
         );
     }

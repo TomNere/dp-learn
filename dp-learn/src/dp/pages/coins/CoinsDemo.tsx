@@ -343,7 +343,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         this.setState({
             inProgress: false,
             result: `${strings.coins.demo.isNeeded}: ${table[this.state.givenValue]}, ${strings.coins.demo.usedCoins}: ${this.getFullSolution()}`,
-            currentState: "...",
+            currentState: strings.global.done,
         });
     }
 
@@ -376,7 +376,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
             heading.push(
                 <TableCell key={'columnName' + i.toString()} className={classNames.join(' ')}>
-                    {`${strings.coins.demo.value} ${i}`}
+                    {`${strings.coins.value} ${i}`}
                 </TableCell>);
         }
 

@@ -1,13 +1,17 @@
+import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
 import { dpEditDistance, dpEditDistanceSpace, dpEditDistanceTime, editDistanceExamples, recEditDistanceSpace, recEditDistanceTime, recursiveEditDistance } from 'src/dp/helpers/editDistance/EditDistanceStatsHelper';
+import { editDistDpSpaceComplex, editDistDpTimeComplex, editDistRecSpaceComplex, editDistRecTimeComplex } from 'src/dp/helpers/editDistance/EditDistanceStrings';
 
 import BottomedDiv from 'src/hoc/BottomedDiv';
 import ChartsAndTable from 'src/components/dpComponents/ChartsAndTable';
+import Complexity from 'src/components/dpComponents/Complexity';
 import CustomButton from 'src/components/customComponents/CustomButton';
 import CustomTextField from 'src/components/customComponents/CustomTextField';
 import CustomTitle from 'src/hoc/CustomTitle';
 import FlexOne from 'src/hoc/FlexOne';
+import FlexTwo from 'src/hoc/FlexTwo';
 import { Grid } from '@material-ui/core';
 import { ISimpleObjectParameter } from 'src/helpers/TypesDefinitions';
 import { ISpaceChartData } from 'src/components/dpComponents/SpaceChart';
@@ -39,31 +43,50 @@ class EditDistanceStats extends React.Component<any, IEditDistanceStatsState> {
         return (
             <div>
                 <CustomTitle variant='h5'>
-                    {strings.substring.demo.title}
+                    {strings.editDistance.stats.title}
                 </CustomTitle>
                 <BottomedDiv>
-                    {strings.substring.demo.brief}
+                    <Markdown source={strings.editDistance.stats.brief} />
                 </BottomedDiv>
                 <Grid container={true} direction='row'>
                     <FlexOne>
                         <Grid container={true} direction='column'>
-                            <CustomTextField label={`${strings.components.string} X (max. 20)`} value={this.state.stringX} onChange={this.handlestrXChange} />
-                            <CustomTextField label={`${strings.components.string} Y (max. 20)`} value={this.state.stringY} onChange={this.handlestrYChange} />
+                            <CustomTextField label={`${strings.global.string} X (max. 30)`} value={this.state.stringX} onChange={this.handlestrXChange} />
+                            <CustomTextField label={`${strings.global.string} Y (max. 30)`} value={this.state.stringY} onChange={this.handlestrYChange} />
                         </Grid>
+                        <CustomButton onClick={this.drawStats} label={strings.global.evaluateStats} />
                     </FlexOne>
+                    <FlexTwo>
+                        <Grid container={true} direction='row'>
+                            <Complexity time={editDistRecTimeComplex} space={editDistRecSpaceComplex} recOrDp='rec' />
+                            <Complexity time={editDistDpTimeComplex}  space={editDistDpSpaceComplex} recOrDp='dp' />
+                        </Grid>
+                    </FlexTwo>
                 </Grid>
-                <CustomButton onClick={this.drawStats} label={strings.global.drawCharts} />
+                <br />
                 <ChartsAndTable visible={this.state.statsVisible} timeStats={this.timeStats} spaceStats={this.spaceStats} tableStats={this.tableStats} />
+                {this.state.statsVisible &&
+                    <div>
+                        <CustomTitle variant='h5'>
+                            {strings.global.conclusion}
+                        </CustomTitle>
+                        <Markdown source={strings.editDistance.stats.conclusion} />
+                    </div>
+                }
             </div>
         );
     }
 
     private handlestrXChange = (e: any) => {
-        this.setState({ stringX: e.target.value });
+        if (e.target.value.length <= 30) {
+            this.setState({ stringX: e.target.value });
+        }
     };
 
     private handlestrYChange = (e: any) => {
-        this.setState({ stringY: e.target.value });
+        if (e.target.value.length <= 30) {
+            this.setState({ stringY: e.target.value });
+        }
     };
 
     private getStats = () => {
@@ -91,7 +114,7 @@ class EditDistanceStats extends React.Component<any, IEditDistanceStatsState> {
         name = `'${strX}', '${strY}'`;
         data = {
             name,
-            recTheorTime: recEditDistanceTime(length1),
+            recTheorTime: recEditDistanceTime(length1, length2),
             recTime: recCalls,
             dpTime: dpCalls,
             dpTheorTime: dpEditDistanceTime(length1, length2),
@@ -122,7 +145,7 @@ class EditDistanceStats extends React.Component<any, IEditDistanceStatsState> {
             name = `'${strX}', '${strY}'`;
             data = {
                 name,
-                recTheorTime: recEditDistanceTime(length1),
+                recTheorTime: recEditDistanceTime(length1, length2),
                 recTime: recCalls,
                 dpTime: dpCalls,
                 dpTheorTime: dpEditDistanceTime(length1, length2),

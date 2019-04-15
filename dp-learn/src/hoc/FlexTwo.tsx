@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
+import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
 import { ReactNode } from 'react';
 
@@ -12,14 +12,14 @@ interface IFlexZeroProps {
     children: ReactNode
 }
 
-const styles = () => createStyles({
+const styles = (theme: Theme) => createStyles({
     flexChild: {
-        flex: 2
+        flex: 2,
+        marginLeft: theme.spacing.unit * 2
     },
 });
 
-// Container with flex row displayed content and bottom margin
-// Takes multiple children
+// Div with flex value 2 and left margin
 class FlexTwo extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;

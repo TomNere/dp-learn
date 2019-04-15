@@ -91,8 +91,8 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
                 <Grid container={true} direction='row'>
                     <FlexOne>
                         <Grid container={true} direction='column'>
-                            <CustomTextField label={`${strings.components.string} X (max. 20)`} value={this.state.stringX} onChange={this.handlestrXChange} />
-                            <CustomTextField label={`${strings.components.string} Y (max. 20)`} value={this.state.stringY} onChange={this.handlestrYChange} />
+                            <CustomTextField label={`${strings.global.string} X (max. 20)`} value={this.state.stringX} onChange={this.handlestrXChange} />
+                            <CustomTextField label={`${strings.global.string} Y (max. 20)`} value={this.state.stringY} onChange={this.handlestrYChange} />
                         </Grid>
 
                         {/* Speed select */}
@@ -350,7 +350,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
         this.setState({
             inProgress: false,
             result: `${strings.substring.demo.longestSubr}: "${finalString}", ${strings.substring.demo.length}: ${table[this.resultPos[0]][this.resultPos[1]]}`,
-            currentState: '...'
+            currentState: strings.global.done
         });
     }
 

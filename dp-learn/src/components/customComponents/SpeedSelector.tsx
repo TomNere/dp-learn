@@ -27,7 +27,7 @@ class SpeedSelector extends React.Component<AllProps> {
             <div className={classes.leftMargin}>
                 <FormControl component={"fieldset" as "div"} margin='normal'>
                     <FormLabel component="label">
-                        {strings.components.speed}
+                        {strings.global.speed}
                     </FormLabel>
                     <RadioGroup
                         aria-label="speed"
@@ -59,7 +59,7 @@ class SpeedSelector extends React.Component<AllProps> {
                         <FormControlLabel
                             value="0"
                             control={<Radio color="primary" />}
-                            label={strings.components.step}
+                            label={strings.global.stepping}
                         />
                     </RadioGroup>
                 </FormControl>

@@ -30,9 +30,6 @@ export const dpCoins = (coins: number[], arrSize: number, value: number, calls: 
 
     for (let i = 1; i <= value; i++) {
         table[i] = Number.MAX_VALUE;
-    }
-
-    for (let i = 1; i <= value; i++) {
         for (let j = 0; j < arrSize; j++) {
             if (coins[j] <= i) {
                 calls.value++;
@@ -66,14 +63,18 @@ export const dpCoinsSpace = (coinsLength: number, value: number) => {
 export const coinsExamples = [
     {
         coins: [1, 2],
-        value: 15
+        value: 2
     },
     {
-        coins: [2, 3, 4],
+        coins: [1,2,3,4,5,6,7,20],
         value: 20
     },
     {
-        coins: [4,5,6,7,10],
+        coins: [5,6,7,8,9,10,11,12,13,14],
+        value: 15
+    },
+    {
+        coins: [1,2,3,4,5,6,7,8,9,10],
         value: 15
     },
 ];

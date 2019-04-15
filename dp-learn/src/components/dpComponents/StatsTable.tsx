@@ -51,17 +51,17 @@ class StatsTable extends React.Component<AllProps> {
             <TableRow>
                 {/* Table brief */}
                 <TableCell rowSpan={2} className={classes.tableHeading}>
-                    {strings.components.tableComparison}
+                    {strings.global.tableComparison}
                 </TableCell>
 
                 {/* Time complexity */}
-                <TableCell colSpan={3} className={columnCaption}>
-                    {strings.components.timeComplex}
+                <TableCell colSpan={4} className={columnCaption}>
+                    {strings.global.timeComplex}
                 </TableCell>
 
                 {/* Space complexity */}
                 <TableCell colSpan={2} className={columnCaption}>
-                    {strings.components.spaceComplex}
+                    {strings.global.spaceComplex}
                 </TableCell>
             </TableRow>
         );
@@ -74,7 +74,7 @@ class StatsTable extends React.Component<AllProps> {
             <TableRow>
                 {/* recTheorTime */}
                 <TableCell className={[classes.columnCaption, classes.recTheorBackground].join(' ')} >
-                    {`${strings.global.recursion} (${strings.components.theoreticValue})`}
+                    {`${strings.global.recursion} (${strings.global.theoreticValue})`}
                 </TableCell>
 
                 {/* recTime */}
@@ -84,7 +84,7 @@ class StatsTable extends React.Component<AllProps> {
 
                 {/* dpTheorTime */}
                 <TableCell className={[classes.columnCaption, classes.dpTheorBackground].join(' ')} >
-                    {`${strings.global.dp} (${strings.components.theoreticValue})`}
+                    {`${strings.global.dp} (${strings.global.theoreticValue})`}
                 </TableCell>
 
                 {/* dpTime */}

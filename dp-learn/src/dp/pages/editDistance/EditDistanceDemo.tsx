@@ -101,8 +101,8 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
                 <Grid container={true} direction='row'>
                     <FlexOne>
                         <Grid container={true} direction='column'>
-                            <CustomTextField label={`${strings.components.string} X (max. 20)`} value={this.state.stringX} onChange={this.handlestrXChange} />
-                            <CustomTextField label={`${strings.components.string} Y (max. 20)`} value={this.state.stringY} onChange={this.handlestrYChange} />
+                            <CustomTextField label={`${strings.global.string} X (max. 20)`} value={this.state.stringX} onChange={this.handlestrXChange} />
+                            <CustomTextField label={`${strings.global.string} Y (max. 20)`} value={this.state.stringY} onChange={this.handlestrYChange} />
                         </Grid>
 
                         {/* Speed select */}
@@ -440,7 +440,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
         this.setState({
             inProgress: false,
             highlightingOn: false,
-            currentState: '...',
+            currentState: strings.global.done,
             result: `${strings.editDistance.demo.opNumber}: ${table[this.LENGTH1][this.LENGTH2]}, ${strings.editDistance.demo.usedOps}: ${operations.join(', ')}`,
         });
     }

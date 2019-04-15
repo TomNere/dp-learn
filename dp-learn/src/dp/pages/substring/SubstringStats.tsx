@@ -1,13 +1,17 @@
+import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
 import { dpSubstring, dpSubstringSpace, dpSubstringTime, recSubstringSpace, recSubstringTime, recursiveSubstring, substringExamples } from 'src/dp/helpers/substring/SubstringStatsHelper';
+import { substringDpSpaceComplex, substringDpTimeComplex, substringRecSpaceComplex, substringRecTimeComplex } from 'src/dp/helpers/substring/SubstringStrings';
 
 import BottomedDiv from 'src/hoc/BottomedDiv';
 import ChartsAndTable from 'src/components/dpComponents/ChartsAndTable';
+import Complexity from 'src/components/dpComponents/Complexity';
 import CustomButton from 'src/components/customComponents/CustomButton';
 import CustomTextField from 'src/components/customComponents/CustomTextField';
 import CustomTitle from 'src/hoc/CustomTitle';
 import FlexOne from 'src/hoc/FlexOne';
+import FlexTwo from 'src/hoc/FlexTwo';
 import { Grid } from '@material-ui/core';
 import { ISimpleObjectParameter } from 'src/helpers/TypesDefinitions';
 import { ISpaceChartData } from 'src/components/dpComponents/SpaceChart';
@@ -38,33 +42,48 @@ class SubstringStats extends React.Component<any, ISubstringStatsState> {
         return (
             <div>
                 <CustomTitle variant='h5'>
-                    {strings.substring.demo.title}
+                    {strings.substring.stats.title}
                 </CustomTitle>
                 <BottomedDiv>
-                    {strings.substring.demo.brief}
+                    <Markdown source={strings.substring.stats.brief} />
                 </BottomedDiv>
                 <Grid container={true} direction='row'>
                     <FlexOne>
                         <Grid container={true} direction='column'>
-                            <CustomTextField label={`${strings.components.string} X (max. 20)`} value={this.state.stringX} onChange={this.handlestrXChange} />
-                            <CustomTextField label={`${strings.components.string} Y (max. 20)`} value={this.state.stringY} onChange={this.handlestrYChange} />
+                            <CustomTextField label={`${strings.global.string} X (max. 15)`} value={this.state.stringX} onChange={this.handlestrXChange} />
+                            <CustomTextField label={`${strings.global.string} Y (max. 15)`} value={this.state.stringY} onChange={this.handlestrYChange} />
                         </Grid>
+                        <CustomButton onClick={this.drawStats} label={strings.global.evaluateStats} />
                     </FlexOne>
+                    <FlexTwo>
+                        <Grid container={true} direction='row'>
+                            <Complexity time={substringRecTimeComplex} space={substringRecSpaceComplex} recOrDp='rec' />
+                            <Complexity time={substringDpTimeComplex}  space={substringDpSpaceComplex} recOrDp='dp' />
+                        </Grid>
+                    </FlexTwo>
                 </Grid>
-                <CustomButton onClick={this.drawStats} label={strings.global.drawCharts} />
-                <ChartsAndTable timeStats={this.timeStats} spaceStats={this.spaceStats} tableStats={this.tableStats} visible={this.state.statsVisible} />
+                <br />
+                <ChartsAndTable visible={this.state.statsVisible} timeStats={this.timeStats} spaceStats={this.spaceStats} tableStats={this.tableStats} />
+                {this.state.statsVisible &&
+                    <div>
+                        <CustomTitle variant='h5'>
+                            {strings.global.conclusion}
+                        </CustomTitle>
+                        <Markdown source={strings.substring.stats.conclusion} />
+                    </div>
+                }
             </div>
         );
     }
 
     private handlestrXChange = (e: any) => {
-        if (e.target.value.length <= 20) {
+        if (e.target.value.length <= 15) {
             this.setState({ stringX: e.target.value });
         }
     };
 
     private handlestrYChange = (e: any) => {
-        if (e.target.value.length <= 20) {
+        if (e.target.value.length <= 15) {
             this.setState({ stringY: e.target.value });
         }
     };

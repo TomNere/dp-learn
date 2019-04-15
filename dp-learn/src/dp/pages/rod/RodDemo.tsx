@@ -255,7 +255,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
     }
 
     private nextInnerCycle = () => {
-        let currentState: string = '...';
+        let currentState: string = '';
 
         if (this.outerCounter + 1 > this.LENGTH) {
             this.setFinalState(this.state.table);
@@ -279,7 +279,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
         this.setState({
             inProgress: false,
             result: `${strings.rod.demo.result} ${table[this.LENGTH]}, ${strings.rod.demo.usedLengths} ${this.getFullSolution()}`,
-            currentState: '...',
+            currentState: strings.global.done,
             highlightingOn: false
         });
     }

@@ -15,7 +15,7 @@ export const english = {
         step: 'Next step',
         table: 'Table',
         result: 'Result',
-        drawCharts: 'Draw charts',
+        evaluateStats: 'Evaluate statistics',
         recCalls: 'recursive calls',
         numberOfCalls: 'Number of recursive calls / iterations',
         microSeconds: 'Microseconds',
@@ -23,15 +23,13 @@ export const english = {
         skipping: 'Skipping...',
         recursion: 'Recursion',
         dp: 'DP',
-        invalidArg: 'Input values validation error'
-    },
-    components: {
+        invalidArg: 'Input values validation error',
         srcCode: 'Source code',
         timeComplex: 'Time complexity ',
         spaceComplex: 'Space complexity',
         tryDemo: 'Try out demo!',
         speed: 'Speed',
-        step: 'Step by step',
+        stepping: 'Step by step',
         theory: 'Theory',
         demo: 'Demo',
         charts: 'Charts',
@@ -39,7 +37,9 @@ export const english = {
         calls: 'calls',
         theoreticValue: 'theoretical value',
         tableComparison: 'Table comparison',
-        string: 'String'
+        string: 'String',
+        conclusion: 'Conclusion',
+        done: 'Done.',
     },
     demoGlobal:{
         assigning: 'Assigning ',
@@ -90,12 +90,14 @@ export const english = {
         stats: {
             title: 'Cutting a rod - statistics',
             brief: 'Zadajte ceny jednotlivých dĺžok tyče (maximálne 30) oddelené čiarkami (dĺžky sú 1, 2, 3, ...).',
+            conclusion: '**Časová zložitosť** rekurzívneho algoritmu exponenciálne narastá s dĺžkou tyče (počtom zadaných cien). Kedže v rekurzívnom algoritme nie je žiadná podmienka, počet rekurzívnych volaní sa bude presne rovnať teoretickej hodnote zo vzorca (ako môžno vidieť po vypočítaní štatistík). Nezáleží ani na cenách jednotlivých dĺžok, iba na ich počte. DP algoritmus bude mať oproti teoretickej hodnote počet volaní nižší, pretože počet opakovaní vnútorného cyklu závisí od cien jednotlivých dĺžok. Zo štatistík vyplýva, že rekurzívny algoritmus nie je rýchlejší ako DP algoritmus ani pri veľmi jednoduchom vstupe.',
         }
     },
     coins: {
         coin: 'Coin',
         coins: 'Coins',
         value: 'Value',
+        valueLower: 'value',
         brief: {
             b1: 'There are coins **C = { C1, C2, ..., Cn }**. We want to find minimum number of coins that make a given value **V**, e.g.:',
             b2: 'Which coins we need to get given value?',
@@ -113,9 +115,13 @@ export const english = {
             evalCoinsFor: 'Evaluating coins needed for value ',
             usedCoin: 'used coin',
             usedCoins: 'used coins',
-            value: 'Value',
             coinsNumber: 'Number of coins',
             usedCoinBig: 'Used coin',
+        },
+        stats: {
+            title: 'Minimálny počet mincí na vytvorenie danej hodnoty - štatistiky',
+            brief: 'Zadajte hodnotu (od 1 po 20), ktorú treba vytvoriť súčtom hodnôt mincí a hodnoty mincí oddelené čiarkami (maximálny počet je 15).',
+            conclusion: 'Oproti úlohe **Rezanie tyče** je v rekurzívnom riešení tejto úlohy veľký rozdiel medzi teoretickou maximálnou **časovou zložitosťou**. Tá veľmi závisí od konkrétných hodnôt mincí. Teoretická sa skutočnej hodnote rovná len v jednoduchom príklade, kedy **mince: 1,2** a **hodnota: 2**. V ostatných príkladoch sa hodnoty približujú tým viac, čím "nezmyselnejšie" mince sú zadané. Aj keď je jasné, že jediná minca s hodnotou 20 stačí na vytvorenie hodnoty 20, algoritmus skúma aj všetky predchádzajúce hodnoty. Podobne je to aj pri DP algoritme.',
         }
     },
     substring: {
@@ -131,6 +137,11 @@ export const english = {
             longestSubr: 'Longest common substring',
             length: 'length'
         },
+        stats: {
+            title: 'Najdlhší spoločný podreťazec - štatistiky',
+            brief: 'Zadajte 2 reťazce - **X** a **Y** s maximálnou dĺžkou 15 znakov.',
+            conclusion: '**TODO rekurzia casova zlozitost......** Teoretická aj reálna časová zložitosť sa pri DP algoritme budú vždy rovnať, pretože algoritmus vždy porovnáva každý znak reťazca X so všetkými znakmi druhého reťazca.'
+        }
     },
     editDistance: {
         theory: {
@@ -150,6 +161,11 @@ export const english = {
             remove: 'remove',
             replace: 'replace',
         },
+        stats: {
+            title: 'Editačná vzdialenosť - štatistiky',
+            brief: 'Zadajte 2 reťazce - **X** a **Y** s maximálnou dĺžkou 30 znakov.',
+            conclusion: 'Pri veľmi krátkych (alebo prázdnych) reťazcoch je rekurzívny algoritmus rýchlejší ako DP algoritmus, ale jeho časová zložitosť sa dramaticky zvyšuje s dĺžkou oboch reťazcov. Súčet dĺžok reťazcov v poslednom vzorovom vstupe je 20, pričom reálny počet rekurzívnych volaní je **8-ciferné** oproti **121** opakovaní cyklu pri DP algoritme. Reálna časová zložitosť DP algoritmu sa vždy rovná teoretickej. Rovnako ako pri úlohe **Najdlhší spoločný podreťazec** algoritmus prejde celou tabuľkou.',
+        }
     },
     tree: {
         arrayOfK: 'Array of search keys',
@@ -166,7 +182,13 @@ export const english = {
             selectedToSum: 'Selected cells to sum',
             nothingToDo: 'nothing to do.',
             nextCell: 'Moving to next cell',
-            done: 'Hotovo.'
+            tree: 'Search tree',
+            key: 'Key',
+            cost: 'Cost of optimal tree',
+        },
+        stats: {
+            title: 'Optimalizovaný binárny vyhľadávací strom - štatistiky',
+            brief: 'Zadajte pole počtu vyhľadávaní jednotlivých kľúčov (pole vyhľadávacích kľučov nie je potreba).',
         }
     }
 };

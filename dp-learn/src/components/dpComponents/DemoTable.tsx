@@ -26,7 +26,6 @@ const styles = (theme: Theme) => createStyles({
             color: 'white',
             backgroundColor: myTheme.palette.secondary.main,
             padding: theme.spacing.unit,
-            borderRadius: theme.spacing.unit * 2,
         }
     },
     table: {
@@ -49,29 +48,27 @@ class DemoTable extends React.Component<AllProps> {
         const { classes } = this.props;
         return (
             <div>
-                {(this.props.visible) &&
-                    <div>
-                        {this.props.result !== "" &&
-                            <div className={classes.result}>
-                                <span>
-                                    {this.props.result}
-                                </span>
-                            </div>
-                        }
-                        <Table className={classes.table}>
-                            <TableBody>
-                                {this.props.currentState !== "" &&
-                                    <TableRow >
-                                        <TableCell className={classes.currentState} colSpan={this.props.cols}>
-                                            {this.props.currentState}
-                                        </TableCell>
-                                    </TableRow>
-                                }
-                                <TableRow>{this.props.head()}</TableRow>
-                                {this.props.body()}
-                            </TableBody>
-                        </Table>
+                {this.props.result !== '' &&
+                    <div className={classes.result}>
+                        <span>
+                            {this.props.result}
+                        </span>
                     </div>
+                }
+                {(this.props.visible) &&
+                    <Table className={classes.table}>
+                        <TableBody>
+                            {this.props.currentState !== "" &&
+                                <TableRow >
+                                    <TableCell className={classes.currentState} colSpan={this.props.cols}>
+                                        {this.props.currentState}
+                                    </TableCell>
+                                </TableRow>
+                            }
+                            <TableRow>{this.props.head()}</TableRow>
+                            {this.props.body()}
+                        </TableBody>
+                    </Table>
                 }
             </div>
         );
