@@ -1,66 +1,79 @@
 export const substrDynCode = `// Returns length of longest common substring
-int CommonSubstrLength(char* x, char* y) 
-{
-    // Store strings length
-    int len1 = strlen(x);
-    int len2 = strlen(y);
-
+// x - string X
+// y - string Y
+// L1, L2 - lengths of strings
+int commonSubstr(char* x, char* y, int L1, int L2) {
     // Table (two-dimensional array) for storing values
-    // Table size is length +1 because of simplicity
-    int[len1 + 1][len2 + 1] table;
-          
-    // Variable keeping length of the longest common substring
-    int result = 0;
+    int table[L1][L2];
+
+    // Variables keeping position in table of longest subtring
+    int row = 0;
+    int col = 0;
   
     // Algorithm
-    for (int i = 0; i <= len1; i++)
-    {
-        for (int j = 0; j <= len2; j++)
-        {
-            // Fill first row and column of table with zero values
-            if (i == 0 || j == 0)
-            {
-                table[i, j] = 0;
-            }
-            // Check for matching characters
-            // (i-1 and j-1 because we have bigger table than strings)
-            else if (x[i - 1] == x[j - 1])
-            {
-                // Match!
-                // Suffix is incremented
-                // We have zero value in first column/row, 
-                // so we can just increment
-                table[i][j] = ++table[i - 1][j - 1];
+    for (int i = 0; i <= len1; i++) {
+        for (int j = 0; j <= len2; j++) {
 
+            // Match!
+            if (x[i] == x[j])
+            {
+                // Assign 1
+                if (i == 0 || j == 0) {
+                    table[i][j]
+                }
+                // Suffix is incremented
+                else {
+                    table[i][j] = ++table[i - 1][j - 1];
+                }
+                
                 // Set new result
-                result = max(resultm, table[i][j]);
+                if (table[row][col] < table[i][j]) {
+                    row = i;
+                    col = j;
+                }
             }
-            // Different characters
+            // No match
             else
             {
-                table[i, j] = 0; 
+                table[i, j] = 0;
             }
         }
     }
 
-    return result; 
+    // Full solution
+    for (int i = table[row][col] - 1; i >= 0; i--) {
+        printf("%c", x[row - i]);
+    }
+    printf("\\n");
+
+    return result;
 }`;
 
-export const substrRecCode = `// Returns length of longest common substring
-int CommonSubstrLength(char* x, char* y)
-{
-    if (*x == '\0' || *y == '\0')
-    {
-        return 0;
+export const substrRecCode = `
+// Global variables
+char* X;
+char* Y;
+
+// Returns length longest common substring of X and Y
+// L1 - length of X
+// L2 - length of Y
+// count 0 at start
+int commonSubstr(int L1, int L2, int count) {
+    // String is empty
+    if (i == 0 || j == 0) {
+        return count;
     }
-    else if (*x == *y)
-    {
-        return (1 + CommonSubstrLength(x + 1, y + 1);
+
+    // Match
+    if (X[i - 1] == Y[j - 1]) {
+        count = commonSubstr(i - 1, j - 1, count + 1);
     }
-    else
-    {
-        return max(CommonSubstrLength(x + 1, y), CommonSubstrLength(x, y + 1));
-    }
+
+    // No match, try another substrings
+    // max returns the higher of two values
+    count = max(count, max(commonsSubstr(i, j - 1, 0), commonSubstr(i - 1, j, 0)));
+
+    return count;
 }`;
 
 export const substrEnhCode = `// Returns length of longest common substring
@@ -112,7 +125,7 @@ export const substringFormula = `T[i][j] = {(0,; i=0 ),
     (T[i-1][j-1] + 1,;
     X[i-1] = Y[j-1]):}`;
 
-export const substringRecTimeComplex = `???`;
+export const substringRecTimeComplex = `2 ^ (L1 + L2)???`;
 export const substringDpTimeComplex = `L1 * L2`;
 export const substringRecSpaceComplex = `L1 + L2`;
 export const substringDpSpaceComplex = `L1 + L2 + (L1 * L2) + 1`;

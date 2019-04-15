@@ -5,30 +5,32 @@ import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/s
 import { ReactNode } from 'react';
 
 type AllProps =
-    IBottomedDivProps &
+    ITableImgProps &
     WithStyles<typeof styles>;
 
-interface IBottomedDivProps {
+interface ITableImgProps {
     children: ReactNode
 }
 
 const styles = (theme: Theme) => createStyles({
-    bottomMargin: {
-        marginBottom: theme.spacing.unit * 2,
-    },
+    margin: {
+        paddingLeft: 40,    // Same as ul list padding
+        paddingRight: 40,    // Same as left
+        marginBottom: theme.spacing.unit * 3,
+    }
 });
 
-// Container with flex row displayed content and bottom margin
-// Takes multiple children
-class BottomedDiv extends React.Component<AllProps> {
+// Custom title
+// Takes 1 child
+class PaddingImage extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;
         return (
-            <div className={classes.bottomMargin}>
+            <div className={classes.margin}>
                 {this.props.children}
             </div>
         );
     }
 }
 
-export default withStyles(styles)(BottomedDiv);
+export default withStyles(styles)(PaddingImage);

@@ -3,7 +3,8 @@ import * as React from 'react';
 import { AppBar, Tab, Tabs } from '@material-ui/core';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
-import ContainerWithPadding from './ContainerWithPadding';
+import Cookies from 'universal-cookie';
+import PaddingDiv from './PaddingDiv';
 import myTheme from 'src/styles/index';
 import { strings } from 'src/strings/languages';
 
@@ -15,6 +16,7 @@ interface ITabMenuProps {
     theory: React.ReactNode,
     demo: React.ReactNode,
     charts: React.ReactNode,
+    pageName: string
 }
 
 interface ITabMenuState {
@@ -45,10 +47,19 @@ const styles = (theme: Theme) => createStyles({
 // Tab menu with 3 tabs: theory, demo and charts
 // Takes 3 children
 class TabMenu extends React.Component<AllProps, ITabMenuState> {
+    private cookies = new Cookies();
     public constructor(props: AllProps) {
-        super(props)
-        this.state = {
-            selected: 0
+        super(props);
+        const selected = this.cookies.get(`${this.props.pageName}Selected`);
+        if (selected !== undefined) {
+            this.state = {
+                selected: +selected     // Conversion to number
+            }
+        }
+        else {
+            this.state = {
+                selected: 0
+            }
         }
     }
 
@@ -64,15 +75,16 @@ class TabMenu extends React.Component<AllProps, ITabMenuState> {
                     </Tabs>
                 </AppBar>
                 <div className={classes.padding}>
-                    {this.state.selected === 0 && <ContainerWithPadding> {this.props.theory} </ContainerWithPadding>}
-                    {this.state.selected === 1 && <ContainerWithPadding> {this.props.demo}   </ContainerWithPadding>}
-                    {this.state.selected === 2 && <ContainerWithPadding> {this.props.charts} </ContainerWithPadding>}
+                    {this.state.selected === 0 && <PaddingDiv> {this.props.theory} </PaddingDiv>}
+                    {this.state.selected === 1 && <PaddingDiv> {this.props.demo}   </PaddingDiv>}
+                    {this.state.selected === 2 && <PaddingDiv> {this.props.charts} </PaddingDiv>}
                 </div>
             </div>
         );
     }
 
     private handleTabChange = (e: any, selected: number) => {
+        this.cookies.set(`${this.props.pageName}Selected`, selected);
         this.setState({ selected })
     };
 }

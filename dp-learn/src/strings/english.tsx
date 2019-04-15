@@ -14,6 +14,7 @@ export const english = {
         finish: 'Finish',
         step: 'Next step',
         table: 'Table',
+        tables: 'Tables',
         result: 'Result',
         evaluateStats: 'Evaluate statistics',
         recCalls: 'recursive calls',
@@ -40,8 +41,13 @@ export const english = {
         string: 'String',
         conclusion: 'Conclusion',
         done: 'Done.',
+        similarProblems: 'Podobné optimalizačné úlohy',
+        partOfApp: 'je súčasťou aplikácie'
     },
-    demoGlobal:{
+    theoryGlobal: {
+        eg: 'For example:',
+    },
+    demoGlobal: {
         assigning: 'Assigning ',
         cycle: 'Cycle',
         start: 'Start',
@@ -66,7 +72,7 @@ export const english = {
         mainPrinciplesText: 'Pri tvorbe DP algoritmu vychádzame väčšinou z jednoduchého rekurzívneho algoritmu. Aby malo zmysel vytvárať DP algoritmus, musí mať rekurzívne riešenie 2 vlastnosti: **optimálnu subštruktúru** a **opakovanie podproblémov**.',
         optSubstructTitle: 'Optimálna subštruktúra',
         optSubstructText: 'Pôvodný problém rozdelíme na podproblémy. Ak sa "skladaním" výsledkov jednotlivých podproblémov dá získať riešenie pôvodného problému, hovoríme, že riešenie má **optimálnu subštruktúru**.',
-        repeatingTitle: 'Opakovanie podproblémov', 
+        repeatingTitle: 'Opakovanie podproblémov',
         repeatingText: 'Druhou vlastnosťou, ktorú musí rekurzívne riešenie spĺňať je **opakovanie podproblémov**. Zistiť, či sa pri rekurzívnom riešení opakujú podproblémy sa dá napríklad nakreslením **stromu rekurzívnych volaní**:',
         prosAndConsTitle: 'Výhody a nevýhody',
         prosAndConsText: 'Hlavná výhoda DP spočíva v tom, že využíva opakovanie sa podproblémov a preto vedie často k oveľa efektívnejšiemu a rýchlejšiemu riešeniu. Výsledky menších podproblémov sú ukladané do dátovej štruktúry (poľa alebo tabuľky). Ak algoritmus narazí znovu na podproblém, ktorý už bol predtým vyriešený, použije sa uložený výsledok. Rekurzívny algoritmus pri jednoduchom vstupe výsledok skôr ako DP algoritmus. Pri zložitom vstupe je ale DP algoritmus výrazne efektívnejší. **Exponenciálna** časová zložitosť rekurzívneho algoritmu môže byť znížená na **polynomickú**. Nevýhodou je vyššia pamäťová náročnosť z dôvodu vytvárania dátovej štruktúry na ukladanie výsledkov podproblémov.'
@@ -75,6 +81,18 @@ export const english = {
         prices: 'Prices',
         theory: {
             title: 'Cutting a rod - theory',
+            brief: {
+                b1: 'Majme oceľovú tyč dĺžky **L**. Túto tyč je potrebné narezať na menšie kusy. Na vstupe sú predajné ceny tyčí všetkých dĺžok od 1 po L: **P = { p1, p2, p3, ..., pL}**. Na aké dĺžky treba narezať tyč, aby súčet cien tyčí, ktoré vzniknú bol čo najvyšší?',
+                b2: 'Na aké dĺžky sa dá tyč narezať?',
+                b3: 'Na aké dĺžky sa dá tyč narezať?',
+            },
+            recursion1: 'Pre tyč dĺžky **0** musí byť aj najlepšia cena **0**. V opačnom prípade vypočítame najvyššie ceny pre všetky dĺžky tyče. Pri rekurzívnom algoritme sa teda budú dookola vypočítavať najvyššie ceny pre všetky dĺžky tyče.',
+            recTime: '**Časová zložitosť** exponenciálne narastá s dĺžkou tyče (počtom zadaných cien).',
+            recSpace: '**Priestorová zložitosť** sa rovná počtu zadaných cien.',
+            dynProg1: 'V DP algoritme sa budú do tabuľky (jednorozmerného poľa) ukladať najvyššie možné ceny pre všetky dĺžky tyče. Pri výbere hodnoty do bunky sa berú do úvahy ceny **všetkých** dĺžok vypočítaných predtým (to znamená menších od aktuálnej). Ku každej bunke sa pripočítajú ceny takých dĺžok tak, aby výsledná dĺžka neprekročila aktuálne vypočítavanú. Do bunky sa vyberie súčet tých dĺžok (ich cien), ktoré dávajú najvyššiu predajnú cenu.',
+            dpTime: 'Algoritmus obsahuje 1 vnorený cyklus, takže jeho **časová zložitosť** je polynomická - druhá mocnina počtu zadaných cien.',
+            dpSpace: '**Priestorová zložitosť** sa oproti rekurzívnemu algoritmu zvýšila o veľkosť poľa potrebného na ukladanie výsledkov podproblémov.',
+            outerCycle: 'Vonkajší cyklus',
         },
         demo: {
             title: 'Cutting a rod - demo',
@@ -98,15 +116,21 @@ export const english = {
         coins: 'Coins',
         value: 'Value',
         valueLower: 'value',
-        brief: {
-            b1: 'There are coins **C = { C1, C2, ..., Cn }**. We want to find minimum number of coins that make a given value **V**, e.g.:',
-            b2: 'Which coins we need to get given value?',
-            b3: 'Both options are valid. 2. option needs only 2 coins, so this is our result. Minimum number of coins is **2**.',
-        },
         theory: {
             title: 'Minimum number of coins that make a given value - theory',
+            brief: {
+                b1: 'There are coins **C = { C1, C2, ..., Cn }**. We want to find minimum number of coins that make a given value **V**, e.g.:',
+                b2: 'Which coins we need to get given value?',
+                b3: 'Both options are valid. 2. option needs only 2 coins, so this is our result. Minimum number of coins is **2**.',
+            },
             recursion1: 'Program will loop through **N** coin values. For each coin which value is less or equal given value **V**, we will call the same method recursively with value **V** substracted by current coin\'s value. So, time complexity of this solution is exponential. Space complexity is pretty obvious - **N + 1**, where **N** is the number of coin types and **1** to store given value **V**.',
-            dynProg1: 'As can you see in recursion tree, some subproblems are recomputed again and again. Time complexity can be significantly minimize by storing partial results. So, let\'s try solve this problem by dynamic programming! In this example, we will need simple one-dimensional array.\n New value of the cell is incremented value of some previous cell. Distance between cell which is computed and cell which value is incremented depends on coins. If value is 4 for and there is coins 4, max distance is 4.'
+            recTime: 'Časová zložitosť exponenciálne narastá s požadovanou hodnotou **V**',
+            recSpace: 'Priestorová zložitosť je zrejmá - **N + 1**, kde **N** je počet mincí a **1** potrebujeme na uloženie hodnoty **V**.',
+            dynProg1: 'As can you see in recursion tree, some subproblems are recomputed again and again. Time complexity can be significantly minimize by storing partial results. So, let\'s try solve this problem by dynamic programming! In this example, we will need simple one-dimensional array.\n New value of the cell is incremented value of some previous cell. Distance between cell which is computed and cell which value is incremented depends on coins. If value is 4 for and there is coins 4, max distance is 4.',
+            dpTime: 'Keďže algoritmus obsahuje vnorený cyklus, jeho **časová zložitosť** je polynomická - počet mincí vynásobený hodnotou.',
+            dpSpace: '**Priestorová zložitosť** sa oproti rekurzívnemu algoritmu zvýšila iba o veľkosť poľa potrebného na ukladanie výsledkov podproblémov.',
+            rod: 'Rezanie tyče',
+            knapsack: 'Knapsack problem',
         },
         demo: {
             title: 'Minimum number of coins that make a given value - demo',
@@ -126,7 +150,24 @@ export const english = {
     },
     substring: {
         theory: {
-
+            title: 'Najdlhší spoločný podreťazec - teória',
+            brief: {
+                b1: 'Na vstupe sú dva reťazce, **X** s dĺžkou **L1** a **Y** s dĺžkou **L2**. Aký je ich najdlhší spoločný podreťazec?',
+                b2: 'Aký je najdlhší spoločný podreťazec týchto dvoch reťazcov?',
+                strX: 'U|ni|ca|s|**|ting|**',
+                strY: 'u|ni|tTe|s|**|ting|**',
+                b3: 'Môžeme vidieť, že reťazce majú viacero spoločných podreťazcov. Najdlhší z nich je **ting** a má dĺžku  **4** znaky.',
+                b4: 'Jednoduchým riešením by bolo zobrať každý podreťazec z prvého reťazca a zisťiť, či sa tento podreťazec nachádza aj v druhom reťazci. V prvom reťazci bude **O(L1 ^ 2)** podreťazcov. Pri využití **Knuth-Morris-Prattovho** algoritmu na vyhľadávanie všetkých podreťazcov v druhom reťazci, časová zložitosť tohoto riešenia bude **O((L1 ^ 2) * L2)**.',
+            },
+            recursion1: 'Ak je dĺžka jedného alebo druhého reťazca rovná **0**, výsledok bude **0**, pretože v jednom zo stringov nebude žiadny podřetazec. Ak algoritmus narazí na zhodu znakov, pripočíta k výsledku hodnotu **1** a pokračuje porovnaním nasledujúcich dvoch znakov. Ak zhoda nenastane, nastáva rekurzívne volanie pre porovnanie ďalšieho znaku v prvom reťazci a ďalšieho znaku v druhom reťazci. Z týchto hodnôt sa vyberie maximum. Algoritmus je síce jednoduchý, ale veľmi neefektívny.',
+            recTime: '**Časová zložitosť** sa exponenciálne zvyšuje s dĺžkou reťazcov.',
+            recSpace: '**Priestorová zložitosť** je súčet dĺžok oboch reťazcov.',
+            dynProg1: 'Princíp algoritmu spočíva v hľadaní najdlhšieho spoločného **sufixu** v podreťazcoch oboch reťazcov. Dĺžky sufixov sa budú ukladať do dvojrozmerného poľa. Ak sa znak v stĺpci a riadku nerovná, do bunky sa vloží hodnota **0**. Ak rovnajú, tak sa vloží hodnota **1**, ak ide o prvý znak jedného alebo druhého reťazca, alebo sa inkrementuje predchádzajúca hodnota na diagonále (inkrementuje sa sufix). Okrem tabuľky potrebujeme navyše premenné na ukladanie pozície v tabuľke s najvyššou hodnotou sufixu. Vďaka tejto pozícii a hodnote v bunke vieme jednoducho vytvoriť aj kompletné riešenie úlohy, pretože vieme kde končí najdlhší sufix a poznáme jeho dĺžku.',
+            dpTime: '**Časová zložitosť** je polynomická - vypĺňanie tabuľky **L1 * L2**.',
+            dpSpace: '**Priestorová zložitosť** je veľkosť tabuľky + premenná na ukladanie aktuálnej hodnoty najdlhšieho sufixu (ak nepotrebujeme zostaviť kompletné riešenie, stačí nám len jeho hodnota, netreba pozíciu v tabuľke).',
+            zero: 'Znaky sa nerovnajú - priradenie hodnoty 0',
+            increment: 'Znaky sa rovnajú - inkrementovanie sufixu',
+            one: 'Znaky sa rovnajú, ale ide o prvé znaky v reťazcoch - priradenie hodnoty 1',
         },
         demo: {
             title: 'Longest common substring - demo',

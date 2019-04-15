@@ -4,7 +4,7 @@ import * as React from 'react';
 import { dpEditDistance, dpEditDistanceSpace, dpEditDistanceTime, editDistanceExamples, recEditDistanceSpace, recEditDistanceTime, recursiveEditDistance } from 'src/dp/helpers/editDistance/EditDistanceStatsHelper';
 import { editDistDpSpaceComplex, editDistDpTimeComplex, editDistRecSpaceComplex, editDistRecTimeComplex } from 'src/dp/helpers/editDistance/EditDistanceStrings';
 
-import BottomedDiv from 'src/hoc/BottomedDiv';
+import BottomMarginDiv from 'src/hoc/BottomMarginDiv';
 import ChartsAndTable from 'src/components/dpComponents/ChartsAndTable';
 import Complexity from 'src/components/dpComponents/Complexity';
 import CustomButton from 'src/components/customComponents/CustomButton';
@@ -45,9 +45,9 @@ class EditDistanceStats extends React.Component<any, IEditDistanceStatsState> {
                 <CustomTitle variant='h5'>
                     {strings.editDistance.stats.title}
                 </CustomTitle>
-                <BottomedDiv>
+                <BottomMarginDiv>
                     <Markdown source={strings.editDistance.stats.brief} />
-                </BottomedDiv>
+                </BottomMarginDiv>
                 <Grid container={true} direction='row'>
                     <FlexOne>
                         <Grid container={true} direction='column'>

@@ -33,7 +33,7 @@ const styles = () => createStyles({
         }
     },
     fixedWidth: {
-        minWidth: 160
+        minWidth: 180
     }
 })
 
@@ -67,7 +67,7 @@ class Complexity extends React.Component<AllProps> {
                                     <AccessTime />
                                     {strings.global.timeComplex}:
                                 </div>
-                                <b>{this.props.time}</b>
+                                <b>O({this.props.time})</b>
                                 <br />
                             </Grid>
                         }

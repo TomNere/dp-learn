@@ -5,6 +5,7 @@ import MenuHeader, { IOnLanguageChangeProps } from './MenuHeader';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
 import Coins from 'src/dp/pages/coins/Coins';
+import Cookies from 'universal-cookie';
 import DynamicProgramming from 'src/dp/pages/DynamicProgramming';
 import EditDistance from 'src/dp/pages/editDistance/EditDistance';
 import Rod from 'src/dp/pages/rod/Rod';
@@ -72,10 +73,21 @@ const styles = (theme: Theme) => createStyles({
 // The only one page of the app (this app is an single page app)
 // Consist of left menu and right window with content
 class Page extends React.Component<AllProps, IPageState> {
+    private cookies = new Cookies();
+
     public constructor(props: AllProps) {
         super(props);
-        this.state = {
-            selected: 'aboutDP'
+        const selected = this.cookies.get('selected');
+
+        if (selected !== undefined) {
+            this.state = {
+                selected
+            }
+        }
+        else {
+            this.state = {
+                selected: 'aboutDP'
+            }
         }
     }
 
@@ -139,29 +151,40 @@ class Page extends React.Component<AllProps, IPageState> {
     }
 
     // Handlers for item selection
-
     private handleSelectHome = () => {
-        this.setState({ selected: 'aboutDP' });
+        const selected = 'aboutDP';
+        this.cookies.set('selected', selected);
+        this.setState({ selected });
     }
 
     private handleSelectCoins = () => {
-        this.setState({ selected: 'coins' });
+        const selected = 'coins';
+        this.cookies.set('selected', selected);
+        this.setState({ selected });
     }
 
     private handleSelectRod = () => {
-        this.setState({ selected: 'rod' });
+        const selected = 'rod';
+        this.cookies.set('selected', selected);
+        this.setState({ selected });
     }
 
     private handleSelectSubstring = () => {
-        this.setState({ selected: 'substring' });
+        const selected = 'substring';
+        this.cookies.set('selected', selected);
+        this.setState({ selected });
     }
 
     private handleSelectEditDistance = () => {
-        this.setState({ selected: 'editDistance' });
+        const selected = 'editDistance';
+        this.cookies.set('selected', selected);
+        this.setState({ selected });
     }
 
     private handleSelectTree = () => {
-        this.setState({ selected: 'tree' });
+        const selected = 'tree';
+        this.cookies.set('selected', selected);
+        this.setState({ selected });
     }
 }
 

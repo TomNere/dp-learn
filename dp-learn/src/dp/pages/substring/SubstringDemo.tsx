@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Grid, TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from "@material-ui/core/styles";
 
-import BottomedDiv from 'src/hoc/BottomedDiv';
+import BottomMarginDiv from 'src/hoc/BottomMarginDiv';
 import CustomButton from 'src/components/customComponents/CustomButton';
 import CustomTextField from 'src/components/customComponents/CustomTextField';
 import CustomTitle from 'src/hoc/CustomTitle';
@@ -14,7 +14,7 @@ import FlexTwo from 'src/hoc/FlexTwo';
 import Formula from 'src/hoc/Formula';
 import SpeedSelector from 'src/components/customComponents/SpeedSelector';
 import { ValueOrUndefined } from 'src/helpers/Helpers';
-import { demoStyle } from 'src/styles/globalStyles';
+import { globalStyles } from 'src/styles/globalStyles';
 import { strings } from 'src/strings/languages';
 import { substringFormula } from 'src/dp/helpers/substring/SubstringStrings';
 
@@ -32,7 +32,7 @@ interface ISubstringDemoState {
 }
 
 type AllProps =
-    WithStyles<typeof demoStyle>;
+    WithStyles<typeof globalStyles>;
 
 class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
 
@@ -85,9 +85,9 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
                 <CustomTitle variant='h5'>
                     {strings.substring.demo.title}
                 </CustomTitle>
-                <BottomedDiv>
+                <BottomMarginDiv>
                     <Markdown source={strings.substring.demo.brief} />
-                </BottomedDiv>
+                </BottomMarginDiv>
                 <Grid container={true} direction='row'>
                     <FlexOne>
                         <Grid container={true} direction='column'>
@@ -477,4 +477,4 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
     }
 }
 
-export default withStyles(demoStyle)(SubstringDemo);
+export default withStyles(globalStyles)(SubstringDemo);

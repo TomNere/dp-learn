@@ -1,100 +1,92 @@
 export const coinsRecCode = `// Returns number of coins to make given value
-// coins[] - array of different coin types
-// arrSize - size of array coins[]
-// value - value we need to make
-int minCoins(int coins[], int arrSize, int value) 
-{
-    // Base case
-    if (value == 0)
-    {
+// coins[] - table of different coins
+// arrSize - size of coins[]
+// value - value to make
+int minCoins(int coins[], int arrSize, int value) {
+    // Base case (if given value value is 0)
+    if (value == 0) {
         return 0;
     }
 
     // Initialize result
-    int res = INT_MAX; // From limits.h
+    int result = INT_MAX;
 
     // Loop trough all coins smaller or equal to given value
-    for (int i = 0; i < arrSize; i++)
-    {
-        if (coins[i] <= value) 
-        { 
-            int subRes = minCoins(coins, arrSize, value - coins[i]);
+    for (int i = 0; i < arrSize; i++) {
+        if (coins[i] <= value) {
+            int subResult = minCoins(coins, arrSize, value - coins[i]);
 
-            // Check for INT_MAX to avoid overflow and see 
-            // if result can be minimized
-            if (subRes != INT_MAX && subRes + 1 < res)
-            {
-                res = subRes + 1;
+            // If subResult == INT_MAX - no result
+            // If subResult + 1 < result - we've got new result
+            if (subResult != INT_MAX && subResult + 1 < result) {
+                result = subResult + 1;
             }
         }
     }
-    return res;
+    return result;
 }
 `;
 
 export const coinsDynCode = `// Returns number of coins to make given value
-// coins[] - array of different coin types
-// arrSize - size of array coins[]
-// value - value we need to make
-int minCoins(int coins[], int arrSize, int value)
-{
-    // Array[i] will be storing the minimum number of coins
-    // required for i value. So array[value] will have result
-    int array[value + 1];
+// coins[] - table of different coins
+// arrSize - size of coins[]
+// value - value to make
+int minCoins(int coins[], int arrSize, int value) {
+    // Minimum number of coins to make value i will be in table[i]
+    int table[value + 1];
 
-    // To get exact result
-    int backtrackHelp[value + 1];
+    // Helper for printing full solution
+    int solutionHelper[value + 1];
   
-    // Base case (If given value value is 0)
-    array[0] = 0;
+    // Base case (if given value value is 0)
+    table[0] = 0;
   
-    // Initialize all array values as INT_MAX
-    for (int i = 1; i <= value; i++)
-    {
-        array[i] = INT_MAX; // INT_MAX is from limits.h
-        backtrackHelp[i] = -1;
+    // Initialize all table values as INT_MAX
+    for (int i = 1; i <= value; i++) {
+        table[i] = INT_MAX;
     }
   
-    // Compute minimum coins required for all
-    // values from 1 to value
-    for (int i = 1; i <= value; i++)
-    {
-        // Go through all coins smaller than i
-        for (int j=0; j < arrSize; j++)
-        {
-            if (coins[j] <= i) 
-            {
-                int subRes = array[i - coins[j]];
-                if (subRes != INT_MAX && subRes + 1 < array[i])
-                {
-                    array[i] = subRes + 1;
-                    backtrackHelp[i] = j;   
+    // Compute minimum coins required for all values
+    // from 1 to given value
+    for (int i = 1; i <= value; i++) {
+        for (int j=0; j < arrSize; j++) {
+
+            // Check if value of coins[i] is <= value i
+            if (coins[j] <= i) {
+                int subResult = table[i - coins[j]];
+
+                // If subResult == INT_MAX - no result
+                // If subResult + 1 < result - we've got new result
+                if (subResult != INT_MAX && subResult + 1 < table[i]) {
+                    table[i] = subRes + 1;
+                    solutionHelper[i] = j;  // Coin at which index was used
                 }
             }
         }
     }
-    if (backtrackHelp[V] == -1) {
-	    printf("No output\\n");
-    }
-    else {
-	    int start = V;
-	    printf("The coins are: \\n");
+
+    // Print full solution only if full solution exist
+    // (if given value != 0)
+    if (solutionHelper[value] != 0) {
+	    int start = value;
+	    printf("Used coins: \\n");
 	    while(start != 0) {
-	        int j = backtrackHelp[start];
-	        printf("%d ", coins[j]);
+	        int j = solutionHelper[start];
+	        printf("%d, ", coins[j]);
 	        start = start - coins[j];
 	    }
 	    printf("\\n");
-	}
-    return array[value];
+    }
+    
+    return table[value];
 }`;
 
 export const coinsSmallDynCode = `// Inner cycle part of coins DP solution
 for (int j = 0; j < arrSize; j++) {
     if (coins[j] <= i) {
-        int subRes = array[i - coins[j]];
-        if (subRes != INT_MAX && subRes + 1 < array[i]) {
-            array[i] = subRes + 1;
+        int subRes = table[i - coins[j]];
+        if (subRes != INT_MAX && subRes + 1 < table[i]) {
+            table[i] = subRes + 1;
             result[i] = j;
         }
     }
@@ -104,7 +96,7 @@ export const coinsBacktrack = `// Print exact solution
 int start = V;
 printf("The coins are: \\n");
 while(start != 0) {
-    int j = backtrackHelp[start];
+    int j = solutionHelper[start];
     printf("%d ", coins[j]);
     start = start - coins[j];
 }

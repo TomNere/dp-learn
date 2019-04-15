@@ -5,7 +5,7 @@ import { FreqArraySum, GetNumbers, ValueOrIntMax, ValueOrUndefined } from 'src/h
 import { Grid, TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from "@material-ui/core/styles";
 
-import BottomedDiv from 'src/hoc/BottomedDiv';
+import BottomMarginDiv from 'src/hoc/BottomMarginDiv';
 import CustomButton from 'src/components/customComponents/CustomButton';
 import CustomTextField from 'src/components/customComponents/CustomTextField';
 import CustomTitle from 'src/hoc/CustomTitle';
@@ -14,7 +14,7 @@ import FlexOne from 'src/hoc/FlexOne';
 import FlexTwo from 'src/hoc/FlexTwo';
 import Formula from 'src/hoc/Formula';
 import SpeedSelector from 'src/components/customComponents/SpeedSelector';
-import { demoStyle } from 'src/styles/globalStyles';
+import { globalStyles } from 'src/styles/globalStyles';
 import { strings } from 'src/strings/languages';
 import { treeFormula } from 'src/dp/helpers/tree/treeStrings';
 
@@ -33,7 +33,7 @@ interface ITreeDemoState {
 }
 
 type AllProps =
-    WithStyles<typeof demoStyle>;
+    WithStyles<typeof globalStyles>;
 
 class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
 
@@ -89,9 +89,9 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
                 <CustomTitle variant='h5'>
                     {strings.tree.demo.title}
                 </CustomTitle>
-                <BottomedDiv>
+                <BottomMarginDiv>
                     <Markdown source={strings.tree.demo.brief} />
-                </BottomedDiv>
+                </BottomMarginDiv>
                 <Grid container={true} direction='row'>
                     <FlexOne>
                         <Grid container={true} direction='column'>
@@ -504,4 +504,4 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
     }
 }
 
-export default withStyles(demoStyle)(TreeDemo);
+export default withStyles(globalStyles)(TreeDemo);

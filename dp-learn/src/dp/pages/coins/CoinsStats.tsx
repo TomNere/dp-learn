@@ -4,7 +4,7 @@ import * as React from 'react';
 import { coinsDpSpaceComplex, coinsDpTimeComplex, coinsRecSpaceComplex, coinsRecTimeComplex } from 'src/dp/helpers/coins/CoinsStrings';
 import { coinsExamples, dpCoins, dpCoinsSpace, dpCoinsTime, recCoinsSpace, recCoinsTime, recursiveCoins } from 'src/dp/helpers/coins/CoinsStatsHelper';
 
-import BottomedDiv from 'src/hoc/BottomedDiv';
+import BottomMarginDiv from 'src/hoc/BottomMarginDiv';
 import ChartsAndTable from 'src/components/dpComponents/ChartsAndTable';
 import Complexity from 'src/components/dpComponents/Complexity';
 import CustomButton from 'src/components/customComponents/CustomButton';
@@ -46,9 +46,9 @@ class CoinsStats extends React.Component<any, ICoinsStatsState> {
                 <CustomTitle variant='h5'>
                     {strings.coins.stats.title}
                 </CustomTitle>
-                <BottomedDiv>
+                <BottomMarginDiv>
                     {strings.coins.stats.brief}
-                </BottomedDiv>
+                </BottomMarginDiv>
                 <Grid container={true} direction='row'>
                     <FlexOne>
                         <Grid container={true} direction='column'>

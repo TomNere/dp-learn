@@ -5,7 +5,7 @@ import { createStyles } from "@material-ui/core/styles";
 import myTheme from './index';
 
 // Style definition for all "Demo" components
-export const demoStyle = (theme: Theme) => createStyles({
+export const globalStyles = (theme: Theme) => createStyles({
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
@@ -108,5 +108,13 @@ export const demoStyle = (theme: Theme) => createStyles({
     },
     container: {
         display: 'flex'
+    },
+    center: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        display: 'block'
+    },
+    simpleList: {
+        listStyleType: 'none'
     }
 });

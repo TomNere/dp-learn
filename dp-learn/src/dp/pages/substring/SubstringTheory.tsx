@@ -1,45 +1,32 @@
 import '../../../styles/prism.css';
 
+import * as Markdown from 'react-markdown';
 import * as Prism from 'prismjs';
 import * as React from 'react';
 
-import { Grid, Paper, Typography } from '@material-ui/core';
-import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
-import { substrDynCode, substrEnhCode, substrRecCode } from 'src/dp/helpers/substring/SubstringStrings';
+import { Grid, Typography } from '@material-ui/core';
+import { WithStyles, withStyles } from '@material-ui/core/styles';
+import { substrDynCode, substrRecCode, substringDpSpaceComplex, substringDpTimeComplex, substringRecSpaceComplex, substringRecTimeComplex } from 'src/dp/helpers/substring/SubstringStrings';
 
-import BottomedDiv from 'src/hoc/BottomedDiv';
+import BottomMarginDiv from 'src/hoc/BottomMarginDiv';
 import Complexity from 'src/components/dpComponents/Complexity';
+import CustomTitle from 'src/hoc/CustomTitle';
 import FlexOne from 'src/hoc/FlexOne';
+import PaddingDiv from 'src/hoc/PaddingDiv';
+import PaddingImage from 'src/hoc/PaddingImage';
 import SourceCode from 'src/components/dpComponents/SourceCode';
+import Table1 from 'src/resources/substring/substringTable1.svg';
+import Table2 from 'src/resources/substring/substringTable2.svg';
+import Table3 from 'src/resources/substring/substringTable3.svg';
+import Tree from 'src/resources/substring/substringTree.svg';
+import { globalStyles } from 'src/styles/globalStyles';
+import { strings } from 'src/strings/languages';
 
 type AllProps =
-    WithStyles<typeof styles>;
+    WithStyles<typeof globalStyles>;
 
-const styles = (theme: Theme) => createStyles({
-    container: {
-        display: 'flex',
-        flexDirection: 'row'
-    },
-    flexChild: {
-        flex: 1,
-        padding: theme.spacing.unit * 2
-    },
-    bottomMargin: {
-        marginBottom: 15,
-    },
-    leftMargin: {
-        marginLeft: 20
-    },
-    paper: {
-        padding: theme.spacing.unit * 2,
-    },
-});
 
 class SubstringTheory extends React.Component<AllProps> {
-    public constructor(props: AllProps) {
-        super(props)
-    }
-
     public componentDidMount() {
         Prism.highlightAll();
     }
@@ -49,84 +36,128 @@ class SubstringTheory extends React.Component<AllProps> {
 
         return (
             <div>
-                {/* Title */}
-                <Typography variant={'h4'} align={'center'} className={classes.bottomMargin}>
-                    Longest common substring
-                </Typography>
-                {/* Brief */}
-                <Paper className={classes.paper}>
-                    <BottomedDiv>
-                        There are two strings <b>X</b> and <b>Y</b>. We want to find the length of the longest common substring(subsequence), e.g.: <br />
-                        <div className={classes.leftMargin}>
-                            X = "I like dynamic programm<b>ing!</b>"<br />
-                            Y = "Really? So tell me something about this cool th<b>ing!</b>"<br /><br />
-                        </div>
-                        The lenght of the longest common substring is <b>4</b> and the substring is <b>"ing!"</b>.
-                    </BottomedDiv>
-                    <hr />
-                    {/* Simple solution */}
-                    <Typography variant={'h6'} className={classes.bottomMargin}>
-                        Simple solution
-                    </Typography>
-                    <div>
-                        We have to consider all substrings of first string and check if this is a substring in second string.
-                        Consider <b>m</b> is length of the first string and <b>n</b> length of the second string, there will be <b>O(m^2)</b> substrings in first string.
-                        We can check for matching substring in <b>O(n)</b> time.
-                    </div>
-                    <Complexity time={'O(m^2 * n)'} />
-                    <hr />
-                    <Grid>
-                        <FlexOne>
-                            <Typography variant={'h6'} align={'center'} className={classes.bottomMargin}>
-                                Using recursion
+                <CustomTitle variant='h5'>
+                    {strings.substring.theory.title}
+                </CustomTitle>
+                {/* What is longest common substring problem */}
+                <BottomMarginDiv>
+                    <Markdown source={strings.rod.theory.brief.b1} />
+
+                    {strings.theoryGlobal.eg}
+                    <ul className={classes.simpleList}>
+                        <li>X = {"'Unicasting'"}</li>
+                        <li>Y = {"'unitTesting'"}</li>
+                    </ul>
+
+                    {strings.rod.theory.brief.b2}
+                    <ul className={classes.simpleList}>
+                        <li><Markdown source={strings.substring.theory.brief.strX} /></li>
+                        <li><Markdown source={strings.substring.theory.brief.strY} /></li>
+                    </ul>
+                    <Markdown source={strings.substring.theory.brief.b3} />
+                    <Markdown source={strings.substring.theory.brief.b4} />
+                </BottomMarginDiv>
+                <hr />
+                <Grid container={true} direction='row'>
+                    {/* Recursive solution */}
+                    <FlexOne>
+                        <PaddingDiv>
+                            <Typography variant={'h5'} align={'center'} >
+                                {strings.global.recursiveSolution}
                             </Typography>
 
-                            <div>
-                                This solution seems pretty simple. Space complexity is only on lengths of strings.
-                                But if the strings has no common substring, time complexity can grow nearly to <b>2^n</b> considering <b>m == n</b>,
-                                so this method is very inefficient.
-                            </div>
-                            <Complexity time={'O(n^2'} space={'O(m + n)'} />
+                            <BottomMarginDiv>
+                                <Markdown source={strings.substring.theory.recursion1} />
+                                <Markdown source={strings.substring.theory.recTime} />
+                                <Markdown source={strings.substring.theory.recSpace} />
+                            </BottomMarginDiv>
+
+                            <BottomMarginDiv>
+                                <Complexity time={substringRecTimeComplex} space={substringRecSpaceComplex} />
+                            </BottomMarginDiv>
+
+                            {/* Recursion Tree */}
+                            <Typography variant={'h6'} className={classes.bottomMargin}>
+                                {strings.global.recusionTree}
+                            </Typography>
+                            <PaddingImage>
+                                <img src={Tree} alt="SubstringRecTree" />
+                            </PaddingImage>
                             <SourceCode code={substrRecCode} />
-                        </FlexOne>
-                        <FlexOne>
-                            <Typography variant={'h6'} align={'center'} className={classes.bottomMargin}>
-                                Dynamic programming
+                        </PaddingDiv>
+                    </FlexOne>
+
+                    {/* Dynamic programming */}
+                    <FlexOne>
+                        <PaddingDiv>
+                            <Typography variant={'h5'} align={'center'}>
+                                {strings.global.dynProgSolution}
                             </Typography>
 
-                            <div>
-                                Using this method we need to find the length of longest common <b>suffix</b> for substrings of both strings.
-                                These length's are stored in a table. At the end cell with the biggest value is our result. <br />
-                                Value in column is compared to value in row. Default value is 0, but when a match is detected, value from
-                                previous column and row is incremented (suffix is incremented). We need to fill <b>M x N</b> table.
-                            </div>
-                            <Complexity time={'O(m * n)'} space={'O(m * n)'} />
+                            <BottomMarginDiv>
+                                <Markdown source={strings.substring.theory.dynProg1} />
+                                <Markdown source={strings.substring.theory.dpTime} />
+                                <Markdown source={strings.substring.theory.dpSpace} />
+                            </BottomMarginDiv>
+
+                            <BottomMarginDiv>
+                                <Complexity time={substringDpTimeComplex} space={substringDpSpaceComplex} />
+                            </BottomMarginDiv>
+
+                            {/* Table examples */}
+                            <Typography variant={'h6'} className={classes.bottomMargin}>
+                                {strings.global.tables}
+                            </Typography>
+
+                            <BottomMarginDiv>
+                                <Typography variant={'subtitle1'}>
+                                    <ul className={classes.simpleList}>
+                                        <li>X = {"'dog'"}</li>
+                                        <li>Y = {"'frog'"}</li>
+                                        <li>{strings.substring.theory.zero}</li>
+                                    </ul>
+                                </Typography>
+                            </BottomMarginDiv>
+
+                            <PaddingImage>
+                                <img src={Table1} width='350' />
+                            </PaddingImage>
+
+                            <BottomMarginDiv>
+                                <Typography variant={'subtitle1'} >
+                                    <ul className={classes.simpleList}>
+                                        <li>X = {"'dog'"}</li>
+                                        <li>Y = {"'frog'"}</li>
+                                        <li>{strings.substring.theory.increment}</li>
+                                    </ul>
+                                </Typography>
+                            </BottomMarginDiv>
+
+                            <PaddingImage>
+                                <img src={Table2} width='350' />
+                            </PaddingImage>
+
+                            <BottomMarginDiv>
+                                <Typography variant={'subtitle1'} >
+                                    <ul className={classes.simpleList}>
+                                        <li>X = {"'dog'"}</li>
+                                        <li>Y = {"'dig'"}</li>
+                                        <li>{strings.substring.theory.one}</li>
+                                    </ul>
+                                </Typography>
+                            </BottomMarginDiv>
+
+                            <PaddingImage>
+                                <img src={Table3} width='350' />
+                            </PaddingImage>
 
                             <SourceCode code={substrDynCode} />
-                            <Typography variant={'subtitle1'} className={classes.bottomMargin}>
-                                Enhancement
-                            </Typography>
-                            <div>
-                                The space used by this solution can be significantly reduced.
-                                Suppose we are at position <b>table[i][j]</b>. <br />
-                                Now if <b>x[i-1] == x[j-1]</b>, then we add the value of <b>table[i-1][j-1]</b>
-                                to our result. That is we add value from previous row and value for all other rows below the previous row are never used.
-                                So, at a time we are using only two consecutive rows.
-                                This observation can be used to reduce the space required to find length of longest common substring.
-                                Instead of creating a matrix of size <b>m*n</b>, we create a matrix of size <b>2*n</b>.
-                                A variable currRow is used to represent that either row 0 or row 1 of this matrix is currently used to find length.
-                                Initially row 0 is used as current row for the case when length of string x is zero. At the end of each iteration,
-                                current row is made previous row and previous row is made new current row.
-                            </div>
-                            <Complexity time={'O(m * n)'} space={'O(2 * n)'} />
-                            <SourceCode code={substrEnhCode} />
-                        </FlexOne>
-
-                    </Grid>
-                </Paper>
+                        </PaddingDiv>
+                    </FlexOne>
+                </Grid>
             </div>
         );
     }
 }
 
-export default withStyles(styles)(SubstringTheory);
+export default withStyles(globalStyles)(SubstringTheory);

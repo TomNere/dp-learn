@@ -43,7 +43,8 @@ export const dpSubstringTime = (length1: number, length2: number) => {
 }
 
 export const recSubstringTime = (length1: number, length2: number) => {
-    // TODO
+    // TODO check
+    Math.pow(2, length1 + length2);
     return 0;
 }
 

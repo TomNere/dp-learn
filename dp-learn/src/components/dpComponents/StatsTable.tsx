@@ -3,13 +3,13 @@ import * as React from 'react';
 import { Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 
-import BottomedDiv from 'src/hoc/BottomedDiv';
-import { demoStyle } from 'src/styles/globalStyles';
+import BottomMarginDiv from 'src/hoc/BottomMarginDiv';
+import { globalStyles } from 'src/styles/globalStyles';
 import { strings } from 'src/strings/languages';
 
 type AllProps =
     IStatsTableProps &
-    WithStyles<typeof demoStyle>;
+    WithStyles<typeof globalStyles>;
 
 interface IStatsTableProps {
     data: IStatsTableData[]
@@ -30,7 +30,7 @@ class StatsTable extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;
         return (
-            <BottomedDiv>
+            <BottomMarginDiv>
                 <Table className={classes.table}>
                     <TableBody>
                         {this.getTimeAndSpace()}
@@ -38,7 +38,7 @@ class StatsTable extends React.Component<AllProps> {
                         {this.getValues()}
                     </TableBody>
                 </Table>
-            </BottomedDiv>
+            </BottomMarginDiv>
         );
     }
 
@@ -155,4 +155,4 @@ class StatsTable extends React.Component<AllProps> {
     }
 }
 
-export default withStyles(demoStyle)(StatsTable);
+export default withStyles(globalStyles)(StatsTable);

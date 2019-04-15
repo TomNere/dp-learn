@@ -4,7 +4,7 @@ import { GetNumbers, ValueOrIntMax } from 'src/helpers/Helpers';
 import { Grid, TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 
-import BottomedDiv from 'src/hoc/BottomedDiv';
+import BottomMarginDiv from 'src/hoc/BottomMarginDiv';
 import CustomButton from 'src/components/customComponents/CustomButton';
 import CustomTextField from 'src/components/customComponents/CustomTextField';
 import CustomTitle from 'src/hoc/CustomTitle';
@@ -14,7 +14,7 @@ import FlexTwo from 'src/hoc/FlexTwo';
 import Formula from 'src/hoc/Formula';
 import SpeedSelector from 'src/components/customComponents/SpeedSelector';
 import { coinsFormula } from 'src/dp/helpers/coins/CoinsStrings';
-import { demoStyle } from 'src/styles/globalStyles';
+import { globalStyles } from 'src/styles/globalStyles';
 import { strings } from 'src/strings/languages';
 
 interface ICoinsDemoState {
@@ -31,7 +31,7 @@ interface ICoinsDemoState {
 }
 
 type AllProps =
-    WithStyles<typeof demoStyle>;
+    WithStyles<typeof globalStyles>;
 
 // Minimum coins problem demo
 class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
@@ -83,9 +83,9 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
                 <CustomTitle variant='h5'>
                     {strings.coins.demo.title}
                 </CustomTitle>
-                <BottomedDiv>
+                <BottomMarginDiv>
                     {strings.coins.demo.brief}
-                </BottomedDiv>
+                </BottomMarginDiv>
                 <Grid direction='row' container={true}>
                     <FlexOne>
                         <Grid direction='column' container={true}>
@@ -480,4 +480,4 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
     }
 }
 
-export default withStyles(demoStyle)(CoinsDemo);
+export default withStyles(globalStyles)(CoinsDemo);

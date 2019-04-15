@@ -5,7 +5,7 @@ import { GetNumbers, StrToNumArray } from 'src/helpers/Helpers';
 import { dpTree, dpTreeSpace, dpTreeTime, recTreeSpace, recTreeTime, recursiveTree, treeExamples } from 'src/dp/helpers/tree/TreeStatsHelper';
 import { treeDpSpaceComplex, treeDpTimeComplex, treeRecSpaceComplex, treeRecTimeComplex } from 'src/dp/helpers/tree/treeStrings';
 
-import BottomedDiv from 'src/hoc/BottomedDiv';
+import BottomMarginDiv from 'src/hoc/BottomMarginDiv';
 import ChartsAndTable from 'src/components/dpComponents/ChartsAndTable';
 import Complexity from 'src/components/dpComponents/Complexity';
 import CustomButton from 'src/components/customComponents/CustomButton';
@@ -47,14 +47,14 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
                 <CustomTitle variant='h5'>
                     {strings.tree.stats.title}
                 </CustomTitle>
-                <BottomedDiv>
+                <BottomMarginDiv>
                     {strings.tree.stats.brief}
-                </BottomedDiv>
+                </BottomMarginDiv>
                 <Grid container={true} direction='row'>
                     <FlexOne>
-                        <BottomedDiv>
+                        <BottomMarginDiv>
                         <CustomTextField label={`${strings.tree.arrayOfF} (max. 30)`} value={this.state.givenFreqs} onChange={this.handleFreqs} />
-                        </BottomedDiv>
+                        </BottomMarginDiv>
                         <CustomButton onClick={this.drawStats} label={strings.global.evaluateStats} />
                     </FlexOne>
 

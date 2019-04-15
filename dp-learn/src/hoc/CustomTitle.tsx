@@ -15,12 +15,9 @@ interface ITitleProps {
 }
 
 const styles = (theme: Theme) => createStyles({
-    varianth5: {
+    margin: {
         marginBottom: theme.spacing.unit * 2,
         marginTop: theme.spacing.unit * 2,
-    },
-    varianth6: {
-        margin: theme.spacing.unit * 2,
     },
 });
 
@@ -32,12 +29,12 @@ class CustomTitle extends React.Component<AllProps> {
         return (
             <div>
                 {this.props.variant === 'h5' &&
-                    <Typography variant={'h5'} className={classes.varianth5}>
+                    <Typography variant={'h5'} className={classes.margin}>
                         {this.props.children}
                     </Typography>
                 }
                 {this.props.variant === 'h6' &&
-                    <Typography variant={'h6'} className={classes.varianth6}>
+                    <Typography variant={'h6'} className={classes.margin}>
                         {this.props.children}
                     </Typography>
                 }

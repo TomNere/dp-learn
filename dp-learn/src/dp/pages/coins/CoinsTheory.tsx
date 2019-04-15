@@ -3,133 +3,158 @@ import * as Prism from 'prismjs';
 import * as React from 'react';
 
 import { Grid, Typography } from '@material-ui/core';
-import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
-import { coinsDynCode, coinsRecCode } from 'src/dp/helpers/coins/CoinsStrings';
+import { WithStyles, withStyles } from '@material-ui/core/styles';
+import { coinsDpSpaceComplex, coinsDpTimeComplex, coinsDynCode, coinsRecCode, coinsRecSpaceComplex, coinsRecTimeComplex } from 'src/dp/helpers/coins/CoinsStrings';
 
-import BottomedDiv from 'src/hoc/BottomedDiv';
-import CoinsTree from 'src/resources/coins/coinsTree.png';
+import BottomMarginDiv from 'src/hoc/BottomMarginDiv';
 import Complexity from 'src/components/dpComponents/Complexity';
 import CustomTitle from 'src/hoc/CustomTitle';
 import FlexOne from 'src/hoc/FlexOne';
+import PaddingDiv from 'src/hoc/PaddingDiv';
+import PaddingImage from 'src/hoc/PaddingImage';
 import SourceCode from 'src/components/dpComponents/SourceCode';
-import Table1 from 'src/resources/coins/coinsTable1.png';
-import Table2 from 'src/resources/coins/coinsTable2.png';
+import Table1En from 'src/resources/coins/coinsTable1En.svg';
+import Table1Sk from 'src/resources/coins/coinsTable1Sk.svg';
+import Table2En from 'src/resources/coins/coinsTable2En.svg';
+import Table2Sk from 'src/resources/coins/coinsTable2Sk.svg';
+import Tree from 'src/resources/coins/coinsTree.svg';
+import { globalStyles } from 'src/styles/globalStyles';
 import { strings } from 'src/strings/languages';
 
 type AllProps =
-    WithStyles<typeof styles>;
-
-const styles = (theme: Theme) => createStyles({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    center: {
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        display: 'block'
-    },
-    leftMargin: {
-        marginLeft: 20
-    },
-    bottomMargin: {
-        marginBottom: 15,
-    },
-    paper: {
-        padding: theme.spacing.unit * 2,
-    },
-    flexChild: {
-        flex: 1,
-        padding: theme.spacing.unit * 2
-    },
-});
+    WithStyles<typeof globalStyles>;
 
 class CoinsTheory extends React.Component<AllProps> {
-    public constructor(props: AllProps) {
-        super(props)
-    }
-
     public componentDidMount() {
         Prism.highlightAll();
     }
 
     public render() {
         const { classes } = this.props;
-
         return (
             <div>
-                {/* Brief */}
-                <BottomedDiv>
-                    {/* Title */}
-                    <CustomTitle variant='h5'>
-                        {strings.coins.theory.title}
-                    </CustomTitle>
-                    <Markdown source={strings.coins.brief.b1} />
-                    <div className={[classes.leftMargin, classes.bottomMargin].join(' ')}>
-                        C = {'{ 2, 3, 5 }'}<br />
-                        V = 7
-                            </div>
-                    <Markdown source={strings.coins.brief.b2} />
-                    <div className={classes.leftMargin}>
-                        <ul>
-                            <li>7 = 2 + 2 + 3</li>
-                            <li>7 = 2 + 5</li>
-                        </ul>
-                    </div>
-                    <Markdown source={strings.coins.brief.b3} />
-                </BottomedDiv>
+                <CustomTitle variant='h5'>
+                    {strings.coins.theory.title}
+                </CustomTitle>
+                {/* What is minimum number of coins problem */}
+                <BottomMarginDiv>
+                    <Markdown source={strings.coins.theory.brief.b1} />
+
+                    {strings.theoryGlobal.eg}
+                    <ul className={classes.simpleList}>
+                        <li>C = {'{ 2, 3, 5 }'}</li>
+                        <li>V = 7</li>
+                    </ul>
+
+                    {strings.coins.theory.brief.b2}
+                    <ul className={classes.simpleList}>
+                        <li>7 = 2 + 2 + 3</li>
+                        <li>7 = 2 + 5</li>
+                    </ul>
+                    <Markdown source={strings.coins.theory.brief.b3} />
+                </BottomMarginDiv>
                 <hr />
-                <Grid>
+                <Grid container={true} direction='row'>
                     {/* Recursive solution */}
                     <FlexOne>
-                        <Typography variant={'h5'} align={'center'} className={classes.bottomMargin}>
-                            {strings.global.recursiveSolution}
-                        </Typography>
+                        <PaddingDiv>
+                            <Typography variant={'h5'} align={'center'} >
+                                {strings.global.recursiveSolution}
+                            </Typography>
 
-                        <Markdown source={strings.coins.theory.recursion1} className={classes.bottomMargin} />
+                            <BottomMarginDiv>
+                                <Markdown source={strings.coins.theory.recursion1} />
+                                <Markdown source={strings.coins.theory.recTime} />
+                                <Markdown source={strings.coins.theory.recSpace} />
+                            </BottomMarginDiv>
 
-                        <Complexity time={'O(N^V)'} space={'O(N + 1)'} />
-                        {/* Recursion Tree */}
-                        <Typography variant={'h6'} className={classes.bottomMargin}>
-                            {strings.global.recusionTree}
-                        </Typography>
-                        <BottomedDiv>
-                            <img src={CoinsTree} alt="MinimumCoinsRecTree" />
-                        </BottomedDiv>
-                        <SourceCode code={coinsRecCode} />
+                            <BottomMarginDiv>
+                                <Complexity time={coinsRecTimeComplex} space={coinsRecSpaceComplex} />
+                            </BottomMarginDiv>
+
+                            {/* Recursion Tree */}
+                            <Typography variant={'h6'} className={classes.bottomMargin}>
+                                {strings.global.recusionTree}
+                            </Typography>
+                            <PaddingImage>
+                                <img src={Tree} alt="MinimumCoinsRecTree" />
+                            </PaddingImage>
+                            <SourceCode code={coinsRecCode} />
+                        </PaddingDiv>
                     </FlexOne>
 
                     {/* Dynamic programming */}
                     <FlexOne>
-                        <Typography variant={'h5'} align={'center'} className={classes.bottomMargin}>
-                            {strings.global.dynProgSolution}
-                        </Typography>
-                        <BottomedDiv>
-                            {strings.coins.theory.dynProg1}
-                        </BottomedDiv>
-                        <Complexity time={'O(N*V)'} space={'O(N + (V + 1) + 1)'} />
-                        {/* Table example 1 */}
-                        <Typography variant={'subtitle1'} className={classes.bottomMargin}>
-                            {strings.coins.coins} 1, 2, 5 <br />
-                            {strings.coins.value} 4
+                        <PaddingDiv>
+                            <Typography variant={'h5'} align={'center'}>
+                                {strings.global.dynProgSolution}
                             </Typography>
-                        <BottomedDiv>
-                            <img src={Table1} width={500} alt="CoinsTable1" />
-                        </BottomedDiv>
-                        {/* Table example 2 */}
-                        <Typography variant={'subtitle1'} className={classes.bottomMargin}>
-                            {strings.coins.coins}: 1, 2, 4 <br />
-                            {strings.coins.value}: 4
+
+                            <BottomMarginDiv>
+                                <Markdown source={strings.coins.theory.dynProg1} />
+                                <Markdown source={strings.coins.theory.dpTime} />
+                                <Markdown source={strings.coins.theory.dpSpace} />
+                            </BottomMarginDiv>
+
+                            <BottomMarginDiv>
+                                <Complexity time={coinsDpTimeComplex} space={coinsDpSpaceComplex} />
+                            </BottomMarginDiv>
+
+                            {/* Table examples */}
+                            <Typography variant={'h6'} className={classes.bottomMargin}>
+                                {strings.global.tables}
                             </Typography>
-                        <BottomedDiv>
-                            <img src={Table2} width={500} alt="CoinsTable2" />
-                        </BottomedDiv>
-                        <SourceCode code={coinsDynCode} />
+
+                            <BottomMarginDiv>
+                                <Typography variant={'subtitle1'}>
+                                    <ul className={classes.simpleList}>
+                                        <li>C = {'{ 1, 2, 5 }'}</li>
+                                        <li>V = 4</li>
+                                    </ul>
+                                </Typography>
+                            </BottomMarginDiv>
+
+                            <PaddingImage>
+                                {strings.getLanguage() === 'en' &&
+                                    <img src={Table1En} width='500' />
+                                }
+                                {strings.getLanguage() === 'sk' &&
+                                    <img src={Table1Sk} width='500' />
+                                }
+                            </PaddingImage>
+
+                            <BottomMarginDiv>
+                                <Typography variant={'subtitle1'} >
+                                    <ul className={classes.simpleList}>
+                                        <li>C = {'{ 1, 2, 4 }'}</li>
+                                        <li>V = 4</li>
+                                    </ul>
+                                </Typography>
+                            </BottomMarginDiv>
+
+                            <PaddingImage>
+                                {strings.getLanguage() === 'en' &&
+                                    <img src={Table2En}width='500' />
+                                }
+                                {strings.getLanguage() === 'sk' &&
+                                    <img src={Table2Sk} width='500' />
+                                }
+                            </PaddingImage>
+
+                            <SourceCode code={coinsDynCode} />
+                        </PaddingDiv>
                     </FlexOne>
                 </Grid>
+                <CustomTitle variant='h5'>
+                    {strings.global.similarProblems}
+                </CustomTitle>
+                <ul>
+                    <li><b>{strings.coins.theory.rod}</b> ({strings.global.partOfApp})</li>
+                    <li>{strings.coins.theory.knapsack}</li>  
+                </ul>
             </div>
         );
     }
 }
 
-export default withStyles(styles)(CoinsTheory);
+export default withStyles(globalStyles)(CoinsTheory);

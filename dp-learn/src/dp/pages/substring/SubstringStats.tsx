@@ -4,7 +4,7 @@ import * as React from 'react';
 import { dpSubstring, dpSubstringSpace, dpSubstringTime, recSubstringSpace, recSubstringTime, recursiveSubstring, substringExamples } from 'src/dp/helpers/substring/SubstringStatsHelper';
 import { substringDpSpaceComplex, substringDpTimeComplex, substringRecSpaceComplex, substringRecTimeComplex } from 'src/dp/helpers/substring/SubstringStrings';
 
-import BottomedDiv from 'src/hoc/BottomedDiv';
+import BottomMarginDiv from 'src/hoc/BottomMarginDiv';
 import ChartsAndTable from 'src/components/dpComponents/ChartsAndTable';
 import Complexity from 'src/components/dpComponents/Complexity';
 import CustomButton from 'src/components/customComponents/CustomButton';
@@ -44,9 +44,9 @@ class SubstringStats extends React.Component<any, ISubstringStatsState> {
                 <CustomTitle variant='h5'>
                     {strings.substring.stats.title}
                 </CustomTitle>
-                <BottomedDiv>
+                <BottomMarginDiv>
                     <Markdown source={strings.substring.stats.brief} />
-                </BottomedDiv>
+                </BottomMarginDiv>
                 <Grid container={true} direction='row'>
                     <FlexOne>
                         <Grid container={true} direction='column'>

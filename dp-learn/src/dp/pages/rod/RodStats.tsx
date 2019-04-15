@@ -4,7 +4,7 @@ import * as React from 'react';
 import { dpRod, dpRodSpace, dpRodTime, recRodSpace, recRodTime, recursiveRod, rodExamples } from 'src/dp/helpers/rod/RodStatsHelper';
 import { rodDpSpaceComplex, rodDpTimeComplex, rodRecSpaceComplex, rodRecTimeComplex } from 'src/dp/helpers/rod/RodStrings';
 
-import BottomedDiv from 'src/hoc/BottomedDiv';
+import BottomMarginDiv from 'src/hoc/BottomMarginDiv';
 import ChartsAndTable from 'src/components/dpComponents/ChartsAndTable';
 import Complexity from 'src/components/dpComponents/Complexity';
 import CustomButton from 'src/components/customComponents/CustomButton';
@@ -45,14 +45,14 @@ class RodStats extends React.Component<any, IRodStatsState> {
                 <CustomTitle variant='h5'>
                     {strings.rod.stats.title}
                 </CustomTitle>
-                <BottomedDiv>
+                <BottomMarginDiv>
                     {strings.rod.stats.brief}
-                </BottomedDiv>
+                </BottomMarginDiv>
                 <Grid container={true} direction='row'>
                     <FlexOne>
-                        <BottomedDiv>
+                        <BottomMarginDiv>
                             <CustomTextField label={`${strings.rod.prices} (max. 20)`} value={this.state.givenPrices} onChange={this.handlePrices} />
-                        </BottomedDiv>
+                        </BottomMarginDiv>
                         <CustomButton onClick={this.drawStats} label={strings.global.evaluateStats} />
                     </FlexOne>
 
