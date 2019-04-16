@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import { GetNumbers, StrToNumArray } from 'src/helpers/Helpers';
 import { dpTree, dpTreeSpace, dpTreeTime, recTreeSpace, recTreeTime, recursiveTree, treeExamples } from 'src/dp/helpers/tree/TreeStatsHelper';
-import { treeDpSpaceComplex, treeDpTimeComplex, treeRecSpaceComplex, treeRecTimeComplex } from 'src/dp/helpers/tree/treeStrings';
+import { treeDpSpaceComplex, treeDpTimeComplex, treeRecSpaceComplex, treeRecTimeComplex } from 'src/dp/helpers/tree/TreeStrings';
 
 import BottomMarginDiv from 'src/hoc/BottomMarginDiv';
 import ChartsAndTable from 'src/components/dpComponents/ChartsAndTable';
@@ -36,7 +36,7 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
     public constructor(props: any) {
         super(props)
         this.state = {
-            givenFreqs: '2,4,6,8',
+            givenFreqs: strings.tree.freqsExample,
             statsVisible: false
         }
     }

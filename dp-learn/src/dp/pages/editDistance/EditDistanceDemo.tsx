@@ -342,26 +342,23 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
         for (let i = 0; i <= this.LENGTH1; i++) {
             table[i] = [];
             for (let j = 0; j <= this.LENGTH2; j++) {
-                // If first string is empty, only option is to 
-                // insert all characters of second string 
+                // First string is empty, insert all characters of second string 
                 if (i === 0) {
                     table[i][j] = j;  // Min. operations = j 
                 }
 
-                // If second string is empty, only option is to 
-                // remove all characters of second string 
+                // Second string is empty, remove all characters of first string 
                 else if (j === 0) {
                     table[i][j] = i; // Min. operations = i 
                 }
 
-                // If last characters are same, ignore last char 
-                // and recur for remaining string 
+                // Last characters same, continue to next characters
                 else if (this.state.stringX[i - 1] === this.state.stringY[j - 1]) {
                     table[i][j] = table[i - 1][j - 1];
                 }
 
-                // If the last character is different, consider all 
-                // possibilities and find the minimum 
+                // Last character is different, try all
+                // possibilities and find the minimum
                 else {
                     table[i][j] = 1 + Min(table[i][j - 1],  // Insert 
                         table[i - 1][j],  // Remove 

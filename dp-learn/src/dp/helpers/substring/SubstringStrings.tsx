@@ -1,8 +1,11 @@
-export const substrDynCode = `// Returns length of longest common substring
-// x - string X
-// y - string Y
+export const substrDynCode = `
+// Global variables
+char* X;
+char* Y;
+
+// Returns length of longest common substring
 // L1, L2 - lengths of strings
-int commonSubstr(char* x, char* y, int L1, int L2) {
+int commonSubstr(int L1, int L2) {
     // Table (two-dimensional array) for storing values
     int table[L1][L2];
 
@@ -15,8 +18,7 @@ int commonSubstr(char* x, char* y, int L1, int L2) {
         for (int j = 0; j <= len2; j++) {
 
             // Match!
-            if (x[i] == x[j])
-            {
+            if (X[i] == Y[j]) {
                 // Assign 1
                 if (i == 0 || j == 0) {
                     table[i][j]
@@ -33,8 +35,7 @@ int commonSubstr(char* x, char* y, int L1, int L2) {
                 }
             }
             // No match
-            else
-            {
+            else {
                 table[i, j] = 0;
             }
         }
@@ -42,7 +43,7 @@ int commonSubstr(char* x, char* y, int L1, int L2) {
 
     // Full solution
     for (int i = table[row][col] - 1; i >= 0; i--) {
-        printf("%c", x[row - i]);
+        printf("%c", X[row - i]);
     }
     printf("\\n");
 

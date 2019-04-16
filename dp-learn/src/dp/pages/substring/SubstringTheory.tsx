@@ -25,7 +25,6 @@ import { strings } from 'src/strings/languages';
 type AllProps =
     WithStyles<typeof globalStyles>;
 
-
 class SubstringTheory extends React.Component<AllProps> {
     public componentDidMount() {
         Prism.highlightAll();
@@ -33,7 +32,6 @@ class SubstringTheory extends React.Component<AllProps> {
 
     public render() {
         const { classes } = this.props;
-
         return (
             <div>
                 <CustomTitle variant='h5'>
@@ -67,7 +65,7 @@ class SubstringTheory extends React.Component<AllProps> {
                             </Typography>
 
                             <BottomMarginDiv>
-                                <Markdown source={strings.substring.theory.recursion1} />
+                                <Markdown source={strings.substring.theory.recursion} />
                                 <Markdown source={strings.substring.theory.recTime} />
                                 <Markdown source={strings.substring.theory.recSpace} />
                             </BottomMarginDiv>
@@ -95,7 +93,7 @@ class SubstringTheory extends React.Component<AllProps> {
                             </Typography>
 
                             <BottomMarginDiv>
-                                <Markdown source={strings.substring.theory.dynProg1} />
+                                <Markdown source={strings.substring.theory.dynProg} />
                                 <Markdown source={strings.substring.theory.dpTime} />
                                 <Markdown source={strings.substring.theory.dpSpace} />
                             </BottomMarginDiv>

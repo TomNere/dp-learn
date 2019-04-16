@@ -4,6 +4,7 @@ import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/s
 
 import AppBar from '@material-ui/core/AppBar';
 import { Button } from '@material-ui/core';
+import Cookies from 'universal-cookie';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import myTheme from 'src/styles/index';
@@ -47,6 +48,13 @@ const styles = (theme: Theme) => createStyles({
 class MenuHeader extends React.Component<AllProps> {
     public constructor(props: AllProps) {
         super(props);
+        
+        // Set language
+        const cookies = new Cookies();
+        const language = cookies.get('language');
+        if (language !== undefined && language !== strings.getLanguage()) {
+            this.props.onLanguageChange();
+        }
     }
 
     public render() {

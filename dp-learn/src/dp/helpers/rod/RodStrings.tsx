@@ -1,6 +1,6 @@
 export const rodRecCode = `// Return best obtainable price
-prices[] - array of prices of rod length 1,2,3, ...
-arrSize - number of prices
+// prices[] - array of prices of rod length 1,2,3, ...
+// arrSize - number of prices
 int cuttingRod(int prices[], int n) {
     // Base case (no prices given)
     if (arrSize == 0) {
@@ -19,8 +19,8 @@ int cuttingRod(int prices[], int n) {
 }`;
 
 export const rodDynCode = `// Return best obtainable price
-prices[] - array of prices of rod length 1,2,3, ...
-n - number of prices
+// prices[] - array of prices of rod length 1,2,3, ...
+// n - number of prices
 int cuttingRod(int prices[], int arrSize) {
     // Best price for length i will be in table[i]
     int table[arrSize + 1];

@@ -16,7 +16,7 @@ import Formula from 'src/hoc/Formula';
 import SpeedSelector from 'src/components/customComponents/SpeedSelector';
 import { globalStyles } from 'src/styles/globalStyles';
 import { strings } from 'src/strings/languages';
-import { treeFormula } from 'src/dp/helpers/tree/treeStrings';
+import { treeFormula } from 'src/dp/helpers/tree/TreeStrings';
 
 interface ITreeDemoState {
     speed: number
@@ -69,8 +69,8 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
     public constructor(props: AllProps) {
         super(props)
         this.state = {
-            givenKeys: '1,2,3,4',
-            givenFreqs: '2,4,6,8',
+            givenKeys: strings.tree.keysExample,
+            givenFreqs: strings.tree.freqsExample,
             speed: 1,
             inProgress: false,
             tableVisible: false,
@@ -425,7 +425,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
 
             heading.push(
                 <TableCell key={'columnName' + i.toString()} className={classNames.join(' ')}>
-                    {`${strings.tree.demo.key} ${this.keys[i]}`}
+                    {`${strings.tree.demo.key} ${this.keys[i]} (${this.freqs[i]})`}
                 </TableCell>);
         }
 
@@ -447,7 +447,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
             // Row names
             row.push(
                 <TableCell key={`rowName ${i.toString()}`} className={classNames.join(' ')}>
-                    {`${strings.tree.demo.key} ${this.keys[i]}`}
+                    {`${strings.tree.demo.key} ${this.keys[i]} (${this.freqs[i]})`}
                 </TableCell>
             );
 

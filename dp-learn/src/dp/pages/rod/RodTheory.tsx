@@ -63,7 +63,7 @@ class RodTheory extends React.Component<AllProps> {
                             </Typography>
 
                             <BottomMarginDiv>
-                                <Markdown source={strings.rod.theory.recursion1} />
+                                <Markdown source={strings.rod.theory.recursion} />
                                 <Markdown source={strings.rod.theory.recTime} />
                                 <Markdown source={strings.rod.theory.recSpace} />
                             </BottomMarginDiv>
@@ -91,7 +91,7 @@ class RodTheory extends React.Component<AllProps> {
                             </Typography>
 
                             <BottomMarginDiv>
-                                <Markdown source={strings.rod.theory.dynProg1} />
+                                <Markdown source={strings.rod.theory.dynProg} />
                                 <Markdown source={strings.rod.theory.dpTime} />
                                 <Markdown source={strings.rod.theory.dpSpace} />
                             </BottomMarginDiv>

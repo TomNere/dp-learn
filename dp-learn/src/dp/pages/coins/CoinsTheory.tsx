@@ -63,7 +63,7 @@ class CoinsTheory extends React.Component<AllProps> {
                             </Typography>
 
                             <BottomMarginDiv>
-                                <Markdown source={strings.coins.theory.recursion1} />
+                                <Markdown source={strings.coins.theory.recursion} />
                                 <Markdown source={strings.coins.theory.recTime} />
                                 <Markdown source={strings.coins.theory.recSpace} />
                             </BottomMarginDiv>
@@ -91,7 +91,7 @@ class CoinsTheory extends React.Component<AllProps> {
                             </Typography>
 
                             <BottomMarginDiv>
-                                <Markdown source={strings.coins.theory.dynProg1} />
+                                <Markdown source={strings.coins.theory.dynProg} />
                                 <Markdown source={strings.coins.theory.dpTime} />
                                 <Markdown source={strings.coins.theory.dpSpace} />
                             </BottomMarginDiv>

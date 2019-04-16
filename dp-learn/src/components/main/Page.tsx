@@ -1,13 +1,13 @@
 import * as React from 'react';
 
 import { Divider, Drawer, List, ListItem, ListItemText, } from '@material-ui/core';
-import MenuHeader, { IOnLanguageChangeProps } from './MenuHeader';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
 import Coins from 'src/dp/pages/coins/Coins';
 import Cookies from 'universal-cookie';
 import DynamicProgramming from 'src/dp/pages/DynamicProgramming';
 import EditDistance from 'src/dp/pages/editDistance/EditDistance';
+import MenuHeader from './MenuHeader';
 import Rod from 'src/dp/pages/rod/Rod';
 import Substring from 'src/dp/pages/substring/Substring';
 import Tree from 'src/dp/pages/tree/Tree';
@@ -17,7 +17,6 @@ import { strings } from 'src/strings/languages';
 // import Substring from './examples/Substring';
 
 type AllProps =
-    IOnLanguageChangeProps &
     WithStyles<typeof styles>;
 
 type selectedItem = 'aboutDP' | 'coins' | 'rod' | 'substring' | 'editDistance' | 'tree';
@@ -98,7 +97,7 @@ class Page extends React.Component<AllProps, IPageState> {
                 {/* Left menu */}
                 <Drawer variant="permanent" classes={{ paper: classes.drawerPaper }}>
                     <div className={classes.toolbar} />
-                    <MenuHeader onLanguageChange={this.props.onLanguageChange} />
+                    <MenuHeader onLanguageChange={this.handleLanguageChange} />
                     <List className={classes.noPadding}>
                         {/* About DP */}
                         <ListItem className={this.isSelected('aboutDP')} button={true} onClick={this.handleSelectHome}>
@@ -142,6 +141,13 @@ class Page extends React.Component<AllProps, IPageState> {
                 </main>
             </div>
         );
+    }
+
+    // Handle language change
+    private handleLanguageChange = () => {
+        strings.getLanguage() === 'en' ? strings.setLanguage('sk') : strings.setLanguage('en');
+        this.cookies.set('language', strings.getLanguage());
+        this.setState({});
     }
 
     // Check if item is selected
