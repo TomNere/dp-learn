@@ -77,7 +77,7 @@ class RodTheory extends React.Component<AllProps> {
                                 {strings.global.recusionTree}
                             </Typography>
                             <PaddingImage>
-                                <img src={Tree} alt="RodRecTree" />
+                                <img src={Tree} alt="RodRecTree" width={100}/>
                             </PaddingImage>
                             <SourceCode code={rodRecCode} />
                         </PaddingDiv>

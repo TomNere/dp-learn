@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "staging": "dplearn-84b79",
+    "rc": "dp-learn"
+  }
+}

@@ -2,6 +2,7 @@
 
 export const english = {
     global: {
+        intro: 'Introduction',
         dpLearn: 'DP learn',
         dynamic: 'Dynamic',
         programming: 'programming',
@@ -65,17 +66,32 @@ export const english = {
         editDistance: 'Edit Distance',
         tree: 'Optimal binary search tree'
     },
-    dp: {
-        whatIsDpTitle: 'Čo je to Dynamické programovanie',
-        whatIsDpText: 'Dynamické programovanie (skrátene **DP**) je optimalizačná metóda, ktorá sa dá využiť pri riešení určitého typu optimalizačných úloh. Okrem toho, že je to optimalizačná metóda je DP aj programovacia technika - jeden z prístupov návrhu algoritmov. Táto webová aplikácia sa zaoberá návrhom DP algoritmov, ich grafickému znázorneniu a efektivite.',
-        mainPrinciplesTitle: 'Hlavné princípy',
-        mainPrinciplesText: 'Pri tvorbe DP algoritmu vychádzame väčšinou z jednoduchého rekurzívneho algoritmu. Aby malo zmysel vytvárať DP algoritmus, musí mať rekurzívne riešenie 2 vlastnosti: **optimálnu subštruktúru** a **opakovanie podproblémov**.',
-        optSubstructTitle: 'Optimálna subštruktúra',
-        optSubstructText: 'Pôvodný problém rozdelíme na podproblémy. Ak sa "skladaním" výsledkov jednotlivých podproblémov dá získať riešenie pôvodného problému, hovoríme, že riešenie má **optimálnu subštruktúru**.',
-        repeatingTitle: 'Opakovanie podproblémov',
-        repeatingText: 'Druhou vlastnosťou, ktorú musí rekurzívne riešenie spĺňať je **opakovanie podproblémov**. Zistiť, či sa pri rekurzívnom riešení opakujú podproblémy sa dá napríklad nakreslením **stromu rekurzívnych volaní**:',
-        prosAndConsTitle: 'Výhody a nevýhody',
-        prosAndConsText: 'Hlavná výhoda DP spočíva v tom, že využíva opakovanie sa podproblémov a preto vedie často k oveľa efektívnejšiemu a rýchlejšiemu riešeniu. Výsledky menších podproblémov sú ukladané do dátovej štruktúry (poľa alebo tabuľky). Ak algoritmus narazí znovu na podproblém, ktorý už bol predtým vyriešený, použije sa uložený výsledok. Rekurzívny algoritmus pri jednoduchom vstupe výsledok skôr ako DP algoritmus. Pri zložitom vstupe je ale DP algoritmus výrazne efektívnejší. **Exponenciálna** časová zložitosť rekurzívneho algoritmu môže byť znížená na **polynomickú**. Nevýhodou je vyššia pamäťová náročnosť z dôvodu vytvárania dátovej štruktúry na ukladanie výsledkov podproblémov.'
+    home: {
+        dpLearn: 'Webová aplikácia **DP learn** sa zaoberá technikou návrhu algoritmov s názvom **Dynamické programovanie**. Demonštruje jej princípy a výhody na konkrétnych úlohách. Pri každej úlohe je uvedená základná teória, grafické znázornenie priebehu DP algoritmu a štatistické porovnanie s rekurzívnym riešením.',
+        fitVutbr: 'FIT VUT v Brne',
+        fitVutbrHref: 'https://www.fit.vutbr.cz/',
+        whatIsDpTitle: 'Čo je to dynamické programovanie',
+        whatIsDpText1: 'Dynamické programovanie (skrátene **DP**) je optimalizačná metóda, ktorá sa dá využiť pri riešení určitého typu optimalizačných úloh. Okrem toho, že je to optimalizačná metóda je DP aj programovacia technika - jeden z prístupov návrhu algoritmov. Pri tvorbe DP algoritmu vychádzame väčšinou z jednoduchého rekurzívneho algoritmu. Aby malo zmysel vytvárať DP algoritmus, musí mať rekurzívne riešenie 2 vlastnosti:',
+        optSubstructTitle: 'optimálna subštruktúra',
+        optSubstructText: 'skladaním výsledkov podproblémov (ktoré vzniknú rozložením pôvodného problému) sa dá získať riešenie pôvodného problému',
+        repeatingTitle: 'opakovanie podproblémov',
+        repeatingText: 'pri rekurzívnom algoritme je funkcia volaná opakovane s rovnakými parametrami',
+        whatIsDpText2: 'Hlavná výhoda DP spočíva v tom, že využíva opakovanie sa podproblémov a preto vedie často k oveľa efektívnejšiemu a rýchlejšiemu riešeniu ako pri rekurzívnom algoritme. Výsledky menších podproblémov sú ukladané do dátovej štruktúry (poľa alebo tabuľky). Ak algoritmus narazí znovu na podproblém, ktorý už bol predtým vyriešený, použije sa uložený výsledok.',
+        partsTitle: 'Demonštrovanie princípov a výhod na úlohách',
+        partsText: 'Aplikácia obsahuje 5 optimalizačných úloh, ktoré sa dajú riešiť dynamickým programovaním. Po zvolení konkrétnej úlohy sú k dispozícii 3 záložky:',
+        theoryTitle: 'Teória',
+        theoryText: 'Obsahuje zadanie úlohy s konkrétnym príkladom. Nasleduje popis rekurzívneho a DP algoritmu a ich zložitosti. Pri rekurzívnom algoritme sa nachádza aj grafom rekurzívnych volaní, aby sme dokázali, že sa podproblémy opakujú. Pri DP algoritme je na obrázkoch vysvetlené, akým spôsobom sú vyberané hodnoty do tabuľky. K obom algoritmom sú dostupné zdrojové kódy v jazyku C. Ide vždy iba o jednu metódu a prípadné globálne premenné. V metódach sú často využívane konštanty z knižnice **limits.h** a pomocné metódy, ktoré nie je náročné doimplementovať. Na záver sú uvedené príklady ďalších optimalizačných úloh s podobným princípom vypĺňania tabuľky.',
+        demoTitle: 'Demo',
+        demoText: 'Po zadaní vstupu sa spustí DP algoritmus - vypĺňanie tabuľky. Je možné zvoliť rýchlosť vypĺnania alebo ísť krok po kroku. Po vyplnení tabuľky sa zobrazí výsledok. Nachádza sa tu aj formula, ktorá popisuje výber hodnôt do tabuľky.',
+        statsTitle: 'Štatistiky',
+        statsText: 'Po zadaní vstupu sú vykreslené grafy a tabuľka, ktoré porovnávajú zložitosť rekurzívneho a DP algoritmu. U časovej zložitosti je uvedená teoretická hodnota podľa vzorca a skutočný počet rekurzívnych volaní alebo behov cykla pri DP algoritme. Priestorová zložitosť je vypočítaná zo vzorca. Okrem štatistík pre zadaný vstup aplikácia obsahuje niekoľko "vzorových" vstupov. Pod štatistikami sa sa nachádza ich zhodnotenie.',
+        references: 'Referencie',
+        geeksTitle: 'GeeksforGeeks',
+        geeksHref: 'https://www.geeksforgeeks.org/',
+        geeksText: 'teória a zdrojové kódy k úlohám boli často inšpirované článkami na tomto portále',
+        algorithmsTitle: 'Introduction to Algorithms',
+        algorithmsHref: 'https://www.amazon.com/Introduction-Algorithms-3rd-MIT-Press/dp/0262033844',
+        algorithmsText: 'teória k dynamickému programovaniu a niektorým úlohám',
     },
     rod: {
         prices: 'Prices',
@@ -235,6 +251,8 @@ export const english = {
         arrayOfF: 'Array of frequency counts',
         keysExample: '1, 2, 3, 4',
         freqsExample: '2, 4, 6, 8',
+        keysExample2: '1, 2, 3, 4, 8, 9',
+        freqsExample2: '2, 4, 6, 8, 9, 10',
         tree: 'Tree',
         theory: {
             title: 'Optimalizovaný binárny vyhľadávací strom - teória',

@@ -39,8 +39,9 @@ const styles = (theme: Theme) => createStyles({
     whiteBackground: {
         backgroundColor: 'white'
     },
-    blueBackground: {
-        backgroundColor: myTheme.palette.secondary.main
+    tab: {
+        backgroundColor: myTheme.palette.secondary.main,
+        height: 64
     }
 });
 
@@ -69,9 +70,9 @@ class TabMenu extends React.Component<AllProps, ITabMenuState> {
             <div className={classes.root}>
                 <AppBar className={classes.appBar} position="static">
                     <Tabs value={this.state.selected} variant={'fullWidth'} onChange={this.handleTabChange} classes={{indicator: classes.whiteBackground}} >
-                        <Tab className={classes.blueBackground} label={strings.global.theory} />
-                        <Tab className={classes.blueBackground} label={strings.global.demo} />
-                        <Tab className={classes.blueBackground} label={strings.global.stats} />
+                        <Tab className={classes.tab} label={strings.global.theory}/>
+                        <Tab className={classes.tab} label={strings.global.demo} />
+                        <Tab className={classes.tab} label={strings.global.stats} />
                     </Tabs>
                 </AppBar>
                 <div className={classes.padding}>

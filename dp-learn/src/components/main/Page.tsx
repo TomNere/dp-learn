@@ -5,8 +5,8 @@ import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/s
 
 import Coins from 'src/dp/pages/coins/Coins';
 import Cookies from 'universal-cookie';
-import DynamicProgramming from 'src/dp/pages/DynamicProgramming';
 import EditDistance from 'src/dp/pages/editDistance/EditDistance';
+import Intro from 'src/dp/pages/Intro';
 import MenuHeader from './MenuHeader';
 import Rod from 'src/dp/pages/rod/Rod';
 import Substring from 'src/dp/pages/substring/Substring';
@@ -19,7 +19,7 @@ import { strings } from 'src/strings/languages';
 type AllProps =
     WithStyles<typeof styles>;
 
-type selectedItem = 'aboutDP' | 'coins' | 'rod' | 'substring' | 'editDistance' | 'tree';
+type selectedItem = 'intro' | 'coins' | 'rod' | 'substring' | 'editDistance' | 'tree';
 
 interface IPageState {
     selected: selectedItem
@@ -85,7 +85,7 @@ class Page extends React.Component<AllProps, IPageState> {
         }
         else {
             this.state = {
-                selected: 'aboutDP'
+                selected: 'intro'
             }
         }
     }
@@ -100,8 +100,8 @@ class Page extends React.Component<AllProps, IPageState> {
                     <MenuHeader onLanguageChange={this.handleLanguageChange} />
                     <List className={classes.noPadding}>
                         {/* About DP */}
-                        <ListItem className={this.isSelected('aboutDP')} button={true} onClick={this.handleSelectHome}>
-                            <ListItemText primary={strings.global.dynProg} />
+                        <ListItem className={this.isSelected('intro')} button={true} onClick={this.handleSelectIntro}>
+                            <ListItemText primary={strings.global.intro} />
                         </ListItem>
                         <Divider />
                         {/* Rod */}
@@ -132,7 +132,7 @@ class Page extends React.Component<AllProps, IPageState> {
                 </Drawer>
                 {/* Right window */}
                 <main className={classes.content}>
-                    {this.state.selected === 'aboutDP' && <DynamicProgramming />}
+                    {this.state.selected === 'intro' && <Intro />}
                     {this.state.selected === 'coins' && <Coins />}
                     {this.state.selected === 'rod' && <Rod />}
                     {this.state.selected === 'substring' && <Substring />}
@@ -157,8 +157,8 @@ class Page extends React.Component<AllProps, IPageState> {
     }
 
     // Handlers for item selection
-    private handleSelectHome = () => {
-        const selected = 'aboutDP';
+    private handleSelectIntro = () => {
+        const selected = 'intro';
         this.cookies.set('selected', selected);
         this.setState({ selected });
     }
