@@ -11,8 +11,8 @@ import MenuHeader from './specialized/MenuHeader';
 import Rod from 'src/components/content/rod/Rod';
 import Substring from 'src/components/content/substring/Substring';
 import Tree from 'src/components/content/tree/Tree';
-import myTheme from '../styles/index';
-import { strings } from 'src/strings/translations/languages';
+import { darkColor } from 'src/styles/globalStyles';
+import { strings } from 'src/strings/translations/strings';
 
 // import Substring from './examples/Substring';
 
@@ -41,23 +41,23 @@ const styles = (theme: Theme) => createStyles({
     },
     toolbar: theme.mixins.toolbar,
     selectedItem: {
-        backgroundColor: myTheme.palette.primary.main,
+        backgroundColor: darkColor,
         '& span': {
             color: theme.palette.common.white,
         },
         "&:focus": {
-            backgroundColor: myTheme.palette.primary.main,
+            backgroundColor: darkColor,
             '& span': {
                 color: theme.palette.common.white,
             },
         },
         "&:hover": {
-            backgroundColor: myTheme.palette.primary.main,
+            backgroundColor: darkColor,
         },
     },
     nonSelectedItem: {
         "&:hover": {
-            backgroundColor: myTheme.palette.primary.main,
+            backgroundColor: darkColor,
             '& span': {
                 color: theme.palette.common.white,
             },

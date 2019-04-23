@@ -5,8 +5,8 @@ import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/s
 
 import Cookies from 'universal-cookie';
 import PaddingDiv from './PaddingDiv';
-import myTheme from 'src/styles/index';
-import { strings } from 'src/strings/translations/languages';
+import { blueColor } from 'src/styles/globalStyles';
+import { strings } from 'src/strings/translations/strings';
 
 type AllProps =
     ITabMenuProps &
@@ -40,7 +40,7 @@ const styles = (theme: Theme) => createStyles({
         backgroundColor: 'white'
     },
     tab: {
-        backgroundColor: myTheme.palette.secondary.main,
+        backgroundColor: blueColor,
         height: 64
     }
 });

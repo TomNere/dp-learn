@@ -1,5 +1,5 @@
-import { ISimpleObjectParameter } from 'src/Helpers';
-import { Min } from 'src/Helpers';
+import { ISimpleObjectParameter } from 'src/statsHelpers/CoinsStatsHelper';
+import { Min } from 'src/helpers';
 
 export const recursiveEditDistance = (stringX: string, stringY: string, length1: number, length2: number, calls: ISimpleObjectParameter): number => {
     ++calls.value;

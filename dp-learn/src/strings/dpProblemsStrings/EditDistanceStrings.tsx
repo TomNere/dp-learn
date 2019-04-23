@@ -1,5 +1,4 @@
-export const editDistRecCode = `
-// Global variables
+export const editDistRecCode = `// Global variables
 char* X;
 char* Y;
 
@@ -31,8 +30,7 @@ int editDistance(int L1 ,int L2) {
                 );
 }`;
 
-export const editDistDynCode = `
-// Global variables
+export const editDistDynCode = `// Global variables
 char* X;
 char* Y;
 

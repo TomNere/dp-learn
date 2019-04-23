@@ -4,7 +4,7 @@ import { AccessTime, Storage } from '@material-ui/icons';
 import { Grid, Typography } from '@material-ui/core';
 import { WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
-import { strings } from 'src/strings/translations/languages';
+import { strings } from 'src/strings/translations/strings';
 
 type AllProps =
     IComplexityProps &

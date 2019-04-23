@@ -1,5 +1,4 @@
 import * as Markdown from 'react-markdown';
-import * as Prism from 'prismjs';
 import * as React from 'react';
 
 import { Grid, Typography } from '@material-ui/core';
@@ -12,23 +11,19 @@ import CustomTitle from 'src/components/customStyled/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
 import PaddingDiv from 'src/components/hoc/PaddingDiv';
 import PaddingImage from 'src/components/hoc/PaddingImage';
-import SourceCode from 'src/components/specialized/SourceCode';
+import SourceCode from 'src/components/hoc/SourceCode';
 import Table1En from 'src/resources/rod/rodTable1En.svg';
 import Table1Sk from 'src/resources/rod/rodTable1Sk.svg';
 import Table2En from 'src/resources/rod/rodTable2En.svg';
 import Table2Sk from 'src/resources/rod/rodTable2Sk.svg';
 import Tree from 'src/resources/rod/rodTree.svg';
 import { globalStyles } from 'src/styles/globalStyles';
-import { strings } from 'src/strings/translations/languages';
+import { strings } from 'src/strings/translations/strings';
 
 type AllProps =
     WithStyles<typeof globalStyles>;
 
 class RodTheory extends React.Component<AllProps> {
-    public componentDidMount() {
-        Prism.highlightAll();
-    }
-
     public render() {
         const { classes } = this.props;
         return (
@@ -79,7 +74,9 @@ class RodTheory extends React.Component<AllProps> {
                             <PaddingImage>
                                 <img src={Tree} alt="RodRecTree" />
                             </PaddingImage>
-                            <SourceCode code={rodRecCode} />
+                            <SourceCode>
+                                {rodRecCode}
+                            </SourceCode>
                         </PaddingDiv>
                     </FlexOne>
 
@@ -134,14 +131,16 @@ class RodTheory extends React.Component<AllProps> {
 
                             <PaddingImage>
                                 {strings.getLanguage() === 'en' &&
-                                    <img src={Table2En}width='500' />
+                                    <img src={Table2En} width='500' />
                                 }
                                 {strings.getLanguage() === 'sk' &&
                                     <img src={Table2Sk} width='500' />
                                 }
                             </PaddingImage>
 
-                            <SourceCode code={rodDynCode} />
+                            <SourceCode>
+                                {rodDynCode}
+                            </SourceCode>
                         </PaddingDiv>
                     </FlexOne>
                 </Grid>
@@ -150,7 +149,7 @@ class RodTheory extends React.Component<AllProps> {
                 </CustomTitle>
                 <ul>
                     <li><b>{strings.coins.theory.rod}</b> ({strings.global.partOfApp})</li>
-                    <li>{strings.coins.theory.knapsack}</li>  
+                    <li>{strings.coins.theory.knapsack}</li>
                 </ul>
             </div>
         );

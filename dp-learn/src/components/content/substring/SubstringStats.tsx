@@ -13,11 +13,11 @@ import CustomTitle from 'src/components/customStyled/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
 import FlexTwo from 'src/components/hoc/FlexTwo';
 import { Grid } from '@material-ui/core';
-import { ISimpleObjectParameter } from 'src/Helpers';
+import { ISimpleObjectParameter } from 'src/statsHelpers/CoinsStatsHelper';
 import { ISpaceChartData } from 'src/components/specialized/SpaceChart';
 import { IStatsTableData } from 'src/components/specialized/StatsTable';
 import { ITimeChartData } from 'src/components/specialized/TimeChart';
-import { strings } from 'src/strings/translations/languages';
+import { strings } from 'src/strings/translations/strings';
 
 interface ISubstringStatsState {
     stringX: string
@@ -26,8 +26,8 @@ interface ISubstringStatsState {
 }
 
 class SubstringStats extends React.Component<any, ISubstringStatsState> {
-    private timeStats: ITimeChartData[];
-    private spaceStats: ISpaceChartData[];
+    private timeChartStats: ITimeChartData[];
+    private spaceChartStats: ISpaceChartData[];
     private tableStats: IStatsTableData[];
 
     public constructor(props: any) {
@@ -63,7 +63,7 @@ class SubstringStats extends React.Component<any, ISubstringStatsState> {
                     </FlexTwo>
                 </Grid>
                 <br />
-                <ChartsAndTable visible={this.state.statsVisible} timeStats={this.timeStats} spaceStats={this.spaceStats} tableStats={this.tableStats} />
+                <ChartsAndTable visible={this.state.statsVisible} timeStats={this.timeChartStats} spaceStats={this.spaceChartStats} tableStats={this.tableStats} />
                 {this.state.statsVisible &&
                     <div>
                         <CustomTitle variant='h5'>
@@ -121,8 +121,8 @@ class SubstringStats extends React.Component<any, ISubstringStatsState> {
             recSpace: recSubstringSpace(length1, length2)
         }
 
-        this.spaceStats.push({ name, rec: data.recSpace, dp: data.dpSpace });
-        this.timeStats.push({ name, recTheor: data.recTheorTime, rec: recCalls, dpTheor: data.dpTheorTime, dp: dpCalls });
+        this.spaceChartStats.push({ name, rec: data.recSpace, dp: data.dpSpace });
+        this.timeChartStats.push({ name, recTheor: data.recTheorTime, rec: recCalls, dpTheor: data.dpTheorTime, dp: dpCalls });
         this.tableStats.push(data);
 
         for (const example of substringExamples) {
@@ -152,15 +152,15 @@ class SubstringStats extends React.Component<any, ISubstringStatsState> {
                 recSpace: recSubstringSpace(length1, length2)
             }
 
-            this.spaceStats.push({ name, rec: data.recSpace, dp: data.dpSpace });
-            this.timeStats.push({ name, recTheor: data.recTheorTime, rec: recCalls, dpTheor: data.dpTheorTime, dp: dpCalls });
+            this.spaceChartStats.push({ name, rec: data.recSpace, dp: data.dpSpace });
+            this.timeChartStats.push({ name, recTheor: data.recTheorTime, rec: recCalls, dpTheor: data.dpTheorTime, dp: dpCalls });
             this.tableStats.push(data);
         }
     }
 
     private drawStats = () => {
-        this.timeStats = [];
-        this.spaceStats = [];
+        this.timeChartStats = [];
+        this.spaceChartStats = [];
         this.tableStats = [];
 
         this.getStats();

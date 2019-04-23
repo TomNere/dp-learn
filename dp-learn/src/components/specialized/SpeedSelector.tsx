@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Theme, WithStyles, createStyles, withStyles } from "@material-ui/core";
 
-import { strings } from 'src/strings/translations/languages';
+import { strings } from 'src/strings/translations/strings';
 
 type AllProps =
     ISpeedSelectorProps &

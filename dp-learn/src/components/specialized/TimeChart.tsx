@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Animation, ArgumentScale, Stack, ValueScale } from '@devexpress/dx-react-chart';
+import { Animation, ValueScale } from '@devexpress/dx-react-chart';
 import {
     ArgumentAxis,
     Chart,
@@ -9,11 +9,11 @@ import {
     ValueAxis
 } from '@devexpress/dx-react-chart-material-ui';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
-import { dpColor, dpTheorColor, recColor, recTheorColor } from 'src/styles/colors';
+import { dpColor, dpTheorColor, recColor, recTheorColor } from 'src/styles/globalStyles';
 
 import Paper from '@material-ui/core/Paper';
 import { Typography } from '@material-ui/core';
-import { strings } from 'src/strings/translations/languages';
+import { strings } from 'src/strings/translations/strings';
 
 type AllProps =
     ITimeChartProps &
@@ -52,10 +52,9 @@ class TimeChart extends React.Component<AllProps> {
                 </Typography>
                 <Chart data={data}>
                     <ValueScale name='rec' />
-                    <ArgumentScale />
+                    
                     <ArgumentAxis />
-
-                    <ValueAxis scaleName='rec' showGrid={false} showLine={true} showTicks={true} labelComponent={this.getLabel(` ${strings.global.calls}`)} />
+                    <ValueAxis scaleName='rec' showGrid={true} showLine={true} showTicks={true} labelComponent={this.getLabel(` ${strings.global.numberOfCalls}`)} />
 
                     <LineSeries
                         name={`${global.recursiveSolution} (${global.theoreticValue})`}
@@ -91,7 +90,6 @@ class TimeChart extends React.Component<AllProps> {
 
                     <Legend position='bottom' />
                     <Animation />
-                    <Stack />
                 </Chart>
             </Paper>
         );
@@ -99,7 +97,25 @@ class TimeChart extends React.Component<AllProps> {
 
     // Get value axis label
     private getLabel = (symbol: any) => (props: any) => {
-        const { text } = props;
+        let { text } = props;
+        text = text.replace(/,/g, '');
+
+        if (+text >= 1000000000000000) {
+            text = `${+text / 1000000000000000.0} * 10^15`;
+        }
+        if (+text >= 1000000000000) {
+            text = `${+text / 1000000000000.0} * 10^12`;
+        }
+        if (+text >= 1000000000) {
+            text = `${+text / 1000000000.0} * 10^9`;
+        }
+        if (+text >= 1000000) {
+            text = `${+text / 1000000.0} * 10^6`;
+        }
+        if (+text >= 1000) {
+            text = `${+text / 1000.0} * 10^3`;
+        }
+
         return (
             <ValueAxis.Label
                 {...props}

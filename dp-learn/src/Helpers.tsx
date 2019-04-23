@@ -1,19 +1,3 @@
-// Converter between time units
-type ITimeConverter = (n: number) => number;
-
-// Helper for passing methods parameters by reference
-export interface ISimpleObjectParameter {
-    value: number
-}
-
-export const MilliToMicro : ITimeConverter = (n: number) => {
-    return n * 1000;
-}
-
-export const MilliToMilli : ITimeConverter = (n: number) => {
-    return n;
-}
-
 // Convert numbers in string to number array
 export const GetNumbers = (str: string) => {
     const numbers: number[] = [];
@@ -28,21 +12,13 @@ export const GetNumbers = (str: string) => {
     return numbers;
 }
 
-export const CheckNumbers = (str: string) => {
-    for (const coin of str.split(",")) {
-        if (Number.isNaN(+coin)) {
-            return false;
-        }
-    }
-    return true;
-}
-
+// Return minimum of three values
 export const Min = (n1: number, n2: number, n3: number) => {
     n1 = Math.min(n1, n2);
     return Math.min(n1, n3);
 }
 
-// Return position in tuple
+// Return position in tuple - minimum of three values
 export const MinPosition = (n1: [number, [number, number]], n2: [number, [number, number]], n3: [number, [number, number]]) => {
     let min: [number, [number, number]];
     if (n1[0] < n2[0]) {
@@ -58,7 +34,6 @@ export const MinPosition = (n1: [number, [number, number]], n2: [number, [number
 
     return min[1];
 }
-
 
 // A utility function to get sum of array elements from i to j
 // helper for tree demo
@@ -77,19 +52,4 @@ export const ValueOrIntMax = (val: number) => {
 
 export const ValueOrUndefined = (val: number) => {
     return val === undefined ? '-' : val.toString();
-}
-
-export const StrToNumArray = (str: string) => {
-    const numbers: number[] = [];
-
-    for (const num of str.split(",")) {
-        if (Number.isNaN(+num)) {
-            return [];
-        }
-        else {
-            numbers.push(+num);
-        }
-    }
-    
-    return numbers;
 }

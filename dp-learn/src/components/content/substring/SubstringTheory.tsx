@@ -1,7 +1,4 @@
-import '../../../styles/prism.css';
-
 import * as Markdown from 'react-markdown';
-import * as Prism from 'prismjs';
 import * as React from 'react';
 
 import { Grid, Typography } from '@material-ui/core';
@@ -14,22 +11,18 @@ import CustomTitle from 'src/components/customStyled/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
 import PaddingDiv from 'src/components/hoc/PaddingDiv';
 import PaddingImage from 'src/components/hoc/PaddingImage';
-import SourceCode from 'src/components/specialized/SourceCode';
+import SourceCode from 'src/components/hoc/SourceCode';
 import Table1 from 'src/resources/substring/substringTable1.svg';
 import Table2 from 'src/resources/substring/substringTable2.svg';
 import Table3 from 'src/resources/substring/substringTable3.svg';
 import Tree from 'src/resources/substring/substringTree.svg';
 import { globalStyles } from 'src/styles/globalStyles';
-import { strings } from 'src/strings/translations/languages';
+import { strings } from 'src/strings/translations/strings';
 
 type AllProps =
     WithStyles<typeof globalStyles>;
 
 class SubstringTheory extends React.Component<AllProps> {
-    public componentDidMount() {
-        Prism.highlightAll();
-    }
-
     public render() {
         const { classes } = this.props;
         return (
@@ -81,7 +74,9 @@ class SubstringTheory extends React.Component<AllProps> {
                             <PaddingImage>
                                 <img src={Tree} alt="SubstringRecTree" />
                             </PaddingImage>
-                            <SourceCode code={substrRecCode} />
+                            <SourceCode>
+                                {substrRecCode}
+                            </SourceCode>
                         </PaddingDiv>
                     </FlexOne>
 
@@ -149,7 +144,9 @@ class SubstringTheory extends React.Component<AllProps> {
                                 <img src={Table3} width='350' />
                             </PaddingImage>
 
-                            <SourceCode code={substrDynCode} />
+                            <SourceCode>
+                                {substrDynCode}
+                            </SourceCode>
                         </PaddingDiv>
                     </FlexOne>
                 </Grid>

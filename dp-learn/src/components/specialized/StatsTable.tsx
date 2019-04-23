@@ -5,7 +5,7 @@ import { WithStyles, withStyles } from '@material-ui/core/styles';
 
 import BottomMarginDiv from 'src/components/hoc/BottomMarginDiv';
 import { globalStyles } from 'src/styles/globalStyles';
-import { strings } from 'src/strings/translations/languages';
+import { strings } from 'src/strings/translations/strings';
 
 type AllProps =
     IStatsTableProps &

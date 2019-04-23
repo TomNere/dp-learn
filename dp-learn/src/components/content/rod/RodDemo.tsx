@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { GetNumbers, ValueOrUndefined } from 'src/Helpers';
+import { GetNumbers, ValueOrUndefined } from 'src/helpers';
 import { Grid, TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 
@@ -15,7 +15,7 @@ import Formula from 'src/components/hoc/Formula';
 import SpeedSelector from 'src/components/specialized/SpeedSelector';
 import { globalStyles } from 'src/styles/globalStyles';
 import { rodFormula } from 'src/strings/dpProblemsStrings/RodStrings';
-import { strings } from 'src/strings/translations/languages';
+import { strings } from 'src/strings/translations/strings';
 
 interface ICoinsDemoState {
     givenPrices: string

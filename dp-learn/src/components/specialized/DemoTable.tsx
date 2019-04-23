@@ -2,8 +2,7 @@ import * as React from 'react';
 
 import { Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
-
-import myTheme from 'src/styles/index';
+import { blueColor, darkColor } from 'src/styles/globalStyles';
 
 type AllProps =
     IDemoTableProps &
@@ -24,7 +23,7 @@ const styles = (theme: Theme) => createStyles({
         "& span": {
             fontSize: theme.typography.pxToRem(24),
             color: 'white',
-            backgroundColor: myTheme.palette.secondary.main,
+            backgroundColor: blueColor,
             padding: theme.spacing.unit,
         }
     },
@@ -36,7 +35,7 @@ const styles = (theme: Theme) => createStyles({
     },
     currentState: {
         color: 'white',
-        backgroundColor: myTheme.palette.primary.main,
+        backgroundColor: darkColor,
         padding: '4px 24px 4px 14px',
         borderRight: 'solid 1px gray',
     }

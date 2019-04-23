@@ -2,7 +2,7 @@ import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
 import { Grid, TableCell, TableRow } from '@material-ui/core';
-import { Min, MinPosition } from 'src/Helpers';
+import { Min, MinPosition } from 'src/helpers';
 import { WithStyles, withStyles } from "@material-ui/core/styles";
 
 import BottomMarginDiv from 'src/components/hoc/BottomMarginDiv';
@@ -16,7 +16,7 @@ import Formula from 'src/components/hoc/Formula';
 import SpeedSelector from 'src/components/specialized/SpeedSelector';
 import { editDistFormula } from 'src/strings/dpProblemsStrings/EditDistanceStrings';
 import { globalStyles } from 'src/styles/globalStyles';
-import { strings } from 'src/strings/translations/languages';
+import { strings } from 'src/strings/translations/strings';
 
 interface ISubstringDemoState {
     stringX: string

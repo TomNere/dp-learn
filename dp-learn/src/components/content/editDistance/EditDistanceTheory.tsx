@@ -1,5 +1,4 @@
 import * as Markdown from 'react-markdown';
-import * as Prism from 'prismjs';
 import * as React from 'react';
 
 import { Grid, Typography } from '@material-ui/core';
@@ -12,23 +11,19 @@ import CustomTitle from 'src/components/customStyled/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
 import PaddingDiv from 'src/components/hoc/PaddingDiv';
 import PaddingImage from 'src/components/hoc/PaddingImage';
-import SourceCode from 'src/components/specialized/SourceCode';
+import SourceCode from 'src/components/hoc/SourceCode';
 import Table1En from 'src/resources/editDistance/editDistTable1En.svg';
 import Table1Sk from 'src/resources/editDistance/editDistTable1Sk.svg';
 import Table2En from 'src/resources/editDistance/editDistTable2En.svg';
 import Table2Sk from 'src/resources/editDistance/editDistTable2Sk.svg';
 import Tree from 'src/resources/editDistance/editDistTree.svg';
 import { globalStyles } from 'src/styles/globalStyles';
-import { strings } from 'src/strings/translations/languages';
+import { strings } from 'src/strings/translations/strings';
 
 type AllProps =
     WithStyles<typeof globalStyles>;
 
 class EditDistanceTheory extends React.Component<AllProps> {
-    public componentDidMount() {
-        Prism.highlightAll();
-    }
-
     public render() {
         const { classes } = this.props;
         return (
@@ -81,7 +76,9 @@ class EditDistanceTheory extends React.Component<AllProps> {
                             <PaddingImage>
                                 <img src={Tree} alt="EditDistanceRecTree" />
                             </PaddingImage>
-                            <SourceCode code={editDistRecCode} />
+                            <SourceCode>
+                                {editDistRecCode}
+                            </SourceCode>
                         </PaddingDiv>
                     </FlexOne>
 
@@ -150,7 +147,9 @@ class EditDistanceTheory extends React.Component<AllProps> {
                                 }
                             </PaddingImage>
 
-                            <SourceCode code={editDistDynCode} />
+                            <SourceCode>
+                                {editDistDynCode}
+                            </SourceCode>
                         </PaddingDiv>
                     </FlexOne>
                 </Grid>

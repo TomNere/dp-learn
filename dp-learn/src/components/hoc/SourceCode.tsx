@@ -1,24 +1,27 @@
+import 'src/styles/prism.css';
+
+import * as Prism from 'prismjs';
 import * as React from 'react';
 
 import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Typography } from '@material-ui/core';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
 import { Code } from '@material-ui/icons';
-import myTheme from 'src/styles/index';
-import { strings } from 'src/strings/translations/languages';
+import { ReactNode } from 'react';
+import { darkColor } from 'src/styles/globalStyles';
+import { strings } from 'src/strings/translations/strings';
 
 type AllProps =
     ISourceCodeProps &
     WithStyles<typeof styles>;
 
 interface ISourceCodeProps {
-    code: string,
-    expanded: boolean
+    children: ReactNode,
 }
 
 const styles = (theme: Theme) => createStyles({
     expPanel: {
-        background: myTheme.palette.primary.main,
+        background: darkColor,
     },
     whiteText: {
         color: 'white'
@@ -27,28 +30,34 @@ const styles = (theme: Theme) => createStyles({
         fontSize: theme.typography.pxToRem(18),
         fontWeight: theme.typography.fontWeightRegular,
     },
-    leftMargin: {
-        marginLeft: 20
+    details: {
+        paddingLeft: theme.spacing.unit * 3,
+        paddingRight: theme.spacing.unit * 3,
+        paddingTop: 0
     },
+    pre: {
+        marginLeft: 20,
+        paddingTop: 0
+    }
 })
 
 // Source code component with expanding etc.
 class SourceCode extends React.Component<AllProps> {
-    public static defaultProps: ISourceCodeProps = {
-        code: "",
-        expanded: false
+    public componentDidMount() {
+        Prism.highlightAll();
     }
+
     public render() {
         const { classes } = this.props;
         return (
-            <ExpansionPanel className={classes.expPanel} defaultExpanded={this.props.expanded}>
+            <ExpansionPanel className={classes.expPanel} defaultExpanded={false}>
                 <ExpansionPanelSummary expandIcon={<Code className={classes.whiteText} />}>
                     <Typography className={[classes.heading, classes.whiteText].join(' ')}>{strings.global.srcCode}</Typography>
                 </ExpansionPanelSummary>
-                <ExpansionPanelDetails>
-                    <pre className={classes.leftMargin}>
+                <ExpansionPanelDetails className={classes.details}>
+                    <pre>
                         <code className="language-clike">
-                            {this.props.code}
+                            {this.props.children}
                         </code>
                     </pre>
                 </ExpansionPanelDetails>

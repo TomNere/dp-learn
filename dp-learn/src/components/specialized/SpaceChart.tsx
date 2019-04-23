@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Animation, ArgumentScale, Stack, ValueScale } from '@devexpress/dx-react-chart';
+import { Animation, ArgumentScale, ValueScale } from '@devexpress/dx-react-chart';
 import {
     ArgumentAxis,
     Chart,
@@ -9,11 +9,11 @@ import {
     ValueAxis
 } from '@devexpress/dx-react-chart-material-ui';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
-import { dpColor, recColor } from 'src/styles/colors';
+import { dpColor, recColor } from 'src/styles/globalStyles';
 
 import Paper from '@material-ui/core/Paper';
 import { Typography } from '@material-ui/core';
-import { strings } from 'src/strings/translations/languages';
+import { strings } from 'src/strings/translations/strings';
 
 type AllProps =
     ISpaceChartProps &
@@ -57,7 +57,7 @@ class SpaceChart extends React.Component<AllProps> {
                     <ArgumentScale />
                     <ArgumentAxis />
 
-                    <ValueAxis scaleName='rec' showGrid={false} showLine={true} showTicks={true} />
+                    <ValueAxis scaleName='rec' showGrid={true} showLine={true} showTicks={true} />
 
                     <LineSeries
                         name={`${global.recursiveSolution}`}
@@ -77,7 +77,6 @@ class SpaceChart extends React.Component<AllProps> {
 
                     <Legend position='bottom' />
                     <Animation />
-                    <Stack />
                 </Chart>
             </Paper>
         );

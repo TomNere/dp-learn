@@ -7,9 +7,9 @@ import { Button } from '@material-ui/core';
 import Cookies from 'universal-cookie';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import myTheme from 'src/styles/index';
+import { darkColor } from 'src/styles/globalStyles';
 import slovak from 'src/resources/flags/slovakFlag.png';
-import { strings } from 'src/strings/translations/languages';
+import { strings } from 'src/strings/translations/strings';
 import uk from 'src/resources/flags/ukFlag.png';
 
 type AllProps =
@@ -33,7 +33,7 @@ const styles = (theme: Theme) => createStyles({
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
-        backgroundColor: myTheme.palette.primary.main
+        backgroundColor: darkColor
     },
     flex: {
         display: 'flex',
@@ -54,6 +54,9 @@ class MenuHeader extends React.Component<AllProps> {
         const cookies = new Cookies();
         const language = cookies.get('language');
         if (language !== undefined && language !== strings.getLanguage()) {
+            this.props.onLanguageChange();
+        }
+        else if ('sk' !== strings.getLanguage()) {
             this.props.onLanguageChange();
         }
     }

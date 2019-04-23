@@ -10,7 +10,6 @@ interface IFormulaProps {
 // Container with centered content
 // Takes 1 child
 class Formula extends React.Component<IFormulaProps> {
-
     public render() {
         return (
             <MathJax.Context input='ascii'>

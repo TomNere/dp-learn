@@ -1,7 +1,6 @@
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
-import { GetNumbers, StrToNumArray } from 'src/Helpers';
 import { dpTree, dpTreeSpace, dpTreeTime, recTreeSpace, recTreeTime, recursiveTree, treeExamples } from 'src/statsHelpers/TreeStatsHelper';
 import { treeDpSpaceComplex, treeDpTimeComplex, treeRecSpaceComplex, treeRecTimeComplex } from 'src/strings/dpProblemsStrings/TreeStrings';
 
@@ -13,12 +12,13 @@ import CustomTextField from 'src/components/customStyled/CustomTextField';
 import CustomTitle from 'src/components/customStyled/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
 import FlexTwo from 'src/components/hoc/FlexTwo';
+import { GetNumbers } from 'src/helpers';
 import { Grid } from '@material-ui/core';
-import { ISimpleObjectParameter } from 'src/Helpers';
+import { ISimpleObjectParameter } from 'src/statsHelpers/CoinsStatsHelper';
 import { ISpaceChartData } from 'src/components/specialized/SpaceChart';
 import { IStatsTableData } from 'src/components/specialized/StatsTable';
 import { ITimeChartData } from 'src/components/specialized/TimeChart';
-import { strings } from 'src/strings/translations/languages';
+import { strings } from 'src/strings/translations/strings';
 
 interface ITreeStatsState {
     givenFreqs: string
@@ -26,8 +26,8 @@ interface ITreeStatsState {
 }
 
 class TreeStats extends React.Component<any, ITreeStatsState> {
-    private spaceStats: ISpaceChartData[];
-    private timeStats: ITimeChartData[];
+    private spaceChartStats: ISpaceChartData[];
+    private timeChartStats: ITimeChartData[];
     private tableStats: IStatsTableData[];
 
     // private keys: number[];
@@ -66,7 +66,7 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
                     </FlexTwo>
                 </Grid>
                 <br />
-                <ChartsAndTable visible={this.state.statsVisible} timeStats={this.timeStats} spaceStats={this.spaceStats} tableStats={this.tableStats} />
+                <ChartsAndTable visible={this.state.statsVisible} timeStats={this.timeChartStats} spaceStats={this.spaceChartStats} tableStats={this.tableStats} />
                 {this.state.statsVisible &&
                     <div>
                         <CustomTitle variant='h5'>
@@ -114,8 +114,8 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
             recSpace: recTreeSpace(this.freqs.length)
         }
 
-        this.spaceStats.push({ name, rec: data.recSpace, dp: data.dpSpace });
-        this.timeStats.push({ name, recTheor: data.recTheorTime, rec: recCalls, dpTheor: data.dpTheorTime, dp: dpCalls });
+        this.spaceChartStats.push({ name, rec: data.recSpace, dp: data.dpSpace });
+        this.timeChartStats.push({ name, recTheor: data.recTheorTime, rec: recCalls, dpTheor: data.dpTheorTime, dp: dpCalls });
         this.tableStats.push(data);
 
         for (const example of treeExamples) {
@@ -143,16 +143,16 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
                 recSpace: recTreeSpace(example.freqs.length)
             }
 
-            this.spaceStats.push({ name, rec: data.recSpace, dp: data.dpSpace });
-            this.timeStats.push({ name, recTheor: data.recTheorTime, rec: recCalls, dpTheor: data.dpTheorTime, dp: dpCalls });
+            this.spaceChartStats.push({ name, rec: data.recSpace, dp: data.dpSpace });
+            this.timeChartStats.push({ name, recTheor: data.recTheorTime, rec: recCalls, dpTheor: data.dpTheorTime, dp: dpCalls });
             this.tableStats.push(data);
         }
     }
 
     private drawStats = () => {
-        this.freqs = StrToNumArray(this.state.givenFreqs);
-        this.spaceStats = [];
-        this.timeStats = [];
+        this.freqs = GetNumbers(this.state.givenFreqs);
+        this.spaceChartStats = [];
+        this.timeChartStats = [];
         this.tableStats = [];
 
         this.getStats();

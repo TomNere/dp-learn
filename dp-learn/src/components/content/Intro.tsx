@@ -5,7 +5,7 @@ import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/s
 
 import CustomTitle from 'src/components/customStyled/CustomTitle';
 import LeftMarginDiv from 'src/components/hoc/LeftMarginDiv';
-import { strings } from 'src/strings/translations/languages';
+import { strings } from 'src/strings/translations/strings';
 
 type AllProps =
     WithStyles<typeof styles>;

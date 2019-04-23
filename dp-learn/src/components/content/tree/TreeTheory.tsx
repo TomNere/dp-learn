@@ -1,5 +1,4 @@
 import * as Markdown from 'react-markdown';
-import * as Prism from 'prismjs';
 import * as React from 'react';
 
 import { Grid, Typography } from '@material-ui/core';
@@ -14,7 +13,7 @@ import FlexTwo from 'src/components/hoc/FlexTwo';
 import Formula from 'src/components/hoc/Formula';
 import PaddingDiv from 'src/components/hoc/PaddingDiv';
 import PaddingImage from 'src/components/hoc/PaddingImage';
-import SourceCode from 'src/components/specialized/SourceCode';
+import SourceCode from 'src/components/hoc/SourceCode';
 import Table1En from 'src/resources/tree/treeTable1En.svg';
 import Table1Sk from 'src/resources/tree/treeTable1Sk.svg';
 import Table2En from 'src/resources/tree/treeTable2En.svg';
@@ -23,16 +22,12 @@ import Tree from 'src/resources/tree/treeTree.svg';
 import TreeExample1 from 'src/resources/tree/treeExample1.svg';
 import TreeExample2 from 'src/resources/tree/treeExample2.svg';
 import { globalStyles } from 'src/styles/globalStyles';
-import { strings } from 'src/strings/translations/languages';
+import { strings } from 'src/strings/translations/strings';
 
 type AllProps =
     WithStyles<typeof globalStyles>;
 
 class TreeTheory extends React.Component<AllProps> {
-    public componentDidMount() {
-        Prism.highlightAll();
-    }
-
     public render() {
         const { classes } = this.props;
         return (
@@ -96,9 +91,11 @@ class TreeTheory extends React.Component<AllProps> {
                                 {strings.global.recusionTree}
                             </Typography>
                             <PaddingImage>
-                                <img src={Tree} alt="optimalTreeRecTree" width='90%'/>
+                                <img src={Tree} alt="optimalTreeRecTree" width='90%' />
                             </PaddingImage>
-                            <SourceCode code={TreeRecCode} />
+                            <SourceCode>
+                                {TreeRecCode}
+                            </SourceCode>
                         </PaddingDiv>
                     </FlexOne>
 
@@ -162,7 +159,9 @@ class TreeTheory extends React.Component<AllProps> {
                                     <img src={Table2Sk} width='650' />
                                 }
                             </PaddingImage>
-                            <SourceCode code={TreeDynCode} />
+                            <SourceCode>
+                                {TreeDynCode}
+                            </SourceCode>
                         </PaddingDiv>
                     </FlexOne>
                 </Grid>

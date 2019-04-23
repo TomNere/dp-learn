@@ -1,5 +1,4 @@
-export const substrDynCode = `
-// Global variables
+export const substrDynCode = `// Global variables
 char* X;
 char* Y;
 
@@ -50,8 +49,7 @@ int commonSubstr(int L1, int L2) {
     return result;
 }`;
 
-export const substrRecCode = `
-// Global variables
+export const substrRecCode = `// Global variables
 char* X;
 char* Y;
 

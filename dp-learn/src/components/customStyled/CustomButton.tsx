@@ -2,8 +2,7 @@ import * as React from 'react';
 
 import { Button, Theme } from "@material-ui/core";
 import { WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
-
-import myTheme from 'src/styles/index';
+import { blueColor, darkColor } from 'src/styles/globalStyles';
 
 type AllProps =
     ICustomButtonProps &
@@ -19,9 +18,9 @@ export const styles = (theme: Theme) => createStyles({
     buttonLight: {
         margin: theme.spacing.unit,
         color: 'white',
-        backgroundColor: myTheme.palette.secondary.main,
+        backgroundColor: blueColor,
         "&:hover": {
-            backgroundColor: myTheme.palette.primary.main
+            backgroundColor: darkColor
         }
     },
 });

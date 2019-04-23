@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { GetNumbers, ValueOrIntMax } from 'src/Helpers';
+import { GetNumbers, ValueOrIntMax } from 'src/helpers';
 import { Grid, TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 
@@ -15,7 +15,7 @@ import Formula from 'src/components/hoc/Formula';
 import SpeedSelector from 'src/components/specialized/SpeedSelector';
 import { coinsFormula } from 'src/strings/dpProblemsStrings/CoinsStrings';
 import { globalStyles } from 'src/styles/globalStyles';
-import { strings } from 'src/strings/translations/languages';
+import { strings } from 'src/strings/translations/strings';
 
 interface ICoinsDemoState {
     speed: number

@@ -1,5 +1,5 @@
-import { FreqArraySum } from 'src/Helpers';
-import { ISimpleObjectParameter } from 'src/Helpers';
+import { FreqArraySum } from 'src/helpers';
+import { ISimpleObjectParameter } from 'src/statsHelpers/CoinsStatsHelper';
 
 export const recursiveTree = (freqs: number[], i: number, j: number, calls: ISimpleObjectParameter) => {
     ++calls.value;

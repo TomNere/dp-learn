@@ -13,9 +13,9 @@ import FlexOne from 'src/components/hoc/FlexOne';
 import FlexTwo from 'src/components/hoc/FlexTwo';
 import Formula from 'src/components/hoc/Formula';
 import SpeedSelector from 'src/components/specialized/SpeedSelector';
-import { ValueOrUndefined } from 'src/Helpers';
+import { ValueOrUndefined } from 'src/helpers';
 import { globalStyles } from 'src/styles/globalStyles';
-import { strings } from 'src/strings/translations/languages';
+import { strings } from 'src/strings/translations/strings';
 import { substringFormula } from 'src/strings/dpProblemsStrings/SubstringStrings';
 
 interface ISubstringDemoState {

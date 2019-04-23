@@ -12,13 +12,13 @@ import CustomTextField from 'src/components/customStyled/CustomTextField';
 import CustomTitle from 'src/components/customStyled/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
 import FlexTwo from 'src/components/hoc/FlexTwo';
-import { GetNumbers } from 'src/Helpers';
+import { GetNumbers } from 'src/helpers';
 import { Grid } from '@material-ui/core';
-import { ISimpleObjectParameter } from 'src/Helpers';
+import { ISimpleObjectParameter } from 'src/statsHelpers/CoinsStatsHelper';
 import { ISpaceChartData } from 'src/components/specialized/SpaceChart';
 import { IStatsTableData } from 'src/components/specialized/StatsTable';
 import { ITimeChartData } from 'src/components/specialized/TimeChart';
-import { strings } from 'src/strings/translations/languages';
+import { strings } from 'src/strings/translations/strings';
 
 interface IRodStatsState {
     givenPrices: string,
@@ -27,8 +27,8 @@ interface IRodStatsState {
 
 class RodStats extends React.Component<any, IRodStatsState> {
     private prices: number[];
-    private spaceStats: ISpaceChartData[];
-    private timeStats: ITimeChartData[];
+    private spaceChartStats: ISpaceChartData[];
+    private timeChartStats: ITimeChartData[];
     private tableStats: IStatsTableData[];
 
     public constructor(props: any) {
@@ -64,7 +64,7 @@ class RodStats extends React.Component<any, IRodStatsState> {
                     </FlexTwo>
                 </Grid>
                 <br />
-                <ChartsAndTable visible={this.state.statsVisible} timeStats={this.timeStats} spaceStats={this.spaceStats} tableStats={this.tableStats} />
+                <ChartsAndTable visible={this.state.statsVisible} timeStats={this.timeChartStats} spaceStats={this.spaceChartStats} tableStats={this.tableStats} />
                 {this.state.statsVisible &&
                     <div>
                         <CustomTitle variant='h5'>
@@ -113,8 +113,8 @@ class RodStats extends React.Component<any, IRodStatsState> {
             recSpace: recRodSpace(this.prices.length)
         }
 
-        this.spaceStats.push({ name, rec: data.recSpace, dp: data.dpSpace });
-        this.timeStats.push({ name, recTheor: data.recTheorTime, rec: recCalls, dpTheor: data.dpTheorTime, dp: dpCalls });
+        this.spaceChartStats.push({ name, rec: data.recSpace, dp: data.dpSpace });
+        this.timeChartStats.push({ name, recTheor: data.recTheorTime, rec: recCalls, dpTheor: data.dpTheorTime, dp: dpCalls });
         this.tableStats.push(data);
 
         for (const example of rodExamples) {
@@ -139,16 +139,16 @@ class RodStats extends React.Component<any, IRodStatsState> {
                 recSpace: recRodSpace(example.prices.length)
             }
 
-            this.spaceStats.push({ name, rec: data.recSpace, dp: data.dpSpace });
-            this.timeStats.push({ name, recTheor: data.recTheorTime, rec: recCalls, dpTheor: data.dpTheorTime, dp: dpCalls });
+            this.spaceChartStats.push({ name, rec: data.recSpace, dp: data.dpSpace });
+            this.timeChartStats.push({ name, recTheor: data.recTheorTime, rec: recCalls, dpTheor: data.dpTheorTime, dp: dpCalls });
             this.tableStats.push(data);
         }
     }
 
     private drawStats = () => {
         this.prices = GetNumbers(this.state.givenPrices);
-        this.spaceStats = [];
-        this.timeStats = [];
+        this.spaceChartStats = [];
+        this.timeChartStats = [];
         this.tableStats = [];
 
         this.getStats();

@@ -1,4 +1,4 @@
-import { ISimpleObjectParameter } from 'src/Helpers';
+import { ISimpleObjectParameter } from 'src/statsHelpers/CoinsStatsHelper';
 
 export const recursiveRod = (prices: number[], arrSize: number, calls: ISimpleObjectParameter) => {
     ++calls.value;

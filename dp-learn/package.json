@@ -1,7 +1,7 @@
 {
   "name": "dp-learn",
   "version": "0.9.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@devexpress/dx-react-chart": "^1.10.1",
     "@devexpress/dx-react-chart-material-ui": "^1.10.1",
@@ -18,7 +18,6 @@
     "react-localization": "^1.0.13",
     "react-markdown": "^4.0.6",
     "react-mathjax2": "0.0.2",
-    "react-prism": "^4.3.2",
     "react-scripts-ts": "4.0.8",
     "save": "^2.3.3",
     "typeface-roboto": "0.0.54",

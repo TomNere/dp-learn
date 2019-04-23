@@ -1,4 +1,4 @@
-import { ISimpleObjectParameter } from 'src/Helpers';
+import { ISimpleObjectParameter } from 'src/statsHelpers/CoinsStatsHelper';
 
 export const recursiveSubstring = (strX: string, strY: string, length1: number, length2: number, result: number, calls: ISimpleObjectParameter) => {
     ++calls.value;

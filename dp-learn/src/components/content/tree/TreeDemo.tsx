@@ -1,7 +1,7 @@
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
-import { FreqArraySum, GetNumbers, ValueOrIntMax, ValueOrUndefined } from 'src/Helpers';
+import { FreqArraySum, GetNumbers, ValueOrIntMax, ValueOrUndefined } from 'src/helpers';
 import { Grid, TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from "@material-ui/core/styles";
 
@@ -15,7 +15,7 @@ import FlexTwo from 'src/components/hoc/FlexTwo';
 import Formula from 'src/components/hoc/Formula';
 import SpeedSelector from 'src/components/specialized/SpeedSelector';
 import { globalStyles } from 'src/styles/globalStyles';
-import { strings } from 'src/strings/translations/languages';
+import { strings } from 'src/strings/translations/strings';
 import { treeFormula } from 'src/strings/dpProblemsStrings/TreeStrings';
 
 interface ITreeDemoState {

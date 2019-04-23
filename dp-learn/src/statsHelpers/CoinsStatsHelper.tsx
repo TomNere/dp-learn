@@ -1,4 +1,7 @@
-import { ISimpleObjectParameter } from 'src/Helpers';
+// Helper for passing methods parameters by reference
+export interface ISimpleObjectParameter {
+    value: number
+}
 
 export const recursiveCoins = (coins: number[], arrSize: number, value: number,  calls: ISimpleObjectParameter) => {
     ++calls.value;
