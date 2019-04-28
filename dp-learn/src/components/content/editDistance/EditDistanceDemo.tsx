@@ -111,13 +111,13 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
 
                         <Grid container={true} direction='row'>
                             {/* Start button */}
-                            <CustomButton label={strings.global.start} onClick={this.onStartClick} disabled={false} />
+                            <CustomButton label={strings.global.start} onClick={this.handleStartClick} disabled={false} />
 
                             {/* Step button */}
                             <CustomButton label={strings.global.step} onClick={this.finiteAutomata} disabled={!this.state.inProgress || this.state.speed !== 0} />
 
                             {/* Finish button */}
-                            <CustomButton label={strings.global.finish} onClick={this.onFinishClick} disabled={!this.state.inProgress} />
+                            <CustomButton label={strings.global.finish} onClick={this.handleFinishClick} disabled={!this.state.inProgress} />
                         </Grid>
                     </FlexOne>
                     <FlexTwo>
@@ -161,7 +161,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
         this.timeout = setTimeout(func, 5000 / this.state.speed);
     }
 
-    private onStartClick = () => {
+    private handleStartClick = () => {
         clearTimeout(this.timeout);
 
         this.LENGTH1 = this.state.stringX.length;
@@ -335,7 +335,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
         this.doInnerCycle();
     }
 
-    private onFinishClick = () => {
+    private handleFinishClick = () => {
         clearTimeout(this.timeout);
         const table: number[][] = [];
 
@@ -380,12 +380,12 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
         // let start: [number, number] = [this.LENGTH1, this.LENGTH2];
         this.blueCells = [];
         this.greenCells = [];
-        let operations: string[] = [];
+        const operations: string[] = [];
 
         // Inspirated by
         // https://github.com/mission-peace/interview/blob/master/src/com/interview/dynamic/EditDistance.java
-        let i = table.length - 1;
-        let j = table[0].length - 1;
+        let i = this.LENGTH1;
+        let j = this.LENGTH2;
 
         while(true) {
             if (i === 0 && j === 0) {
@@ -408,7 +408,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
                 i -= 1;
                 j -= 1;
             }
-            else if (table[i][j] === table[i - 1][j - 1] + 1){
+            else if (table[i][j] === table[i - 1][j - 1] + 1) {
                 this.greenCells.push([i - 1, j - 1]);
                 this.blueCells.push([i, j]);
                 operations.push('↔');
@@ -423,7 +423,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
 
                 i -= 1;
             }
-            else if (table[i][j] === table[i][j - 1] + 1){
+            else if (table[i][j] === table[i][j - 1] + 1) {
                 this.greenCells.push([i, j - 1]);
                 this.blueCells.push([i, j]);
                 operations.push('🖊');
@@ -431,8 +431,6 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
                 j -= 1;
             }
         }
-
-        operations = operations.reverse();
 
         this.setState({
             inProgress: false,

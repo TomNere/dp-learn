@@ -32,15 +32,15 @@ class SubstringTheory extends React.Component<AllProps> {
                 </CustomTitle>
                 {/* What is longest common substring problem */}
                 <BottomMarginDiv>
-                    <Markdown source={strings.rod.theory.brief.b1} />
+                    <Markdown source={strings.substring.theory.brief.b1} />
 
-                    {strings.theoryGlobal.eg}
+                    <b>{strings.theoryGlobal.eg}</b>
                     <ul className={classes.simpleList}>
-                        <li>X = {"'Unicasting'"}</li>
-                        <li>Y = {"'unitTesting'"}</li>
+                        <li>{strings.substring.theory.brief.input1}</li>
+                        <li>{strings.substring.theory.brief.input2}</li>
                     </ul>
 
-                    {strings.rod.theory.brief.b2}
+                    <b>{strings.substring.theory.brief.b2}</b>
                     <ul className={classes.simpleList}>
                         <li><Markdown source={strings.substring.theory.brief.strX} /></li>
                         <li><Markdown source={strings.substring.theory.brief.strY} /></li>
@@ -58,9 +58,9 @@ class SubstringTheory extends React.Component<AllProps> {
                             </Typography>
 
                             <BottomMarginDiv>
-                                <Markdown source={strings.substring.theory.recursion} />
-                                <Markdown source={strings.substring.theory.recTime} />
-                                <Markdown source={strings.substring.theory.recSpace} />
+                                <Markdown source={strings.substring.theory.recursion.brief} />
+                                <Markdown source={strings.substring.theory.recursion.recTime} />
+                                <Markdown source={strings.substring.theory.recursion.recSpace} />
                             </BottomMarginDiv>
 
                             <BottomMarginDiv>
@@ -71,6 +71,14 @@ class SubstringTheory extends React.Component<AllProps> {
                             <Typography variant={'h6'} className={classes.bottomMargin}>
                                 {strings.global.recusionTree}
                             </Typography>
+                            <BottomMarginDiv>
+                                <Typography variant={'subtitle1'}>
+                                    <ul className={classes.simpleList}>
+                                        <li>{strings.substring.theory.recursion.input1}</li>
+                                        <li>{strings.substring.theory.recursion.input2}</li>
+                                    </ul>
+                                </Typography>
+                            </BottomMarginDiv>
                             <PaddingImage>
                                 <img src={Tree} alt="SubstringRecTree" />
                             </PaddingImage>
@@ -88,9 +96,9 @@ class SubstringTheory extends React.Component<AllProps> {
                             </Typography>
 
                             <BottomMarginDiv>
-                                <Markdown source={strings.substring.theory.dynProg} />
-                                <Markdown source={strings.substring.theory.dpTime} />
-                                <Markdown source={strings.substring.theory.dpSpace} />
+                                <Markdown source={strings.substring.theory.dp.brief} />
+                                <Markdown source={strings.substring.theory.dp.dpTime} />
+                                <Markdown source={strings.substring.theory.dp.dpSpace} />
                             </BottomMarginDiv>
 
                             <BottomMarginDiv>
@@ -105,9 +113,9 @@ class SubstringTheory extends React.Component<AllProps> {
                             <BottomMarginDiv>
                                 <Typography variant={'subtitle1'}>
                                     <ul className={classes.simpleList}>
-                                        <li>X = {"'dog'"}</li>
-                                        <li>Y = {"'frog'"}</li>
-                                        <li>{strings.substring.theory.zero}</li>
+                                        <li>{strings.substring.theory.dp.input1}</li>
+                                        <li>{strings.substring.theory.dp.input2}</li>
+                                        <li>{strings.substring.theory.dp.zero}</li>
                                     </ul>
                                 </Typography>
                             </BottomMarginDiv>
@@ -119,9 +127,9 @@ class SubstringTheory extends React.Component<AllProps> {
                             <BottomMarginDiv>
                                 <Typography variant={'subtitle1'} >
                                     <ul className={classes.simpleList}>
-                                        <li>X = {"'dog'"}</li>
-                                        <li>Y = {"'frog'"}</li>
-                                        <li>{strings.substring.theory.increment}</li>
+                                        <li>{strings.substring.theory.dp.input1}</li>
+                                        <li>{strings.substring.theory.dp.input2}</li>
+                                        <li>{strings.substring.theory.dp.increment}</li>
                                     </ul>
                                 </Typography>
                             </BottomMarginDiv>
@@ -133,9 +141,9 @@ class SubstringTheory extends React.Component<AllProps> {
                             <BottomMarginDiv>
                                 <Typography variant={'subtitle1'} >
                                     <ul className={classes.simpleList}>
-                                        <li>X = {"'dog'"}</li>
-                                        <li>Y = {"'dig'"}</li>
-                                        <li>{strings.substring.theory.one}</li>
+                                        <li>{strings.substring.theory.dp.input1}</li>
+                                        <li>{strings.substring.theory.dp.input3}</li>
+                                        <li>{strings.substring.theory.dp.one}</li>
                                     </ul>
                                 </Typography>
                             </BottomMarginDiv>
@@ -150,6 +158,13 @@ class SubstringTheory extends React.Component<AllProps> {
                         </PaddingDiv>
                     </FlexOne>
                 </Grid>
+                <CustomTitle variant='h5'>
+                    {strings.global.similarProblems}
+                </CustomTitle>
+                <ul>
+                    <li><b><a href={strings.substring.theory.longestPalindromHref}>{strings.substring.theory.longestPalindromTitle}</a></b></li>
+                    <li><b><a href={strings.substring.theory.longestIncSubseqHref}>{strings.substring.theory.longestIncSubseqTitle}</a></b></li>
+                </ul>
             </div>
         );
     }

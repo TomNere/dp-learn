@@ -35,16 +35,16 @@ class RodTheory extends React.Component<AllProps> {
                 <BottomMarginDiv>
                     <Markdown source={strings.rod.theory.brief.b1} />
 
-                    {strings.theoryGlobal.eg}
+                    <b>{strings.theoryGlobal.eg}</b>
                     <ul className={classes.simpleList}>
-                        <li>P = {'{ 1, 3, 5 }'}</li>
+                        <li>{strings.rod.theory.brief.input}</li>
                     </ul>
 
-                    {strings.rod.theory.brief.b2}
+                    <b>{strings.rod.theory.brief.b2}</b>
                     <ul className={classes.simpleList}>
-                        <li>3 = 1 + 1 + 1 => 1 + 1 + 1 = 3</li>
-                        <li>3 = 1 + 2 => 1 + 3 = 4</li>
-                        <li>3 = 3 => 5 = 5</li>
+                        <li>{strings.rod.theory.brief.output1}</li>
+                        <li>{strings.rod.theory.brief.output2}</li>
+                        <li>{strings.rod.theory.brief.output3}</li>
                     </ul>
                     <Markdown source={strings.rod.theory.brief.b3} />
                 </BottomMarginDiv>
@@ -58,9 +58,9 @@ class RodTheory extends React.Component<AllProps> {
                             </Typography>
 
                             <BottomMarginDiv>
-                                <Markdown source={strings.rod.theory.recursion} />
-                                <Markdown source={strings.rod.theory.recTime} />
-                                <Markdown source={strings.rod.theory.recSpace} />
+                                <Markdown source={strings.rod.theory.recursion.brief} />
+                                <Markdown source={strings.rod.theory.recursion.recTime} />
+                                <Markdown source={strings.rod.theory.recursion.recSpace} />
                             </BottomMarginDiv>
 
                             <BottomMarginDiv>
@@ -71,6 +71,13 @@ class RodTheory extends React.Component<AllProps> {
                             <Typography variant={'h6'} className={classes.bottomMargin}>
                                 {strings.global.recusionTree}
                             </Typography>
+                            <BottomMarginDiv>
+                                <Typography variant={'subtitle1'}>
+                                    <ul className={classes.simpleList}>
+                                        <li>{strings.rod.theory.recursion.input}</li>
+                                    </ul>
+                                </Typography>
+                            </BottomMarginDiv>
                             <PaddingImage>
                                 <img src={Tree} alt="RodRecTree" />
                             </PaddingImage>
@@ -88,9 +95,9 @@ class RodTheory extends React.Component<AllProps> {
                             </Typography>
 
                             <BottomMarginDiv>
-                                <Markdown source={strings.rod.theory.dynProg} />
-                                <Markdown source={strings.rod.theory.dpTime} />
-                                <Markdown source={strings.rod.theory.dpSpace} />
+                                <Markdown source={strings.rod.theory.dp.brief} />
+                                <Markdown source={strings.rod.theory.dp.dpTime} />
+                                <Markdown source={strings.rod.theory.dp.dpSpace} />
                             </BottomMarginDiv>
 
                             <BottomMarginDiv>
@@ -105,8 +112,8 @@ class RodTheory extends React.Component<AllProps> {
                             <BottomMarginDiv>
                                 <Typography variant={'subtitle1'}>
                                     <ul className={classes.simpleList}>
-                                        <li>P = {'{ 1, 5, 6, 6, 9 }'}</li>
-                                        <li>{strings.rod.theory.outerCycle} i = 3</li>
+                                        <li>{strings.rod.theory.dp.input}</li>
+                                        <li>{strings.rod.theory.dp.outerCycle} {strings.rod.theory.dp.i3}</li>
                                     </ul>
                                 </Typography>
                             </BottomMarginDiv>
@@ -123,8 +130,8 @@ class RodTheory extends React.Component<AllProps> {
                             <BottomMarginDiv>
                                 <Typography variant={'subtitle1'} >
                                     <ul className={classes.simpleList}>
-                                        <li>P = {'{ 1, 5, 6, 6, 9 }'}</li>
-                                        <li>{strings.rod.theory.outerCycle} i = 4</li>
+                                        <li>{strings.rod.theory.dp.input}</li>
+                                        <li>{strings.rod.theory.dp.outerCycle} {strings.rod.theory.dp.i4}</li>
                                     </ul>
                                 </Typography>
                             </BottomMarginDiv>
@@ -148,13 +155,12 @@ class RodTheory extends React.Component<AllProps> {
                     {strings.global.similarProblems}
                 </CustomTitle>
                 <ul>
-                    <li><b>{strings.coins.theory.rod}</b> ({strings.global.partOfApp})</li>
-                    <li>{strings.coins.theory.knapsack}</li>
+                    <li><b>{strings.rod.theory.coins}</b> ({strings.global.partOfApp})</li>
+                    <li><b><a href={strings.coins.theory.knapsackHref}>{strings.coins.theory.knapsackTitle}</a></b></li>
                 </ul>
             </div>
         );
     }
 }
-
 
 export default withStyles(globalStyles)(RodTheory);

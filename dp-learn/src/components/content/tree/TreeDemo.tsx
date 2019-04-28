@@ -69,8 +69,8 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
     public constructor(props: AllProps) {
         super(props)
         this.state = {
-            givenKeys: strings.tree.keysExample,
-            givenFreqs: strings.tree.freqsExample,
+            givenKeys: strings.tree.demo.keysExample,
+            givenFreqs: strings.tree.demo.freqsExample,
             speed: 1,
             inProgress: false,
             tableVisible: false,
@@ -105,13 +105,13 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
 
                         <Grid container={true} direction='row'>
                             {/* Start button */}
-                            <CustomButton label={strings.global.start} onClick={this.onStartClick} disabled={false} />
+                            <CustomButton label={strings.global.start} onClick={this.handleStartClick} disabled={false} />
 
                             {/* Step button */}
                             <CustomButton label={strings.global.step} onClick={this.finiteAutomata} disabled={!this.state.inProgress || this.state.speed !== 0} />
 
                             {/* Finish button */}
-                            <CustomButton label={strings.global.finish} onClick={this.onFinishClick} disabled={!this.state.inProgress} />
+                            <CustomButton label={strings.global.finish} onClick={this.handleFinishClick} disabled={!this.state.inProgress} />
                         </Grid>
                     </FlexOne>
                     <FlexTwo>
@@ -169,7 +169,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
         this.timeout = setTimeout(func, 5000 / this.state.speed);
     }
 
-    private onStartClick = () => {
+    private handleStartClick = () => {
         clearTimeout(this.timeout);
         this.disableHighlighting();
 
@@ -341,7 +341,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
         this.nextAutomataState = 'doInnerCycle';
     }
 
-    private onFinishClick = () => {
+    private handleFinishClick = () => {
         clearTimeout(this.timeout);
 
         /* Create an auxiliary 2D matrix to store results  

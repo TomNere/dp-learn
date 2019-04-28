@@ -76,7 +76,7 @@ class Complexity extends React.Component<AllProps> {
                                 <div className={classes.fixedWidth}>
                                     <Storage />
                                     {strings.global.spaceComplex}:</div>
-                                <b>{this.props.space}</b>
+                                <b>O({this.props.space})</b>
                                 <br />
                             </Grid>
                         }

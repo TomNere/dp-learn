@@ -44,6 +44,7 @@ int optimalSearchTree(int keys[], int freqs[], int N)
     // Cost of single key == frequency of the key
     for (int i = 0; i < N; i++) {
         table[i][i] = freqs[i];
+        usedKeys[i][i] = i;
     }
   
     // Algorithm
@@ -53,7 +54,7 @@ int optimalSearchTree(int keys[], int freqs[], int N)
         for (int j = 0; j <= N - i + 1; j++) {
 
             // Get column number from row number j and chain length i
-            int column = i + i - 1;
+            int column = j + i - 1;
             table[j][column] = INT_MAX;
   
             // Try making all keys in interval keys[i..j] as root
@@ -72,8 +73,21 @@ int optimalSearchTree(int keys[], int freqs[], int N)
             }
         }
     }
+    
+    // Print used keys (indices in keys[])
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (j < i) {
+                printf("-,");
+            }
+            else {
+                printf("%d,", usedKeys[i][j]);
+            }
+        }
+        printf("\\n");
+    }
 
-    return table[0][n-1];
+    return table[0][N - 1];
 }`;
 
 
@@ -81,7 +95,7 @@ export const treeFormula = `T[i][j] = {(F[i],; i=j ),
     (underset(i <= r <= j)(min){T[i][r-1] + T[r+1][j] + sum_(k=i)^j F[k]},;
     X[i-1] != Y[j-1]):}`;
 
-export const treeRecTimeComplex = `???`;
+export const treeRecTimeComplex = `(N * 2) ^ N`;
 export const treeDpTimeComplex = `N ^ 3`;
-export const treeRecSpaceComplex = `N + N`;
-export const treeDpSpaceComplex = `N + N + (N ^ 2)`;
+export const treeRecSpaceComplex = `N`;
+export const treeDpSpaceComplex = `N + (N ^ 2)`;

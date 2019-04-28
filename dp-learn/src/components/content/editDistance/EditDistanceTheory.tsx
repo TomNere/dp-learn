@@ -34,11 +34,13 @@ class EditDistanceTheory extends React.Component<AllProps> {
                 {/* What is edit distance problem */}
                 <BottomMarginDiv>
                     <Markdown source={strings.editDistance.theory.brief.b1} />
+
+                    <b>{strings.theoryGlobal.eg}</b>
                     <ul className={classes.simpleList}>
-                        <li>X = {"'AdRemovee'"}</li>
-                        <li>Y = {"'AddRemove'"}</li>
+                        <li>{strings.editDistance.theory.brief.input1}</li>
+                        <li>{strings.editDistance.theory.brief.input2}</li>
                     </ul>
-                    {strings.editDistance.theory.brief.b2}
+                    <b>{strings.editDistance.theory.brief.b2}</b>
                     <ul className={classes.simpleList}>
                         <li><Markdown source={strings.editDistance.theory.brief.strX} /></li>
                         <li><Markdown source={strings.editDistance.theory.brief.strY} /></li>
@@ -55,14 +57,14 @@ class EditDistanceTheory extends React.Component<AllProps> {
                             </Typography>
 
                             <BottomMarginDiv>
-                                <Markdown source={strings.editDistance.theory.recursion1} />
+                                <Markdown source={strings.editDistance.theory.recursion.brief1} />
                                 <ul>
-                                    <li><Markdown source={strings.editDistance.theory.op1} /></li>
-                                    <li><Markdown source={strings.editDistance.theory.op2} /></li>
-                                    <li><Markdown source={strings.editDistance.theory.op3} /></li>
+                                    <li><Markdown source={strings.editDistance.theory.recursion.op1} /></li>
+                                    <li><Markdown source={strings.editDistance.theory.recursion.op2} /></li>
+                                    <li><Markdown source={strings.editDistance.theory.recursion.op3} /></li>
                                 </ul>
-                                <Markdown source={strings.editDistance.theory.recTime} />
-                                <Markdown source={strings.editDistance.theory.recSpace} />
+                                <Markdown source={strings.editDistance.theory.recursion.recTime} />
+                                <Markdown source={strings.editDistance.theory.recursion.recSpace} />
                             </BottomMarginDiv>
 
                             <BottomMarginDiv>
@@ -73,6 +75,14 @@ class EditDistanceTheory extends React.Component<AllProps> {
                             <Typography variant={'h6'} className={classes.bottomMargin}>
                                 {strings.global.recusionTree}
                             </Typography>
+                            <BottomMarginDiv>
+                                <Typography variant={'subtitle1'}>
+                                    <ul className={classes.simpleList}>
+                                        <li>{strings.editDistance.theory.recursion.input1}</li>
+                                        <li>{strings.editDistance.theory.recursion.input2}</li>
+                                    </ul>
+                                </Typography>
+                            </BottomMarginDiv>
                             <PaddingImage>
                                 <img src={Tree} alt="EditDistanceRecTree" />
                             </PaddingImage>
@@ -90,14 +100,16 @@ class EditDistanceTheory extends React.Component<AllProps> {
                             </Typography>
 
                             <BottomMarginDiv>
-                                <Markdown source={strings.editDistance.theory.dynProg} />
+                                <Markdown source={strings.editDistance.theory.dp.brief1} />
                                 <ul>
-                                    <li><Markdown source={strings.editDistance.theory.dpOp1} /></li>
-                                    <li><Markdown source={strings.editDistance.theory.dpOp2} /></li>
-                                    <li><Markdown source={strings.editDistance.theory.dpOp3} /></li>
+                                    <li><Markdown source={strings.editDistance.theory.dp.dpOp1} /></li>
+                                    <li><Markdown source={strings.editDistance.theory.dp.dpOp2} /></li>
+                                    <li><Markdown source={strings.editDistance.theory.dp.dpOp3} /></li>
                                 </ul>
-                                <Markdown source={strings.editDistance.theory.dpTime} />
-                                <Markdown source={strings.editDistance.theory.dpSpace} />
+                                <Markdown source={strings.editDistance.theory.dp.brief2} />
+                                
+                                <Markdown source={strings.editDistance.theory.dp.dpTime} />
+                                <Markdown source={strings.editDistance.theory.dp.dpSpace} />
                             </BottomMarginDiv>
 
                             <BottomMarginDiv>
@@ -112,9 +124,9 @@ class EditDistanceTheory extends React.Component<AllProps> {
                             <BottomMarginDiv>
                                 <Typography variant={'subtitle1'}>
                                     <ul className={classes.simpleList}>
-                                        <li>X = {"'AdRemovee'"}</li>
-                                        <li>Y = {"'AddRemove'"}</li>
-                                        <li>{strings.editDistance.theory.match}</li>
+                                        <li>{strings.editDistance.theory.dp.input1}</li>
+                                        <li>{strings.editDistance.theory.dp.input2}</li>
+                                        <li>{strings.editDistance.theory.dp.match}</li>
                                     </ul>
                                 </Typography>
                             </BottomMarginDiv>
@@ -131,9 +143,9 @@ class EditDistanceTheory extends React.Component<AllProps> {
                             <BottomMarginDiv>
                                 <Typography variant={'subtitle1'} >
                                     <ul className={classes.simpleList}>
-                                        <li>X = {"'AdRemovee'"}</li>
-                                        <li>Y = {"'AddRemove'"}</li>
-                                        <li>{strings.editDistance.theory.noMatch}</li>
+                                        <li>{strings.editDistance.theory.dp.input1}</li>
+                                        <li>{strings.editDistance.theory.dp.input2}</li>
+                                        <li>{strings.editDistance.theory.dp.noMatch}</li>
                                     </ul>
                                 </Typography>
                             </BottomMarginDiv>
@@ -153,6 +165,13 @@ class EditDistanceTheory extends React.Component<AllProps> {
                         </PaddingDiv>
                     </FlexOne>
                 </Grid>
+                <CustomTitle variant='h5'>
+                    {strings.global.similarProblems}
+                </CustomTitle>
+                <ul>
+                    <li><b><a href={strings.editDistance.theory.longestPalindromHref}>{strings.editDistance.theory.longestPalindromTitle}</a></b></li>
+                    <li><b><a href={strings.editDistance.theory.longestCommonSubseqHref}>{strings.editDistance.theory.longestCommonSubseqTitle}</a></b></li>
+                </ul>
             </div>
         );
     }

@@ -24,8 +24,7 @@ int minCoins(int coins[], int arrSize, int value) {
         }
     }
     return result;
-}
-`;
+}`;
 
 export const coinsDynCode = `// Returns number of coins to make given value
 // coins[] - table of different coins
@@ -58,7 +57,7 @@ int minCoins(int coins[], int arrSize, int value) {
                 // If subResult == INT_MAX - no result
                 // If subResult + 1 < result - we've got new result
                 if (subResult != INT_MAX && subResult + 1 < table[i]) {
-                    table[i] = subRes + 1;
+                    table[i] = subResult + 1;
                     solutionHelper[i] = j;  // Coin at which index was used
                 }
             }
@@ -71,9 +70,9 @@ int minCoins(int coins[], int arrSize, int value) {
 	    int start = value;
 	    printf("Used coins: \\n");
 	    while(start != 0) {
-	        int j = solutionHelper[start];
-	        printf("%d, ", coins[j]);
-	        start = start - coins[j];
+	        int i = solutionHelper[start];
+	        printf("%d, ", coins[i]);
+	        start = start - coins[i];
 	    }
 	    printf("\\n");
     }
@@ -109,4 +108,4 @@ export const coinsFormula = `T[v] = {(0,; v = 0),
 export const coinsRecTimeComplex = `N ^ V`;
 export const coinsDpTimeComplex = `N * V`;
 export const coinsRecSpaceComplex = `N + 1`;
-export const coinsDpSpaceComplex = `N + 1 + (N + 1)`;
+export const coinsDpSpaceComplex = `(N + 1) + (N + 1)`;

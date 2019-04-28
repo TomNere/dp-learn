@@ -36,7 +36,7 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
     public constructor(props: any) {
         super(props)
         this.state = {
-            givenFreqs: strings.tree.freqsExample,
+            givenFreqs: strings.tree.demo.freqsExample,
             statsVisible: false
         }
     }

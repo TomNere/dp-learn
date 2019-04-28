@@ -102,13 +102,13 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
 
                         <Grid container={true} direction='row'>
                             {/* Start button */}
-                            <CustomButton label={strings.global.start} onClick={this.onStartClick} disabled={false} />
+                            <CustomButton label={strings.global.start} onClick={this.handleStartClick} disabled={false} />
 
                             {/* Step button */}
                             <CustomButton label={strings.global.step} onClick={this.finiteAutomata} disabled={!this.state.inProgress || this.state.speed !== 0} />
 
                             {/* Finish button */}
-                            <CustomButton label={strings.global.finish} onClick={this.onFinishClick} disabled={!this.state.inProgress} />
+                            <CustomButton label={strings.global.finish} onClick={this.handleFinishClick} disabled={!this.state.inProgress} />
                         </Grid>
                     </FlexOne>
                     <FlexTwo>
@@ -147,7 +147,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
         this.timeout = setTimeout(func, 5000 / this.state.speed);
     }
 
-    private onStartClick = () => {
+    private handleStartClick = () => {
         clearTimeout(this.timeout);
 
         this.prices = GetNumbers(this.state.givenPrices);
@@ -284,7 +284,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
         });
     }
 
-    private onFinishClick = () => {
+    private handleFinishClick = () => {
         clearTimeout(this.timeout);
         const table: number[] = [0];
         this.solutionHelper = [];

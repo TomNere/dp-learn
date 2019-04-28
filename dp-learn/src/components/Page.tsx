@@ -104,14 +104,14 @@ class Page extends React.Component<AllProps, IPageState> {
                             <ListItemText primary={strings.global.intro} />
                         </ListItem>
                         <Divider />
-                        {/* Rod */}
-                        <ListItem className={this.isSelected('rod')} button={true} onClick={this.handleSelectRod}>
-                            <ListItemText primary={strings.menu.rod} />
-                        </ListItem>
-                        <Divider />
                         {/* Coins */}
                         <ListItem className={this.isSelected('coins')} button={true} onClick={this.handleSelectCoins}>
                             <ListItemText primary={strings.menu.coins} />
+                        </ListItem>
+                        <Divider />
+                        {/* Rod */}
+                        <ListItem className={this.isSelected('rod')} button={true} onClick={this.handleSelectRod}>
+                            <ListItemText primary={strings.menu.rod} />
                         </ListItem>
                         <Divider />
                         {/* Substring */}

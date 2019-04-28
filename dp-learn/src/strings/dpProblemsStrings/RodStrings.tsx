@@ -1,7 +1,7 @@
 export const rodRecCode = `// Return best obtainable price
 // prices[] - array of prices of rod length 1,2,3, ...
 // arrSize - number of prices
-int cuttingRod(int prices[], int n) {
+int cuttingRod(int prices[], int arrSize) {
     // Base case (no prices given)
     if (arrSize == 0) {
         return 0;
@@ -22,8 +22,6 @@ export const rodDynCode = `// Return best obtainable price
 // prices[] - array of prices of rod length 1,2,3, ...
 // n - number of prices
 int cuttingRod(int prices[], int arrSize) {
-    ...
-}
     // Best price for length i will be in table[i]
     int table[arrSize + 1];
 
@@ -73,10 +71,10 @@ for (int i = 1; i<=n; i++) {
 }`;
 
 export const rodFormula = `T[l] = {(0,; l = 0),
-    (max{P[i] + T[l - i - 1]}\ \ ;
-    \ \ \ i:\ \ i < l,; l > 0):}`;
+    (max{P[i] + T[l - i - 1]};
+    \ i:\ i < l,; l > 0):}`;
 
-export const rodRecTimeComplex = `2 ^ N`;
-export const rodDpTimeComplex = `N ^ 2`;
-export const rodRecSpaceComplex = `N`;
-export const rodDpSpaceComplex = `N + (N + 1)`;
+export const rodRecTimeComplex = `2 ^ L`;
+export const rodDpTimeComplex = `L ^ 2`;
+export const rodRecSpaceComplex = `L`;
+export const rodDpSpaceComplex = `L + (L + 1)`;

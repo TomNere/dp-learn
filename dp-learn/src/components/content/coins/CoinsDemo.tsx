@@ -99,13 +99,13 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
                         <Grid direction='row' container={true}>
                             {/* Start button */}
-                            <CustomButton label={strings.global.start} onClick={this.onStartClick} disabled={false} />
+                            <CustomButton label={strings.global.start} onClick={this.handleStartClick} disabled={false} />
 
                             {/* Step button */}
                             <CustomButton label={strings.global.step} onClick={this.finiteAutomata} disabled={!this.state.inProgress || this.state.speed !== 0} />
 
                             {/* Finish button */}
-                            <CustomButton label={strings.global.finish} onClick={this.onFinishClick} disabled={!this.state.inProgress} />
+                            <CustomButton label={strings.global.finish} onClick={this.handleFinishClick} disabled={!this.state.inProgress} />
                         </Grid>
                     </FlexOne>
                     <FlexTwo>
@@ -150,7 +150,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         this.timeout = setTimeout(func, 5000 / this.state.speed);
     }
 
-    private onStartClick = () => {
+    private handleStartClick = () => {
         clearTimeout(this.timeout);
         this.coins = GetNumbers(this.state.givenCoins);
 
@@ -302,7 +302,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
     }
 
     // Stop animation and get result immediately
-    private onFinishClick = () => {
+    private handleFinishClick = () => {
         clearTimeout(this.timeout);
 
         this.solutionHelper = [0];

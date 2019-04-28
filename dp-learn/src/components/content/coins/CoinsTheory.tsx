@@ -35,16 +35,16 @@ class CoinsTheory extends React.Component<AllProps> {
                 <BottomMarginDiv>
                     <Markdown source={strings.coins.theory.brief.b1} />
 
-                    {strings.theoryGlobal.eg}
+                    <b>{strings.theoryGlobal.eg}</b>
                     <ul className={classes.simpleList}>
-                        <li>C = {'{ 2, 3, 5 }'}</li>
-                        <li>V = 7</li>
+                        <li>{strings.coins.theory.brief.input1}</li>
+                        <li>{strings.coins.theory.brief.input2}</li>
                     </ul>
 
-                    {strings.coins.theory.brief.b2}
+                    <b>{strings.coins.theory.brief.b2}</b>
                     <ul className={classes.simpleList}>
-                        <li>7 = 2 + 2 + 3</li>
-                        <li>7 = 2 + 5</li>
+                        <li>{strings.coins.theory.brief.output1}</li>
+                        <li>{strings.coins.theory.brief.output2}</li>
                     </ul>
                     <Markdown source={strings.coins.theory.brief.b3} />
                 </BottomMarginDiv>
@@ -58,9 +58,9 @@ class CoinsTheory extends React.Component<AllProps> {
                             </Typography>
 
                             <BottomMarginDiv>
-                                <Markdown source={strings.coins.theory.recursion} />
-                                <Markdown source={strings.coins.theory.recTime} />
-                                <Markdown source={strings.coins.theory.recSpace} />
+                                <Markdown source={strings.coins.theory.recursion.brief} />
+                                <Markdown source={strings.coins.theory.recursion.recTime} />
+                                <Markdown source={strings.coins.theory.recursion.recSpace} />
                             </BottomMarginDiv>
 
                             <BottomMarginDiv>
@@ -71,6 +71,14 @@ class CoinsTheory extends React.Component<AllProps> {
                             <Typography variant={'h6'} className={classes.bottomMargin}>
                                 {strings.global.recusionTree}
                             </Typography>
+                            <BottomMarginDiv>
+                                <Typography variant={'subtitle1'}>
+                                    <ul className={classes.simpleList}>
+                                        <li>{strings.coins.theory.brief.input1}</li>
+                                        <li>{strings.coins.theory.brief.input2}</li>
+                                    </ul>
+                                </Typography>
+                            </BottomMarginDiv>
                             <PaddingImage>
                                 <img src={Tree} alt="MinimumCoinsRecTree" />
                             </PaddingImage>
@@ -88,9 +96,9 @@ class CoinsTheory extends React.Component<AllProps> {
                             </Typography>
 
                             <BottomMarginDiv>
-                                <Markdown source={strings.coins.theory.dynProg} />
-                                <Markdown source={strings.coins.theory.dpTime} />
-                                <Markdown source={strings.coins.theory.dpSpace} />
+                                <Markdown source={strings.coins.theory.dp.brief} />
+                                <Markdown source={strings.coins.theory.dp.dpTime} />
+                                <Markdown source={strings.coins.theory.dp.dpSpace} />
                             </BottomMarginDiv>
 
                             <BottomMarginDiv>
@@ -105,8 +113,8 @@ class CoinsTheory extends React.Component<AllProps> {
                             <BottomMarginDiv>
                                 <Typography variant={'subtitle1'}>
                                     <ul className={classes.simpleList}>
-                                        <li>C = {'{ 1, 2, 5 }'}</li>
-                                        <li>V = 4</li>
+                                        <li>{strings.coins.theory.dp.input11}</li>
+                                        <li>{strings.coins.theory.dp.input12}</li>
                                     </ul>
                                 </Typography>
                             </BottomMarginDiv>
@@ -123,8 +131,8 @@ class CoinsTheory extends React.Component<AllProps> {
                             <BottomMarginDiv>
                                 <Typography variant={'subtitle1'} >
                                     <ul className={classes.simpleList}>
-                                        <li>C = {'{ 1, 2, 4 }'}</li>
-                                        <li>V = 4</li>
+                                        <li>{strings.coins.theory.dp.input21}</li>
+                                        <li>{strings.coins.theory.dp.input22}</li>
                                     </ul>
                                 </Typography>
                             </BottomMarginDiv>
@@ -149,7 +157,7 @@ class CoinsTheory extends React.Component<AllProps> {
                 </CustomTitle>
                 <ul>
                     <li><b>{strings.coins.theory.rod}</b> ({strings.global.partOfApp})</li>
-                    <li>{strings.coins.theory.knapsack}</li>
+                    <li><b><a href={strings.coins.theory.knapsackHref}>{strings.coins.theory.knapsackTitle}</a></b></li>
                 </ul>
             </div>
         );

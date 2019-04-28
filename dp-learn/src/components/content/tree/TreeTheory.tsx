@@ -38,12 +38,14 @@ class TreeTheory extends React.Component<AllProps> {
                 {/* What is edit distance problem */}
                 <BottomMarginDiv>
                     <Markdown source={strings.tree.theory.brief.b1} />
+
+                    <b>{strings.theoryGlobal.eg}</b>
                     <ul className={classes.simpleList}>
-                        <li>K = {strings.tree.keysExample}</li>
-                        <li>F = {strings.tree.freqsExample}</li>
+                        <li>{strings.tree.theory.keysExample}</li>
+                        <li>{strings.tree.theory.freqsExample}</li>
                     </ul>
                     <BottomMarginDiv>
-                        {strings.tree.theory.brief.b2}
+                        <b>{strings.tree.theory.brief.b2}</b>
                     </BottomMarginDiv>
 
                     {/* Tree examples */}
@@ -53,7 +55,7 @@ class TreeTheory extends React.Component<AllProps> {
                                 {strings.tree.tree} 1
                             </Typography>
                             <PaddingImage>
-                                <img src={TreeExample1} width='350' />
+                                <img src={TreeExample1} width='420' />
                             </PaddingImage>
                         </FlexOne>
                         <FlexTwo>
@@ -61,7 +63,7 @@ class TreeTheory extends React.Component<AllProps> {
                                 {strings.tree.tree} 2
                             </Typography>
                             <PaddingImage>
-                                <img src={TreeExample2} width='280' />
+                                <img src={TreeExample2} width='350' />
                             </PaddingImage>
                         </FlexTwo>
                     </Grid>
@@ -77,9 +79,9 @@ class TreeTheory extends React.Component<AllProps> {
                             </Typography>
 
                             <BottomMarginDiv>
-                                <Markdown source={strings.tree.theory.recursion1} />
-                                <Markdown source={strings.tree.theory.recTime} />
-                                <Markdown source={strings.tree.theory.recSpace} />
+                                <Markdown source={strings.tree.theory.recursion.brief} />
+                                <Markdown source={strings.tree.theory.recursion.recTime} />
+                                <Markdown source={strings.tree.theory.recursion.recSpace} />
                             </BottomMarginDiv>
 
                             <BottomMarginDiv>
@@ -90,8 +92,15 @@ class TreeTheory extends React.Component<AllProps> {
                             <Typography variant={'h6'} className={classes.bottomMargin}>
                                 {strings.global.recusionTree}
                             </Typography>
+                            <BottomMarginDiv>
+                                <Typography variant={'subtitle1'}>
+                                    <ul className={classes.simpleList}>
+                                        <li>{strings.tree.theory.recursion.input}</li>
+                                    </ul>
+                                </Typography>
+                            </BottomMarginDiv>
                             <PaddingImage>
-                                <img src={Tree} alt="optimalTreeRecTree" width='90%' />
+                                <img src={Tree} alt="optimalTreeRecTree" width='99%' />
                             </PaddingImage>
                             <SourceCode>
                                 {TreeRecCode}
@@ -107,12 +116,14 @@ class TreeTheory extends React.Component<AllProps> {
                             </Typography>
 
                             <BottomMarginDiv>
-                                <Markdown source={strings.tree.theory.dynProg} />
+                                <Markdown source={strings.tree.theory.dp.brief1} />
                                 <Formula>
                                     {treeFormula}
                                 </Formula>
-                                <Markdown source={strings.tree.theory.dpTime} />
-                                <Markdown source={strings.tree.theory.dpSpace} />
+                                <Markdown source={strings.tree.theory.dp.brief2} />
+
+                                <Markdown source={strings.tree.theory.dp.dpTime} />
+                                <Markdown source={strings.tree.theory.dp.dpSpace} />
                             </BottomMarginDiv>
 
                             <BottomMarginDiv>
@@ -127,8 +138,8 @@ class TreeTheory extends React.Component<AllProps> {
                             <BottomMarginDiv>
                                 <Typography variant={'subtitle1'}>
                                     <ul className={classes.simpleList}>
-                                        <li>K = {strings.tree.keysExample}</li>
-                                        <li>F = {strings.tree.freqsExample}</li>
+                                        <li>{strings.tree.theory.keysExample}</li>
+                                        <li>{strings.tree.theory.freqsExample}</li>
                                     </ul>
                                 </Typography>
                             </BottomMarginDiv>
@@ -145,8 +156,8 @@ class TreeTheory extends React.Component<AllProps> {
                             <BottomMarginDiv>
                                 <Typography variant={'subtitle1'}>
                                     <ul className={classes.simpleList}>
-                                        <li>K = {strings.tree.keysExample2}</li>
-                                        <li>F = {strings.tree.freqsExample2}</li>
+                                        <li>{strings.tree.theory.keysExample2}</li>
+                                        <li>{strings.tree.theory.freqsExample2}</li>
                                     </ul>
                                 </Typography>
                             </BottomMarginDiv>
@@ -165,6 +176,12 @@ class TreeTheory extends React.Component<AllProps> {
                         </PaddingDiv>
                     </FlexOne>
                 </Grid>
+                <CustomTitle variant='h5'>
+                    {strings.global.similarProblems}
+                </CustomTitle>
+                <ul>
+                    <li><b><a href={strings.tree.theory.matrixMultHref}>{strings.tree.theory.matrixMultTitle}</a></b></li>
+                </ul>
             </div>
         );
     }

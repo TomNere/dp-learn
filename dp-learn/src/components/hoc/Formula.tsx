@@ -12,7 +12,12 @@ interface IFormulaProps {
 class Formula extends React.Component<IFormulaProps> {
     public render() {
         return (
-            <MathJax.Context input='ascii'>
+            <MathJax.Context input='ascii'
+            options={ {
+                asciimath2jax: {
+                     useMathMLspacing: true,
+                }
+            } }>
                 <MathJax.Node>
                     {this.props.children}
                 </MathJax.Node>
