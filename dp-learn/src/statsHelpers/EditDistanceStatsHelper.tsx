@@ -52,12 +52,12 @@ export const dpEditDistance = (stringX: string, stringY: string, length1: number
     return table[length1][length2];
 }
 
-export const dpEditDistanceTime = (length1: number, length2: number) => {
-    return ((length1 + 1) * (length2 + 1));
-}
-
 export const recEditDistanceTime = (length1: number, length2: number) => {
     return Math.pow(3, length1 + length2 - 1);
+}
+
+export const dpEditDistanceTime = (length1: number, length2: number) => {
+    return ((length1 + 1) * (length2 + 1));
 }
 
 export const recEditDistanceSpace = (length1: number, length2: number) => {

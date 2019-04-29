@@ -38,14 +38,12 @@ export const dpSubstring = (strX: string, strY: string, length1: number, length2
     }
 }
 
-export const dpSubstringTime = (length1: number, length2: number) => {
-    return length1 * length2;
+export const recSubstringTime = (length1: number, length2: number) => {
+    return Math.pow(3, length1 + length2 - 1);
 }
 
-export const recSubstringTime = (length1: number, length2: number) => {
-    // TODO check
-    Math.pow(2, length1 + length2);
-    return 0;
+export const dpSubstringTime = (length1: number, length2: number) => {
+    return length1 * length2;
 }
 
 export const recSubstringSpace = (length1: number, length2: number) => {
@@ -53,7 +51,7 @@ export const recSubstringSpace = (length1: number, length2: number) => {
 }
 
 export const dpSubstringSpace = (length1: number, length2: number) => {
-    return length1 + length2 + (length1 * length2) + 1;     // strings, table and result
+    return length1 + length2 + (length1 * length2);     // strings, table and result
 }
 
 export const substringExamples = [
@@ -71,6 +69,6 @@ export const substringExamples = [
     },
     {
         strX: '123here123',
-        strY: '12345hereIGo12345'
+        strY: '123here123'
     },
 ];

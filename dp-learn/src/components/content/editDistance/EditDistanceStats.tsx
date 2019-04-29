@@ -51,8 +51,8 @@ class EditDistanceStats extends React.Component<any, IEditDistanceStatsState> {
                 <Grid container={true} direction='row'>
                     <FlexOne>
                         <Grid container={true} direction='column'>
-                            <CustomTextField label={`${strings.global.string} X (max. 30)`} value={this.state.stringX} onChange={this.handlestrXChange} />
-                            <CustomTextField label={`${strings.global.string} Y (max. 30)`} value={this.state.stringY} onChange={this.handlestrYChange} />
+                            <CustomTextField label={`${strings.global.string} X (max. 15)`} value={this.state.stringX} onChange={this.handlestrXChange} />
+                            <CustomTextField label={`${strings.global.string} Y (max. 15)`} value={this.state.stringY} onChange={this.handlestrYChange} />
                         </Grid>
                         <CustomButton onClick={this.drawStats} label={strings.global.evaluateStats} />
                     </FlexOne>
@@ -78,13 +78,13 @@ class EditDistanceStats extends React.Component<any, IEditDistanceStatsState> {
     }
 
     private handlestrXChange = (e: any) => {
-        if (e.target.value.length <= 30) {
+        if (e.target.value.length <= 15) {
             this.setState({ stringX: e.target.value });
         }
     };
 
     private handlestrYChange = (e: any) => {
-        if (e.target.value.length <= 30) {
+        if (e.target.value.length <= 15) {
             this.setState({ stringY: e.target.value });
         }
     };

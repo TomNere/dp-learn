@@ -132,7 +132,7 @@ class SubstringStats extends React.Component<any, ISubstringStatsState> {
             length2 = strY.length;
 
             calls = { value: 0 };
-            recursiveSubstring(strX, strY, length1, length2, 0, calls);
+            console.log('res:',recursiveSubstring(strX, strY, length1, length2, 0, calls));
 
             recCalls = calls.value;
 

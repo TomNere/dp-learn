@@ -71,6 +71,12 @@ class Intro extends React.Component<AllProps> {
                         <b><a href={strings.intro.algorithmsHref}>{strings.intro.algorithmsTitle}</a></b> - {strings.intro.algorithmsText}
                     </li>
                 </ul>
+                <CustomTitle variant='h5'>
+                    {strings.intro.writeUs}
+                </CustomTitle>
+                <ul>
+                    <li><a href={`mailto:${strings.intro.mail}`}>{strings.intro.mail}</a></li>
+                </ul>
             </div>
         );
     }

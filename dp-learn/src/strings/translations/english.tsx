@@ -90,6 +90,8 @@ export const english = {
         algorithmsTitle: 'Introduction to Algorithms',
         algorithmsHref: 'https://www.amazon.com/Introduction-Algorithms-3rd-MIT-Press/dp/0262033844',
         algorithmsText: 'teória k dynamickému programovaniu a niektorým úlohám',
+        writeUs: 'Write Us',
+        mail: 'dplearnwebapp@gmail.com'
     },
     rod: {
         prices: 'Prices',
@@ -210,7 +212,7 @@ export const english = {
                 input2: "Y = 'sw'",
             },
             dp: {
-                brief: 'Princíp algoritmu spočíva v hľadaní najdlhšieho spoločného **sufixu** v podreťazcoch oboch reťazcov. Dĺžky sufixov sa budú ukladať do dvojrozmerného poľa. Ak sa znak v stĺpci a riadku nerovná, do bunky sa vloží hodnota **0**. Ak sa rovnajú, tak sa vloží hodnota **1**, ak ide o prvý znak jedného alebo druhého reťazca, alebo sa inkrementuje predchádzajúca hodnota na diagonále (inkrementuje sa sufix). Okrem tabuľky potrebujeme navyše premenné na ukladanie pozície v tabuľke s najvyššou hodnotou sufixu. Vďaka tejto pozícii a hodnote v bunke vieme jednoducho vytvoriť aj kompletné riešenie úlohy, pretože vieme kde končí najdlhší sufix a poznáme jeho dĺžku.',
+                brief: 'Princíp algoritmu spočíva v hľadaní najdlhšieho spoločného **sufixu** v podreťazcoch oboch reťazcov. Dĺžky sufixov sa budú ukladať do dvojrozmerného poľa. Ak sa znak v stĺpci a riadku nerovná, do bunky sa vloží hodnota **0**. Ak sa rovnajú, tak sa vloží hodnota **1**, ak ide o prvý znak jedného alebo druhého reťazca, alebo sa inkrementuje predchádzajúca hodnota na diagonále (inkrementuje sa sufix). Okrem tabuľky potrebujeme navyše premenné na ukladanie pozície v tabuľke s najvyššou hodnotou sufixu. Vďaka tejto pozícii a hodnote v bunke vieme jednoducho vytvoriť aj celé riešenie úlohy, pretože vieme kde končí najdlhší sufix a poznáme jeho dĺžku.',
                 dpTime: '**Časová zložitosť** je polynomická - vypĺňanie tabuľky **L1 * L2**.',
                 dpSpace: '**Priestorová zložitosť** je súčet dĺžok reťazcov + veľkosť tabuľky.',
                 input1: "X = 'dog'",
@@ -306,7 +308,7 @@ export const english = {
         arrayOfF: 'Array of frequency counts',
         tree: 'Tree',
         theory: {
-            title: 'Optimalizovaný binárny vyhľadávací strom - teória',
+            title: 'Optimálny binárny vyhľadávací strom - teória',
             brief: {
                 b1: 'Na vstupe je pole vyhľadávacích kľúčov **K** = { k1, k2, k3, ..., kN)**. Pre zjednodušenie si počet všetkých kľúčov označíme ako **N**. Druhé pole na vstupe obsahuje počet vyhľadaní jednotlivých kľúčov z prvého poľa **F** = { f1, f2, f3, ..., fN)**.. Index kľúča v prvom poli sa rovná indexu v druhom poli. Je treba vytvoriť binárny vyhľadávací strom, ktorý bude obsahovať všetky kľúče. Súčet cien všetkých vyhľadaní musí byť čo najnižší.',
                 b2: 'Aká bude cena stromu a ako bude strom vyzerať?',
@@ -349,7 +351,7 @@ export const english = {
             freqsExample: '2, 4, 6, 8',
         },
         stats: {
-            title: 'Optimalizovaný binárny vyhľadávací strom - štatistiky',
+            title: 'Optimálny binárny vyhľadávací strom - štatistiky',
             brief: 'Zadajte pole počtu vyhľadávaní jednotlivých kľúčov (pole vyhľadávacích kľučov nie je potreba).',
         }
     }

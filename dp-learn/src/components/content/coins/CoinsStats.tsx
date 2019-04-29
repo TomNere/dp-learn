@@ -85,7 +85,7 @@ class CoinsStats extends React.Component<any, ICoinsStatsState> {
     }
 
     private handleCoins = (e: any) => {
-        const coins = GetNumbers(e.target.value);
+        const coins = GetNumbers(e.target.value, false);
         if (coins.length <= 15) {
             this.setState({ givenCoins: e.target.value });
         }
@@ -115,7 +115,7 @@ class CoinsStats extends React.Component<any, ICoinsStatsState> {
             dpTheorTime: dpCoinsTime(this.coins.length, this.state.givenValue),
             recTime: recCalls,
             recTheorTime: recCoinsTime(this.coins.length, this.state.givenValue),
-            dpSpace: dpCoinsSpace(this.coins.length, this.state.givenValue),
+            dpSpace: dpCoinsSpace(this.coins.length),
             recSpace: recCoinsSpace(this.coins.length)
         }
 
@@ -140,7 +140,7 @@ class CoinsStats extends React.Component<any, ICoinsStatsState> {
                 dpTheorTime: dpCoinsTime(example.coins.length, example.value),
                 recTime: recCalls,
                 recTheorTime: recCoinsTime(example.coins.length, example.value),
-                dpSpace: dpCoinsSpace(example.coins.length, example.value),
+                dpSpace: dpCoinsSpace(example.coins.length),
                 recSpace: recCoinsSpace(example.coins.length)
             }
 
@@ -151,7 +151,7 @@ class CoinsStats extends React.Component<any, ICoinsStatsState> {
     }
 
     private drawStats = () => {
-        this.coins = GetNumbers(this.state.givenCoins);
+        this.coins = GetNumbers(this.state.givenCoins, false);
         this.timeChartStats = [];
         this.spaceChartStats = [];
         this.tableStats = [];

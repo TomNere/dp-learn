@@ -349,7 +349,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
 
         this.setState({
             inProgress: false,
-            result: `${strings.substring.demo.longestSubr}: "${finalString}", ${strings.substring.demo.length}: ${table[this.resultPos[0]][this.resultPos[1]]}`,
+            result: `${strings.substring.demo.longestSubr}: '${finalString}', ${strings.substring.demo.length}: ${table[this.resultPos[0]][this.resultPos[1]]}`,
             currentState: strings.global.done
         });
     }

@@ -34,12 +34,12 @@ export const dpRod = (prices: number[], arrSize: number, calls: ISimpleObjectPar
     return table[arrSize];
 }
 
-export const dpRodTime = (arrSize: number) => {
-    return arrSize * arrSize;
-}
-
 export const recRodTime = (arrSize: number) => {
     return Math.pow(2, arrSize);
+}
+
+export const dpRodTime = (arrSize: number) => {
+    return arrSize * arrSize;
 }
 
 export const recRodSpace = (arrSize: number) => {
@@ -47,7 +47,7 @@ export const recRodSpace = (arrSize: number) => {
 }
 
 export const dpRodSpace = (arrSize: number) => {
-    return arrSize + (arrSize + 1);     // Store prices and array for DP solution
+    return arrSize + arrSize + 1;     // Store prices and array for DP solution
 }
 
 export const rodExamples = [
@@ -61,6 +61,6 @@ export const rodExamples = [
         prices: [3, 5, 6, 7, 9 , 11, 12, 20, 30],
     },
     {
-        prices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+        prices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
     },
 ];

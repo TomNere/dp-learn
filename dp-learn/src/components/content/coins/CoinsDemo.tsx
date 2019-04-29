@@ -90,7 +90,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
                     <FlexOne>
                         <Grid direction='column' container={true}>
                             <CustomTextField label={`${strings.coins.value} (0-20)`} value={this.state.givenValue.toString()} onChange={this.handleValue} />
-                            <CustomTextField label={`${strings.coins.coins} (max. 5)`} value={this.state.givenCoins} onChange={this.handleCoins} />
+                            <CustomTextField label={`${strings.coins.coins} (max. 15)`} value={this.state.givenCoins} onChange={this.handleCoins} />
                         </Grid>
 
                         {/* Speed select */}
@@ -129,8 +129,8 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
     }
 
     private handleCoins = (e: any) => {
-        const coins = GetNumbers(e.target.value);
-        if (coins.length <= 5) {
+        const coins = GetNumbers(e.target.value, false);
+        if (coins.length <= 15) {
             this.setState({ givenCoins: e.target.value, tableVisible: false, inProgress: false });
         }
     }
@@ -152,7 +152,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
     private handleStartClick = () => {
         clearTimeout(this.timeout);
-        this.coins = GetNumbers(this.state.givenCoins);
+        this.coins = GetNumbers(this.state.givenCoins, false);
 
         if (this.coins.length === 0) {
             this.setState({ result: strings.global.invalidArg });

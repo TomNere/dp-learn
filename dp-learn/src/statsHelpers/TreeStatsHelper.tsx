@@ -57,31 +57,36 @@ export const dpTree = (freqs: number[], calls: ISimpleObjectParameter) => {
     return table[0][LENGTH - 1];
 }
 
+export const recTreeTime = (arrSize: number) => {
+    return Math.pow(arrSize * 2, arrSize);
+}
+
 export const dpTreeTime = (arrSize: number) => {
     return Math.pow(arrSize, 3);
 }
 
-export const recTreeTime = (arrSize: number) => {
-    // TODO right forumla
-    return 0;
-}
-
 export const recTreeSpace = (arrSize: number) => {
-    return arrSize * 2;
+    return arrSize;
 }
 
 export const dpTreeSpace = (arrSize: number) => {
-    return (arrSize * 2) + (arrSize * 2);     // keys, freqs and table
+    return arrSize + (arrSize * arrSize);     // keys, freqs and table
 }
 
 export const treeExamples = [
     {
+        freqs: [1, 2]
+    },
+    {
         freqs: [1, 2, 3, 4],
     },
     {
-        freqs: [2, 3, 4, 4, 6],
+        freqs: [5, 6, 7, 8],
     },
     {
-        freqs: [3, 5, 6, 7, 9, 11, 12],
+        freqs: [55, 77, 33, 11],
+    },
+    {
+        freqs: [2, 3, 4, 4, 6, 9, 15],
     },
 ];

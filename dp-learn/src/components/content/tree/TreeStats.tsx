@@ -53,7 +53,7 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
                 <Grid container={true} direction='row'>
                     <FlexOne>
                         <BottomMarginDiv>
-                        <CustomTextField label={`${strings.tree.arrayOfF} (max. 30)`} value={this.state.givenFreqs} onChange={this.handleFreqs} />
+                        <CustomTextField label={`${strings.tree.arrayOfF} (max. 15)`} value={this.state.givenFreqs} onChange={this.handleFreqs} />
                         </BottomMarginDiv>
                         <CustomButton onClick={this.drawStats} label={strings.global.evaluateStats} />
                     </FlexOne>
@@ -80,8 +80,8 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
     }
 
     private handleFreqs = (e: any) => {
-        const freqs = GetNumbers(e.target.value);
-        if (freqs.length <= 30) {
+        const freqs = GetNumbers(e.target.value, false);
+        if (freqs.length <= 15) {
             this.setState({ givenFreqs: e.target.value });
         }
     }
@@ -120,10 +120,10 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
 
         for (const example of treeExamples) {
             calls = { value: 0 };
-            recursiveTree(example.freqs,
+            console.log('res:',recursiveTree(example.freqs,
                 0,
                 example.freqs.length - 1,
-                calls);
+                calls));
 
             recCalls = calls.value;
 
@@ -150,7 +150,7 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
     }
 
     private drawStats = () => {
-        this.freqs = GetNumbers(this.state.givenFreqs);
+        this.freqs = GetNumbers(this.state.givenFreqs, false);
         this.spaceChartStats = [];
         this.timeChartStats = [];
         this.tableStats = [];

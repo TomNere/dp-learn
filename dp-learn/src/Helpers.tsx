@@ -1,8 +1,11 @@
 // Convert numbers in string to number array
-export const GetNumbers = (str: string) => {
+export const GetNumbers = (str: string, sorted: boolean) => {
     const numbers: number[] = [];
     for (const num of str.split(",")) {
-        if (!Number.isNaN(+num)) {
+        if (!Number.isNaN(+num) ) {
+            if (sorted && +num < numbers[numbers.length - 1]) {
+                return [];
+            }
             numbers.push(+num);
         }
         else {

@@ -49,7 +49,7 @@ export const slovak = {
         substring: 'Najdlhší spoločný podreťazec',
         rod: 'Rezanie tyče',
         editDistance: 'Editačná vzdialenosť',
-        tree: 'Optimalizovaný binárny vyhľadávací strom'
+        tree: 'Optimálny binárny vyhľadávací strom'
     },
     theoryGlobal: {
         eg: 'Konkrétne zadanie:',
@@ -89,54 +89,8 @@ export const slovak = {
         algorithmsTitle: 'Introduction to Algorithms',
         algorithmsHref: 'https://www.amazon.com/Introduction-Algorithms-3rd-MIT-Press/dp/0262033844',
         algorithmsText: 'teória k dynamickému programovaniu a niektorým úlohám',
-    },
-    rod: {
-        prices: 'Ceny',
-        theory: {
-            title: 'Rezanie tyče - teória',
-            brief: {
-                b1: 'Majme oceľovú tyč dĺžky **L**. Túto tyč je potrebné narezať na menšie kusy. Na vstupe sú predajné ceny tyčí všetkých dĺžok od 1 po L: **P = { p1, p2, p3, ..., pL}**. Na aké dĺžky treba narezať tyč, aby súčet cien tyčí, ktoré vzniknú, bol čo najvyšší?',
-                input: 'P = { 1, 3, 5 }',
-                b2: 'Na aké dĺžky sa dá tyč narezať?',
-                output1: '3 = 1 + 1 + 1 => ceny: 1 + 1 + 1 = 3',
-                output2: '3 = 1 + 2 => ceny: 1 + 3 = 4',
-                output3: '3 = 3 => ceny: 5 = 5',
-                b3: 'Pri tomto konkrétnom vstupe vychádza ako najlepšia možnosť tyč vôbec nerezať! Tyč dĺžky 3 má najvyššiu cenu.',
-            },
-            recursion: {
-                brief: 'Pre tyč dĺžky **0** musí byť aj najlepšia cena **0**. V opačnom prípade vypočítame najvyššie ceny pre všetky dĺžky tyče. Pri rekurzívnom algoritme sa teda budú dookola vypočítavať najvyššie ceny pre všetky dĺžky tyče.',
-                recTime: '**Časová zložitosť** exponenciálne narastá s dĺžkou tyče (počtom zadaných cien).',
-                recSpace: '**Priestorová zložitosť** sa rovná počtu zadaných cien.',
-                input: 'P = { 1, 3, 5 }'
-            },
-            dp: {
-                brief: 'V DP algoritme sa budú do tabuľky (jednorozmerného poľa) ukladať najvyššie možné ceny pre všetky dĺžky tyče. Pri výbere hodnoty do bunky sa berú do úvahy ceny **všetkých** dĺžok vypočítaných predtým (to znamená menších od aktuálnej). Ku každej bunke sa pripočítajú ceny takých dĺžok tak, aby výsledná dĺžka neprekročila aktuálne vypočítavanú. Do bunky sa vyberie súčet tých dĺžok (ich cien), ktoré dávajú najvyššiu predajnú cenu. Hodnota novej bunky sa môže odvíjať od všetkých predchádzajúcich buniek. Pre zostavenie celého riešenia je potrebné ďalšie pole, kde sa ukladajú použité tyče.',
-                dpTime: 'Algoritmus obsahuje 1 vnorený cyklus, takže jeho **časová zložitosť** je polynomická - druhá mocnina počtu zadaných cien.',
-                dpSpace: '**Priestorová zložitosť** sa oproti rekurzívnemu algoritmu zvýšila o veľkosť poľa potrebného na ukladanie výsledkov podproblémov.',
-                outerCycle: 'Vonkajší cyklus',
-                input: 'P = { 1, 5, 6, 6, 9 }',
-                i3: 'i = 3',
-                i4: 'i = 4'
-
-            },
-            coins: 'Minimálny počet mincí na vytvorenie danej hodnoty'
-        },
-        demo: {
-            title: 'Rezanie tyče - demo',
-            brief: 'Zadajte ceny jednotlivých dĺžok tyče (maximálne 15) oddelené čiarkami (dĺžky sú 1, 2, 3, ...). Stĺpce tabuľky symbolizujú dĺžky tyče. V prvom riadku budú na konci najvyššie dosiahnuteľné ceny pre jednotlivé dĺžky. V druhom riadku budú pomocné hodnoty pre vytvorenie kompletného riešenia. Hodnota bunky je v tomto prípade dĺžka najdlhšej použitej tyče pre danú dĺžku.',
-            evalPriceFor: 'Výpočet najvyššej ceny pre dĺžku ',
-            result: 'Najvyššia dosiahnuteľná cena: ',
-            usedLength: 'použitá dĺžka ',
-            usedLengths: 'použité dĺžky: ',
-            length: 'Dĺžka',
-            highestPrice: 'Najvyššia cena',
-            usedLengthBig: 'Použitá dĺžka',
-        },
-        stats: {
-            title: 'Rezanie tyče - štatistiky',
-            brief: 'Zadajte ceny jednotlivých dĺžok tyče (maximálne 20) oddelené čiarkami (dĺžky sú 1, 2, 3, ...).',
-            conclusion: '**Časová zložitosť** rekurzívneho algoritmu exponenciálne narastá s dĺžkou tyče (počtom zadaných cien). Kedže v rekurzívnom algoritme nie je žiadná podmienka, počet rekurzívnych volaní sa bude presne rovnať teoretickej hodnote zo vzorca (ako môžno vidieť po vypočítaní štatistík). Nezáleží ani na cenách jednotlivých dĺžok, iba na ich počte. DP algoritmus bude mať oproti teoretickej hodnote počet volaní nižší, pretože počet opakovaní vnútorného cyklu závisí od cien jednotlivých dĺžok. Zo štatistík vyplýva, že rekurzívny algoritmus nie je rýchlejší ako DP algoritmus ani pri veľmi jednoduchom vstupe.',
-        }
+        writeUs: 'Napíšte nám',
+        mail: 'dplearnwebapp@gmail.com'
     },
     coins: {
         coin: 'Minca',
@@ -174,7 +128,7 @@ export const slovak = {
         },
         demo: {
             title: 'Minimálny počet mincí na vytvorenie danej hodnoty - demo',
-            brief: 'Zadajte hodnotu (od 1 po 20), ktorú treba vytvoriť súčtom hodnôt mincí a hodnoty mincí oddelené čiarkami (maximálny počet je 5). Stĺpce tabuľky symbolizujú jednotlivé hodnoty, pre ktoré treba vypočítať minimálny počet mincí. V prvom riadku budú na konci minimálne počty mincí pre jednotlivé hodnoty. V druhom riadku budú pomocné hodnoty pre vytvorenie kompletného riešenia. Hodnota bunky je v tomto prípade hodnota najväčšej použitej mince.',
+            brief: 'Zadajte hodnotu (od 0 po 20), ktorú treba vytvoriť súčtom hodnôt mincí a hodnoty mincí oddelené čiarkami (maximálny počet je 15). Stĺpce tabuľky symbolizujú jednotlivé hodnoty, pre ktoré treba vypočítať minimálny počet mincí. V prvom riadku budú na konci minimálne počty mincí pre jednotlivé hodnoty. V druhom riadku budú pomocné hodnoty pre vytvorenie celého riešenia. Hodnota bunky je v tomto prípade hodnota najväčšej použitej mince.',
             isNeeded: 'Potrebný počet mincí',
             evalCoinsFor: 'Výpočet mincí pre vytvorenie hodnoty ',
             usedCoin: 'použitá minca ',
@@ -184,8 +138,56 @@ export const slovak = {
         },
         stats: {
             title: 'Minimálny počet mincí na vytvorenie danej hodnoty - štatistiky',
-            brief: 'Zadajte hodnotu (od 1 po 20), ktorú treba vytvoriť súčtom hodnôt mincí a hodnoty mincí oddelené čiarkami (maximálny počet je 15).',
-            conclusion: 'Oproti úlohe **Rezanie tyče** je v rekurzívnom riešení tejto úlohy veľký rozdiel medzi teoretickou maximálnou **časovou zložitosťou**. Tá veľmi závisí od konkrétných hodnôt mincí. Teoretická sa skutočnej hodnote rovná len v jednoduchom príklade, kedy **mince: 1,2** a **hodnota: 2**. V ostatných príkladoch sa hodnoty približujú tým viac, čím "nezmyselnejšie" mince sú zadané. Aj keď je jasné, že jediná minca s hodnotou 20 stačí na vytvorenie hodnoty 20, algoritmus skúma aj všetky predchádzajúce hodnoty. Podobne je to aj pri DP algoritme.',
+            brief: 'Zadajte hodnotu (od 0 po 20), ktorú treba vytvoriť súčtom hodnôt mincí a hodnoty mincí oddelené čiarkami (maximálny počet je 15).',
+            conclusion: 'Oproti úlohe *Rezanie tyče* je v rekurzívnom riešení tejto úlohy značný rozdiel medzi teoretickým a reálnym počtom volaní, pretože ten závisí od konkrétných hodnôt mincí. Teoretická sa skutočnej hodnote rovná len v jednoduchom príklade, kedy **C: { 1,2 }** a **V = 2**. V ostatných príkladoch sa hodnoty približujú tým viac, čím "nezmyselnejšie" mince sú zadané. Aj keď je jasné, že jediná minca s hodnotou 20 stačí na vytvorenie hodnoty 20, algoritmus skúma aj všetky predchádzajúce hodnoty. Podobne je to aj pri DP algoritme.',
+        }
+    },
+    rod: {
+        prices: 'Ceny',
+        theory: {
+            title: 'Rezanie tyče - teória',
+            brief: {
+                b1: 'Majme oceľovú tyč dĺžky **L**. Túto tyč je potrebné narezať na menšie kusy. Na vstupe sú predajné ceny tyčí všetkých dĺžok od 1 po L: **P = { p1, p2, p3, ..., pL}**. Na aké dĺžky treba narezať tyč, aby súčet cien tyčí, ktoré vzniknú, bol čo najvyšší?',
+                input: 'P = { 1, 3, 5 }',
+                b2: 'Na aké dĺžky sa dá tyč narezať?',
+                output1: '3 = 1 + 1 + 1 => ceny: 1 + 1 + 1 = 3',
+                output2: '3 = 1 + 2 => ceny: 1 + 3 = 4',
+                output3: '3 = 3 => ceny: 5 = 5',
+                b3: 'Pri tomto konkrétnom vstupe vychádza ako najlepšia možnosť tyč vôbec nerezať! Tyč dĺžky 3 má najvyššiu cenu.',
+            },
+            recursion: {
+                brief: 'Pre tyč dĺžky **0** musí byť aj najlepšia cena **0**. V opačnom prípade vypočítame najvyššie ceny pre všetky dĺžky tyče. Pri rekurzívnom algoritme sa teda budú dookola vypočítavať najvyššie ceny pre všetky dĺžky tyče.',
+                recTime: '**Časová zložitosť** exponenciálne narastá s dĺžkou tyče (počtom zadaných cien).',
+                recSpace: '**Priestorová zložitosť** sa rovná počtu zadaných cien.',
+                input: 'P = { 1, 3, 5 }'
+            },
+            dp: {
+                brief: 'V DP algoritme sa budú do tabuľky (jednorozmerného poľa) ukladať najvyššie možné ceny pre všetky dĺžky tyče. Pri výbere hodnoty do bunky sa berú do úvahy ceny **všetkých** dĺžok vypočítaných predtým (to znamená menších od aktuálnej). Ku každej bunke sa pripočítajú ceny takých dĺžok tak, aby výsledná dĺžka neprekročila aktuálne vypočítavanú. Do bunky sa vyberie súčet tých dĺžok (ich cien), ktoré dávajú najvyššiu predajnú cenu. Hodnota novej bunky sa môže odvíjať od všetkých predchádzajúcich buniek. Pre zostavenie celého riešenia je potrebné ďalšie pole, kde sa ukladajú použité tyče.',
+                dpTime: 'Algoritmus obsahuje 1 vnorený cyklus, takže jeho **časová zložitosť** je polynomická - druhá mocnina počtu zadaných cien.',
+                dpSpace: '**Priestorová zložitosť** sa oproti rekurzívnemu algoritmu zvýšila o veľkosť poľa potrebného na ukladanie výsledkov podproblémov.',
+                outerCycle: 'Vonkajší cyklus',
+                input: 'P = { 1, 5, 6, 6, 9 }',
+                i3: 'i = 3',
+                i4: 'i = 4'
+
+            },
+            coins: 'Minimálny počet mincí na vytvorenie danej hodnoty'
+        },
+        demo: {
+            title: 'Rezanie tyče - demo',
+            brief: 'Zadajte ceny jednotlivých dĺžok tyče (maximálne 15) oddelené čiarkami (dĺžky sú 1, 2, 3, ...). Stĺpce tabuľky symbolizujú dĺžky tyče. V prvom riadku budú na konci najvyššie dosiahnuteľné ceny pre jednotlivé dĺžky. V druhom riadku budú pomocné hodnoty pre vytvorenie celého riešenia. Hodnota bunky je v tomto prípade dĺžka najdlhšej použitej tyče pre danú dĺžku.',
+            evalPriceFor: 'Výpočet najvyššej ceny pre dĺžku ',
+            result: 'Najvyššia dosiahnuteľná cena: ',
+            usedLength: 'použitá dĺžka ',
+            usedLengths: 'použité dĺžky: ',
+            length: 'Dĺžka',
+            highestPrice: 'Najvyššia cena',
+            usedLengthBig: 'Použitá dĺžka',
+        },
+        stats: {
+            title: 'Rezanie tyče - štatistiky',
+            brief: 'Zadajte ceny jednotlivých dĺžok tyče (maximálny počet je 20) oddelené čiarkami (dĺžky sú 1, 2, 3, ...).',
+            conclusion: 'Časová zložitosť rekurzívneho algoritmu exponenciálne narastá s dĺžkou tyče (počtom zadaných cien). Kedže v rekurzívnom algoritme nie je žiadná podmienka, počet rekurzívnych volaní sa bude presne rovnať teoretickej hodnote zo vzorca (ako môžno vidieť po vypočítaní štatistík). Nezáleží ani na cenách jednotlivých dĺžok, iba na ich počte. DP algoritmus bude mať oproti teoretickej hodnote počet volaní nižší, pretože počet opakovaní vnútorného cyklu závisí od cien jednotlivých dĺžok. Zo štatistík vyplýva, že rekurzívny algoritmus nie je rýchlejší ako DP algoritmus ani pri veľmi jednoduchom vstupe.',
         }
     },
     substring: {
@@ -209,7 +211,7 @@ export const slovak = {
                 input2: "Y = 'sw'",
             },
             dp: {
-                brief: 'Princíp algoritmu spočíva v hľadaní najdlhšieho spoločného **sufixu** v podreťazcoch oboch reťazcov. Dĺžky sufixov sa budú ukladať do dvojrozmerného poľa. Ak sa znak v stĺpci a riadku nerovná, do bunky sa vloží hodnota **0**. Ak sa rovnajú, tak sa vloží hodnota **1**, ak ide o prvý znak jedného alebo druhého reťazca, alebo sa inkrementuje predchádzajúca hodnota na diagonále (inkrementuje sa sufix). Okrem tabuľky potrebujeme navyše premenné na ukladanie pozície v tabuľke s najvyššou hodnotou sufixu. Vďaka tejto pozícii a hodnote v bunke vieme jednoducho vytvoriť aj kompletné riešenie úlohy, pretože vieme kde končí najdlhší sufix a poznáme jeho dĺžku.',
+                brief: 'Princíp algoritmu spočíva v hľadaní najdlhšieho spoločného **sufixu** v podreťazcoch oboch reťazcov. Dĺžky sufixov sa budú ukladať do dvojrozmerného poľa. Ak sa znak v stĺpci a riadku nerovná, do bunky sa vloží hodnota **0**. Ak sa rovnajú, tak sa vloží hodnota **1**, ak ide o prvý znak jedného alebo druhého reťazca, alebo sa inkrementuje predchádzajúca hodnota na diagonále (inkrementuje sa sufix). Okrem tabuľky potrebujeme navyše premenné na ukladanie pozície v tabuľke s najvyššou hodnotou sufixu. Vďaka tejto pozícii a hodnote v bunke vieme jednoducho vytvoriť aj celé riešenie úlohy, pretože vieme kde končí najdlhší sufix a poznáme jeho dĺžku.',
                 dpTime: '**Časová zložitosť** je polynomická - vypĺňanie tabuľky **L1 * L2**.',
                 dpSpace: '**Priestorová zložitosť** je súčet dĺžok reťazcov + veľkosť tabuľky.',
                 input1: "X = 'dog'",
@@ -227,7 +229,7 @@ export const slovak = {
         },
         demo: {
             title: 'Najdlhší spoločný podreťazec - demo',
-            brief: 'Zadajte 2 reťazce - **X** a **Y** s maximálnou dĺžkou 20 znakov. Riadky tabuľky symbolizujú znaky reťazca **X**. Stĺpce tabuľky reprezentujú znaky reťazca **Y**. Ak sa rovná znak v riadku s riadkom v stĺpci, hodnota budnky bude nastavená na 1, alebo inkrementovaná, ak sa rovnali aj predchádzajúce znaky. K získaniu kompletného riešenia v tejto úlohe nie je potrebná žiadna dátová štruktúra navyše. Na konci bunka s najvyššou hodnotou predstavuje posledný znak najdlhšieho spoločného podreťazca. Stačí už len zobrať daný počet predchádzajúcich znakov z riadku alebo stĺpca.',
+            brief: 'Zadajte 2 reťazce - **X** a **Y** s maximálnou dĺžkou 20 znakov. Riadky tabuľky symbolizujú znaky reťazca **X**. Stĺpce tabuľky reprezentujú znaky reťazca **Y**. Hodnota bunky je dĺžka sufixu.',
             assignZero: 'priradzujem hodnotu 0',
             noMatch: 'žiadna zhoda. ',
             incrementPrevious: 'inkrementujem predchádzajúcu hodnotu',
@@ -237,7 +239,7 @@ export const slovak = {
         stats: {
             title: 'Najdlhší spoločný podreťazec - štatistiky',
             brief: 'Zadajte 2 reťazce - **X** a **Y** s maximálnou dĺžkou 15 znakov.',
-            conclusion: '**TODO rekurzia casova zlozitost......** Teoretická aj reálna časová zložitosť sa pri DP algoritme budú vždy rovnať, pretože algoritmus vždy porovnáva každý znak reťazca X so všetkými znakmi druhého reťazca.'
+            conclusion: 'Aj keď sú reťazce úplne rozdielne, skutočná hodnota sa teoretickej pri rekurzívnom algoritme veľmi nepribližuje. Vysoký počet volaní aj pri dvoch rovnakých reťazcoch je dôkazom, že rekurzívny algoritmus je veľmi neefektívny. Teoretická aj reálna časová zložitosť sa pri DP algoritme budú vždy rovnať, pretože algoritmus vždy porovnáva každý znak reťazca X so všetkými znakmi druhého reťazca.'
         }
     },
     editDistance: {
@@ -283,7 +285,7 @@ export const slovak = {
         },
         demo: {
             title: 'Editačná vzdialenosť - demo',
-            brief: 'Zadajte 2 reťazce - **X** a **Y** s maximálnou dĺžkou 20 znakov. Riadky tabuľky symbolizujú znaky reťazca **X**. Stĺpce tabuľky reprezentujú znaky reťazca **Y**. Prvý riadok a stĺpec symbolizujú prázdny reťazec. ',
+            brief: 'Zadajte 2 reťazce - **X** a **Y** s maximálnou dĺžkou 20 znakov. Riadky tabuľky symbolizujú znaky reťazca **X**. Stĺpce tabuľky reprezentujú znaky reťazca **Y**. Prvý riadok a stĺpec symbolizujú prázdny reťazec. Hodnota bunky je počet operácií.',
             empty: 'Prázdny',
             stringXEmpty: 'Reťazec X je prázdny, vložíme všetky znaky stringu Y',
             stringYEmpty: 'Reťazec Y je prázdny, odstránime všetky znaky stringu X',
@@ -298,7 +300,7 @@ export const slovak = {
         stats: {
             title: 'Editačná vzdialenosť - štatistiky',
             brief: 'Zadajte 2 reťazce - **X** a **Y** s maximálnou dĺžkou 15 znakov.',
-            conclusion: 'Pri veľmi krátkych (alebo prázdnych) reťazcoch je rekurzívny algoritmus rýchlejší ako DP algoritmus, ale jeho časová zložitosť sa dramaticky zvyšuje s dĺžkou oboch reťazcov. Súčet dĺžok reťazcov v poslednom vzorovom vstupe je 20, pričom reálny počet rekurzívnych volaní je **8-ciferné** oproti **121** opakovaní cyklu pri DP algoritme. Reálna časová zložitosť DP algoritmu sa vždy rovná teoretickej. Rovnako ako pri úlohe **Najdlhší spoločný podreťazec** algoritmus prejde celou tabuľkou.',
+            conclusion: 'Pri veľmi krátkych (alebo prázdnych) reťazcoch je rekurzívny algoritmus rýchlejší ako DP algoritmus, ale jeho časová zložitosť sa dramaticky zvyšuje s dĺžkou oboch reťazcov. Súčet dĺžok reťazcov v poslednom vzorovom vstupe je 20, pričom reálny počet rekurzívnych volaní je **8-ciferné** oproti **121** opakovaní cyklu pri DP algoritme. Reálna časová zložitosť DP algoritmu sa vždy rovná teoretickej. Rovnako ako pri úlohe *Najdlhší spoločný podreťazec* algoritmus prejde celou tabuľkou.',
         }
     },
     tree: {
@@ -306,7 +308,7 @@ export const slovak = {
         arrayOfF: 'Pole počtu vyhľadaní kľučov',
         tree: 'Strom',
         theory: {
-            title: 'Optimalizovaný binárny vyhľadávací strom - teória',
+            title: 'Optimálny binárny vyhľadávací strom - teória',
             brief: {
                 b1: 'Na vstupe je **utriedené** pole vyhľadávacích kľúčov **K = { k1, k2, k3, ..., kN)**. Pre zjednodušenie si počet všetkých kľúčov označíme ako **N**. Druhé pole na vstupe obsahuje počet vyhľadaní jednotlivých kľúčov z prvého poľa **F = { f1, f2, f3, ..., fN)**. Index kľúča v prvom poli sa rovná indexu v druhom poli. Je potrebné vytvoriť binárny vyhľadávací strom, ktorý bude obsahovať všetky kľúče. Súčet cien všetkých vyhľadaní musí byť čo najnižší. Cena vyhľadania sa násobí s každou úrovňou stromu - 1. úrověn = počet vyhľadaní * 1, 2. úroveň = počet vyhľadaní * 2 atď.',
                 b2: 'Aká bude cena stromu a ako bude strom vyzerať?',
@@ -332,8 +334,8 @@ export const slovak = {
             matrixMultHref: 'http://www.personal.kent.edu/~rmuhamma/Algorithms/MyAlgorithms/Dynamic/chainMatrixMult.htm',
         },
         demo: {
-            title: 'Optimalizovaný binárny vyhľadávací strom - demo',
-            brief: 'Zadajte pole vyhľadávacích kľúčov a pole počtu vyhľadávaní jednotlivých kľúčov (v oboch prípadoch ide o čísla oddelené čiarkami). Hodnota bunky symbolizuje cenu optimálneho stromu, ktorý môže byť vytvorený od kľúča v stĺpci ku kľúču v riadku. Preto na diagonále v tabuľke sú počty vyhľadaní (cena stromu s jedným uzlom je počet vyhľadaní) a bunky pod diagonálou sú prázdne. Hodnota v zátvorke je index v poli kľúčov - symbolizuje ktorý kľuč bol použitý ako koreň stromu pre daný podproblém. Pomocou týchto pomocných hodnôt sa dá vytvoriť celý strom. ',
+            title: 'Optimálny binárny vyhľadávací strom - demo',
+            brief: 'Zadajte **utriedené** pole vyhľadávacích kľúčov a pole počtu vyhľadávaní jednotlivých kľúčov (v oboch prípadoch ide o čísla oddelené čiarkami, pričom maximálny počet je 15). Hodnota bunky symbolizuje cenu optimálneho stromu, ktorý môže byť vytvorený od kľúča v stĺpci ku kľúču v riadku. Preto na diagonále v tabuľke sú počty vyhľadaní (cena stromu s jedným uzlom je počet vyhľadaní) a bunky pod diagonálou sú prázdne. Hodnota v zátvorke je index v poli kľúčov - symbolizuje ktorý kľuč bol použitý ako koreň stromu pre daný podproblém. Pomocou týchto pomocných hodnôt sa dá vytvoriť celý strom. ',
             initialState: 'Počiatočný stav',
             evalChainLength: 'Výpočet hodnôt pre reťaz dĺžky ',
             assignedIntMax: 'Priradené INT_MAX',
@@ -343,12 +345,13 @@ export const slovak = {
             tree: 'Vyhľadávací strom',
             key: 'Kľúč',
             cost: 'Cena optimálneho stromu',
-            keysExample: '1, 2, 3, 4',
-            freqsExample: '2, 4, 6, 8',
+            keysExample: '1,2,3,4',
+            freqsExample: '2,4,6,8',
         },
         stats: {
-            title: 'Optimalizovaný binárny vyhľadávací strom - štatistiky',
-            brief: 'Zadajte pole počtu vyhľadávaní jednotlivých kľúčov (pole vyhľadávacích kľučov nie je potreba).',
+            title: 'Optimálny binárny vyhľadávací strom - štatistiky',
+            brief: 'Zadajte pole počtu vyhľadávaní jednotlivých kľúčov (maximálny počet je 15). Poľe kľúčov nie je potreba.',
+            conclusion: 'Aj pre veľmi jednoduchý strom je DP algoritmus efektívnejší ako rekurzívny. Môžeme si všimnúť, že pri oboch algoritmoch nezáleží na počtoch vyhľadaní ale len na počte kľúčov. V algoritmoch sa totiž nenachádza podmienka pre volanie/vykonanie cyklu, ktorá by brala do úvahy počet vyhľadaní.'
         }
     }
 };

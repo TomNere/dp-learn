@@ -173,8 +173,8 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
         clearTimeout(this.timeout);
         this.disableHighlighting();
 
-        this.keys = GetNumbers(this.state.givenKeys);
-        this.freqs = GetNumbers(this.state.givenFreqs);
+        this.keys = GetNumbers(this.state.givenKeys, true);
+        this.freqs = GetNumbers(this.state.givenFreqs, false);
 
         if (this.keys.length === 0 || this.keys.length !== this.freqs.length) {
             this.setState({ result: strings.global.invalidArg });

@@ -78,7 +78,7 @@ class RodStats extends React.Component<any, IRodStatsState> {
     }
 
     private handlePrices = (e: any) => {
-        const prices = GetNumbers(e.target.value);
+        const prices = GetNumbers(e.target.value, false);
         if (prices.length <= 20) {
             this.setState({ givenPrices: e.target.value });
         }
@@ -146,7 +146,7 @@ class RodStats extends React.Component<any, IRodStatsState> {
     }
 
     private drawStats = () => {
-        this.prices = GetNumbers(this.state.givenPrices);
+        this.prices = GetNumbers(this.state.givenPrices, false);
         this.spaceChartStats = [];
         this.timeChartStats = [];
         this.tableStats = [];

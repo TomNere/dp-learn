@@ -126,7 +126,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
     }
 
     private handlePrices = (e: any) => {
-        const prices = GetNumbers(e.target.value);
+        const prices = GetNumbers(e.target.value, false);
         if (prices.length <= 15) {
             this.setState({ givenPrices: e.target.value, tableVisible: false, inProgress: false });
         }
@@ -150,7 +150,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
     private handleStartClick = () => {
         clearTimeout(this.timeout);
 
-        this.prices = GetNumbers(this.state.givenPrices);
+        this.prices = GetNumbers(this.state.givenPrices, false);
         this.LENGTH = this.prices.length;
 
         if (this.prices.length === 0) {

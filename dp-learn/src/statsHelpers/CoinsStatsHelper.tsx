@@ -55,12 +55,12 @@ export const dpCoinsTime = (arrSize: number, value: number) => {
     return arrSize * value;
 }
 
-export const recCoinsSpace = (coinsLength: number) => {
-    return coinsLength + 1;     // Store coins and given value
+export const recCoinsSpace = (arrSize: number) => {
+    return arrSize + 1;     // Store coins and given value
 }
 
-export const dpCoinsSpace = (coinsLength: number, value: number) => {
-    return coinsLength + 1 + (value + 1);   // Store coins, given value, coins array for DP (size is coins number +1)
+export const dpCoinsSpace = (arrSize: number) => {
+    return arrSize + 1 + arrSize + 1;   // Store coins, given value, coins array for DP (size is coins number +1)
 }
 
 export const coinsExamples = [
@@ -69,7 +69,7 @@ export const coinsExamples = [
         value: 2
     },
     {
-        coins: [1,2,3,4,5,6,7,20],
+        coins: [1,2,3,20],
         value: 20
     },
     {

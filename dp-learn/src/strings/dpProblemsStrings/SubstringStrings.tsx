@@ -17,7 +17,7 @@ int commonSubstr(int L1, int L2, int count) {
         count = commonSubstr(L1 - 1, L2 - 1, count + 1);
     }
 
-    // No match, try another substrings
+    // Try another substrings
     // max returns the higher of two values
     count = max(count, max(commonSubstr(L1, L2 - 1, 0), commonSubstr(L1 - 1, L2, 0)));
 
@@ -75,13 +75,13 @@ int commonSubstr(int L1, int L2) {
     return table[row][col];
 }`;
 
-export const substringFormula = `T[i][j] = {(0,; i=0 ),
-    (0,; j=0),
-    (0,; X[i-1] != Y[j-1]),
+export const substringFormula = `T[i][j] = {(0,; X[i] != Y[j]),
+    (1,; X[i] = Y[j] ^^ (i=0 vv j=0) ),
     (T[i-1][j-1] + 1,;
-    X[i-1] = Y[j-1]):}`;
+    X[i] = Y[j] ^^ i>0 ^^ j>0
+ ):}`;
 
-export const substringRecTimeComplex = `2 ^ (L1 + L2 - 1)`;
+export const substringRecTimeComplex = `3 ^ (L1 + L2 - 1)`;
 export const substringDpTimeComplex = `L1 * L2`;
 export const substringRecSpaceComplex = `L1 + L2`;
 export const substringDpSpaceComplex = `L1 + L2 + (L1 * L2)`;
