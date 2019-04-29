@@ -12,7 +12,8 @@ type AllProps =
 
 const styles = (theme: Theme) => createStyles({
     parent: {
-        padding: theme.spacing.unit * 2,
+        paddingLeft: theme.spacing.unit * 2,
+        paddingRight: theme.spacing.unit * 2,
     },
 });
 
