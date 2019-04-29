@@ -68,7 +68,7 @@ export const english = {
         partsTitle: 'Demonstration of principles and advantages on optimization problems',
         partsText: 'Application contains 5 optimization problems, which can be solved by dynamic programming. Each problem has these 3 tabs',
         theoryTitle: 'Theory',
-        theoryText: "This tab provides problem definition with concrete example followed by recursive and DP algorithms. After algorithm explanation is given its time and space complexity. Space complexity of DP algorithm doesn't contain helping structures for full solution building. Under recursive algorithm is listed the recursive calls tree and under DP algorithm the tables with values selection. Source codes in C language are provided contains one function solving the problem. Main function and helpers are easy to add. At the end, examples of similar optimization problems (table building is similar) are stated.",
+        theoryText: "This tab provides problem definition with concrete example followed by recursive and DP algorithms. After algorithm explanation is given its time and space complexity. Space complexity of DP algorithm doesn't contain helping structures for full solution building. Under recursive algorithm is listed the recursive calls tree and under DP algorithm the tables with values selection. Source codes in C language contains one function solving the problem. Main function and helpers are easy to add. At the end, examples of similar optimization problems (table building is similar) are stated.",
         demoTitle: 'Demo',
         demoText: 'After the button is clicked, DP algorithm starts. You can choose speed or select "step by step". After the table is filled, value of optimal solution and also full solution shows up (in *Optimal binary search tree* only solution value is given). Also the formula describing values evaluation is given.',
         statsTitle: 'Statistics',
@@ -119,7 +119,7 @@ export const english = {
         },
         demo: {
             title: 'Minimum number of coins that make a given value - demo',
-            brief: 'Provide value to make (from 0 to 20) and comma separated coins (max. 15). Table cols symbolize coin values. First row will contain solutions for all values at the end. Second row is full solution building helper. Value of a cell in second row is value of highest used coin.',
+            brief: 'Enter value to make (from 0 to 20) and comma separated coins (max. 15). Table columns symbolize coin values. First row will contain solutions for all values at the end. Second row is full solution building helper. Value of a cell in second row is value of highest used coin.',
             isNeeded: 'Number of coins',
             evalCoinsFor: 'Evaluating coins needed for value ',
             usedCoin: 'used coin',
@@ -129,8 +129,8 @@ export const english = {
         },
         stats: {
             title: 'Minimum number of coins that make a given value - statistics',
-            brief: 'Please provide value to make (from 0 to 20) and comma separated coins (max. 15).',
-            conclusion: "There could be noticeable difference between theoretical and real number of recursive calls. It's because real number depends on concrete coin values. Teoretical equals real value when **C: { 1,2 }** and **V = 2**. Number of calls or iterations in DP algorithm is growing when useless coins are provided.",
+            brief: 'Enter value to make (from 0 to 20) and comma separated coins (max. 15).',
+            conclusion: "There could be noticeable difference between theoretical and real number of recursive calls. It's because real number depends on concrete coin values. Teoretical equals real value when **C: { 1,2 }** and **V = 2**. Number of calls or iterations in DP algorithm is growing when useless coins are entered.",
         }
     },
     rod: {
@@ -148,8 +148,8 @@ export const english = {
             },
             recursion: {
                 brief: 'For length **0** the price is **0**. Otherwise, we must evaluate best prices for all lengths. In recursive algorithm the prices for all lengths will be evaluated repeatedly.',
-                recTime: '**Time complexity** is growing exponentially with rod length (number of provided prices).',
-                recSpace: '**Space complexity** is equal to number of provided prices.',
+                recTime: '**Time complexity** is growing exponentially with rod length (number of entered prices).',
+                recSpace: '**Space complexity** is equal to number of entered prices.',
                 input: 'P = { 1, 3, 5 }'
             },
             dp: {
@@ -165,7 +165,7 @@ export const english = {
         },
         demo: {
             title: 'Rod cutting - demo',
-            brief: 'Provide max. 15 comma separated prices of lengths (lengths are 1, 2, 3, ...). Table cols symbolize rod lengths. First row will contain maximum obtainable prices for all lengths at the end. Second row is full solution building helper. Value of a cell in second row is maximum used length.',
+            brief: 'Enter max. 15 comma separated prices of lengths (lengths are 1, 2, 3, ...). Table columns symbolize rod lengths. First row will contain maximum obtainable prices for all lengths at the end. Second row is full solution building helper. Value of a cell in second row is maximum used length.',
             evalPriceFor: 'Evaluating maximum obtainable price for length ',
             result: 'Maximum obtainable value: ',
             usedLength: 'used length ',
@@ -176,49 +176,50 @@ export const english = {
         },
         stats: {
             title: 'Rod cutting - statistics',
-            brief: 'Provide max. 20 comma separated prices of lengths (lengths are 1, 2, 3, ...).',
-            conclusion: "There is no condition for recursive call, so theoretical and real number of recursive calls will be always the same. The actual prices doesn't matter. Number of calls depends only on number of provided prices. DP algorithm is always faster than recursive algorithm. There is a condition in inner loop, so the real and theoretical number of iterations is different.",
+            brief: 'Enter max. 20 comma separated prices of lengths (lengths are 1, 2, 3, ...).',
+            conclusion: "There is no condition for recursive call, so theoretical and real number of recursive calls will be always the same. The actual prices doesn't matter. Number of calls depends only on number of entered prices. DP algorithm is always faster than recursive algorithm. There is a condition in inner loop, so the real and theoretical number of iterations is different.",
         }
     },
     substring: {
         theory: {
             title: 'Longest common substring - theory',
             brief: {
-                b1: 'Na vstupe sú dva reťazce, **X** s dĺžkou **L1** a **Y** s dĺžkou **L2**. Aký je ich najdlhší spoločný podreťazec?',
+                b1: 'We have two strings, **X** with length **L1** and **Y** with length **L2**. What is the longest common substring of this strings?',
                 input1: "X = 'Unicasting'",
                 input2: "Y = 'unitTesting'",
-                b2: 'Aký je najdlhší spoločný podreťazec týchto dvoch reťazcov?',
+                b2: 'What is the longest common substring?',
                 strX: "X = 'U|ni|ca|s||**ting**|'",
                 strY: "Y = 'u|ni|tTe|s||**ting**|'",
-                b3: 'Môžeme vidieť, že reťazce majú viacero spoločných podreťazcov. Najdlhší z nich je **ting** a má dĺžku  **4** znaky.',
-                b4: 'Jednoduchým riešením by bolo zobrať každý podreťazec z prvého reťazca a zisťiť, či sa tento podreťazec nachádza aj v druhom reťazci. V prvom reťazci bude **O(L1 ^ 2)** podreťazcov. Pri využití **Knuth-Morris-Prattovho** algoritmu na vyhľadávanie všetkých podreťazcov v druhom reťazci by časová zložitosť tohoto riešenia bola **O((L1 ^ 2) * L2)**.',
+                b3: 'As you can see, the strings have several common substrings. The longest is **ting** with length **4**.',
+                b4:'A simple solution is to take all substrings from **X** and for every substring check if it is a substring in **Y**. There will be **O(L1 ^ 2)** substrings in **X**. Using the **Knuth-Morris-Pratt** algorithm, time complexity of this solution would be **O((L1 ^ 2) * L2)**.',
             },
             recursion:{
-                brief: 'Ak je dĺžka jedného alebo druhého reťazca rovná **0**, výsledok bude **0**, pretože v jednom z reťazcov nebude žiadny podreťazec. Ak algoritmus narazí na zhodu znakov, pripočíta k výsledku hodnotu **1** a pokračuje porovnaním nasledujúcich dvoch znakov. Ak zhoda nenastane, nastáva rekurzívne volanie pre porovnanie ďalšieho znaku v prvom reťazci a ďalšieho znaku v druhom reťazci. Z týchto hodnôt sa vyberie maximum. Algoritmus je síce jednoduchý, ale veľmi neefektívny.',
-                recTime: '**Časová zložitosť** sa exponenciálne zvyšuje s dĺžkou reťazcov.',
-                recSpace: '**Priestorová zložitosť** je súčet dĺžok oboch reťazcov.',
+                brief: 'If **L1** or **L2** is **0**, result is also **0** (no substring). If algorithm find equal characters, result is incremented and algorithm continues with next characters. If characters are different, function is called recursively for next character in **X** and next character in **Y** and maximum result is taken. This algorithm is simple but very inefficient.',
+                recTime: '**Time complexity** is growing exponentially with lengths of strings.',
+                recSpace: '**Space complexity** is sum of lengths.',
                 input1: "X = 'hw'",
                 input2: "Y = 'sw'",
             },
             dp: {
-                brief: 'Princíp algoritmu spočíva v hľadaní najdlhšieho spoločného **sufixu** v podreťazcoch oboch reťazcov. Dĺžky sufixov sa budú ukladať do dvojrozmerného poľa. Ak sa znak v stĺpci a riadku nerovná, do bunky sa vloží hodnota **0**. Ak sa rovnajú, tak sa vloží hodnota **1**, ak ide o prvý znak jedného alebo druhého reťazca, alebo sa inkrementuje predchádzajúca hodnota na diagonále (inkrementuje sa sufix). Okrem tabuľky potrebujeme navyše premenné na ukladanie pozície v tabuľke s najvyššou hodnotou sufixu. Vďaka tejto pozícii a hodnote v bunke vieme jednoducho vytvoriť aj celé riešenie úlohy, pretože vieme kde končí najdlhší sufix a poznáme jeho dĺžku.',
-                dpTime: '**Časová zložitosť** je polynomická - vypĺňanie tabuľky **L1 * L2**.',
-                dpSpace: '**Priestorová zložitosť** je súčet dĺžok reťazcov + veľkosť tabuľky.',
+                brief: "Algorithm is searching for longest common suffix for all substrings of both strings and stores these lengths in a table. If characters in col and row are different, **0** is stored to the cell. If characters are equal, suffix is incremented (previous value on diagonal) or **1** is assigned if it's a first character in string. We need variables to store position of longest suffix to build full solution.",
+                dpTime: '**Time complexity** is polynomic - filling the table **L1 * L2**.',
+                dpSpace: '**Space complexity** is sum of lengths + table size.',
                 input1: "X = 'dog'",
                 input2: "Y = 'frog'",
-                zero: 'Znaky sa nerovnajú - priradenie hodnoty 0',
-                increment: 'Znaky sa rovnajú - inkrementovanie sufixu',
-                one: 'Znaky sa rovnajú, ale ide o prvé znaky v reťazcoch - priradenie hodnoty 1',
+                zero: 'Different characters - assigning value 0',
+                increment: 'Equal characters - suffix is incremented',
+                one: 'Equal characters, assigning value 1',
                 input3: "Y = 'dig'",
             },
-            longestPalindromTitle: 'Najdlhší palindrom v reťazci',
+            longestPalindromTitle: 'Longest palindromic substring',
             longestPalindromHref: 'https://www.geeksforgeeks.org/longest-palindrome-substring-set-1/',
-            longestIncSubseqTitle: 'Najdlhšia stúpajúca podsekvencia',
+            longestIncSubseqTitle: 'Longest increasing subsequence',
             longestIncSubseqHref: 'https://www.geeksforgeeks.org/longest-increasing-subsequence-dp-3/',
+
         },
         demo: {
             title: 'Longest common substring - demo',
-            brief: 'Dynamic programming solution - simple version with **M x N** table.',
+            brief: 'Enter 2 strings - **X** a **Y** with max. length 20 characters. Table columns symbolize characters of string **X**. Table rows symbolize characters of string **Y**. Value in cell is length of suffix.',
             assignZero: 'assigning value 0',
             noMatch: 'no match. ',
             incrementPrevious: 'incrementing previous value',
@@ -226,9 +227,9 @@ export const english = {
             length: 'length'
         },
         stats: {
-            title: 'Najdlhší spoločný podreťazec - štatistiky',
-            brief: 'Zadajte 2 reťazce - **X** a **Y** s maximálnou dĺžkou 15 znakov.',
-            conclusion: '**TODO rekurzia casova zlozitost......** Teoretická aj reálna časová zložitosť sa pri DP algoritme budú vždy rovnať, pretože algoritmus vždy porovnáva každý znak reťazca X so všetkými znakmi druhého reťazca.'
+            title: 'Longest common substring - statistics',
+            brief: 'Enter 2 strings - **X** a **Y** with max. length 15 characters.',
+            conclusion: 'Theoretical and real number of recursive calls is quite different. Number of recursive calls is pretty big even if strings are the same. Recursive algorithm is very inefficient. Theoretical and real number of iteration is the same because all characters in strings are compared.',
         }
     },
     editDistance: {
@@ -274,7 +275,7 @@ export const english = {
         },
         demo: {
             title: 'Edit distance - demo',
-            brief: 'Provide 2 strings, which will be edit distance calculated for.',
+            brief: 'Enter 2 strings, which will be edit distance calculated for.',
             empty: 'Empty',
             stringXEmpty: 'String X is empty, insert all characters of stringY',
             stringYEmpty: 'String Y is empty, remove all characters of string X',
@@ -326,7 +327,7 @@ export const english = {
         },
         demo: {
             title: 'Optimal binary search tree - demo',
-            brief: 'Provide array of search keys and array of frequency counts (comma separated numbers in both cases).',
+            brief: 'Enter array of search keys and array of frequency counts (comma separated numbers in both cases).',
             initialState: 'Initial state',
             evalChainLength: 'Evaluating values for chain of length ',
             assignedIntMax: 'Assigned INT_MAX',
