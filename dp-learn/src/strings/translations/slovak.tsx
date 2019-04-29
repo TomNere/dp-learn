@@ -300,9 +300,9 @@ export const slovak = {
         theory: {
             title: 'Optimálny binárny vyhľadávací strom - teória',
             brief: {
-                b1: 'Na vstupe je **utriedené** pole vyhľadávacích kľúčov **K = { k1, k2, k3, ..., kN)**. Pre zjednodušenie si počet všetkých kľúčov označíme ako **N**. Druhé pole na vstupe obsahuje počet vyhľadaní jednotlivých kľúčov z prvého poľa **F = { f1, f2, f3, ..., fN)**. Index kľúča v prvom poli sa rovná indexu v druhom poli. Je potrebné vytvoriť binárny vyhľadávací strom, ktorý bude obsahovať všetky kľúče. Súčet cien všetkých vyhľadaní musí byť čo najnižší. Cena vyhľadania sa násobí s každou úrovňou stromu - 1. úrověn = počet vyhľadaní * 1, 2. úroveň = počet vyhľadaní * 2 atď.',
+                b1: 'Na vstupe je **utriedené** pole vyhľadávacích kľúčov **K = { k1, k2, k3, ..., kN }**. Pre zjednodušenie si počet všetkých kľúčov označíme ako **N**. Druhé pole na vstupe obsahuje počet vyhľadaní jednotlivých kľúčov z prvého poľa **F = { f1, f2, f3, ..., fN }**. Index kľúča v prvom poli sa rovná indexu v druhom poli. Je potrebné vytvoriť binárny vyhľadávací strom, ktorý bude obsahovať všetky kľúče. Súčet cien všetkých vyhľadaní musí byť čo najnižší. Cena vyhľadania sa násobí s každou úrovňou stromu - 1. úrověn = počet vyhľadaní * 1, 2. úroveň = počet vyhľadaní * 2 atď.',
                 b2: 'Aká bude cena stromu a ako bude strom vyzerať?',
-                b3: 'Prvý strom síce vyzerá zaujimavejšie, ale výsledná cena všetkých vyhľadaní v tomto strome je **44**. Cena vyhľadaní v druhom strome je **36**. Práve druhý strom je riešením úlohy.',
+                b3: 'Výsledná cena všetkých vyhľadaní v prvom strome je **44**. Cena vyhľadaní v druhom strome je **36**. Práve druhý strom je riešením úlohy.',
             },
             recursion: {
                 brief: 'Rekurzívne riešenie bude spočívať v postupnom dosadzovaní všetkých kľúčov ako koreň stromu, koreň podstromu atď. Pre všetky takéto podstromy sa spočíta cena. Ak bude každý podstrom optimálny, získame optimálnu štruktúru celého stromu.',
@@ -325,7 +325,7 @@ export const slovak = {
         },
         demo: {
             title: 'Optimálny binárny vyhľadávací strom - demo',
-            brief: 'Zadajte **utriedené** pole vyhľadávacích kľúčov a pole počtu vyhľadávaní jednotlivých kľúčov (v oboch prípadoch ide o čísla oddelené čiarkami, pričom maximálny počet je 15). Hodnota bunky symbolizuje cenu optimálneho stromu, ktorý môže byť vytvorený od kľúča v stĺpci ku kľúču v riadku. Preto na diagonále v tabuľke sú počty vyhľadaní (cena stromu s jedným uzlom je počet vyhľadaní) a bunky pod diagonálou sú prázdne. Hodnota v zátvorke je index v poli kľúčov - symbolizuje ktorý kľuč bol použitý ako koreň stromu pre daný podproblém. Pomocou týchto pomocných hodnôt sa dá vytvoriť celý strom. ',
+            brief: 'Zadajte **utriedené** pole vyhľadávacích kľúčov a pole počtu vyhľadávaní jednotlivých kľúčov (v oboch prípadoch ide o čísla oddelené čiarkami, pričom maximálny počet je 15). Hodnota bunky symbolizuje cenu optimálneho stromu, ktorý môže byť vytvorený od kľúča v stĺpci ku kľúču v riadku. Hodnota v zátvorke je index v poli kľúčov - symbolizuje ktorý kľuč bol použitý ako koreň stromu pre daný podproblém. Pomocou týchto pomocných hodnôt sa dá vytvoriť celý strom. ',
             initialState: 'Počiatočný stav',
             evalChainLength: 'Výpočet hodnôt pre reťaz dĺžky ',
             assignedIntMax: 'Priradené INT_MAX',
@@ -341,7 +341,7 @@ export const slovak = {
         stats: {
             title: 'Optimálny binárny vyhľadávací strom - štatistiky',
             brief: 'Zadajte pole počtu vyhľadávaní jednotlivých kľúčov (maximálny počet je 15). Poľe kľúčov nie je potreba.',
-            conclusion: 'Aj pre veľmi jednoduchý strom je DP algoritmus efektívnejší ako rekurzívny. Môžeme si všimnúť, že pri oboch algoritmoch nezáleží na počtoch vyhľadaní ale len na počte kľúčov. V algoritmoch sa totiž nenachádza podmienka pre volanie/vykonanie cyklu, ktorá by brala do úvahy počet vyhľadaní.'
+            conclusion: 'Aj pri malom počte kľúčov je DP algoritmus rýchlejší ako rekurzívny. Môžeme si všimnúť, že pri oboch algoritmoch nezáleží na počtoch vyhľadaní ale len na počte kľúčov. V algoritmoch sa totiž nenachádza podmienka pre volanie/vykonanie cyklu, ktorá by brala do úvahy počet vyhľadaní.'
         }
     }
 };
