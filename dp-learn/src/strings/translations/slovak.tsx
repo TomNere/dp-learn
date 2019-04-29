@@ -148,7 +148,7 @@ export const slovak = {
             },
             recursion: {
                 brief: 'Pre tyč dĺžky **0** musí byť aj najlepšia cena **0**. V opačnom prípade vypočítame najvyššie ceny pre všetky dĺžky tyče. Pri rekurzívnom algoritme sa teda budú dookola vypočítavať najvyššie ceny pre všetky dĺžky tyče.',
-                recTime: '**Časová zložitosť** exponenciálne narastá s dĺžkou tyče (počtom zadaných cien).',
+                recTime: 'Časová zložitosť* exponenciálne narastá s dĺžkou tyče (počtom zadaných cien).',
                 recSpace: '**Priestorová zložitosť** sa rovná počtu zadaných cien.',
                 input: 'P = { 1, 3, 5 }'
             },
@@ -160,7 +160,6 @@ export const slovak = {
                 input: 'P = { 1, 5, 6, 6, 9 }',
                 i3: 'i = 3',
                 i4: 'i = 4'
-
             },
             coins: 'Minimálny počet mincí na vytvorenie danej hodnoty'
         },
@@ -178,7 +177,7 @@ export const slovak = {
         stats: {
             title: 'Rezanie tyče - štatistiky',
             brief: 'Zadajte ceny jednotlivých dĺžok tyče (maximálny počet je 20) oddelené čiarkami (dĺžky sú 1, 2, 3, ...).',
-            conclusion: 'Časová zložitosť rekurzívneho algoritmu exponenciálne narastá s dĺžkou tyče (počtom zadaných cien). Kedže v rekurzívnom algoritme nie je žiadná podmienka, počet rekurzívnych volaní sa bude presne rovnať teoretickej hodnote zo vzorca (ako môžno vidieť po vypočítaní štatistík). Nezáleží ani na cenách jednotlivých dĺžok, iba na ich počte. DP algoritmus bude mať oproti teoretickej hodnote počet volaní nižší, pretože počet opakovaní vnútorného cyklu závisí od cien jednotlivých dĺžok. Zo štatistík vyplýva, že rekurzívny algoritmus nie je rýchlejší ako DP algoritmus ani pri veľmi jednoduchom vstupe.',
+            conclusion: 'Keďže v rekurzívnom algoritme nie je žiadná podmienka, počet rekurzívnych volaní sa bude presne rovnať teoretickej hodnote zo vzorca (ako môžno vidieť po vypočítaní štatistík). Nezáleží ani na cenách jednotlivých dĺžok, iba na ich počte. DP algoritmus bude mať oproti teoretickej hodnote počet volaní nižší, pretože počet opakovaní vnútorného cyklu závisí od cien jednotlivých dĺžok. Zo štatistík vyplýva, že rekurzívny algoritmus nie je rýchlejší ako DP algoritmus ani pri veľmi jednoduchom vstupe.',
         }
     },
     substring: {

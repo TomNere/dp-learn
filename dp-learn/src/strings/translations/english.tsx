@@ -101,8 +101,8 @@ export const english = {
             },
             recursion:{
                 brief: "If given value is **0**, the result is also **0**. Otherwise, the program will loop through **N** coin values. For each coin which value is less or equal given value **V**, will be called the same function recursively with value **V** substracted by current coin's value. Number of used coins is incremented.",
-                recTime: 'Time complexity is growing exponentially with given value **V**.',
-                recSpace: 'Space complexity is pretty obvious - **N + 1**, where **N** is the number of coins and **1** is needed to store given value **V**.',
+                recTime: '**Time complexity** is growing exponentially with given value **V**.',
+                recSpace: '**Space complexity** is pretty obvious - **N + 1**, where **N** is the number of coins and **1** is needed to store given value **V**.',
             },
             dp:{
                 brief: 'Table is 1-dimensional array in this case. All values in array of size **V + 1** are set to **INT_MAX** at start excepting **0** at **0.** index. New value of the table cell is incremented value of some of the previous cells. Distance between cell which value is computed and cell which value is used depends on coins. If value is **4** for and there is coin **4**, max distance is **4**. Value of the last cell is the optimal solution at the end. For full solution building we need additional array.',
@@ -119,7 +119,7 @@ export const english = {
         },
         demo: {
             title: 'Minimum number of coins that make a given value - demo',
-            brief: 'Please provide value to make (from 0 to 20) and comma separated coins (max. 15). Table cols symbolize coin values. First row will contain solutions for all values at the end. Second row is full solution building helper. Value of a cell in second row is value of highest used coin.',
+            brief: 'Provide value to make (from 0 to 20) and comma separated coins (max. 15). Table cols symbolize coin values. First row will contain solutions for all values at the end. Second row is full solution building helper. Value of a cell in second row is value of highest used coin.',
             isNeeded: 'Number of coins',
             evalCoinsFor: 'Evaluating coins needed for value ',
             usedCoin: 'used coin',
@@ -136,39 +136,38 @@ export const english = {
     rod: {
         prices: 'Prices',
         theory: {
-            title: 'Cutting a rod - theory',
+            title: 'Rod cutting - theory',
             brief: {
-                b1: 'Majme oceľovú tyč dĺžky **L**. Túto tyč je potrebné narezať na menšie kusy. Na vstupe sú predajné ceny tyčí všetkých dĺžok od 1 po L: **P = { p1, p2, p3, ..., pL}**. Na aké dĺžky treba narezať tyč, aby súčet cien tyčí, ktoré vzniknú bol čo najvyšší?',
+                b1: 'We have rod of length **L**. Determine the maximum value obtainable by cutting up the rod and selling the pieces. Prices of pieces of lengths 1, 2 etc. are **P = { p1, p2, p3, ..., pL}**.',
                 input: 'P = { 1, 3, 5 }',
-                b2: 'Na aké dĺžky sa dá tyč narezať?',
-                output1: '3 = 1 + 1 + 1 => ceny: 1 + 1 + 1 = 3',
-                output2: '3 = 1 + 2 => ceny: 1 + 3 = 4',
-                output3: '3 = 3 => ceny 5 = 5',
-                b3: 'Na aké dĺžky sa dá tyč narezať?',
+                b2: 'How can we cut up the rod?',
+                output1: '3 = 1 + 1 + 1 => prices: 1 + 1 + 1 = 3',
+                output2: '3 = 1 + 2 => prices: 1 + 3 = 4',
+                output3: '3 = 3 => prices 5 = 5',
+                b3: 'The best solution in this case is no cutting at all! Rod of length 3 has maximum obtainable price.',
             },
             recursion: {
-                brief: 'Pre tyč dĺžky **0** musí byť aj najlepšia cena **0**. V opačnom prípade vypočítame najvyššie ceny pre všetky dĺžky tyče. Pri rekurzívnom algoritme sa teda budú dookola vypočítavať najvyššie ceny pre všetky dĺžky tyče.',
-                recTime: '**Časová zložitosť** exponenciálne narastá s dĺžkou tyče (počtom zadaných cien).',
-                recSpace: '**Priestorová zložitosť** sa rovná počtu zadaných cien.',
+                brief: 'For length **0** the price is **0**. Otherwise, we must evaluate best prices for all lengths. In recursive algorithm the prices for all lengths will be evaluated repeatedly.',
+                recTime: '**Time complexity** is growing exponentially with rod length (number of provided prices).',
+                recSpace: '**Space complexity** is equal to number of provided prices.',
                 input: 'P = { 1, 3, 5 }'
-
             },
             dp: {
-                brief: 'V DP algoritme sa budú do tabuľky (jednorozmerného poľa) ukladať najvyššie možné ceny pre všetky dĺžky tyče. Pri výbere hodnoty do bunky sa berú do úvahy ceny **všetkých** dĺžok vypočítaných predtým (to znamená menších od aktuálnej). Ku každej bunke sa pripočítajú ceny takých dĺžok tak, aby výsledná dĺžka neprekročila aktuálne vypočítavanú. Do bunky sa vyberie súčet tých dĺžok (ich cien), ktoré dávajú najvyššiu predajnú cenu.',
-                dpTime: 'Algoritmus obsahuje 1 vnorený cyklus, takže jeho **časová zložitosť** je polynomická - druhá mocnina počtu zadaných cien.',
-                dpSpace: '**Priestorová zložitosť** sa oproti rekurzívnemu algoritmu zvýšila o veľkosť poľa potrebného na ukladanie výsledkov podproblémov.',
+                brief: 'Best obtainable prices for all lengths will be stored in one-dimensional array (so the table is array). New value of the table cell can be evaluated from all of the previous cells. We need to get sum of the maximum prices of lengths to get maximum price for next length. For full solution building we need additional array.',
+                dpTime: 'Due to nested loop in algorithm, **time complexity** is polynomic.',
+                dpSpace: 'Additional space compared to recursive algorithm is needed to storing values in table.',
                 outerCycle: 'Outer loop',
                 input: 'P = { 1, 5, 6, 6, 9 }',
                 i3: 'i = 3',
                 i4: 'i = 4'
             },
-            coins: 'Minimálny počet mincí na vytvorenie danej hodnoty'
+            coins: 'Minimum number of coins that make a given value'
         },
         demo: {
-            title: 'Cutting a rod - demo',
-            brief: 'Provide comma separated prices of lengths (lengths are 1, 2, 3, ...).',
-            evalPriceFor: 'Evaluating biggest price for length ',
-            result: 'Highest obtainable value: ',
+            title: 'Rod cutting - demo',
+            brief: 'Provide max. 15 comma separated prices of lengths (lengths are 1, 2, 3, ...). Table cols symbolize rod lengths. First row will contain maximum obtainable prices for all lengths at the end. Second row is full solution building helper. Value of a cell in second row is maximum used length.',
+            evalPriceFor: 'Evaluating maximum obtainable price for length ',
+            result: 'Maximum obtainable value: ',
             usedLength: 'used length ',
             usedLengths: 'used lengths: ',
             length: 'Length',
@@ -176,14 +175,14 @@ export const english = {
             usedLengthBig: 'Used length',
         },
         stats: {
-            title: 'Cutting a rod - statistics',
-            brief: 'Zadajte ceny jednotlivých dĺžok tyče (maximálne 30) oddelené čiarkami (dĺžky sú 1, 2, 3, ...).',
-            conclusion: '**Časová zložitosť** rekurzívneho algoritmu exponenciálne narastá s dĺžkou tyče (počtom zadaných cien). Kedže v rekurzívnom algoritme nie je žiadná podmienka, počet rekurzívnych volaní sa bude presne rovnať teoretickej hodnote zo vzorca (ako môžno vidieť po vypočítaní štatistík). Nezáleží ani na cenách jednotlivých dĺžok, iba na ich počte. DP algoritmus bude mať oproti teoretickej hodnote počet volaní nižší, pretože počet opakovaní vnútorného cyklu závisí od cien jednotlivých dĺžok. Zo štatistík vyplýva, že rekurzívny algoritmus nie je rýchlejší ako DP algoritmus ani pri veľmi jednoduchom vstupe.',
+            title: 'Rod cutting - statistics',
+            brief: 'Provide max. 20 comma separated prices of lengths (lengths are 1, 2, 3, ...).',
+            conclusion: "There is no condition for recursive call, so theoretical and real number of recursive calls will be always the same. The actual prices doesn't matter. Number of calls depends only on number of provided prices. DP algorithm is always faster than recursive algorithm. There is a condition in inner loop, so the real and theoretical number of iterations is different.",
         }
     },
     substring: {
         theory: {
-            title: 'Najdlhší spoločný podreťazec - teória',
+            title: 'Longest common substring - theory',
             brief: {
                 b1: 'Na vstupe sú dva reťazce, **X** s dĺžkou **L1** a **Y** s dĺžkou **L2**. Aký je ich najdlhší spoločný podreťazec?',
                 input1: "X = 'Unicasting'",
