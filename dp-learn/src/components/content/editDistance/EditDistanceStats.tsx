@@ -64,7 +64,7 @@ class EditDistanceStats extends React.Component<any, IEditDistanceStatsState> {
                     </FlexTwo>
                 </Grid>
                 <br />
-                <ChartsAndTable visible={this.state.statsVisible} timeStats={this.timeChartStats} spaceStats={this.spaceChartStats} tableStats={this.tableStats} />
+                <ChartsAndTable visible={this.state.statsVisible} timeStats={this.timeChartStats} spaceStats={this.spaceChartStats} tableStats={this.tableStats} error={false} />
                 {this.state.statsVisible &&
                     <div>
                         <CustomTitle variant='h5'>

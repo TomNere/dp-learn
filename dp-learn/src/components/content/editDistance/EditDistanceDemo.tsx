@@ -136,13 +136,15 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
 
     private handlestrXChange = (e: any) => {
         if (e.target.value.length <= 20) {
-            this.setState({ stringX: e.target.value, tableVisible: false });
+            clearTimeout(this.timeout);
+            this.setState({ stringX: e.target.value, tableVisible: false, result:'', });
         }
     };
 
     private handlestrYChange = (e: any) => {
         if (e.target.value.length <= 20) {
-            this.setState({ stringY: e.target.value, tableVisible: false });
+            clearTimeout(this.timeout);
+            this.setState({ stringY: e.target.value, tableVisible: false, result:'', });
         }
     };
 

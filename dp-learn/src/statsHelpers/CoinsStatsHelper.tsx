@@ -70,14 +70,18 @@ export const coinsExamples = [
     },
     {
         coins: [1,2,3,20],
+        value: 15
+    },
+    {
+        coins: [1,2,3,4,5,6,7,8,20],
         value: 20
     },
     {
-        coins: [5,6,7,8,9,10,11,12,13,14],
-        value: 15
+        coins: [6,7,8,9,10,12,13,14,20],
+        value: 20
     },
     {
-        coins: [1,2,3,4,5,6,7,8,9,10],
-        value: 15
+        coins: [1,2,3,4,5,6,7],
+        value: 10
     },
 ];

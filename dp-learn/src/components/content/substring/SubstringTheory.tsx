@@ -9,8 +9,8 @@ import BottomMarginDiv from 'src/components/hoc/BottomMarginDiv';
 import Complexity from 'src/components/specialized/Complexity';
 import CustomTitle from 'src/components/customStyled/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
+import Img from 'src/components/hoc/PaddingImage';
 import PaddingDiv from 'src/components/hoc/PaddingDiv';
-import PaddingImage from 'src/components/hoc/PaddingImage';
 import SourceCode from 'src/components/hoc/SourceCode';
 import Table1 from 'src/resources/substring/substringTable1.svg';
 import Table2 from 'src/resources/substring/substringTable2.svg';
@@ -79,9 +79,7 @@ class SubstringTheory extends React.Component<AllProps> {
                                     </ul>
                                 </Typography>
                             </BottomMarginDiv>
-                            <PaddingImage>
-                                <img src={Tree} alt="SubstringRecTree" />
-                            </PaddingImage>
+                                <Img src={Tree} alt="SubstringRecTree" width='720' padding='big' />
                             <SourceCode>
                                 {substrRecCode}
                             </SourceCode>
@@ -120,9 +118,7 @@ class SubstringTheory extends React.Component<AllProps> {
                                 </Typography>
                             </BottomMarginDiv>
 
-                            <PaddingImage>
-                                <img src={Table1} width='350' />
-                            </PaddingImage>
+                            <Img src={Table1} alt="SubstringRecTable1" width='350' padding='big' />
 
                             <BottomMarginDiv>
                                 <Typography variant={'subtitle1'} >
@@ -134,9 +130,7 @@ class SubstringTheory extends React.Component<AllProps> {
                                 </Typography>
                             </BottomMarginDiv>
 
-                            <PaddingImage>
-                                <img src={Table2} width='350' />
-                            </PaddingImage>
+                            <Img src={Table2} alt="SubstringRecTable2" width='350' padding='big' />
 
                             <BottomMarginDiv>
                                 <Typography variant={'subtitle1'} >
@@ -148,9 +142,7 @@ class SubstringTheory extends React.Component<AllProps> {
                                 </Typography>
                             </BottomMarginDiv>
 
-                            <PaddingImage>
-                                <img src={Table3} width='350' />
-                            </PaddingImage>
+                            <Img src={Table3} alt="SubstringRecTable3" width='350' padding='big' />
 
                             <SourceCode>
                                 {substrDynCode}

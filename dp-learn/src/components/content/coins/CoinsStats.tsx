@@ -1,6 +1,7 @@
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
+import { CheckForZero, GetNumbers } from 'src/helpers';
 import { coinsDpSpaceComplex, coinsDpTimeComplex, coinsRecSpaceComplex, coinsRecTimeComplex } from 'src/strings/dpProblemsStrings/CoinsStrings';
 import { coinsExamples, dpCoins, dpCoinsSpace, dpCoinsTime, recCoinsSpace, recCoinsTime, recursiveCoins } from 'src/statsHelpers/CoinsStatsHelper';
 
@@ -12,7 +13,6 @@ import CustomTextField from 'src/components/customStyled/CustomTextField';
 import CustomTitle from 'src/components/customStyled/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
 import FlexTwo from 'src/components/hoc/FlexTwo';
-import { GetNumbers } from 'src/helpers';
 import { Grid } from '@material-ui/core';
 import { ISimpleObjectParameter } from 'src/statsHelpers/CoinsStatsHelper';
 import { ISpaceChartData } from 'src/components/specialized/SpaceChart';
@@ -24,6 +24,7 @@ interface ICoinsStatsState {
     givenValue: number
     givenCoins: string
     statsVisible: boolean
+    error: boolean
 }
 
 class CoinsStats extends React.Component<any, ICoinsStatsState> {
@@ -37,7 +38,8 @@ class CoinsStats extends React.Component<any, ICoinsStatsState> {
         this.state = {
             givenValue: 10,
             givenCoins: "1,2,5",
-            statsVisible: false
+            statsVisible: false,
+            error: false
         }
     }
     public render() {
@@ -65,7 +67,7 @@ class CoinsStats extends React.Component<any, ICoinsStatsState> {
                     </FlexTwo>
                 </Grid>
                 <br />
-                <ChartsAndTable visible={this.state.statsVisible} timeStats={this.timeChartStats} spaceStats={this.spaceChartStats} tableStats={this.tableStats} />
+                <ChartsAndTable visible={this.state.statsVisible} timeStats={this.timeChartStats} spaceStats={this.spaceChartStats} tableStats={this.tableStats} error={this.state.error} />
                 {this.state.statsVisible &&
                     <div>
                         <CustomTitle variant='h5'>
@@ -152,6 +154,17 @@ class CoinsStats extends React.Component<any, ICoinsStatsState> {
 
     private drawStats = () => {
         this.coins = GetNumbers(this.state.givenCoins, false);
+        if (CheckForZero(this.coins)) {
+            this.setState({ 
+                error: true,
+                statsVisible: false
+            });
+            return;
+        }
+        else {
+            this.setState({ error: false });
+        }
+
         this.timeChartStats = [];
         this.spaceChartStats = [];
         this.tableStats = [];

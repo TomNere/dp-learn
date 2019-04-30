@@ -2,35 +2,54 @@ import * as React from 'react';
 
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
-import { ReactNode } from 'react';
-
 type AllProps =
     ITableImgProps &
     WithStyles<typeof styles>;
 
 interface ITableImgProps {
-    children: ReactNode
+    src: string,
+    alt: string,
+    width: string,
+    padding: 'big' | 'small'
 }
 
 const styles = (theme: Theme) => createStyles({
-    margin: {
+    big: {
         paddingLeft: 40,    // Same as ul list padding
         paddingRight: 40,    // Same as left
         marginBottom: theme.spacing.unit * 3,
+    },
+    small: {
+        paddingLeft: 10,
+        paddingRight: 10,
+        marginBottom: theme.spacing.unit * 3,
+    },
+    maxWidth: {
+        maxWidth: '98%'
     }
 });
 
 // Custom title
 // Takes 1 child
-class PaddingImage extends React.Component<AllProps> {
+class Img extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;
         return (
-            <div className={classes.margin}>
-                {this.props.children}
+            <div>
+                {this.props.padding === 'small' &&
+                    <div className={classes.small}>
+                        <img className={classes.maxWidth} src={this.props.src} alt={this.props.alt} width={this.props.width} />
+                    </div>
+                }
+                {/* Big is default */}
+                {this.props.padding === 'big' &&
+                    <div className={classes.big}>
+                        <img className={classes.maxWidth} src={this.props.src} alt={this.props.alt} width={this.props.width} />
+                    </div>
+                }
             </div>
         );
     }
 }
 
-export default withStyles(styles)(PaddingImage);
+export default withStyles(styles)(Img);

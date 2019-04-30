@@ -2,7 +2,7 @@
 export const GetNumbers = (str: string, sorted: boolean) => {
     const numbers: number[] = [];
     for (const num of str.split(",")) {
-        if (!Number.isNaN(+num) ) {
+        if (!Number.isNaN(+num) && +num >= 0 && Number.isInteger(+num)) {
             if (sorted && +num < numbers[numbers.length - 1]) {
                 return [];
             }
@@ -13,6 +13,16 @@ export const GetNumbers = (str: string, sorted: boolean) => {
         }
     }
     return numbers;
+}
+
+// Check for zero value in array
+export const CheckForZero = (arr: number[]) => {
+    for (const num of arr) {
+        if (num === 0) {
+            return true;
+        }
+    }
+    return false;
 }
 
 // Return minimum of three values

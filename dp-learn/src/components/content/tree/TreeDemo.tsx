@@ -1,7 +1,7 @@
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
-import { FreqArraySum, GetNumbers, ValueOrIntMax, ValueOrUndefined } from 'src/helpers';
+import { CheckForZero, FreqArraySum, GetNumbers, ValueOrIntMax, ValueOrUndefined } from 'src/helpers';
 import { Grid, TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from "@material-ui/core/styles";
 
@@ -137,7 +137,8 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
             sum++;
         }
         if (sum <= 15) {
-            this.setState({ givenKeys: e.target.value, tableVisible: false, inProgress: false });
+            clearTimeout(this.timeout);
+            this.setState({ givenKeys: e.target.value, tableVisible: false, result:'', inProgress: false });
         }
     }
 
@@ -150,7 +151,8 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
             sum++;
         }
         if (sum <= 15) {
-            this.setState({ givenFreqs: e.target.value, tableVisible: false, inProgress: false });
+            clearTimeout(this.timeout);
+            this.setState({ givenFreqs: e.target.value, tableVisible: false, result:'', inProgress: false });
         }
     }
 
@@ -176,7 +178,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
         this.keys = GetNumbers(this.state.givenKeys, true);
         this.freqs = GetNumbers(this.state.givenFreqs, false);
 
-        if (this.keys.length === 0 || this.keys.length !== this.freqs.length) {
+        if (CheckForZero(this.freqs) || this.keys.length !== this.freqs.length) {
             this.setState({ result: strings.global.invalidArg });
             return;
         }

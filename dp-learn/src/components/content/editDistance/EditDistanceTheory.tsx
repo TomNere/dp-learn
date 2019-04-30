@@ -9,8 +9,8 @@ import BottomMarginDiv from 'src/components/hoc/BottomMarginDiv';
 import Complexity from 'src/components/specialized/Complexity';
 import CustomTitle from 'src/components/customStyled/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
+import Img from 'src/components/hoc/PaddingImage';
 import PaddingDiv from 'src/components/hoc/PaddingDiv';
-import PaddingImage from 'src/components/hoc/PaddingImage';
 import SourceCode from 'src/components/hoc/SourceCode';
 import Table1En from 'src/resources/editDistance/editDistTable1En.svg';
 import Table1Sk from 'src/resources/editDistance/editDistTable1Sk.svg';
@@ -83,9 +83,7 @@ class EditDistanceTheory extends React.Component<AllProps> {
                                     </ul>
                                 </Typography>
                             </BottomMarginDiv>
-                            <PaddingImage>
-                                <img src={Tree} alt="EditDistanceRecTree" />
-                            </PaddingImage>
+                            <Img src={Tree} alt="EditDistanceRecTree" width='600' padding='big' />
                             <SourceCode>
                                 {editDistRecCode}
                             </SourceCode>
@@ -107,7 +105,7 @@ class EditDistanceTheory extends React.Component<AllProps> {
                                     <li><Markdown source={strings.editDistance.theory.dp.dpOp3} /></li>
                                 </ul>
                                 <Markdown source={strings.editDistance.theory.dp.brief2} />
-                                
+
                                 <Markdown source={strings.editDistance.theory.dp.dpTime} />
                                 <Markdown source={strings.editDistance.theory.dp.dpSpace} />
                             </BottomMarginDiv>
@@ -131,14 +129,12 @@ class EditDistanceTheory extends React.Component<AllProps> {
                                 </Typography>
                             </BottomMarginDiv>
 
-                            <PaddingImage>
-                                {strings.getLanguage() === 'en' &&
-                                    <img src={Table1En} width='450' />
-                                }
-                                {strings.getLanguage() === 'sk' &&
-                                    <img src={Table1Sk} width='450' />
-                                }
-                            </PaddingImage>
+                            {strings.getLanguage() === 'en' &&
+                                <Img src={Table1En} alt="EditDistanceTab1" width='450' padding='big' />
+                            }
+                            {strings.getLanguage() === 'sk' &&
+                                <Img src={Table1Sk} alt="EditDistanceTab1" width='450' padding='big' />
+                            }
 
                             <BottomMarginDiv>
                                 <Typography variant={'subtitle1'} >
@@ -150,14 +146,12 @@ class EditDistanceTheory extends React.Component<AllProps> {
                                 </Typography>
                             </BottomMarginDiv>
 
-                            <PaddingImage>
-                                {strings.getLanguage() === 'en' &&
-                                    <img src={Table2En} width='450' />
-                                }
-                                {strings.getLanguage() === 'sk' &&
-                                    <img src={Table2Sk} width='450' />
-                                }
-                            </PaddingImage>
+                            {strings.getLanguage() === 'en' &&
+                                <Img src={Table2En} alt="EditDistanceTab2" width='450' padding='big' />
+                            }
+                            {strings.getLanguage() === 'sk' &&
+                                <Img src={Table2Sk} alt="EditDistanceTab2" width='450' padding='big' />
+                            }
 
                             <SourceCode>
                                 {editDistDynCode}

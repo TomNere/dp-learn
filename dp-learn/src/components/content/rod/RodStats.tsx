@@ -1,6 +1,7 @@
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
+import { CheckForZero, GetNumbers } from 'src/helpers';
 import { dpRod, dpRodSpace, dpRodTime, recRodSpace, recRodTime, recursiveRod, rodExamples } from 'src/statsHelpers/RodStatsHelper';
 import { rodDpSpaceComplex, rodDpTimeComplex, rodRecSpaceComplex, rodRecTimeComplex } from 'src/strings/dpProblemsStrings/RodStrings';
 
@@ -12,7 +13,6 @@ import CustomTextField from 'src/components/customStyled/CustomTextField';
 import CustomTitle from 'src/components/customStyled/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
 import FlexTwo from 'src/components/hoc/FlexTwo';
-import { GetNumbers } from 'src/helpers';
 import { Grid } from '@material-ui/core';
 import { ISimpleObjectParameter } from 'src/statsHelpers/CoinsStatsHelper';
 import { ISpaceChartData } from 'src/components/specialized/SpaceChart';
@@ -22,7 +22,8 @@ import { strings } from 'src/strings/translations/strings';
 
 interface IRodStatsState {
     givenPrices: string,
-    statsVisible: boolean
+    statsVisible: boolean,
+    error: boolean
 }
 
 class RodStats extends React.Component<any, IRodStatsState> {
@@ -35,7 +36,8 @@ class RodStats extends React.Component<any, IRodStatsState> {
         super(props)
         this.state = {
             givenPrices: '1,5,6,6,9',
-            statsVisible: false
+            statsVisible: false,
+            error: false
         }
     }
 
@@ -64,7 +66,7 @@ class RodStats extends React.Component<any, IRodStatsState> {
                     </FlexTwo>
                 </Grid>
                 <br />
-                <ChartsAndTable visible={this.state.statsVisible} timeStats={this.timeChartStats} spaceStats={this.spaceChartStats} tableStats={this.tableStats} />
+                <ChartsAndTable visible={this.state.statsVisible} timeStats={this.timeChartStats} spaceStats={this.spaceChartStats} tableStats={this.tableStats} error={this.state.error} />
                 {this.state.statsVisible &&
                     <div>
                         <CustomTitle variant='h5'>
@@ -147,6 +149,17 @@ class RodStats extends React.Component<any, IRodStatsState> {
 
     private drawStats = () => {
         this.prices = GetNumbers(this.state.givenPrices, false);
+        if (CheckForZero(this.prices)) {
+            this.setState({ 
+                error: true,
+                statsVisible: false
+            });
+            return;
+        }
+        else {
+            this.setState({ error: false });
+        }
+        
         this.spaceChartStats = [];
         this.timeChartStats = [];
         this.tableStats = [];

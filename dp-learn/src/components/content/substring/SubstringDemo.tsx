@@ -126,13 +126,15 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
 
     private handlestrXChange = (e: any) => {
         if (e.target.value.length <= 20) {
-            this.setState({ stringX: e.target.value, tableVisible: false, inProgress: false });
+            clearTimeout(this.timeout);
+            this.setState({ stringX: e.target.value, tableVisible: false, result:'', inProgress: false });
         }
     };
 
     private handlestrYChange = (e: any) => {
         if (e.target.value.length <= 20) {
-            this.setState({ stringY: e.target.value, tableVisible: false, inProgress: false });
+            clearTimeout(this.timeout);
+            this.setState({ stringY: e.target.value, tableVisible: false, result:'', inProgress: false });
         }
     };
 
@@ -158,6 +160,13 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
 
         this.LENGTH1 = this.state.stringX.length;
         this.LENGTH2 = this.state.stringY.length;
+
+        if (this.LENGTH1 === 0 || this.LENGTH2 === 0) {
+            this.setState({
+                result: `${strings.substring.demo.longestSubr}: '', ${strings.substring.demo.length}: 0`,
+            });
+            return;
+        }
 
         this.resultPos = [0, 0];
 

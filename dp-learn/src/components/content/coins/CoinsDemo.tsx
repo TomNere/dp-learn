@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { GetNumbers, ValueOrIntMax } from 'src/helpers';
+import { CheckForZero, GetNumbers, ValueOrIntMax } from 'src/helpers';
 import { Grid, TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 
@@ -124,14 +124,16 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
     private handleValue = (e: any) => {
         if (!Number.isNaN(+e.target.value) && +e.target.value >= 0 && +e.target.value <= 20) {
-            this.setState({ givenValue: +e.target.value, tableVisible: false, inProgress: false });
+            clearTimeout(this.timeout);
+            this.setState({ givenValue: +e.target.value, tableVisible: false, result:'', inProgress: false });
         }
     }
 
     private handleCoins = (e: any) => {
         const coins = GetNumbers(e.target.value, false);
         if (coins.length <= 15) {
-            this.setState({ givenCoins: e.target.value, tableVisible: false, inProgress: false });
+            clearTimeout(this.timeout);
+            this.setState({ givenCoins: e.target.value, tableVisible: false, result:'', inProgress: false });
         }
     }
 
@@ -154,8 +156,13 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         clearTimeout(this.timeout);
         this.coins = GetNumbers(this.state.givenCoins, false);
 
-        if (this.coins.length === 0) {
+        if (CheckForZero(this.coins)) {
             this.setState({ result: strings.global.invalidArg });
+            return;
+        }
+
+        if (this.state.givenValue === 0) {
+            this.setState({ result: `${strings.coins.demo.isNeeded}: 0` });
             return;
         }
 
@@ -339,6 +346,15 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
     private setFinalState = (table: number[]) => {
         this.outerCounter = -1;
         this.nextAutomataState = 'done';
+
+        if (table[this.state.givenValue] === Number.MAX_VALUE) {
+            this.setState({
+                inProgress: false,
+                result: strings.global.noSolution,
+                tableVisible: false,
+            });
+            return;
+        }
 
         this.setState({
             inProgress: false,

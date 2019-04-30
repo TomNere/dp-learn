@@ -9,8 +9,8 @@ import BottomMarginDiv from 'src/components/hoc/BottomMarginDiv';
 import Complexity from 'src/components/specialized/Complexity';
 import CustomTitle from 'src/components/customStyled/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
+import Img from 'src/components/hoc/PaddingImage';
 import PaddingDiv from 'src/components/hoc/PaddingDiv';
-import PaddingImage from 'src/components/hoc/PaddingImage';
 import SourceCode from 'src/components/hoc/SourceCode';
 import Table1En from 'src/resources/rod/rodTable1En.svg';
 import Table1Sk from 'src/resources/rod/rodTable1Sk.svg';
@@ -78,9 +78,7 @@ class RodTheory extends React.Component<AllProps> {
                                     </ul>
                                 </Typography>
                             </BottomMarginDiv>
-                            <PaddingImage>
-                                <img src={Tree} alt="RodRecTree" />
-                            </PaddingImage>
+                            <Img src={Tree} alt="RodRecTree" width='600' padding='small' />
                             <SourceCode>
                                 {rodRecCode}
                             </SourceCode>
@@ -118,14 +116,12 @@ class RodTheory extends React.Component<AllProps> {
                                 </Typography>
                             </BottomMarginDiv>
 
-                            <PaddingImage>
-                                {strings.getLanguage() === 'en' &&
-                                    <img src={Table1En} width='500' />
-                                }
-                                {strings.getLanguage() === 'sk' &&
-                                    <img src={Table1Sk} width='500' />
-                                }
-                            </PaddingImage>
+                            {strings.getLanguage() === 'en' &&
+                                <Img src={Table1En} alt="RodRecTable1" width='600' padding='big' />
+                            }
+                            {strings.getLanguage() === 'sk' &&
+                                <Img src={Table1Sk} alt="RodRecTable1" width='600' padding='big' />
+                            }
 
                             <BottomMarginDiv>
                                 <Typography variant={'subtitle1'} >
@@ -136,14 +132,13 @@ class RodTheory extends React.Component<AllProps> {
                                 </Typography>
                             </BottomMarginDiv>
 
-                            <PaddingImage>
-                                {strings.getLanguage() === 'en' &&
-                                    <img src={Table2En} width='500' />
-                                }
-                                {strings.getLanguage() === 'sk' &&
-                                    <img src={Table2Sk} width='500' />
-                                }
-                            </PaddingImage>
+                            {strings.getLanguage() === 'en' &&
+                                <Img src={Table2En} alt="RodRecTable2" width='600' padding='big' />
+
+                            }
+                            {strings.getLanguage() === 'sk' &&
+                                <Img src={Table2Sk} alt="RodRecTable2" width='600' padding='big' />
+                            }
 
                             <SourceCode>
                                 {rodDynCode}

@@ -9,10 +9,9 @@ import BottomMarginDiv from 'src/components/hoc/BottomMarginDiv';
 import Complexity from 'src/components/specialized/Complexity';
 import CustomTitle from 'src/components/customStyled/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
-import FlexTwo from 'src/components/hoc/FlexTwo';
 import Formula from 'src/components/hoc/Formula';
+import Img from 'src/components/hoc/PaddingImage';
 import PaddingDiv from 'src/components/hoc/PaddingDiv';
-import PaddingImage from 'src/components/hoc/PaddingImage';
 import SourceCode from 'src/components/hoc/SourceCode';
 import Table1En from 'src/resources/tree/treeTable1En.svg';
 import Table1Sk from 'src/resources/tree/treeTable1Sk.svg';
@@ -54,18 +53,14 @@ class TreeTheory extends React.Component<AllProps> {
                             <Typography variant={'h6'} className={classes.bottomMargin}>
                                 {strings.tree.tree} 1
                             </Typography>
-                            <PaddingImage>
-                                <img src={TreeExample1} width='420' />
-                            </PaddingImage>
+                            <Img src={TreeExample1} alt='tree1' width='420' padding='big' />
                         </FlexOne>
-                        <FlexTwo>
+                        <FlexOne>
                             <Typography variant={'h6'} className={classes.bottomMargin}>
                                 {strings.tree.tree} 2
                             </Typography>
-                            <PaddingImage>
-                                <img src={TreeExample2} width='350' />
-                            </PaddingImage>
-                        </FlexTwo>
+                            <Img src={TreeExample2} alt='tree2' width='350' padding='big' />
+                        </FlexOne>
                     </Grid>
                     <Markdown source={strings.tree.theory.brief.b3} />
                 </BottomMarginDiv>
@@ -99,9 +94,7 @@ class TreeTheory extends React.Component<AllProps> {
                                     </ul>
                                 </Typography>
                             </BottomMarginDiv>
-                            <PaddingImage>
-                                <img src={Tree} alt="optimalTreeRecTree" width='99%' />
-                            </PaddingImage>
+                            <Img src={Tree} alt="optimalTreeRecTree" width='740' padding='small' />
                             <SourceCode>
                                 {TreeRecCode}
                             </SourceCode>
@@ -144,14 +137,13 @@ class TreeTheory extends React.Component<AllProps> {
                                 </Typography>
                             </BottomMarginDiv>
 
-                            <PaddingImage>
-                                {strings.getLanguage() === 'en' &&
-                                    <img src={Table1En} width='450' />
-                                }
-                                {strings.getLanguage() === 'sk' &&
-                                    <img src={Table1Sk} width='450' />
-                                }
-                            </PaddingImage>
+                            {strings.getLanguage() === 'en' &&
+                                <Img src={Table1En} alt="TreeTable1" width='400' padding='big' />
+
+                            }
+                            {strings.getLanguage() === 'sk' &&
+                                <Img src={Table1Sk} alt="TreeTable1" width='400' padding='big' />
+                            }
 
                             <BottomMarginDiv>
                                 <Typography variant={'subtitle1'}>
@@ -162,14 +154,14 @@ class TreeTheory extends React.Component<AllProps> {
                                 </Typography>
                             </BottomMarginDiv>
 
-                            <PaddingImage>
-                                {strings.getLanguage() === 'en' &&
-                                    <img src={Table2En} width='650' />
-                                }
-                                {strings.getLanguage() === 'sk' &&
-                                    <img src={Table2Sk} width='650' />
-                                }
-                            </PaddingImage>
+                            {strings.getLanguage() === 'en' &&
+                                <Img src={Table2En} alt="TreeTable2" width='600' padding='big' />
+
+                            }
+                            {strings.getLanguage() === 'sk' &&
+                                <Img src={Table2Sk} alt="TreeTable2" width='580' padding='big' />
+                            }
+
                             <SourceCode>
                                 {TreeDynCode}
                             </SourceCode>

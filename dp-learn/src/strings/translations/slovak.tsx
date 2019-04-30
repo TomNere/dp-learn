@@ -18,7 +18,8 @@ export const slovak = {
         skipping: 'Preskakujem...',
         recursion: 'Rekurzia',
         dp: 'DP',
-        invalidArg: 'Chyba pri validácii vstupných hodnôt',
+        invalidArg: 'Chyba pri validácii vstupných hodnôt!',
+        noSolution: 'Úloha nemá riešenie.',
         srcCode: 'Zdrojový kód',
         timeComplex: 'Časová zložitosť',
         spaceComplex: 'Priestorová zložitosť',
@@ -36,7 +37,7 @@ export const slovak = {
         partOfApp: 'je súčasťou aplikácie'
     },
     menu: {
-        coins: 'Minimálny počet mincí',
+        coins: 'Minimálny počet mincí na vytvorenie danej hodnoty',
         substring: 'Najdlhší spoločný podreťazec',
         rod: 'Rezanie tyče',
         editDistance: 'Editačná vzdialenosť',
@@ -130,7 +131,7 @@ export const slovak = {
         stats: {
             title: 'Minimálny počet mincí na vytvorenie danej hodnoty - štatistiky',
             brief: 'Zadajte hodnotu (od 0 po 20), ktorú treba vytvoriť súčtom hodnôt mincí a hodnoty mincí oddelené čiarkami (maximálny počet je 15).',
-            conclusion: 'Oproti úlohe *Rezanie tyče* je v rekurzívnom riešení tejto úlohy značný rozdiel medzi teoretickým a reálnym počtom volaní, pretože ten závisí od konkrétných hodnôt mincí. Teoretická sa skutočnej hodnote rovná len v jednoduchom príklade, kedy **C: { 1,2 }** a **V = 2**. V ostatných príkladoch sa hodnoty približujú tým viac, čím "nezmyselnejšie" mince sú zadané. Aj keď je jasné, že jediná minca s hodnotou 20 stačí na vytvorenie hodnoty 20, algoritmus skúma aj všetky predchádzajúce hodnoty. Podobne je to aj pri DP algoritme.',
+            conclusion: 'Oproti úlohe *Rezanie tyče* je v rekurzívnom riešení tejto úlohy značný rozdiel medzi teoretickým a reálnym počtom volaní, pretože ten závisí od konkrétných hodnôt mincí. Teoretická sa skutočnej hodnote rovná len v jednoduchom príklade, kedy **C: { 1,2 }** a **V = 2**. V ostatných príkladoch sa hodnoty približujú tým viac, čím "nezmyselnejšie" mince sú zadané. Aj keď je jasné, že jediná minca s hodnotou 20 stačí na vytvorenie hodnoty 20, algoritmus skúma aj mince s nízkymi hodnotami, ktoré určite nebudú dávať optimálne riešenie. Podobne je to aj pri DP algoritme. Zaujímavosťou je, že rekurzívny algoritmus môže byť v niektorých prípadoch rýchlejší. Viď. predposledný vzorový príklad, keď sa na vstupe nachádza hodnota udávajúca hodnotu a ostatné mince nemajú príliš nízku hodnotu.',
         }
     },
     rod: {

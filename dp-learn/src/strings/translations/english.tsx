@@ -19,6 +19,7 @@ export const english = {
         recursion: 'Recursion',
         dp: 'DP',
         invalidArg: 'Invalid input values!',
+        noSolution: 'Problem has no solution.',
         srcCode: 'Source code',
         timeComplex: 'Time complexity',
         spaceComplex: 'Space complexity',
@@ -130,7 +131,7 @@ export const english = {
         stats: {
             title: 'Minimum number of coins that make a given value - statistics',
             brief: 'Enter value to make (from 0 to 20) and comma separated coins (max. 15).',
-            conclusion: "There could be noticeable difference between theoretical and real number of recursive calls. It's because real number depends on concrete coin values. Teoretical equals real value when **C: { 1,2 }** and **V = 2**. Number of calls or iterations in DP algorithm is growing when useless coins are given.",
+            conclusion: "There could be noticeable difference between theoretical and real number of recursive calls. It's because real number depends on concrete coin values. Teoretical equals real value when **C: { 1,2 }** and **V = 2**. Number of calls or iterations in DP algorithm is growing when useless coins are given. Resursive algorithm can be faster than DP algorithm when there is coin with same value as given value and values of other coins are not so small.",
         }
     },
     rod: {
@@ -208,7 +209,7 @@ export const english = {
                 input2: "Y = 'frog'",
                 zero: 'Different characters - assigning value 0',
                 increment: 'Equal characters - suffix is incremented',
-                one: 'Equal characters, assigning value 1',
+                one: 'Equal characters but at first index - assigning value 1',
                 input3: "Y = 'dig'",
             },
             longestPalindromTitle: 'Longest palindromic substring',

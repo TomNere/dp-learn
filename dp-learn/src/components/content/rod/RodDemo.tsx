@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { GetNumbers, ValueOrUndefined } from 'src/helpers';
+import { CheckForZero, GetNumbers, ValueOrUndefined } from 'src/helpers';
 import { Grid, TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 
@@ -128,7 +128,8 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
     private handlePrices = (e: any) => {
         const prices = GetNumbers(e.target.value, false);
         if (prices.length <= 15) {
-            this.setState({ givenPrices: e.target.value, tableVisible: false, inProgress: false });
+            clearTimeout(this.timeout);
+            this.setState({ givenPrices: e.target.value, tableVisible: false, inProgress: false, result:'', });
         }
     }
 
@@ -149,11 +150,14 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
 
     private handleStartClick = () => {
         clearTimeout(this.timeout);
+        console.log(this.state.givenPrices);
 
         this.prices = GetNumbers(this.state.givenPrices, false);
-        this.LENGTH = this.prices.length;
+        console.log(this.prices);
 
-        if (this.prices.length === 0) {
+        this.LENGTH = this.prices.length;
+        
+        if (CheckForZero(this.prices)) {
             this.setState({ result: strings.global.invalidArg });
             return;
         }

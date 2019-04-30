@@ -1,6 +1,7 @@
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
+import { CheckForZero, GetNumbers } from 'src/helpers';
 import { dpTree, dpTreeSpace, dpTreeTime, recTreeSpace, recTreeTime, recursiveTree, treeExamples } from 'src/statsHelpers/TreeStatsHelper';
 import { treeDpSpaceComplex, treeDpTimeComplex, treeRecSpaceComplex, treeRecTimeComplex } from 'src/strings/dpProblemsStrings/TreeStrings';
 
@@ -12,7 +13,6 @@ import CustomTextField from 'src/components/customStyled/CustomTextField';
 import CustomTitle from 'src/components/customStyled/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
 import FlexTwo from 'src/components/hoc/FlexTwo';
-import { GetNumbers } from 'src/helpers';
 import { Grid } from '@material-ui/core';
 import { ISimpleObjectParameter } from 'src/statsHelpers/CoinsStatsHelper';
 import { ISpaceChartData } from 'src/components/specialized/SpaceChart';
@@ -23,6 +23,7 @@ import { strings } from 'src/strings/translations/strings';
 interface ITreeStatsState {
     givenFreqs: string
     statsVisible: boolean
+    error: boolean
 }
 
 class TreeStats extends React.Component<any, ITreeStatsState> {
@@ -37,7 +38,8 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
         super(props)
         this.state = {
             givenFreqs: strings.tree.demo.freqsExample,
-            statsVisible: false
+            statsVisible: false,
+            error: false
         }
     }
 
@@ -66,7 +68,7 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
                     </FlexTwo>
                 </Grid>
                 <br />
-                <ChartsAndTable visible={this.state.statsVisible} timeStats={this.timeChartStats} spaceStats={this.spaceChartStats} tableStats={this.tableStats} />
+                <ChartsAndTable visible={this.state.statsVisible} timeStats={this.timeChartStats} spaceStats={this.spaceChartStats} tableStats={this.tableStats} error={this.state.error} />
                 {this.state.statsVisible &&
                     <div>
                         <CustomTitle variant='h5'>
@@ -151,6 +153,17 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
 
     private drawStats = () => {
         this.freqs = GetNumbers(this.state.givenFreqs, false);
+        if (CheckForZero(this.freqs)) {
+            this.setState({ 
+                error: true,
+                statsVisible: false
+            });
+            return;
+        }
+        else {
+            this.setState({ error: false });
+        }
+        
         this.spaceChartStats = [];
         this.timeChartStats = [];
         this.tableStats = [];
