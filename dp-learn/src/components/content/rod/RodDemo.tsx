@@ -40,10 +40,10 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
     private outerCounter: number;
     private nextAutomataState:
         'start' |
-        'doInnerCycle' |
+        'doInnerLoop' |
         'highlightMaxIndex' |
         'assignValue' |
-        'nextInnerCycle' |
+        'nextInnerLoop' |
         'done' = 'done';
 
     // Given prices
@@ -191,8 +191,8 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
             case 'start':
                 this.start();
                 break;
-            case 'doInnerCycle':
-                this.doInnerCycle();
+            case 'doInnerLoop':
+                this.doInnerLoop();
                 break;
             case 'highlightMaxIndex':
                 this.highlightMaxIndex();
@@ -200,8 +200,8 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
             case 'assignValue':
                 this.assignValue();
                 break;
-            case 'nextInnerCycle':
-                this.nextInnerCycle();
+            case 'nextInnerLoop':
+                this.nextInnerLoop();
                 break;
         }
 
@@ -220,11 +220,11 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
         this.setState({
             currentState: `${strings.rod.demo.evalPriceFor} ${this.outerCounter}`,
         });
-        this.nextAutomataState = 'doInnerCycle';
+        this.nextAutomataState = 'doInnerLoop';
     }
 
-    // Do 1 inner cycle (maxVal is evaluated) and enable candidates highlighting
-    private doInnerCycle = () => {
+    // Do 1 inner loop (maxVal is evaluated) and enable candidates highlighting
+    private doInnerLoop = () => {
         let maxVal: number = Number.MIN_VALUE;
 
         for (let i = 0; i < this.outerCounter; i++) {
@@ -255,10 +255,10 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
             table,
             currentState: `${strings.demoGlobal.assigning} ${value}, ${strings.rod.demo.usedLength} ${this.solutionHelper[this.outerCounter]}`
         });
-        this.nextAutomataState = 'nextInnerCycle';
+        this.nextAutomataState = 'nextInnerLoop';
     }
 
-    private nextInnerCycle = () => {
+    private nextInnerLoop = () => {
         let currentState: string = '';
 
         if (this.outerCounter + 1 > this.LENGTH) {
@@ -276,7 +276,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
             currentState
         });
 
-        this.nextAutomataState = 'doInnerCycle';
+        this.nextAutomataState = 'doInnerLoop';
     }
 
     private setFinalState = (table: number[]) => {

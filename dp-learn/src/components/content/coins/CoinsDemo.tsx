@@ -43,8 +43,8 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
     private nextAutomataState:
         'start' |
-        'doInnerCycle' |
-        'nextInnerCycle' |
+        'doInnerLoop' |
+        'nextInnerLoop' |
         'assignNewValue' |
         'dontAssignNewValue' |
         'done'
@@ -192,7 +192,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             currentCol: undefined
         });
 
-        this.nextAutomataState = 'doInnerCycle';
+        this.nextAutomataState = 'doInnerLoop';
         // Check if auto play or step by step
         if (this.state.speed !== 0) {
             this.setTimeout(this.finiteAutomata);
@@ -205,11 +205,11 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             case 'start':
                 this.start();
                 break;
-            case 'doInnerCycle':
-                this.doInnerCycle();
+            case 'doInnerLoop':
+                this.doInnerLoop();
                 break;
-            case 'nextInnerCycle':
-                this.nextInnerCycle();
+            case 'nextInnerLoop':
+                this.nextInnerLoop();
                 break;
             case 'assignNewValue':
                 this.assignNewValue();
@@ -233,10 +233,10 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         this.setState({
             currentState: `${strings.coins.demo.evalCoinsFor} ${this.outerCounter}`,
         });
-        this.nextAutomataState = 'doInnerCycle';
+        this.nextAutomataState = 'doInnerLoop';
     }
 
-    private doInnerCycle = () => {
+    private doInnerLoop = () => {
         if (this.coins[this.innerCounter] <= this.outerCounter) {
             const subRes = this.state.table[this.outerCounter - this.coins[this.innerCounter]];
 
@@ -250,7 +250,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             }
         }
         else {
-            this.nextInnerCycle();
+            this.nextInnerLoop();
         }
     }
 
@@ -266,15 +266,15 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         });
 
         this.setState({ match: true });
-        this.nextAutomataState = 'nextInnerCycle';
+        this.nextAutomataState = 'nextInnerLoop';
     }
 
     private dontAssignNewValue = () => {
         this.setState({ match: false });
-        this.nextAutomataState = 'nextInnerCycle';
+        this.nextAutomataState = 'nextInnerLoop';
     }
 
-    private nextInnerCycle = () => {
+    private nextInnerLoop = () => {
         let currentState: string = '..';
 
         if (this.innerCounter + 1 >= this.coins.length) {
@@ -295,7 +295,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             });
 
             this.innerCounter++;
-            this.doInnerCycle();
+            this.doInnerLoop();
             return;
         }
 
@@ -305,7 +305,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
             currentState,
         });
 
-        this.nextAutomataState = 'doInnerCycle';
+        this.nextAutomataState = 'doInnerLoop';
     }
 
     // Stop animation and get result immediately

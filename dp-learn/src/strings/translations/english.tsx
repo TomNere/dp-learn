@@ -48,10 +48,10 @@ export const english = {
     },
     demoGlobal: {
         assigning: 'Assigning',
-        cycle: 'Loop',
+        loop: 'Loop',
         start: 'Start',
         array: 'Array',
-        nextCycle: 'Next loop',
+        nextLoop: 'Next loop',
         solution: 'Solution',
         start0: 'Assigning value 0 to position 0',
         candidates: 'Selection of candidates',
@@ -157,7 +157,7 @@ export const english = {
                 brief: 'Best obtainable prices for all lengths will be stored in one-dimensional array (so the table is array). New value of the table cell can be evaluated from all of the previous cells. We need to get sum of the maximum prices of lengths to get maximum price for next length. For full solution building we need additional array.',
                 dpTime: 'Due to nested loop in algorithm, **time complexity** is polynomic.',
                 dpSpace: 'Additional space compared to recursive algorithm is needed to storing values in table.',
-                outerCycle: 'Outer loop',
+                outerLoop: 'Outer loop',
                 input: 'P = { 1, 5, 6, 6, 9 }',
                 i3: 'i = 3',
                 i4: 'i = 4'

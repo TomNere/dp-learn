@@ -42,8 +42,8 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
     private innerCounter: number;
 
     private nextAutomataState:
-        'doInnerCycle' |
-        'nextInnerCycle' |
+        'doInnerLoop' |
+        'nextInnerLoop' |
         'assignZero' |
         'assignOne' |
         'assignIncremented' |
@@ -187,8 +187,8 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
             highlitingOn: false
         });
 
-        // Start immediately with inner cycle
-        this.doInnerCycle();
+        // Start immediately with inner loop
+        this.doInnerLoop();
 
         // Check if auto play or step by step
         if (this.state.speed !== 0) {
@@ -199,11 +199,11 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
     private finiteAutomata = () => {
         // Finite automata
         switch (this.nextAutomataState) {
-            case 'doInnerCycle':
-                this.doInnerCycle();
+            case 'doInnerLoop':
+                this.doInnerLoop();
                 break;
-            case 'nextInnerCycle':
-                this.nextInnerCycle();
+            case 'nextInnerLoop':
+                this.nextInnerLoop();
                 break;
             case 'assignZero':
                 this.assignZero();
@@ -224,7 +224,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
         }
     }
 
-    private doInnerCycle = () => {
+    private doInnerLoop = () => {
         this.setState({ highlitingOn: true });
         if (this.state.stringX[this.outerCounter] === this.state.stringY[this.innerCounter]) {
             this.setState({
@@ -252,7 +252,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
             table,
         });
 
-        this.nextAutomataState = 'nextInnerCycle';
+        this.nextAutomataState = 'nextInnerLoop';
     }
 
     private assignOne = () => {
@@ -268,7 +268,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
             this.resultPos[1] = this.innerCounter;
         }
 
-        this.nextAutomataState = 'nextInnerCycle';
+        this.nextAutomataState = 'nextInnerLoop';
     }
 
     private assignIncremented = () => {
@@ -286,10 +286,10 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
             this.resultPos[1] = this.innerCounter;
         }
 
-        this.nextAutomataState = 'nextInnerCycle';
+        this.nextAutomataState = 'nextInnerLoop';
     }
 
-    private nextInnerCycle = () => {
+    private nextInnerLoop = () => {
         if (this.innerCounter + 1 >= this.LENGTH2) {
             if (this.outerCounter + 1 >= this.LENGTH1) {
                 this.nextAutomataState = 'done';
@@ -309,7 +309,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
             match: undefined,
         });
 
-        this.doInnerCycle();
+        this.doInnerLoop();
     }
 
     private handleFinishClick = () => {
@@ -460,7 +460,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
                         }
 
                         // Highlight previous
-                        if (this.state.match && i === this.outerCounter - 1 && j === this.innerCounter - 1 && this.nextAutomataState === 'nextInnerCycle') {
+                        if (this.state.match && i === this.outerCounter - 1 && j === this.innerCounter - 1 && this.nextAutomataState === 'nextInnerLoop') {
                             classNames.push(classes.yellowCell);
                             value += ' + 1';
                         }

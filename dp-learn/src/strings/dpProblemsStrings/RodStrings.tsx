@@ -61,7 +61,7 @@ int cuttingRod(int prices[], int arrSize) {
    return table[arrSize];
 }`;
 
-export const rodSmallDynCode = `// Inner cycle part of rod DP solution
+export const rodSmallDynCode = `// Inner loop part of rod DP solution
 for (int i = 1; i<=n; i++) {
     int result = INT_MIN;
     for (int j = 0; j < i; j++)

@@ -26,7 +26,7 @@ int editDistance(int L1 ,int L2) {
     // min returns minimum of three values
     return 1 + min(editDistance(L1, L2 - 1),    // Insert
                    editDistance(L1 - 1, L2),    // Remove
-                   editDistance(L1 - 1, L2-1)   // Replace
+                   editDistance(L1 - 1, L2 - 1)   // Replace
                 );
 }`;
 

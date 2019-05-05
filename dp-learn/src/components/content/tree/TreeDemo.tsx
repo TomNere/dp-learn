@@ -44,10 +44,10 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
     private mostInnerCounter: number;
 
     private nextAutomataState:
-        'doInnerCycle' |
-        'doRootCycle' |
-        'nextRootCycle' |
-        'nextInnerCycle' |
+        'doInnerLoop' |
+        'doRootLoop' |
+        'nextRootLoop' |
+        'nextInnerLoop' |
         'showSumRes' |
         'done'
         = 'done';
@@ -205,7 +205,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
             table: localTable,
         });
 
-        this.nextAutomataState = 'doInnerCycle';
+        this.nextAutomataState = 'doInnerLoop';
         // Check if auto play or step by step
         if (this.state.speed !== 0) {
             this.setTimeout(this.finiteAutomata);
@@ -215,17 +215,17 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
     private finiteAutomata = () => {
         // Finite automata
         switch (this.nextAutomataState) {
-            case 'doInnerCycle':
-                this.doInnerCycle();
+            case 'doInnerLoop':
+                this.doInnerLoop();
                 break;
-            case 'doRootCycle':
-                this.doRootCycle();
+            case 'doRootLoop':
+                this.doRootLoop();
                 break;
-            case 'nextRootCycle':
-                this.nextRootCycle();
+            case 'nextRootLoop':
+                this.nextRootLoop();
                 break;
-            case 'nextInnerCycle':
-                this.nextInnerCycle();
+            case 'nextInnerLoop':
+                this.nextInnerLoop();
                 break;
             case 'showSumRes':
                 this.showSumRes();
@@ -240,7 +240,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
         }
     }
 
-    private doInnerCycle = () => {
+    private doInnerLoop = () => {
         this.columnNumber = this.innerCounter + this.outerCounter - 1;
         this.assignIntMax();
     }
@@ -255,10 +255,10 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
             highlightCurrent: true,
             currentState: strings.tree.demo.assignedIntMax
         });
-        this.nextAutomataState = 'nextRootCycle';
+        this.nextAutomataState = 'nextRootLoop';
     }
 
-    private doRootCycle = () => {
+    private doRootLoop = () => {
         if (this.mostInnerCounter <= this.columnNumber) {
             const highlightedToSum: Array<[number, number]> = [];
             if (this.mostInnerCounter > this.innerCounter) {
@@ -275,7 +275,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
             this.nextAutomataState = 'showSumRes';
         }
         else {
-            this.nextInnerCycle();
+            this.nextInnerLoop();
         }
     }
 
@@ -303,19 +303,19 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
             });
         }
 
-        this.nextAutomataState = 'nextRootCycle';
+        this.nextAutomataState = 'nextRootLoop';
     }
 
-    private nextRootCycle = () => {
+    private nextRootLoop = () => {
         this.setState({
             highlightedToSum: [],
         });
 
         this.mostInnerCounter++;
-        this.doRootCycle();
+        this.doRootLoop();
     }
 
-    private nextInnerCycle = () => {
+    private nextInnerLoop = () => {
         if (this.innerCounter + 1 > this.LENGTH - this.outerCounter) {
             if (this.outerCounter + 1 > this.LENGTH) {
                 this.setFinalState(this.state.table);
@@ -340,7 +340,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
             this.innerCounter++;
         }
 
-        this.nextAutomataState = 'doInnerCycle';
+        this.nextAutomataState = 'doInnerLoop';
     }
 
     private handleFinishClick = () => {

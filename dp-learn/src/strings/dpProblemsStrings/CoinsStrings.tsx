@@ -80,7 +80,7 @@ int minCoins(int coins[], int arrSize, int value) {
     return table[value];
 }`;
 
-export const coinsSmallDynCode = `// Inner cycle part of coins DP solution
+export const coinsSmallDynCode = `// Inner loop part of coins DP solution
 for (int j = 0; j < arrSize; j++) {
     if (coins[j] <= i) {
         int subRes = table[i - coins[j]];

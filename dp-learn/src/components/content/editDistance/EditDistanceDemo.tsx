@@ -48,7 +48,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
         'assignOuter' |
         'assignPrevious' |
         'findMin' |
-        'nextInnerCycle' |
+        'nextInnerLoop' |
         'assignMin' |
         'done'
         = 'done';
@@ -137,14 +137,14 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
     private handlestrXChange = (e: any) => {
         if (e.target.value.length <= 20) {
             clearTimeout(this.timeout);
-            this.setState({ stringX: e.target.value, tableVisible: false, result:'', });
+            this.setState({ stringX: e.target.value, tableVisible: false,inProgress: false, result:'', });
         }
     };
 
     private handlestrYChange = (e: any) => {
         if (e.target.value.length <= 20) {
             clearTimeout(this.timeout);
-            this.setState({ stringY: e.target.value, tableVisible: false, result:'', });
+            this.setState({ stringY: e.target.value, tableVisible: false, inProgress: false, result:'', });
         }
     };
 
@@ -187,8 +187,8 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
             highlightingOn: true
         });
 
-        // Start immediately with inner cycle
-        this.doInnerCycle();
+        // Start immediately with inner loop
+        this.doInnerLoop();
 
         // Check if auto play or step by step
         if (this.state.speed !== 0) {
@@ -214,8 +214,8 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
             case 'assignPrevious':
                 this.assignPrevious();
                 break;
-            case 'nextInnerCycle':
-                this.nextInnerCycle();
+            case 'nextInnerLoop':
+                this.nextInnerLoop();
                 break;
         }
 
@@ -227,7 +227,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
         }
     }
 
-    private doInnerCycle = () => {
+    private doInnerLoop = () => {
         let currentState: string;
 
         // String X is empty, insert all characters of string Y
@@ -264,7 +264,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
         this.setState({
             table,
         });
-        this.nextAutomataState = 'nextInnerCycle';
+        this.nextAutomataState = 'nextInnerLoop';
     }
 
     private assignOuter = () => {
@@ -274,7 +274,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
         this.setState({
             table,
         });
-        this.nextAutomataState = 'nextInnerCycle';
+        this.nextAutomataState = 'nextInnerLoop';
     }
 
     private assignPrevious = () => {
@@ -285,7 +285,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
             table,
             highlightPrevious: true
         });
-        this.nextAutomataState = 'nextInnerCycle';
+        this.nextAutomataState = 'nextInnerLoop';
     }
 
     private findMin = () => {
@@ -309,10 +309,10 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
             table,
             currentState: `${strings.demoGlobal.assigning} ${value}`
         });
-        this.nextAutomataState = 'nextInnerCycle';
+        this.nextAutomataState = 'nextInnerLoop';
     }
 
-    private nextInnerCycle = () => {
+    private nextInnerLoop = () => {
         this.setState({
             highlightPrevious: false,
             highlightCandidates: false,
@@ -334,7 +334,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
             this.innerCounter++;
         }
 
-        this.doInnerCycle();
+        this.doInnerLoop();
     }
 
     private handleFinishClick = () => {

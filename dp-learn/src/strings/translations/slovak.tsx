@@ -48,10 +48,10 @@ export const slovak = {
     },
     demoGlobal: {
         assigning: 'Priradzujem',
-        cycle: 'Cyklus',
+        loop: 'Cyklus',
         start: 'Štart',
         array: 'Pole',
-        nextCycle: 'Ďalší cyklus',
+        nextLoop: 'Ďalší cyklus',
         solution: 'Riešenie',
         start0: 'Priradzujem hodnotu 0 na pozíciu 0',
         candidates: 'Výber kandidátov',
@@ -157,7 +157,7 @@ export const slovak = {
                 brief: 'V DP algoritme sa budú do tabuľky (jednorozmerného poľa) ukladať najvyššie možné ceny pre všetky dĺžky tyče. Pri výbere hodnoty do bunky sa berú do úvahy ceny **všetkých** dĺžok vypočítaných predtým (to znamená menších od aktuálnej). Ku každej bunke sa pripočítajú ceny takých dĺžok tak, aby výsledná dĺžka neprekročila aktuálne vypočítavanú. Do bunky sa vyberie súčet tých dĺžok (ich cien), ktoré dávajú najvyššiu predajnú cenu. Hodnota novej bunky sa môže odvíjať od všetkých predchádzajúcich buniek. Pre zostavenie celého riešenia je potrebné ďalšie pole, kde sa ukladajú použité tyče.',
                 dpTime: 'Algoritmus obsahuje 1 vnorený cyklus, takže jeho **časová zložitosť** je polynomická - druhá mocnina počtu zadaných cien.',
                 dpSpace: '**Priestorová zložitosť** sa oproti rekurzívnemu algoritmu zvýšila o veľkosť poľa potrebného na ukladanie výsledkov podproblémov.',
-                outerCycle: 'Vonkajší cyklus',
+                outerLoop: 'Vonkajší cyklus',
                 input: 'P = { 1, 5, 6, 6, 9 }',
                 i3: 'i = 3',
                 i4: 'i = 4'

@@ -111,7 +111,7 @@ class RodTheory extends React.Component<AllProps> {
                                 <Typography variant={'subtitle1'}>
                                     <ul className={classes.simpleList}>
                                         <li>{strings.rod.theory.dp.input}</li>
-                                        <li>{strings.rod.theory.dp.outerCycle} {strings.rod.theory.dp.i3}</li>
+                                        <li>{strings.rod.theory.dp.outerLoop} {strings.rod.theory.dp.i3}</li>
                                     </ul>
                                 </Typography>
                             </BottomMarginDiv>
@@ -127,7 +127,7 @@ class RodTheory extends React.Component<AllProps> {
                                 <Typography variant={'subtitle1'} >
                                     <ul className={classes.simpleList}>
                                         <li>{strings.rod.theory.dp.input}</li>
-                                        <li>{strings.rod.theory.dp.outerCycle} {strings.rod.theory.dp.i4}</li>
+                                        <li>{strings.rod.theory.dp.outerLoop} {strings.rod.theory.dp.i4}</li>
                                     </ul>
                                 </Typography>
                             </BottomMarginDiv>
