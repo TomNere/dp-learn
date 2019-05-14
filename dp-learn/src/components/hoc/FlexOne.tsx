@@ -19,8 +19,7 @@ const styles = () => createStyles({
     },
 });
 
-// Container with flex row displayed content and bottom margin
-// Takes multiple children
+// Container with flex row displayed content and width: '50%'
 class FlexOne extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;

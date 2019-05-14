@@ -1,40 +1,24 @@
 // Strings for slovak localization
-
 export const slovak = {
     global: {
         intro: 'Úvod',
         dpLearn: 'DP learn',
         dynProg: 'Dynamické programovanie',
         recursiveSolution: 'Rekurzívny algoritmus',
-        recusionTree: 'Strom rekurzívnych volaní',
         dynProgSolution: 'DP algoritmus',
-        start: 'Štart',
-        finish: 'Dokončiť',
-        step: 'Ďalší krok',
         table: 'Tabuľka',
         tables: 'Tabuľky',
-        evaluateStats: 'Vypočítať štatistiky',
-        numberOfCalls: 'volaní/behov cyklu',
-        skipping: 'Preskakujem...',
         recursion: 'Rekurzia',
         dp: 'DP',
         invalidArg: 'Chyba pri validácii vstupných hodnôt!',
         noSolution: 'Úloha nemá riešenie.',
-        srcCode: 'Zdrojový kód',
         timeComplex: 'Časová zložitosť',
         spaceComplex: 'Priestorová zložitosť',
-        speed: 'Rýchlosť',
-        stepping: 'Krokovanie',
         theory: 'Teória',
         demo: 'Demo',
         stats: 'Štatistiky',
-        theoreticValue: 'teoretická hodnota',
-        tableComparison: 'Porovnanie v tabuľke',
         string: 'Reťazec',
-        conclusion: 'Zhodnotenie',
-        done: 'Hotovo.',
-        similarProblems: 'Podobné optimalizačné úlohy',
-        partOfApp: 'je súčasťou aplikácie'
+        dots: '...'
     },
     menu: {
         coins: 'Minimálny počet mincí na vytvorenie danej hodnoty',
@@ -45,17 +29,49 @@ export const slovak = {
     },
     theoryGlobal: {
         eg: 'Konkrétne zadanie:',
+        partOfApp: 'je súčasťou aplikácie',
+        similarProblems: 'Podobné optimalizačné úlohy',
+        srcCode: 'Zdrojový kód',
+        recusionTree: 'Strom rekurzívnych volaní',
+        knapsackTitle: 'Problém batohu',
+        knapsackHref: 'https://www.gatevidyalay.com/0-1-knapsack-problem-using-dynamic-programming-approach/',
+        longestIncSubseqTitle: 'Najdlhšia stúpajúca podsekvencia',
+        longestIncSubseqHref: 'https://www.geeksforgeeks.org/longest-increasing-subsequence-dp-3/',
     },
     demoGlobal: {
         assigning: 'Priradzujem',
         loop: 'Cyklus',
-        start: 'Štart',
         array: 'Pole',
         nextLoop: 'Ďalší cyklus',
         solution: 'Riešenie',
         start0: 'Priradzujem hodnotu 0 na pozíciu 0',
         candidates: 'Výber kandidátov',
         best: 'Výber najlepšieho',
+        evaluation: 'Prebieha výpočet...',
+        skipping: 'Preskakujem...',
+        start: 'Štart',
+        finish: 'Dokončiť',
+        step: 'Ďalší krok',
+        speed1: '3 s',
+        speed2: '2 s',
+        speed3: '1 s',
+        speed4: '0.5 s',
+        speed: 'Rýchlosť kroku',
+        stepping: 'Krokovanie',
+        done: 'Hotovo.',
+    },
+    statsGlobal: {
+        evaluateStats: 'Vypočítať štatistiky',
+        numberOfCalls: 'počet volaní funkcie (rekurzívny alg.) / počet behov cyklu (DP alg.)',
+        dataStructureSize: 'veľkosť dátových štruktúr, ktoré algoritmus využíva',
+        theoreticalValue: 'maximálny teoretický počet',
+        theoreticalValueShort: 'm. t. p.',
+        tableComparison: 'Porovnanie v tabuľke',
+        conclusion: 'Zhodnotenie',
+
+        x: 'X',
+        y: 'Y',
+        f: 'F'
     },
     intro: {
         dpLearn: 'Webová aplikácia **DP learn** sa zaoberá technikou návrhu algoritmov s názvom **dynamické programovanie**, konkrétne prístupu **"zdola-hore" (tabuľková metóda)**. Demonštruje jej princípy a výhody na konkrétnych úlohách. Pri každej úlohe je uvedená základná teória, grafické znázornenie priebehu DP algoritmu (demo) a porovnanie s rekurzívnym riešením (štatistiky).',
@@ -73,7 +89,7 @@ export const slovak = {
         demoTitle: 'Demo',
         demoText: 'Po klinutí na tlačidlo sa spustí DP algoritmus "zdola-hore" - vypĺňanie tabuľky. Je možné zvoliť rýchlosť vypĺnania alebo ísť krok po kroku. Po vyplnení tabuľky sa zobrazí hodnota optimálneho riešenia a aj celé riešenie (okrem úlohy *Optimálny binárny vyhľadávací strom*). Nachádza sa tu aj formula, ktorá popisuje výpočet hodnôt do buniek tabuľky.',
         statsTitle: 'Štatistiky',
-        statsText: 'Po klinutí na tlačidlo sú vykreslené grafy a tabuľka, ktoré porovnávajú zložitosť rekurzívneho a DP algoritmu. U časovej zložitosti je uvedená maximálna teoretická hodnota podľa funkcie zložitosti a skutočný počet rekurzívnych volaní alebo behov cykla pri DP algoritme. Priestorová zložitosť je vypočítaná z funkcie zložitosti. Okrem štatistík pre zadaný vstup aplikácia obsahuje niekoľko "vzorových" vstupov. Pod štatistikami sa nachádza ich slovné zhodnotenie.',
+        statsText: 'Po klinutí na tlačidlo sú vykreslené grafy a tabuľka, ktoré porovnávajú zložitosť rekurzívneho a DP algoritmu. U časovej zložitosti je uvedená maximálna teoretická hodnota podľa funkcie zložitosti a skutočný počet rekurzívnych volaní (počíta sa aj prvé zavolanie funkcie) alebo behov cykla pri DP algoritme. Priestorová zložitosť je vypočítaná z funkcie zložitosti. Okrem štatistík pre zadaný vstup aplikácia obsahuje niekoľko "vzorových" vstupov. Pod štatistikami sa nachádza ich slovné zhodnotenie.',
         references: 'Referencie',
         geeksTitle: 'GeeksforGeeks',
         geeksHref: 'https://www.geeksforgeeks.org/',
@@ -115,8 +131,6 @@ export const slovak = {
                 input22: 'V = 4',
             },
             rod: 'Rezanie tyče',
-            knapsackTitle: 'Problém batohu',
-            knapsackHref: 'https://www.gatevidyalay.com/0-1-knapsack-problem-using-dynamic-programming-approach/',
         },
         demo: {
             title: 'Minimálny počet mincí na vytvorenie danej hodnoty - demo',
@@ -131,7 +145,9 @@ export const slovak = {
         stats: {
             title: 'Minimálny počet mincí na vytvorenie danej hodnoty - štatistiky',
             brief: 'Zadajte hodnotu (od 0 po 20), ktorú treba vytvoriť súčtom hodnôt mincí a hodnoty mincí oddelené čiarkami (maximálny počet je 15).',
-            conclusion: 'Oproti úlohe *Rezanie tyče* je v rekurzívnom riešení tejto úlohy značný rozdiel medzi teoretickým a reálnym počtom volaní, pretože ten závisí od konkrétných hodnôt mincí. Teoretická sa skutočnej hodnote rovná len v jednoduchom príklade, kedy **C: { 1,2 }** a **V = 2**. V ostatných príkladoch sa hodnoty približujú tým viac, čím "nezmyselnejšie" mince sú zadané. Aj keď je jasné, že jediná minca s hodnotou 20 stačí na vytvorenie hodnoty 20, algoritmus skúma aj mince s nízkymi hodnotami, ktoré určite nebudú dávať optimálne riešenie. Podobne je to aj pri DP algoritme. Zaujímavosťou je, že rekurzívny algoritmus môže byť v niektorých prípadoch rýchlejší. Viď. predposledný vzorový príklad, keď sa na vstupe nachádza hodnota udávajúca hodnotu a ostatné mince nemajú príliš nízku hodnotu.',
+            c: 'C',
+            v: 'V',
+            conclusion: 'Oproti úlohe *Rezanie tyče* je v rekurzívnom riešení tejto úlohy značný rozdiel medzi teoretickým a reálnym počtom volaní, pretože ten závisí od konkrétnych hodnôt mincí. Teoretická sa skutočnej hodnote rovná len v jednoduchom príklade, kedy **C: { 1,2 }** a **V = 2**. V ostatných príkladoch sa hodnoty približujú tým viac, čím "nezmyselnejšie" mince sú zadané. Aj keď je jasné, že jediná minca s hodnotou 20 stačí na vytvorenie hodnoty 20, algoritmus skúma aj mince s nízkymi hodnotami, ktoré určite nebudú dávať optimálne riešenie. Podobne je to aj pri DP algoritme. Zaujímavosťou je, že rekurzívny algoritmus môže byť v niektorých prípadoch rýchlejší. Viď. predposledný vzorový príklad, keď sa na vstupe nachádza hodnota udávajúca hodnotu a ostatné mince nemajú príliš nízku hodnotu.',
         }
     },
     rod: {
@@ -162,7 +178,7 @@ export const slovak = {
                 i3: 'i = 3',
                 i4: 'i = 4'
             },
-            coins: 'Minimálny počet mincí na vytvorenie danej hodnoty'
+            coins: 'Minimálny počet mincí na vytvorenie danej hodnoty',
         },
         demo: {
             title: 'Rezanie tyče - demo',
@@ -178,7 +194,8 @@ export const slovak = {
         stats: {
             title: 'Rezanie tyče - štatistiky',
             brief: 'Zadajte ceny jednotlivých dĺžok tyče (maximálny počet je 20) oddelené čiarkami (dĺžky sú 1, 2, 3, ...).',
-            conclusion: 'Keďže v rekurzívnom algoritme nie je žiadná podmienka, počet rekurzívnych volaní sa bude presne rovnať teoretickej hodnote zo vzorca (ako môžno vidieť po vypočítaní štatistík). Nezáleží ani na cenách jednotlivých dĺžok, iba na ich počte. DP algoritmus bude mať oproti teoretickej hodnote počet volaní nižší, pretože počet opakovaní vnútorného cyklu závisí od cien jednotlivých dĺžok. Zo štatistík vyplýva, že rekurzívny algoritmus nie je rýchlejší ako DP algoritmus ani pri veľmi jednoduchom vstupe.',
+            p: 'P',
+            conclusion: 'Keďže v rekurzívnom algoritme nie je žiadna podmienka, počet rekurzívnych volaní sa bude presne rovnať teoretickej hodnote zo vzorca (ako môžno vidieť po vypočítaní štatistík). Nezáleží ani na cenách jednotlivých dĺžok, iba na ich počte. DP algoritmus bude mať oproti teoretickej hodnote počet volaní nižší, pretože počet opakovaní vnútorného cyklu závisí od cien jednotlivých dĺžok. Zo štatistík vyplýva, že rekurzívny algoritmus nie je rýchlejší ako DP algoritmus ani pri veľmi jednoduchom vstupe.',
         }
     },
     substring: {
@@ -214,9 +231,6 @@ export const slovak = {
             },
             longestPalindromTitle: 'Najdlhší palindrom v reťazci',
             longestPalindromHref: 'https://www.geeksforgeeks.org/longest-palindrome-substring-set-1/',
-            longestIncSubseqTitle: 'Najdlhšia stúpajúca podsekvencia',
-            longestIncSubseqHref: 'https://www.geeksforgeeks.org/longest-increasing-subsequence-dp-3/',
-
         },
         demo: {
             title: 'Najdlhší spoločný podreťazec - demo',
@@ -323,6 +337,8 @@ export const slovak = {
             freqsExample2: 'F = { 2, 4, 6, 8, 9, 10 }',
             matrixMultTitle: 'Reťazové násobenie matíc',
             matrixMultHref: 'http://www.personal.kent.edu/~rmuhamma/Algorithms/MyAlgorithms/Dynamic/chainMatrixMult.htm',
+            rnaTitle: 'Predikcia sekundárnej štruktúry RNA',
+            rnaHref: 'https://www.cs.cmu.edu/~02710/Lectures/RNALecture2015.pdf',
         },
         demo: {
             title: 'Optimálny binárny vyhľadávací strom - demo',

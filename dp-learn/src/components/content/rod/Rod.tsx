@@ -5,6 +5,7 @@ import RodStats from './RodStats';
 import RodTheory from './RodTheory';
 import TabMenu from 'src/components/hoc/TabMenu';
 
+// Main component for Rod cutting problem
 class Rod extends React.Component {
     public render() {
         return (

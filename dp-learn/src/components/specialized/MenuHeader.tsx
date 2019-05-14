@@ -27,8 +27,6 @@ const styles = (theme: Theme) => createStyles({
         zIndex: 1,
         height: 64,
         width: '100vh',
-        // overflow: 'hidden',
-        // position: 'relative',
         display: 'flex',
     },
     appBar: {

@@ -1,7 +1,7 @@
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
-import { CheckForZero, GetNumbers } from 'src/helpers';
+import { checkForZero, getNumbers } from 'src/helpers';
 import { dpTree, dpTreeSpace, dpTreeTime, recTreeSpace, recTreeTime, recursiveTree, treeExamples } from 'src/statsHelpers/TreeStatsHelper';
 import { treeDpSpaceComplex, treeDpTimeComplex, treeRecSpaceComplex, treeRecTimeComplex } from 'src/strings/dpProblemsStrings/TreeStrings';
 
@@ -10,7 +10,7 @@ import ChartsAndTable from 'src/components/specialized/ChartsAndTable';
 import Complexity from 'src/components/specialized/Complexity';
 import CustomButton from 'src/components/customStyled/CustomButton';
 import CustomTextField from 'src/components/customStyled/CustomTextField';
-import CustomTitle from 'src/components/customStyled/CustomTitle';
+import CustomTitle from 'src/components/hoc/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
 import FlexTwo from 'src/components/hoc/FlexTwo';
 import { Grid } from '@material-ui/core';
@@ -26,6 +26,7 @@ interface ITreeStatsState {
     error: boolean
 }
 
+// Optimal binary search tree problem stats
 class TreeStats extends React.Component<any, ITreeStatsState> {
     private spaceChartStats: ISpaceChartData[];
     private timeChartStats: ITimeChartData[];
@@ -57,7 +58,7 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
                         <BottomMarginDiv>
                         <CustomTextField label={`${strings.tree.arrayOfF} (max. 15)`} value={this.state.givenFreqs} onChange={this.handleFreqs} />
                         </BottomMarginDiv>
-                        <CustomButton onClick={this.drawStats} label={strings.global.evaluateStats} />
+                        <CustomButton onClick={this.drawStats} label={strings.statsGlobal.evaluateStats} />
                     </FlexOne>
 
                     <FlexTwo>
@@ -72,9 +73,9 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
                 {this.state.statsVisible &&
                     <div>
                         <CustomTitle variant='h5'>
-                            {strings.global.conclusion}
+                            {strings.statsGlobal.conclusion}
                         </CustomTitle>
-                        <Markdown source={strings.rod.stats.conclusion} />
+                        <Markdown source={strings.tree.stats.conclusion} />
                     </div>
                 }
             </div>
@@ -82,7 +83,7 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
     }
 
     private handleFreqs = (e: any) => {
-        const freqs = GetNumbers(e.target.value, false);
+        const freqs = getNumbers(e.target.value, false);
         if (freqs.length <= 15) {
             this.setState({ givenFreqs: e.target.value });
         }
@@ -105,7 +106,7 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
         dpTree(this.freqs, calls);
         dpCalls = calls.value;
 
-        name = `${this.state.givenFreqs}`;
+        name = `${strings.statsGlobal.f}: ${this.state.givenFreqs}`;
         data = {
             name,
             recTheorTime: recTreeTime(this.freqs.length),
@@ -121,25 +122,12 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
         this.tableStats.push(data);
 
         for (const example of treeExamples) {
-            calls = { value: 0 };
-            console.log('res:',recursiveTree(example.freqs,
-                0,
-                example.freqs.length - 1,
-                calls));
-
-            recCalls = calls.value;
-
-            calls = { value: 0 };
-            dpTree(example.freqs, calls);
-
-            dpCalls = calls.value;
-
-            name = `${example.freqs}`;
+            name = `${strings.statsGlobal.f}: ${example.freqs}`;
             data = {
                 name,
                 recTheorTime: recTreeTime(example.freqs.length),
-                recTime: recCalls,
-                dpTime: dpCalls,
+                recTime: example.recTime,
+                dpTime: example.dpTime,
                 dpTheorTime: dpTreeTime(example.freqs.length),
                 dpSpace: dpTreeSpace(example.freqs.length),
                 recSpace: recTreeSpace(example.freqs.length)
@@ -152,8 +140,8 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
     }
 
     private drawStats = () => {
-        this.freqs = GetNumbers(this.state.givenFreqs, false);
-        if (CheckForZero(this.freqs)) {
+        this.freqs = getNumbers(this.state.givenFreqs, false);
+        if (checkForZero(this.freqs)) {
             this.setState({ 
                 error: true,
                 statsVisible: false

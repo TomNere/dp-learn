@@ -81,17 +81,6 @@ export const globalStyles = (theme: Theme) => createStyles({
         fontSize: 30,
         margin: theme.spacing.unit
     },
-    // centeredContent: {
-    //     textAlign: 'center',
-    //     margin: theme.spacing.unit * 2,
-    //     "& span": {
-    //         fontSize: theme.typography.pxToRem(24),
-    //         color: 'white',
-    //         backgroundColor: blueColor,
-    //         padding: theme.spacing.unit,
-    //         borderRadius: theme.spacing.unit * 2,
-    //     }
-    // },
     table: {
         width: 'auto',
         "& td:last-child, th:last-child": {
@@ -116,5 +105,5 @@ export const globalStyles = (theme: Theme) => createStyles({
     },
     simpleList: {
         listStyleType: 'none'
-    }
+    },
 });

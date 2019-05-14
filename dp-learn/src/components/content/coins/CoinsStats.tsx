@@ -1,7 +1,7 @@
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
-import { CheckForZero, GetNumbers } from 'src/helpers';
+import { checkForZero, getNumbers } from 'src/helpers';
 import { coinsDpSpaceComplex, coinsDpTimeComplex, coinsRecSpaceComplex, coinsRecTimeComplex } from 'src/strings/dpProblemsStrings/CoinsStrings';
 import { coinsExamples, dpCoins, dpCoinsSpace, dpCoinsTime, recCoinsSpace, recCoinsTime, recursiveCoins } from 'src/statsHelpers/CoinsStatsHelper';
 
@@ -10,7 +10,7 @@ import ChartsAndTable from 'src/components/specialized/ChartsAndTable';
 import Complexity from 'src/components/specialized/Complexity';
 import CustomButton from 'src/components/customStyled/CustomButton';
 import CustomTextField from 'src/components/customStyled/CustomTextField';
-import CustomTitle from 'src/components/customStyled/CustomTitle';
+import CustomTitle from 'src/components/hoc/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
 import FlexTwo from 'src/components/hoc/FlexTwo';
 import { Grid } from '@material-ui/core';
@@ -27,6 +27,7 @@ interface ICoinsStatsState {
     error: boolean
 }
 
+// Minimum number of coins problem stats
 class CoinsStats extends React.Component<any, ICoinsStatsState> {
     private coins: number[];
     private timeChartStats: ITimeChartData[];
@@ -36,8 +37,8 @@ class CoinsStats extends React.Component<any, ICoinsStatsState> {
     public constructor(props: any) {
         super(props)
         this.state = {
-            givenValue: 10,
-            givenCoins: "1,2,5",
+            givenValue: 4,
+            givenCoins: '1,2,5',
             statsVisible: false,
             error: false
         }
@@ -54,10 +55,10 @@ class CoinsStats extends React.Component<any, ICoinsStatsState> {
                 <Grid container={true} direction='row'>
                     <FlexOne>
                         <Grid container={true} direction='column'>
-                            <CustomTextField label={`${strings.coins.value} (0-20)`} value={this.state.givenValue.toString()} onChange={this.handleValue} />
+                        <CustomTextField label={`${strings.coins.value} (0-20)`} value={this.state.givenValue.toString()} onChange={this.handleValue} />
                             <CustomTextField label={`${strings.coins.coins} (max. 15)`} value={this.state.givenCoins} onChange={this.handleCoins} />
                         </Grid>
-                        <CustomButton onClick={this.drawStats} label={strings.global.evaluateStats} />
+                        <CustomButton onClick={this.drawStats} label={strings.statsGlobal.evaluateStats} />
                     </FlexOne>
                     <FlexTwo>
                         <Grid container={true} direction='row'>
@@ -71,7 +72,7 @@ class CoinsStats extends React.Component<any, ICoinsStatsState> {
                 {this.state.statsVisible &&
                     <div>
                         <CustomTitle variant='h5'>
-                            {strings.global.conclusion}
+                            {strings.statsGlobal.conclusion}
                         </CustomTitle>
                         <Markdown source={strings.coins.stats.conclusion} />
                     </div>
@@ -87,7 +88,7 @@ class CoinsStats extends React.Component<any, ICoinsStatsState> {
     }
 
     private handleCoins = (e: any) => {
-        const coins = GetNumbers(e.target.value, false);
+        const coins = getNumbers(e.target.value, false);
         if (coins.length <= 15) {
             this.setState({ givenCoins: e.target.value });
         }
@@ -110,13 +111,13 @@ class CoinsStats extends React.Component<any, ICoinsStatsState> {
         dpCoins(this.coins, this.coins.length, this.state.givenValue, calls);
         dpCalls = calls.value;
 
-        name = `${strings.coins.coins}: ${this.coins}, ${strings.coins.valueLower}: ${this.state.givenValue}`;
+        name = `${strings.coins.stats.c}: ${this.coins}, ${strings.coins.stats.v}: ${this.state.givenValue}`;
         data = {
             name,
             dpTime: dpCalls,
             dpTheorTime: dpCoinsTime(this.coins.length, this.state.givenValue),
             recTime: recCalls,
-            recTheorTime: recCoinsTime(this.coins.length, this.state.givenValue),
+            recTheorTime: recCoinsTime(this.state.givenValue),
             dpSpace: dpCoinsSpace(this.coins.length),
             recSpace: recCoinsSpace(this.coins.length)
         }
@@ -126,22 +127,13 @@ class CoinsStats extends React.Component<any, ICoinsStatsState> {
         this.tableStats.push(data);
 
         for (const example of coinsExamples) {
-            calls = { value: 0 };
-            recursiveCoins(example.coins, example.coins.length, example.value, calls);
-            recCalls = calls.value;
-
-            calls = { value: 0 };
-            dpCoins(example.coins, example.coins.length, example.value, calls);
-
-            dpCalls = calls.value;
-
-            name = `${strings.coins.coins}: ${example.coins}, ${strings.coins.valueLower}: ${example.value}`;
+            name = `${strings.coins.stats.c}: ${example.coins}, ${strings.coins.stats.v}: ${example.value}`;
             data = {
                 name,
-                dpTime: dpCalls,
+                dpTime: example.dpTime,
                 dpTheorTime: dpCoinsTime(example.coins.length, example.value),
-                recTime: recCalls,
-                recTheorTime: recCoinsTime(example.coins.length, example.value),
+                recTime: example.recTime,
+                recTheorTime: recCoinsTime(example.value),
                 dpSpace: dpCoinsSpace(example.coins.length),
                 recSpace: recCoinsSpace(example.coins.length)
             }
@@ -153,8 +145,8 @@ class CoinsStats extends React.Component<any, ICoinsStatsState> {
     }
 
     private drawStats = () => {
-        this.coins = GetNumbers(this.state.givenCoins, false);
-        if (CheckForZero(this.coins)) {
+        this.coins = getNumbers(this.state.givenCoins, false);
+        if (checkForZero(this.coins)) {
             this.setState({ 
                 error: true,
                 statsVisible: false

@@ -7,7 +7,7 @@ import { rodDpSpaceComplex, rodDpTimeComplex, rodDynCode, rodRecCode, rodRecSpac
 
 import BottomMarginDiv from 'src/components/hoc/BottomMarginDiv';
 import Complexity from 'src/components/specialized/Complexity';
-import CustomTitle from 'src/components/customStyled/CustomTitle';
+import CustomTitle from 'src/components/hoc/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
 import Img from 'src/components/hoc/PaddingImage';
 import PaddingDiv from 'src/components/hoc/PaddingDiv';
@@ -23,6 +23,7 @@ import { strings } from 'src/strings/translations/strings';
 type AllProps =
     WithStyles<typeof globalStyles>;
 
+// Rod cutting problem theory
 class RodTheory extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;
@@ -69,7 +70,7 @@ class RodTheory extends React.Component<AllProps> {
 
                             {/* Recursion Tree */}
                             <Typography variant={'h6'} className={classes.bottomMargin}>
-                                {strings.global.recusionTree}
+                                {strings.theoryGlobal.recusionTree}
                             </Typography>
                             <BottomMarginDiv>
                                 <Typography variant={'subtitle1'}>
@@ -147,11 +148,12 @@ class RodTheory extends React.Component<AllProps> {
                     </FlexOne>
                 </Grid>
                 <CustomTitle variant='h5'>
-                    {strings.global.similarProblems}
+                    {strings.theoryGlobal.similarProblems}
                 </CustomTitle>
                 <ul>
-                    <li><b>{strings.rod.theory.coins}</b> ({strings.global.partOfApp})</li>
-                    <li><b><a href={strings.coins.theory.knapsackHref}>{strings.coins.theory.knapsackTitle}</a></b></li>
+                    <li><b>{strings.rod.theory.coins}</b> ({strings.theoryGlobal.partOfApp})</li>
+                    <li><b><a href={strings.theoryGlobal.knapsackHref}>{strings.theoryGlobal.knapsackTitle}</a></b></li>
+                    <li><b><a href={strings.theoryGlobal.longestIncSubseqHref}>{strings.theoryGlobal.longestIncSubseqTitle}</a></b></li>
                 </ul>
             </div>
         );

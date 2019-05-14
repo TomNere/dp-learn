@@ -15,7 +15,7 @@ interface ICustomButtonProps {
 }
 
 export const styles = (theme: Theme) => createStyles({
-    buttonLight: {
+    buttonBlue: {
         margin: theme.spacing.unit,
         color: 'white',
         backgroundColor: blueColor,
@@ -25,7 +25,7 @@ export const styles = (theme: Theme) => createStyles({
     },
 });
 
-// Light or dark colored button
+// Blue colored material Button
 class CustomButton extends React.Component<AllProps> {
     public static defaultProps: any = {
         disabled: false,
@@ -38,7 +38,7 @@ class CustomButton extends React.Component<AllProps> {
                 variant='contained'
                 color='primary'
                 disabled={this.props.disabled}
-                className={classes.buttonLight}
+                className={classes.buttonBlue}
                 onClick={this.props.onClick}
             >
                 {this.props.label}

@@ -75,6 +75,6 @@ export const rodFormula = `T[l] = {(0,; l = 0),
     \ i:\ i < l,; l > 0):}`;
 
 export const rodRecTimeComplex = `2 ^ L`;
-export const rodDpTimeComplex = `L ^ 2`;
+export const rodDpTimeComplex = `L * L`;
 export const rodRecSpaceComplex = `L`;
 export const rodDpSpaceComplex = `L + (L + 1)`;

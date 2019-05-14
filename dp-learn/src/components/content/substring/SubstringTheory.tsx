@@ -7,7 +7,7 @@ import { substrDynCode, substrRecCode, substringDpSpaceComplex, substringDpTimeC
 
 import BottomMarginDiv from 'src/components/hoc/BottomMarginDiv';
 import Complexity from 'src/components/specialized/Complexity';
-import CustomTitle from 'src/components/customStyled/CustomTitle';
+import CustomTitle from 'src/components/hoc/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
 import Img from 'src/components/hoc/PaddingImage';
 import PaddingDiv from 'src/components/hoc/PaddingDiv';
@@ -22,6 +22,7 @@ import { strings } from 'src/strings/translations/strings';
 type AllProps =
     WithStyles<typeof globalStyles>;
 
+// Longest common substring problem theory
 class SubstringTheory extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;
@@ -69,7 +70,7 @@ class SubstringTheory extends React.Component<AllProps> {
 
                             {/* Recursion Tree */}
                             <Typography variant={'h6'} className={classes.bottomMargin}>
-                                {strings.global.recusionTree}
+                                {strings.theoryGlobal.recusionTree}
                             </Typography>
                             <BottomMarginDiv>
                                 <Typography variant={'subtitle1'}>
@@ -151,11 +152,10 @@ class SubstringTheory extends React.Component<AllProps> {
                     </FlexOne>
                 </Grid>
                 <CustomTitle variant='h5'>
-                    {strings.global.similarProblems}
+                    {strings.theoryGlobal.similarProblems}
                 </CustomTitle>
                 <ul>
                     <li><b><a href={strings.substring.theory.longestPalindromHref}>{strings.substring.theory.longestPalindromTitle}</a></b></li>
-                    <li><b><a href={strings.substring.theory.longestIncSubseqHref}>{strings.substring.theory.longestIncSubseqTitle}</a></b></li>
                 </ul>
             </div>
         );

@@ -1,4 +1,4 @@
-export const TreeRecCode = `// Return table of optimal binary search tree
+export const treeRecCode = `// Return table of optimal binary search tree
 // freqs[] - array of key searching frequences
 // i, j - indexes of subarray
 // first call i = 0, j = freqs.length - 1
@@ -29,7 +29,7 @@ int optimalSearchTree(int freqs[], int i, int j) {
     return min + freqsSum;
 }`;
 
-export const TreeDynCode = `// Return table of optimal binary search tree
+export const treeDynCode = `// Return table of optimal binary search tree
 // keys[] - array of keys
 // freqs[] - array of key searching frequences
 // N - number of keys
@@ -92,15 +92,15 @@ int optimalSearchTree(int keys[], int freqs[], int N)
 
 
 export const treeFormula = `T[j][col] = {
-    (F[j]; j: j<N,; j=col ),
+    (F[j],; j=col ),
     (min{T[j][r-1] + T[r+1][col] + sum_(k=j)^(col) F[k]},;
         X[i-1] != Y[j-1]),
-    (i: i >= 2 ^^ i <= N,),
-    (j: j <=N -i +1,),
-    (col: j + i - 1,),
-    (r: r >= j ^^ r <=col,):}`;
+    (,;i: i >= 2 ^^ i <= N),
+    (,;j: j <=N -i +1),
+    (,;col: j + i - 1),
+    (,;r: r >= j ^^ r <=col):}`;
 
-export const treeRecTimeComplex = `(N * 2) ^ N`;
+export const treeRecTimeComplex = `(4 ^ N) * (N ^ (-3 / 2))`;
 export const treeDpTimeComplex = `N ^ 3`;
 export const treeRecSpaceComplex = `N`;
-export const treeDpSpaceComplex = `N + (N ^ 2)`;
+export const treeDpSpaceComplex = `N + (N * N)`;

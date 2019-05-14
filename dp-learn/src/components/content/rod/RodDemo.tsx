@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import { CheckForZero, GetNumbers, ValueOrUndefined } from 'src/helpers';
 import { Grid, TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
+import { checkForZero, getNumbers, valueOrUndefined } from 'src/helpers';
 
 import BottomMarginDiv from 'src/components/hoc/BottomMarginDiv';
 import CustomButton from 'src/components/customStyled/CustomButton';
 import CustomTextField from 'src/components/customStyled/CustomTextField';
-import CustomTitle from 'src/components/customStyled/CustomTitle';
+import CustomTitle from 'src/components/hoc/CustomTitle';
 import DemoTable from 'src/components/specialized/DemoTable';
 import FlexOne from 'src/components/hoc/FlexOne';
 import FlexTwo from 'src/components/hoc/FlexTwo';
@@ -22,7 +22,7 @@ interface ICoinsDemoState {
     inProgress: boolean
     tableVisible: boolean
     result: string
-    speed: number
+    speed: string
     table: number[]
     highlightCandidates: boolean
     highlightMax: boolean
@@ -33,6 +33,7 @@ interface ICoinsDemoState {
 type AllProps =
     WithStyles<typeof globalStyles>;
 
+// Rod cutting problem demo
 class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
 
     /////////////////////// private variables /////////////////////////////////
@@ -64,12 +65,13 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
 
     // Timeout
     private timeout: any;
+    private speed: number = 1;
 
     public constructor(props: AllProps) {
         super(props)
         this.state = {
             givenPrices: "1, 5, 6, 6, 9",
-            speed: 1,
+            speed: '9',
             inProgress: false,
             tableVisible: false,
             result: "",
@@ -97,18 +99,18 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
                         </BottomMarginDiv>
 
                         {/* Speed select */}
-                        <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
+                        <SpeedSelector onClick={this.speedChange} speed={this.state.speed} />
                         <br />
 
                         <Grid container={true} direction='row'>
                             {/* Start button */}
-                            <CustomButton label={strings.global.start} onClick={this.handleStartClick} disabled={false} />
+                            <CustomButton label={strings.demoGlobal.start} onClick={this.handleStartClick} disabled={false} />
 
                             {/* Step button */}
-                            <CustomButton label={strings.global.step} onClick={this.finiteAutomata} disabled={!this.state.inProgress || this.state.speed !== 0} />
+                            <CustomButton label={strings.demoGlobal.step} onClick={this.finiteAutomata} disabled={!this.state.inProgress || +this.state.speed !== 0} />
 
                             {/* Finish button */}
-                            <CustomButton label={strings.global.finish} onClick={this.handleFinishClick} disabled={!this.state.inProgress} />
+                            <CustomButton label={strings.demoGlobal.finish} onClick={this.handleFinishClick} disabled={!this.state.inProgress} />
                         </Grid>
                     </FlexOne>
                     <FlexTwo>
@@ -126,7 +128,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
     }
 
     private handlePrices = (e: any) => {
-        const prices = GetNumbers(e.target.value, false);
+        const prices = getNumbers(e.target.value, false);
         if (prices.length <= 15) {
             clearTimeout(this.timeout);
             this.setState({ givenPrices: e.target.value, tableVisible: false, inProgress: false, result:'', });
@@ -134,30 +136,28 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
     }
 
     private speedChange = (e: any) => {
-        this.setState({ speed: +e.target.value });
+        this.setState({ speed: e.target.value });
+        this.speed = +e.target.value;
+            
+        clearTimeout(this.timeout);
 
-        if (+e.target.value === 0) {
-            clearTimeout(this.timeout);
-        }
-        else if (this.state.inProgress) {
-            this.setTimeout(this.finiteAutomata);
+        if (+e.target.value !== 0 && this.state.inProgress) {
+            this.finiteAutomata();
         }
     };
 
     private setTimeout = (func: () => void) => {
-        this.timeout = setTimeout(func, 5000 / this.state.speed);
+        this.timeout = setTimeout(func, 9000 / this.speed);
     }
 
     private handleStartClick = () => {
         clearTimeout(this.timeout);
-        console.log(this.state.givenPrices);
 
-        this.prices = GetNumbers(this.state.givenPrices, false);
-        console.log(this.prices);
+        this.prices = getNumbers(this.state.givenPrices, false);
 
         this.LENGTH = this.prices.length;
         
-        if (CheckForZero(this.prices)) {
+        if (checkForZero(this.prices)) {
             this.setState({ result: strings.global.invalidArg });
             return;
         }
@@ -168,7 +168,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
         this.setState({
             tableVisible: true,
             inProgress: true,
-            result: '',
+            result: strings.demoGlobal.evaluation,
             currentState: strings.demoGlobal.start0,
             table: [0],
             highlightingOn: true,
@@ -180,7 +180,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
         this.nextAutomataState = 'start';
 
         // Check if auto play or step by step
-        if (this.state.speed !== 0) {
+        if (this.speed !== 0) {
             this.setTimeout(this.finiteAutomata);
         }
     }
@@ -206,7 +206,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
         }
 
         // If speed != 0, setTimeout is needed
-        const auto: boolean = this.state.speed !== 0;
+        const auto: boolean = this.speed !== 0;
 
         if (auto && this.nextAutomataState !== 'done') {
             this.setTimeout(this.finiteAutomata);
@@ -283,7 +283,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
         this.setState({
             inProgress: false,
             result: `${strings.rod.demo.result} ${table[this.LENGTH]}, ${strings.rod.demo.usedLengths} ${this.getFullSolution()}`,
-            currentState: strings.global.done,
+            currentState: strings.demoGlobal.done,
             highlightingOn: false
         });
     }
@@ -371,7 +371,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
 
         for (let j = 0; j <= this.LENGTH; j++) {
             const key = `body column ${j}`;
-            let value = ValueOrUndefined(this.state.table[j]);
+            let value = valueOrUndefined(this.state.table[j]);
 
             classNames = [classes.tableCell];
 
@@ -434,7 +434,7 @@ class RodDemo extends React.Component<AllProps, ICoinsDemoState> {
 
             row.push(
                 <TableCell key={`solution${j}`} className={classNames.join(' ')}>
-                    {ValueOrUndefined(this.solutionHelper[j])}
+                    {valueOrUndefined(this.solutionHelper[j])}
                 </TableCell>
             );
         }

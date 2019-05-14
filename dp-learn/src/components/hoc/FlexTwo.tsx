@@ -19,7 +19,7 @@ const styles = (theme: Theme) => createStyles({
     },
 });
 
-// Div with flex value 2 and left margin
+// Container with flex value 2 and left margin
 class FlexTwo extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;

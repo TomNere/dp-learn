@@ -56,19 +56,33 @@ export const dpSubstringSpace = (length1: number, length2: number) => {
 
 export const substringExamples = [
     {
+        strX: '',
+        strY: '',
+        recTime: 1,
+        dpTime: 0,
+    },
+    {
         strX: 'aaaaa',
-        strY: 'bbbbb'
+        strY: '',
+        recTime: 1,
+        dpTime: 0,
     },
     {
-        strX: 'someString',
-        strY: 'anotherstring'
+        strX: 'aaaaa',
+        strY: 'bbbbb',
+        recTime: 503,
+        dpTime: 25,
     },
     {
-        strX: 'UPPERCASE',
-        strY: 'onlypartUPPERcase'
+        strX: 'aaaaa',
+        strY: 'aaaaa',
+        recTime: 2524,
+        dpTime: 25,
     },
     {
-        strX: '123here123',
-        strY: '123here123'
+        strX: 'test',
+        strY: 'twoTests',
+        recTime: 1735,
+        dpTime: 32,
     },
 ];

@@ -1,5 +1,5 @@
-import { FreqArraySum } from 'src/helpers';
 import { ISimpleObjectParameter } from 'src/statsHelpers/CoinsStatsHelper';
+import { freqArraySum } from 'src/helpers';
 
 export const recursiveTree = (freqs: number[], i: number, j: number, calls: ISimpleObjectParameter) => {
     ++calls.value;
@@ -12,7 +12,7 @@ export const recursiveTree = (freqs: number[], i: number, j: number, calls: ISim
         return freqs[i];
     }
 
-    const fsum = FreqArraySum(freqs, i, j);
+    const fsum = freqArraySum(freqs, i, j);
 
     let min = Number.MAX_VALUE;
 
@@ -45,7 +45,7 @@ export const dpTree = (freqs: number[], calls: ISimpleObjectParameter) => {
 
                 const val = ((rootCounter > innerCounter) ? table[innerCounter][rootCounter - 1] : 0) +
                     ((rootCounter < columnNumber) ? table[rootCounter + 1][columnNumber] : 0) +
-                    FreqArraySum(freqs, innerCounter, columnNumber);
+                    freqArraySum(freqs, innerCounter, columnNumber);
 
                 if (val < table[innerCounter][columnNumber]) {
                     table[innerCounter][columnNumber] = val;
@@ -58,7 +58,7 @@ export const dpTree = (freqs: number[], calls: ISimpleObjectParameter) => {
 }
 
 export const recTreeTime = (arrSize: number) => {
-    return Math.pow(arrSize * 2, arrSize);
+    return Math.round(Math.pow(4, arrSize) * Math.pow(arrSize, -3/2));
 }
 
 export const dpTreeTime = (arrSize: number) => {
@@ -75,18 +75,28 @@ export const dpTreeSpace = (arrSize: number) => {
 
 export const treeExamples = [
     {
-        freqs: [1, 2]
+        freqs: [1],
+        recTime: 1,
+        dpTime: 0,
     },
     {
-        freqs: [1, 2, 3, 4],
+        freqs: [1,4],
+        recTime: 5,
+        dpTime: 2,
     },
     {
-        freqs: [5, 6, 7, 8],
+        freqs: [1,4,7],
+        recTime: 15,
+        dpTime: 7,
     },
     {
-        freqs: [55, 77, 33, 11],
+        freqs: [1,2,3,4,5,6,7,8,9,10],
+        recTime: 32805,
+        dpTime: 210,
     },
     {
-        freqs: [2, 3, 4, 4, 6, 9, 15],
+        freqs: [1,2,3,4,5,6,7,8,9,10,11],
+        recTime: 98415,
+        dpTime: 275,
     },
 ];

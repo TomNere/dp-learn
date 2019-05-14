@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import Page from './Page';
 
-// Root class of the app
+// Root component of the app
 class App extends React.Component {
     public render() {
         return (
@@ -10,8 +10,6 @@ class App extends React.Component {
             <Page />
         );
     }
-
-    
 }
 
 export default App;

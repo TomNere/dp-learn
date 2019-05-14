@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
-import CustomTitle from 'src/components/customStyled/CustomTitle';
+import CustomTitle from 'src/components/hoc/CustomTitle';
 import LeftMarginDiv from 'src/components/hoc/LeftMarginDiv';
 import { strings } from 'src/strings/translations/strings';
 
@@ -17,6 +17,7 @@ const styles = (theme: Theme) => createStyles({
     },
 });
 
+// Intro page
 class Intro extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;

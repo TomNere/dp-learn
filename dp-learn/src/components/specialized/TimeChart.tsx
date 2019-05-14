@@ -44,20 +44,19 @@ const styles = (theme: Theme) => createStyles({
 class TimeChart extends React.Component<AllProps> {
     public render() {
         const { data, classes } = this.props;
-        const { global } = strings;
         return (
             <Paper className={classes.bottomMargin}>
                 <Typography align={'center'} className={classes.title} variant={'h6'}>
-                    {strings.global.timeComplex}
+                    {strings.global.timeComplex} - {strings.statsGlobal.numberOfCalls}
                 </Typography>
                 <Chart data={data}>
                     <ValueScale name='rec' />
                     
                     <ArgumentAxis />
-                    <ValueAxis scaleName='rec' showGrid={true} showLine={true} showTicks={true} labelComponent={this.getLabel(` ${strings.global.numberOfCalls}`)} />
+                    <ValueAxis scaleName='rec' showGrid={true} showLine={true} showTicks={true} labelComponent={this.getLabel()} />
 
                     <LineSeries
-                        name={`${global.recursiveSolution} (${global.theoreticValue})`}
+                        name={`${strings.global.recursiveSolution} (${strings.statsGlobal.theoreticalValue})`}
                         valueField='recTheor'
                         argumentField='name'
                         scaleName='rec'
@@ -65,7 +64,7 @@ class TimeChart extends React.Component<AllProps> {
                     />
 
                     <LineSeries
-                        name={`${global.recursiveSolution}`}
+                        name={`${strings.global.recursiveSolution}`}
                         valueField='rec'
                         argumentField='name'
                         scaleName='rec'
@@ -73,7 +72,7 @@ class TimeChart extends React.Component<AllProps> {
                     />
 
                     <LineSeries
-                        name={`${global.dynProgSolution} (${global.theoreticValue})`}
+                        name={`${strings.global.dynProgSolution} (${strings.statsGlobal.theoreticalValue})`}
                         valueField='dpTheor'
                         argumentField='name'
                         scaleName='rec'
@@ -81,7 +80,7 @@ class TimeChart extends React.Component<AllProps> {
                     />
 
                     <LineSeries
-                        name={`${global.dynProgSolution}`}
+                        name={`${strings.global.dynProgSolution}`}
                         valueField='dp'
                         argumentField='name'
                         scaleName='rec'
@@ -96,7 +95,7 @@ class TimeChart extends React.Component<AllProps> {
     }
 
     // Get value axis label
-    private getLabel = (symbol: any) => (props: any) => {
+    private getLabel = () => (props: any) => {
         let { text } = props;
         text = text.replace(/,/g, '');
 
@@ -119,7 +118,7 @@ class TimeChart extends React.Component<AllProps> {
         return (
             <ValueAxis.Label
                 {...props}
-                text={text + symbol}
+                text={text}
             />
         );
     };

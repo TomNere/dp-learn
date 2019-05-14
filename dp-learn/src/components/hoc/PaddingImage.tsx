@@ -29,8 +29,7 @@ const styles = (theme: Theme) => createStyles({
     }
 });
 
-// Custom title
-// Takes 1 child
+// Special container showing image
 class Img extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;

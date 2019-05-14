@@ -46,7 +46,6 @@ const styles = (theme: Theme) => createStyles({
 });
 
 // Tab menu with 3 tabs: theory, demo and charts
-// Takes 3 children
 class TabMenu extends React.Component<AllProps, ITabMenuState> {
     private cookies = new Cookies();
     public constructor(props: AllProps) {

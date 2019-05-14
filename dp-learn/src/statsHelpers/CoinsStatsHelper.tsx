@@ -47,8 +47,8 @@ export const dpCoins = (coins: number[], arrSize: number, value: number, calls: 
     return table[value];
 };
 
-export const recCoinsTime = (arrSize: number, value: number) => {
-    return Math.pow(arrSize, value);
+export const recCoinsTime = (value: number) => {
+    return Math.pow(2, value);
 }
 
 export const dpCoinsTime = (arrSize: number, value: number) => {
@@ -65,23 +65,27 @@ export const dpCoinsSpace = (arrSize: number) => {
 
 export const coinsExamples = [
     {
-        coins: [1, 2],
-        value: 2
+        coins: [1],
+        value: 0,
+        recTime: 1,
+        dpTime: 0,
     },
     {
-        coins: [1,2,3,20],
-        value: 15
+        coins: [1,2,3,4],
+        value: 4,
+        recTime: 16,
+        dpTime: 10,
     },
     {
-        coins: [1,2,3,4,5,6,7,8,20],
-        value: 20
+        coins: [1,3,5],
+        value: 8,
+        recTime: 52,
+        dpTime: 18,
     },
     {
-        coins: [6,7,8,9,10,12,13,14,20],
-        value: 20
-    },
-    {
-        coins: [1,2,3,4,5,6,7],
-        value: 10
+        coins: [4,6,8],
+        value: 12,
+        recTime: 11,
+        dpTime: 21,
     },
 ];

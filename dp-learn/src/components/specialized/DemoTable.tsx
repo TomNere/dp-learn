@@ -20,6 +20,7 @@ interface IDemoTableProps {
 const styles = (theme: Theme) => createStyles({
     result: {
         marginBottom: theme.spacing.unit * 2,
+        marginTop: theme.spacing.unit * 2,
         "& span": {
             fontSize: theme.typography.pxToRem(24),
             color: 'white',
@@ -38,6 +39,9 @@ const styles = (theme: Theme) => createStyles({
         backgroundColor: darkColor,
         padding: '4px 24px 4px 14px',
         borderRight: 'solid 1px gray',
+    },
+    hiddenOverflow: {
+        overflowX: 'auto'
     }
 })
 
@@ -46,7 +50,7 @@ class DemoTable extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;
         return (
-            <div>
+            <div className={classes.hiddenOverflow}>
                 {this.props.result !== '' &&
                     <div className={classes.result}>
                         <span>

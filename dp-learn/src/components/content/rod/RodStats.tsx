@@ -1,7 +1,7 @@
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
-import { CheckForZero, GetNumbers } from 'src/helpers';
+import { checkForZero, getNumbers } from 'src/helpers';
 import { dpRod, dpRodSpace, dpRodTime, recRodSpace, recRodTime, recursiveRod, rodExamples } from 'src/statsHelpers/RodStatsHelper';
 import { rodDpSpaceComplex, rodDpTimeComplex, rodRecSpaceComplex, rodRecTimeComplex } from 'src/strings/dpProblemsStrings/RodStrings';
 
@@ -10,7 +10,7 @@ import ChartsAndTable from 'src/components/specialized/ChartsAndTable';
 import Complexity from 'src/components/specialized/Complexity';
 import CustomButton from 'src/components/customStyled/CustomButton';
 import CustomTextField from 'src/components/customStyled/CustomTextField';
-import CustomTitle from 'src/components/customStyled/CustomTitle';
+import CustomTitle from 'src/components/hoc/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
 import FlexTwo from 'src/components/hoc/FlexTwo';
 import { Grid } from '@material-ui/core';
@@ -26,6 +26,7 @@ interface IRodStatsState {
     error: boolean
 }
 
+// Rod cutting problem stats
 class RodStats extends React.Component<any, IRodStatsState> {
     private prices: number[];
     private spaceChartStats: ISpaceChartData[];
@@ -55,7 +56,7 @@ class RodStats extends React.Component<any, IRodStatsState> {
                         <BottomMarginDiv>
                             <CustomTextField label={`${strings.rod.prices} (max. 20)`} value={this.state.givenPrices} onChange={this.handlePrices} />
                         </BottomMarginDiv>
-                        <CustomButton onClick={this.drawStats} label={strings.global.evaluateStats} />
+                        <CustomButton onClick={this.drawStats} label={strings.statsGlobal.evaluateStats} />
                     </FlexOne>
 
                     <FlexTwo>
@@ -70,7 +71,7 @@ class RodStats extends React.Component<any, IRodStatsState> {
                 {this.state.statsVisible &&
                     <div>
                         <CustomTitle variant='h5'>
-                            {strings.global.conclusion}
+                            {strings.statsGlobal.conclusion}
                         </CustomTitle>
                         <Markdown source={strings.rod.stats.conclusion} />
                     </div>
@@ -80,7 +81,7 @@ class RodStats extends React.Component<any, IRodStatsState> {
     }
 
     private handlePrices = (e: any) => {
-        const prices = GetNumbers(e.target.value, false);
+        const prices = getNumbers(e.target.value, false);
         if (prices.length <= 20) {
             this.setState({ givenPrices: e.target.value });
         }
@@ -104,7 +105,7 @@ class RodStats extends React.Component<any, IRodStatsState> {
 
         dpCalls = calls.value;
 
-        name = `${strings.rod.prices}: ${this.prices}`;
+        name = `${strings.rod.stats.p}: ${this.prices}`;
         data = {
             name,
             dpTime: dpCalls,
@@ -120,22 +121,12 @@ class RodStats extends React.Component<any, IRodStatsState> {
         this.tableStats.push(data);
 
         for (const example of rodExamples) {
-            calls = { value: 0 };
-            recursiveRod(example.prices, example.prices.length, calls);
-
-            recCalls = calls.value;
-
-            calls = { value: 0 };
-            dpRod(example.prices, example.prices.length, calls);
-
-            dpCalls = calls.value;
-
-            name = `${strings.rod.prices}: ${example.prices}`;
+            name = `${strings.rod.stats.p}: ${example.prices}`;
             data = {
                 name,
                 recTheorTime: recRodTime(example.prices.length),
-                recTime: recCalls,
-                dpTime: dpCalls,
+                recTime: example.recTime,
+                dpTime: example.dpTime,
                 dpTheorTime: dpRodTime(example.prices.length),
                 dpSpace: dpRodSpace(example.prices.length),
                 recSpace: recRodSpace(example.prices.length)
@@ -148,8 +139,8 @@ class RodStats extends React.Component<any, IRodStatsState> {
     }
 
     private drawStats = () => {
-        this.prices = GetNumbers(this.state.givenPrices, false);
-        if (CheckForZero(this.prices)) {
+        this.prices = getNumbers(this.state.givenPrices, false);
+        if (checkForZero(this.prices)) {
             this.setState({ 
                 error: true,
                 statsVisible: false

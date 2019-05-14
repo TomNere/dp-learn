@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import SpaceChart, { ISpaceChartData } from './SpaceChart';
+import  SpaceChart, { ISpaceChartData } from './SpaceChart';
 import StatsTable, { IStatsTableData } from './StatsTable';
 import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core';
 import TimeChart, { ITimeChartData } from './TimeChart';
@@ -32,8 +32,7 @@ const styles = (theme: Theme) => createStyles({
     },
 })
 
-// Component contains time and space chart, table and some text
-// Props are visibility, data and text
+// Component contains time,space charts and table
 class ChartsAndTable extends React.Component<AllProps> {
     public render() {
         return (

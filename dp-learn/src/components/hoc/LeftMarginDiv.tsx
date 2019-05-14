@@ -18,8 +18,7 @@ const styles = (theme: Theme) => createStyles({
     }
 });
 
-// Custom title
-// Takes 1 child
+// Div with left margin
 class LeftMarginDiv extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;

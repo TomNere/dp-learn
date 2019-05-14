@@ -27,7 +27,7 @@ class SpeedSelector extends React.Component<AllProps> {
             <div className={classes.leftMargin}>
                 <FormControl component={"fieldset" as "div"} margin='normal'>
                     <FormLabel component="label">
-                        {strings.global.speed}
+                        {strings.demoGlobal.speed}
                     </FormLabel>
                     <RadioGroup
                         aria-label="speed"
@@ -37,29 +37,29 @@ class SpeedSelector extends React.Component<AllProps> {
                         row={true}
                     >
                         <FormControlLabel
-                            value="1"
+                            value="3"
                             control={<Radio color="primary" />}
-                            label="1x"
+                            label={strings.demoGlobal.speed1}
                         />
                         <FormControlLabel
-                            value="2"
+                            value="4.5"
                             control={<Radio color="primary" />}
-                            label="2x"
+                            label={strings.demoGlobal.speed2}
                         />
                         <FormControlLabel
-                            value="5"
+                            value="9"
                             control={<Radio color="primary" />}
-                            label="5x"
+                            label={strings.demoGlobal.speed3}
                         />
                         <FormControlLabel
-                            value="10"
+                            value="18"
                             control={<Radio color="primary" />}
-                            label="10x"
+                            label={strings.demoGlobal.speed4}
                         />
                         <FormControlLabel
                             value="0"
                             control={<Radio color="primary" />}
-                            label={strings.global.stepping}
+                            label={strings.demoGlobal.stepping}
                         />
                     </RadioGroup>
                 </FormControl>

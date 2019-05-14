@@ -1,5 +1,5 @@
 import { ISimpleObjectParameter } from 'src/statsHelpers/CoinsStatsHelper';
-import { Min } from 'src/helpers';
+import { min } from 'src/helpers';
 
 export const recursiveEditDistance = (stringX: string, stringY: string, length1: number, length2: number, calls: ISimpleObjectParameter): number => {
     ++calls.value;
@@ -16,7 +16,7 @@ export const recursiveEditDistance = (stringX: string, stringY: string, length1:
         return recursiveEditDistance(stringX, stringY, length1 - 1, length2 - 1, calls);
     }
 
-    return 1 + Min(recursiveEditDistance(stringX, stringY, length1, length2 - 1, calls),
+    return 1 + min(recursiveEditDistance(stringX, stringY, length1, length2 - 1, calls),
         recursiveEditDistance(stringX, stringY, length1 - 1, length2, calls),
         recursiveEditDistance(stringX, stringY, length1 - 1, length2 - 1, calls)
     );
@@ -42,7 +42,7 @@ export const dpEditDistance = (stringX: string, stringY: string, length1: number
             }
 
             else {
-                table[i][j] = 1 + Min(table[i][j - 1],
+                table[i][j] = 1 + min(table[i][j - 1],
                     table[i - 1][j],
                     table[i - 1][j - 1]);
             }
@@ -71,18 +71,32 @@ export const dpEditDistanceSpace = (length1: number, length2: number) => {
 export const editDistanceExamples = [
     {
         strX: '',
-        strY: 'SomeEmptyString'
-    },
-    {
-        strX: 'A',
-        strY: 'Ad'
+        strY: '',
+        recTime: 1,
+        dpTime: 1,
     },
     {
         strX: 'aaaaa',
-        strY: 'bbbbb'
+        strY: '',
+        recTime: 1,
+        dpTime: 6,
     },
     {
-        strX: 'AMatchHere',
-        strY: 'tenisMatch'
+        strX: 'aaaaa',
+        strY: 'bbbbb',
+        recTime: 2524,
+        dpTime: 36
+    },
+    {
+        strX: 'aaaaa',
+        strY: 'aaaaa',
+        recTime: 6,
+        dpTime: 36,
+    },
+    {
+        strX: 'gra',
+        strY: 'bagra',
+        recTime: 4,
+        dpTime: 24,
     },
 ];

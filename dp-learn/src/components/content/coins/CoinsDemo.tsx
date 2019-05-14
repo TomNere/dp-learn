@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import { CheckForZero, GetNumbers, ValueOrIntMax } from 'src/helpers';
 import { Grid, TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
+import { checkForZero, getNumbers, valueOrIntMax } from 'src/helpers';
 
 import BottomMarginDiv from 'src/components/hoc/BottomMarginDiv';
 import CustomButton from 'src/components/customStyled/CustomButton';
 import CustomTextField from 'src/components/customStyled/CustomTextField';
-import CustomTitle from 'src/components/customStyled/CustomTitle';
+import CustomTitle from 'src/components/hoc/CustomTitle';
 import DemoTable from 'src/components/specialized/DemoTable';
 import FlexOne from 'src/components/hoc/FlexOne';
 import FlexTwo from 'src/components/hoc/FlexTwo';
@@ -18,7 +18,7 @@ import { globalStyles } from 'src/styles/globalStyles';
 import { strings } from 'src/strings/translations/strings';
 
 interface ICoinsDemoState {
-    speed: number
+    speed: string
     inProgress: boolean
     tableVisible: boolean
     table: number[]
@@ -33,7 +33,7 @@ interface ICoinsDemoState {
 type AllProps =
     WithStyles<typeof globalStyles>;
 
-// Minimum coins problem demo
+// Minimum number of coins problem demo
 class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
     /////////////////////// private variables /////////////////////////////////
@@ -61,17 +61,19 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
     // Timeout
     private timeout: any;
 
+    private speed: number = 1;
+
     public constructor(props: AllProps) {
         super(props)
         this.state = {
-            speed: 1,
+            speed: '9',
             inProgress: false,
             tableVisible: false,
             table: [],
-            result: "",
-            currentState: '...',
+            result: '',
+            currentState: strings.global.dots,
             givenValue: 4,
-            givenCoins: "1,2,5",
+            givenCoins: '1,2,5',
             currentCol: undefined,
             match: undefined,
         }
@@ -94,18 +96,18 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
                         </Grid>
 
                         {/* Speed select */}
-                        <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
+                        <SpeedSelector onClick={this.speedChange} speed={this.state.speed} />
                         <br />
 
                         <Grid direction='row' container={true}>
                             {/* Start button */}
-                            <CustomButton label={strings.global.start} onClick={this.handleStartClick} disabled={false} />
+                            <CustomButton label={strings.demoGlobal.start} onClick={this.handleStartClick} disabled={false} />
 
                             {/* Step button */}
-                            <CustomButton label={strings.global.step} onClick={this.finiteAutomata} disabled={!this.state.inProgress || this.state.speed !== 0} />
+                            <CustomButton label={strings.demoGlobal.step} onClick={this.finiteAutomata} disabled={!this.state.inProgress || +this.state.speed !== 0} />
 
                             {/* Finish button */}
-                            <CustomButton label={strings.global.finish} onClick={this.handleFinishClick} disabled={!this.state.inProgress} />
+                            <CustomButton label={strings.demoGlobal.finish} onClick={this.handleFinishClick} disabled={!this.state.inProgress} />
                         </Grid>
                     </FlexOne>
                     <FlexTwo>
@@ -130,7 +132,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
     }
 
     private handleCoins = (e: any) => {
-        const coins = GetNumbers(e.target.value, false);
+        const coins = getNumbers(e.target.value, false);
         if (coins.length <= 15) {
             clearTimeout(this.timeout);
             this.setState({ givenCoins: e.target.value, tableVisible: false, result:'', inProgress: false });
@@ -138,25 +140,25 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
     }
 
     private speedChange = (e: any) => {
-        this.setState({ speed: +e.target.value });
+        this.setState({ speed: e.target.value });
+        this.speed = +e.target.value;
+        
+        clearTimeout(this.timeout);
 
-        if (+e.target.value === 0) {
-            clearTimeout(this.timeout);
-        }
-        else if (this.state.inProgress) {
-            this.setTimeout(this.finiteAutomata);
+        if (+e.target.value !== 0 && this.state.inProgress) {
+            this.finiteAutomata();
         }
     };
 
     private setTimeout = (func: () => void) => {
-        this.timeout = setTimeout(func, 5000 / this.state.speed);
+        this.timeout = setTimeout(func, 9000 / this.speed);
     }
 
     private handleStartClick = () => {
         clearTimeout(this.timeout);
-        this.coins = GetNumbers(this.state.givenCoins, false);
+        this.coins = getNumbers(this.state.givenCoins, false);
 
-        if (CheckForZero(this.coins)) {
+        if (checkForZero(this.coins)) {
             this.setState({ result: strings.global.invalidArg });
             return;
         }
@@ -185,7 +187,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         this.setState({
             tableVisible: true,
             inProgress: true,
-            result: '',
+            result: strings.demoGlobal.evaluation,
             currentState: strings.demoGlobal.start0,
             table,
             match: undefined,
@@ -194,7 +196,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
         this.nextAutomataState = 'doInnerLoop';
         // Check if auto play or step by step
-        if (this.state.speed !== 0) {
+        if (this.speed !== 0) {
             this.setTimeout(this.finiteAutomata);
         }
     }
@@ -220,7 +222,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         }
 
         // if speed != 0, setTimeout is needed
-        const auto: boolean = this.state.speed !== 0;
+        const auto: boolean = this.speed !== 0;
 
         if (auto && this.nextAutomataState !== 'done') {
             this.setTimeout(this.finiteAutomata);
@@ -242,7 +244,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
             this.setState({
                 currentCol: this.outerCounter - this.coins[this.innerCounter],
-                currentState: `(${ValueOrIntMax(subRes)} != INT_MAX) && (${ValueOrIntMax(subRes)} + 1 < ${ValueOrIntMax(this.state.table[this.outerCounter])}) ?`
+                currentState: `(${valueOrIntMax(subRes)} != INT_MAX) && (${valueOrIntMax(subRes)} + 1 < ${valueOrIntMax(this.state.table[this.outerCounter])}) ?`
             });
 
             if (subRes !== Number.MAX_VALUE && subRes + 1 < this.state.table[this.outerCounter]) {
@@ -359,7 +361,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
         this.setState({
             inProgress: false,
             result: `${strings.coins.demo.isNeeded}: ${table[this.state.givenValue]}, ${strings.coins.demo.usedCoins}: ${this.getFullSolution()}`,
-            currentState: strings.global.done,
+            currentState: strings.demoGlobal.done,
         });
     }
 
@@ -419,7 +421,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
 
         for (let j = 0; j <= this.state.givenValue; j++) {
             const key = `body column ${j}`;
-            let value = ValueOrIntMax(this.state.table[j]);
+            let value = valueOrIntMax(this.state.table[j]);
 
             classNames = [classes.tableCell];
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
+import { WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 
 import { Grid } from '@material-ui/core';
 import { ReactNode } from 'react';
@@ -13,7 +13,7 @@ interface ICenteredContainerProps {
     children: ReactNode
 }
 
-const styles = (theme: Theme) => createStyles({
+const styles = () => createStyles({
     centeredContainer: {
         display: 'flex',
         justifyContent: 'center'
@@ -21,7 +21,6 @@ const styles = (theme: Theme) => createStyles({
 });
 
 // Container with centered content
-// Takes 1 child
 class CenteredContainer extends React.Component<AllProps> {
     public constructor(props: AllProps) {
         super(props);

@@ -5,6 +5,7 @@ import EditDistanceStats from './EditDistanceStats';
 import EditDistanceTheory from './EditDistanceTheory';
 import TabMenu from 'src/components/hoc/TabMenu';
 
+// Main component for Edit Distance problem
 class EditDistance extends React.Component {
     public render() {
         return (

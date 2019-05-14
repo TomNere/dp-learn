@@ -52,7 +52,7 @@ class SourceCode extends React.Component<AllProps> {
         return (
             <ExpansionPanel className={classes.expPanel} defaultExpanded={false}>
                 <ExpansionPanelSummary expandIcon={<Code className={classes.whiteText} />}>
-                    <Typography className={[classes.heading, classes.whiteText].join(' ')}>{strings.global.srcCode}</Typography>
+                    <Typography className={[classes.heading, classes.whiteText].join(' ')}>{strings.theoryGlobal.srcCode}</Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails className={classes.details}>
                     <pre>

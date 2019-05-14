@@ -7,8 +7,7 @@ interface IFormulaProps {
     children: ReactNode
 }
 
-// Container with centered content
-// Takes 1 child
+// Container showing asciimath formula
 class Formula extends React.Component<IFormulaProps> {
     public render() {
         return (

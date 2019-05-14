@@ -51,7 +51,7 @@ class StatsTable extends React.Component<AllProps> {
             <TableRow>
                 {/* Table brief */}
                 <TableCell rowSpan={2} className={classes.tableHeading}>
-                    {strings.global.tableComparison}
+                    {strings.statsGlobal.tableComparison}
                 </TableCell>
 
                 {/* Time complexity */}
@@ -74,7 +74,7 @@ class StatsTable extends React.Component<AllProps> {
             <TableRow>
                 {/* recTheorTime */}
                 <TableCell className={[classes.columnCaption, classes.recTheorBackground].join(' ')} >
-                    {`${strings.global.recursion} (${strings.global.theoreticValue})`}
+                    {`${strings.global.recursion} (${strings.statsGlobal.theoreticalValueShort})`}
                 </TableCell>
 
                 {/* recTime */}
@@ -84,7 +84,7 @@ class StatsTable extends React.Component<AllProps> {
 
                 {/* dpTheorTime */}
                 <TableCell className={[classes.columnCaption, classes.dpTheorBackground].join(' ')} >
-                    {`${strings.global.dp} (${strings.global.theoreticValue})`}
+                    {`${strings.global.dp} (${strings.statsGlobal.theoreticalValueShort})`}
                 </TableCell>
 
                 {/* dpTime */}

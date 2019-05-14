@@ -9,7 +9,7 @@ import ChartsAndTable from 'src/components/specialized/ChartsAndTable';
 import Complexity from 'src/components/specialized/Complexity';
 import CustomButton from 'src/components/customStyled/CustomButton';
 import CustomTextField from 'src/components/customStyled/CustomTextField';
-import CustomTitle from 'src/components/customStyled/CustomTitle';
+import CustomTitle from 'src/components/hoc/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
 import FlexTwo from 'src/components/hoc/FlexTwo';
 import { Grid } from '@material-ui/core';
@@ -25,6 +25,7 @@ interface ISubstringStatsState {
     statsVisible: boolean
 }
 
+// Longest common substring problem stats
 class SubstringStats extends React.Component<any, ISubstringStatsState> {
     private timeChartStats: ITimeChartData[];
     private spaceChartStats: ISpaceChartData[];
@@ -53,7 +54,7 @@ class SubstringStats extends React.Component<any, ISubstringStatsState> {
                             <CustomTextField label={`${strings.global.string} X (max. 15)`} value={this.state.stringX} onChange={this.handlestrXChange} />
                             <CustomTextField label={`${strings.global.string} Y (max. 15)`} value={this.state.stringY} onChange={this.handlestrYChange} />
                         </Grid>
-                        <CustomButton onClick={this.drawStats} label={strings.global.evaluateStats} />
+                        <CustomButton onClick={this.drawStats} label={strings.statsGlobal.evaluateStats} />
                     </FlexOne>
                     <FlexTwo>
                         <Grid container={true} direction='row'>
@@ -67,7 +68,7 @@ class SubstringStats extends React.Component<any, ISubstringStatsState> {
                 {this.state.statsVisible &&
                     <div>
                         <CustomTitle variant='h5'>
-                            {strings.global.conclusion}
+                            {strings.statsGlobal.conclusion}
                         </CustomTitle>
                         <Markdown source={strings.substring.stats.conclusion} />
                     </div>
@@ -109,8 +110,8 @@ class SubstringStats extends React.Component<any, ISubstringStatsState> {
         calls = { value: 0 };
         dpSubstring(strX, strY, length1, length2, calls);
         dpCalls = calls.value;
+        name = `${strings.statsGlobal.x}: '${strX}', ${strings.statsGlobal.y}: '${strY}'`;
 
-        name = `'${strX}', '${strY}'`;
         data = {
             name,
             dpTime: dpCalls,
@@ -131,22 +132,12 @@ class SubstringStats extends React.Component<any, ISubstringStatsState> {
             strY = example.strY;
             length2 = strY.length;
 
-            calls = { value: 0 };
-            console.log('res:',recursiveSubstring(strX, strY, length1, length2, 0, calls));
-
-            recCalls = calls.value;
-
-            calls = { value: 0 };
-            dpSubstring(strX, strY, length1, length2, calls);
-
-            dpCalls = calls.value;
-
-            name = `'${strX}', '${strY}'`;
+            name = `${strings.statsGlobal.x}: '${strX}', ${strings.statsGlobal.y}: '${strY}'`;
             data = {
                 name,
-                dpTime: dpCalls,
+                dpTime: example.dpTime,
                 dpTheorTime: dpSubstringTime(length1, length2),
-                recTime: recCalls,
+                recTime: example.recTime,
                 recTheorTime: recSubstringTime(length1, length2),
                 dpSpace: dpSubstringSpace(length1, length2),
                 recSpace: recSubstringSpace(length1, length2)

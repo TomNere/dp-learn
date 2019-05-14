@@ -1,14 +1,14 @@
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
-import { CheckForZero, FreqArraySum, GetNumbers, ValueOrIntMax, ValueOrUndefined } from 'src/helpers';
 import { Grid, TableCell, TableRow } from '@material-ui/core';
 import { WithStyles, withStyles } from "@material-ui/core/styles";
+import { checkForDuplicate, checkForZero, freqArraySum, getNumbers, valueOrIntMax, valueOrUndefined } from 'src/helpers';
 
 import BottomMarginDiv from 'src/components/hoc/BottomMarginDiv';
 import CustomButton from 'src/components/customStyled/CustomButton';
 import CustomTextField from 'src/components/customStyled/CustomTextField';
-import CustomTitle from 'src/components/customStyled/CustomTitle';
+import CustomTitle from 'src/components/hoc/CustomTitle';
 import DemoTable from 'src/components/specialized/DemoTable';
 import FlexOne from 'src/components/hoc/FlexOne';
 import FlexTwo from 'src/components/hoc/FlexTwo';
@@ -19,7 +19,7 @@ import { strings } from 'src/strings/translations/strings';
 import { treeFormula } from 'src/strings/dpProblemsStrings/TreeStrings';
 
 interface ITreeDemoState {
-    speed: number
+    speed: string
     inProgress: boolean
     tableVisible: boolean
     table: Array<Array<[number, number]>>
@@ -35,6 +35,7 @@ interface ITreeDemoState {
 type AllProps =
     WithStyles<typeof globalStyles>;
 
+// Optimal binary search tree problem demo
 class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
 
     /////////////////////// private variables /////////////////////////////////
@@ -64,6 +65,8 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
     // Timeout
     private timeout: any;
 
+    private speed: number = 1;
+
     ////////////////////////////////////////////////////////////////////////////
 
     public constructor(props: AllProps) {
@@ -71,7 +74,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
         this.state = {
             givenKeys: strings.tree.demo.keysExample,
             givenFreqs: strings.tree.demo.freqsExample,
-            speed: 1,
+            speed: '9',
             inProgress: false,
             tableVisible: false,
             result: '',
@@ -100,18 +103,18 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
                         </Grid>
 
                         {/* Speed select */}
-                        <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
+                        <SpeedSelector onClick={this.speedChange} speed={this.state.speed} />
                         <br />
 
                         <Grid container={true} direction='row'>
                             {/* Start button */}
-                            <CustomButton label={strings.global.start} onClick={this.handleStartClick} disabled={false} />
+                            <CustomButton label={strings.demoGlobal.start} onClick={this.handleStartClick} disabled={false} />
 
                             {/* Step button */}
-                            <CustomButton label={strings.global.step} onClick={this.finiteAutomata} disabled={!this.state.inProgress || this.state.speed !== 0} />
+                            <CustomButton label={strings.demoGlobal.step} onClick={this.finiteAutomata} disabled={!this.state.inProgress || +this.state.speed !== 0} />
 
                             {/* Finish button */}
-                            <CustomButton label={strings.global.finish} onClick={this.handleFinishClick} disabled={!this.state.inProgress} />
+                            <CustomButton label={strings.demoGlobal.finish} onClick={this.handleFinishClick} disabled={!this.state.inProgress} />
                         </Grid>
                     </FlexOne>
                     <FlexTwo>
@@ -157,28 +160,28 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
     }
 
     private speedChange = (e: any) => {
-        this.setState({ speed: +e.target.value });
+        this.setState({ speed: e.target.value });
+        this.speed = +e.target.value;
+            
+        clearTimeout(this.timeout);
 
-        if (+e.target.value === 0) {
-            clearTimeout(this.timeout);
-        }
-        else if (this.state.inProgress) {
-            this.setTimeout(this.finiteAutomata);
+        if (+e.target.value !== 0 && this.state.inProgress) {
+            this.finiteAutomata();
         }
     };
 
     private setTimeout = (func: () => void) => {
-        this.timeout = setTimeout(func, 5000 / this.state.speed);
+        this.timeout = setTimeout(func, 9000 / this.speed);
     }
 
     private handleStartClick = () => {
         clearTimeout(this.timeout);
         this.disableHighlighting();
 
-        this.keys = GetNumbers(this.state.givenKeys, true);
-        this.freqs = GetNumbers(this.state.givenFreqs, false);
+        this.keys = getNumbers(this.state.givenKeys, true);
+        this.freqs = getNumbers(this.state.givenFreqs, false);
 
-        if (CheckForZero(this.freqs) || this.keys.length !== this.freqs.length) {
+        if (checkForZero(this.freqs) || checkForDuplicate(this.keys) || this.keys.length !== this.freqs.length) {
             this.setState({ result: strings.global.invalidArg });
             return;
         }
@@ -200,14 +203,14 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
         this.setState({
             tableVisible: true,
             inProgress: true,
-            result: '',
+            result: strings.demoGlobal.evaluation,
             currentState: `${strings.tree.demo.evalChainLength} ${this.outerCounter}`,
             table: localTable,
         });
 
         this.nextAutomataState = 'doInnerLoop';
         // Check if auto play or step by step
-        if (this.state.speed !== 0) {
+        if (this.speed !== 0) {
             this.setTimeout(this.finiteAutomata);
         }
     }
@@ -233,7 +236,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
         }
 
         // if speed != 0, setTimeout is needed
-        const auto: boolean = this.state.speed !== 0;
+        const auto: boolean = this.speed !== 0;
 
         if (auto && this.nextAutomataState !== 'done') {
             this.setTimeout(this.finiteAutomata);
@@ -285,7 +288,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
             this.valueToAssign += this.state.table[element[0]][element[1]][0];
         });
 
-        this.valueToAssign += FreqArraySum(this.freqs, this.innerCounter, this.columnNumber);
+        this.valueToAssign += freqArraySum(this.freqs, this.innerCounter, this.columnNumber);
         const currentVal = this.state.table[this.innerCounter][this.columnNumber][0];
 
         if (this.valueToAssign < currentVal) {
@@ -294,12 +297,12 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
 
             this.setState({
                 table,
-                currentState: `${this.valueToAssign} < ${ValueOrIntMax(currentVal)}. ${strings.demoGlobal.assigning}`
+                currentState: `${this.valueToAssign} < ${valueOrIntMax(currentVal)}. ${strings.demoGlobal.assigning}`
             });
         }
         else {
             this.setState({
-                currentState: `${this.valueToAssign} >= ${ValueOrIntMax(currentVal)}, ${strings.tree.demo.nothingToDo}`
+                currentState: `${this.valueToAssign} >= ${valueOrIntMax(currentVal)}, ${strings.tree.demo.nothingToDo}`
             });
         }
 
@@ -376,7 +379,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
                     // c = cost when keys[r] becomes root of this subtree 
                     const val = ((mostInnerCounter > innerCounter) ? table[innerCounter][mostInnerCounter - 1][0] : 0) +
                         ((mostInnerCounter < columnNumber) ? table[mostInnerCounter + 1][columnNumber][0] : 0) +
-                        FreqArraySum(this.freqs, innerCounter, columnNumber);
+                        freqArraySum(this.freqs, innerCounter, columnNumber);
 
                     if (val < table[innerCounter][columnNumber][0]) {
                         table[innerCounter][columnNumber] = [val, mostInnerCounter];
@@ -394,7 +397,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
         this.disableHighlighting();
         this.setState({
             inProgress: false,
-            currentState: strings.global.done,
+            currentState: strings.demoGlobal.done,
             result: `${strings.tree.demo.cost}: ${table[0][this.LENGTH - 1][0]}`,
         });
     }
@@ -463,7 +466,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
                         value = 'INT_MAX';
                     }
                     else {
-                        value = ValueOrUndefined(this.state.table[i][j][0]);
+                        value = valueOrUndefined(this.state.table[i][j][0]);
     
                         if (this.state.table[i][j][1] !== -1) {
                             value += ` (${this.state.table[i][j][1]})`;

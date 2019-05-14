@@ -2,13 +2,13 @@ import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
 import { Grid, TableCell, TableRow } from '@material-ui/core';
-import { Min, MinPosition } from 'src/helpers';
 import { WithStyles, withStyles } from "@material-ui/core/styles";
+import { min, minPosition } from 'src/helpers';
 
 import BottomMarginDiv from 'src/components/hoc/BottomMarginDiv';
 import CustomButton from 'src/components/customStyled/CustomButton';
 import CustomTextField from 'src/components/customStyled/CustomTextField';
-import CustomTitle from 'src/components/customStyled/CustomTitle';
+import CustomTitle from 'src/components/hoc/CustomTitle';
 import DemoTable from 'src/components/specialized/DemoTable';
 import FlexOne from 'src/components/hoc/FlexOne';
 import FlexTwo from 'src/components/hoc/FlexTwo';
@@ -21,7 +21,7 @@ import { strings } from 'src/strings/translations/strings';
 interface ISubstringDemoState {
     stringX: string
     stringY: string
-    speed: number
+    speed: string
     inProgress: boolean
     tableVisible: boolean
     result: string
@@ -36,6 +36,7 @@ interface ISubstringDemoState {
 type AllProps =
     WithStyles<typeof globalStyles>;
 
+// Edit distance problem demo
 class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
 
     /////////////////////// private variables /////////////////////////////////
@@ -68,6 +69,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
 
     // Timeout
     private timeout: any;
+    private speed: number = 1;
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -76,7 +78,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
         this.state = {
             stringX: "AdRemovee",
             stringY: "AddRemove",
-            speed: 1,
+            speed: '9',
             inProgress: false,
             tableVisible: false,
             result: "",
@@ -106,18 +108,18 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
                         </Grid>
 
                         {/* Speed select */}
-                        <SpeedSelector onClick={this.speedChange} speed={this.state.speed.toString()} />
+                        <SpeedSelector onClick={this.speedChange} speed={this.state.speed} />
                         <br />
 
                         <Grid container={true} direction='row'>
                             {/* Start button */}
-                            <CustomButton label={strings.global.start} onClick={this.handleStartClick} disabled={false} />
+                            <CustomButton label={strings.demoGlobal.start} onClick={this.handleStartClick} disabled={false} />
 
                             {/* Step button */}
-                            <CustomButton label={strings.global.step} onClick={this.finiteAutomata} disabled={!this.state.inProgress || this.state.speed !== 0} />
+                            <CustomButton label={strings.demoGlobal.step} onClick={this.finiteAutomata} disabled={!this.state.inProgress || +this.state.speed !== 0} />
 
                             {/* Finish button */}
-                            <CustomButton label={strings.global.finish} onClick={this.handleFinishClick} disabled={!this.state.inProgress} />
+                            <CustomButton label={strings.demoGlobal.finish} onClick={this.handleFinishClick} disabled={!this.state.inProgress} />
                         </Grid>
                     </FlexOne>
                     <FlexTwo>
@@ -149,18 +151,18 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
     };
 
     private speedChange = (e: any) => {
-        this.setState({ speed: +e.target.value });
+        this.setState({ speed: e.target.value });
+        this.speed = +e.target.value;
+            
+        clearTimeout(this.timeout);
 
-        if (+e.target.value === 0) {
-            clearTimeout(this.timeout);
-        }
-        else if (this.state.inProgress) {
-            this.setTimeout(this.finiteAutomata);
+        if (+e.target.value !== 0 && this.state.inProgress) {
+            this.finiteAutomata();
         }
     };
 
     private setTimeout = (func: () => void) => {
-        this.timeout = setTimeout(func, 5000 / this.state.speed);
+        this.timeout = setTimeout(func, 9000 / this.speed);
     }
 
     private handleStartClick = () => {
@@ -182,7 +184,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
         this.setState({
             tableVisible: true,
             inProgress: true,
-            result: '',
+            result: strings.demoGlobal.evaluation,
             table,
             highlightingOn: true
         });
@@ -191,7 +193,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
         this.doInnerLoop();
 
         // Check if auto play or step by step
-        if (this.state.speed !== 0) {
+        if (this.speed !== 0) {
             this.setTimeout(this.finiteAutomata);
         }
     }
@@ -220,7 +222,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
         }
 
         // if speed != 0, setTimeout is needed
-        const auto: boolean = this.state.speed !== 0;
+        const auto: boolean = this.speed !== 0;
 
         if (auto && this.nextAutomataState !== 'done') {
             this.setTimeout(this.finiteAutomata);
@@ -289,7 +291,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
     }
 
     private findMin = () => {
-        this.minPosition = MinPosition(
+        this.minPosition = minPosition(
             [this.state.table[this.outerCounter][this.innerCounter - 1], [this.outerCounter, this.innerCounter - 1]],
             [this.state.table[this.outerCounter - 1][this.innerCounter], [this.outerCounter - 1, this.innerCounter]],
             [this.state.table[this.outerCounter - 1][this.innerCounter - 1], [this.outerCounter - 1, this.innerCounter - 1]]
@@ -362,7 +364,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
                 // Last character is different, try all
                 // possibilities and find the minimum
                 else {
-                    table[i][j] = 1 + Min(table[i][j - 1],  // Insert 
+                    table[i][j] = 1 + min(table[i][j - 1],  // Insert 
                         table[i - 1][j],  // Remove 
                         table[i - 1][j - 1]); // Replace
                 }
@@ -437,7 +439,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
         this.setState({
             inProgress: false,
             highlightingOn: false,
-            currentState: strings.global.done,
+            currentState: strings.demoGlobal.done,
             result: `${strings.editDistance.demo.opNumber}: ${table[this.LENGTH1][this.LENGTH2]}, ${strings.editDistance.demo.usedOps}: ${operations.join(', ')}`,
         });
     }

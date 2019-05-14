@@ -52,15 +52,23 @@ export const dpRodSpace = (arrSize: number) => {
 
 export const rodExamples = [
     {
-        prices: [1,2],
+        prices: [1],
+        recTime: 2,
+        dpTime: 1,
     },
     {
-        prices: [2, 3, 4, 4, 6, 6, 11],
+        prices: [1,2,3,4],
+        recTime: 16,
+        dpTime: 10,
     },
     {
-        prices: [3, 5, 6, 7, 9 , 11, 12],
+        prices: [1,2,3,4,5,6,7,8,9,10],
+        recTime: 1024,
+        dpTime: 55,
     },
     {
-        prices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, ],
+        prices: [10,9,8,7,6,5,4,3,2,1],
+        recTime: 1024,
+        dpTime: 55,
     },
 ];

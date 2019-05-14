@@ -1,40 +1,24 @@
 // Strings for english localization
-
 export const english = {
     global: {
         intro: 'Introduction',
         dpLearn: 'DP learn',
         dynProg: 'Dynamic programming',
         recursiveSolution: 'Recursive algorithm',
-        recusionTree: 'Recursive calls tree',
         dynProgSolution: 'DP algorithm',
-        start: 'Start',
-        finish: 'Finish',
-        step: 'Next step',
         table: 'Table',
         tables: 'Tables',
-        evaluateStats: 'Evaluate statistics',
-        numberOfCalls: 'calls/iterations',
-        skipping: 'Skipping...',
         recursion: 'Recursion',
         dp: 'DP',
         invalidArg: 'Invalid input values!',
         noSolution: 'Problem has no solution.',
-        srcCode: 'Source code',
         timeComplex: 'Time complexity',
         spaceComplex: 'Space complexity',
-        speed: 'Speed',
-        stepping: 'Step by step',
         theory: 'Theory',
         demo: 'Demo',
         stats: 'Statistics',
-        theoreticValue: 'theoretical value',
-        tableComparison: 'Table comparison',
         string: 'String',
-        conclusion: 'Conclusion',
-        done: 'Done.',
-        similarProblems: 'Similar optimalization problems',
-        partOfApp: 'is a part of the app'
+        dots: '...'
     },
     menu: {
         coins: 'Minimum number of coins that make a given value',
@@ -45,6 +29,14 @@ export const english = {
     },
     theoryGlobal: {
         eg: 'For example:',
+        similarProblems: 'Similar optimization problems',
+        partOfApp: 'is a part of the app',
+        srcCode: 'Source code',
+        recusionTree: 'Recursive calls tree',
+        knapsackTitle: 'Knapsack problem',
+        knapsackHref: 'https://www.gatevidyalay.com/0-1-knapsack-problem-using-dynamic-programming-approach/',
+        longestIncSubseqTitle: 'Longest increasing subsequence',
+        longestIncSubseqHref: 'https://www.geeksforgeeks.org/longest-increasing-subsequence-dp-3/',
     },
     demoGlobal: {
         assigning: 'Assigning',
@@ -56,13 +48,36 @@ export const english = {
         start0: 'Assigning value 0 to position 0',
         candidates: 'Selection of candidates',
         best: 'Selection of the best',
+        evaluation: 'Evaluation in progress...',
+        speed1: '3 s',
+        speed2: '2 s',
+        speed3: '1 s',
+        speed4: '0.5 s',
+        speed: 'Step speed',
+        stepping: 'Step by step',
+        skipping: 'Skipping...',
+        done: 'Done.',
+        finish: 'Finish',
+        step: 'Next step',
+    },
+    statsGlobal: {
+        evaluateStats: 'Evaluate statistics',
+        numberOfCalls: 'number of function calls (recursive alg.) / number of loop iterations (DP alg.)',
+        dataStructureSize: 'size of data structures used by algorithm',
+        theoreticalValue: 'maximal theoretical number',
+        theoreticalValueShort: 'm. t. n.',
+        tableComparison: 'Table comparison',
+        conclusion: 'Conclusion',
+        x: 'X',
+        y: 'Y',
+        f: 'F'
     },
     intro: {
-        dpLearn: "Web application **DP learn** demonstrates principles and advantages of **Dynamic programming** **\"bottom-up\"(tabulation)** method on several optimalization problems. Each problem has its own *theory*, *demo* and *statistics* page.",
+        dpLearn: "Web application **DP learn** demonstrates principles and advantages of **Dynamic programming** **\"bottom-up\"(tabulation)** method on several optimization problems. Each problem has its own *theory*, *demo* and *statistics* page.",
         fitVutbr: 'FIT BUT',
         fitVutbrHref: 'https://www.fit.vutbr.cz/',
         whatIsDpTitle: 'What is dynamic programming?',
-        whatIsDpText1: 'Dynamic programming (**DP**) is a mathematical optimization method, which can be used to optimize inefficient recursive solution of a certain type of optimalization problems. Dynamic programming is also a computer programming method. Following are the two main properties of a problem that suggest that the given problem can be solved:',
+        whatIsDpText1: 'Dynamic programming (**DP**) is a mathematical optimization method, which can be used to optimize inefficient recursive solution of a certain type of optimization problems. Dynamic programming is also a computer programming method. Following are the two main properties of a problem that suggest that the given problem can be solved:',
         optSubstruct: '**optimal substructure** - results of subproblems can be used to obtain optimal solution of the given problem',
         repeating: '**overlapping subproblems** - function is recursively called again and again with the same parameters',
         whatIsDpText2: "In DP algorithm, results of subproblems are stored and that's why DP algorithm is much more efficient and faster than a naive recursive algorithm.",
@@ -115,8 +130,6 @@ export const english = {
                 input22: 'V = 4',
             },
             rod: 'Rod cutting',
-            knapsackTitle: 'Knapsack problem',
-            knapsackHref: 'https://www.gatevidyalay.com/0-1-knapsack-problem-using-dynamic-programming-approach/',
         },
         demo: {
             title: 'Minimum number of coins that make a given value - demo',
@@ -131,6 +144,8 @@ export const english = {
         stats: {
             title: 'Minimum number of coins that make a given value - statistics',
             brief: 'Enter value to make (from 0 to 20) and comma separated coins (max. 15).',
+            c: 'C',
+            v: 'V',
             conclusion: "There could be noticeable difference between theoretical and real number of recursive calls. It's because real number depends on concrete coin values. Teoretical equals real value when **C: { 1,2 }** and **V = 2**. Number of calls or iterations in DP algorithm is growing when useless coins are given. Resursive algorithm can be faster than DP algorithm when there is coin with same value as given value and values of other coins are not so small.",
         }
     },
@@ -162,7 +177,7 @@ export const english = {
                 i3: 'i = 3',
                 i4: 'i = 4'
             },
-            coins: 'Minimum number of coins that make a given value'
+            coins: 'Minimum number of coins that make a given value',
         },
         demo: {
             title: 'Rod cutting - demo',
@@ -178,6 +193,7 @@ export const english = {
         stats: {
             title: 'Rod cutting - statistics',
             brief: 'Enter max. 20 comma separated prices of lengths (lengths are 1, 2, 3, ...).',
+            p: 'P',
             conclusion: "There is no condition for recursive call, so theoretical and real number of recursive calls will be always the same. The actual prices doesn't matter. Number of calls depends only on number of given prices. DP algorithm is always faster than recursive algorithm. There is a condition in inner loop, so the real and theoretical number of iterations is different.",
         }
     },
@@ -214,9 +230,6 @@ export const english = {
             },
             longestPalindromTitle: 'Longest palindromic substring',
             longestPalindromHref: 'https://www.geeksforgeeks.org/longest-palindrome-substring-set-1/',
-            longestIncSubseqTitle: 'Longest increasing subsequence',
-            longestIncSubseqHref: 'https://www.geeksforgeeks.org/longest-increasing-subsequence-dp-3/',
-
         },
         demo: {
             title: 'Longest common substring - demo',
@@ -323,6 +336,8 @@ export const english = {
             freqsExample2: 'F = { 2, 4, 6, 8, 9, 10 }',
             matrixMultTitle: 'Matrix chain multiplication',
             matrixMultHref: 'http://www.personal.kent.edu/~rmuhamma/Algorithms/MyAlgorithms/Dynamic/chainMatrixMult.htm',
+            rnaTitle: 'RNA secondary structure prediction',
+            rnaHref: 'https://www.cs.cmu.edu/~02710/Lectures/RNALecture2015.pdf',
         },
         demo: {
             title: 'Optimal binary search tree - demo',

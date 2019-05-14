@@ -5,6 +5,7 @@ import TreeDemo from './TreeDemo';
 import TreeStats from './TreeStats';
 import TreeTheory from './TreeTheory';
 
+// Main component for Optimal binary search tree problem
 class Tree extends React.Component {
     public render() {
         return (

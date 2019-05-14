@@ -16,7 +16,7 @@ const styles = () => createStyles({
     },
 });
 
-// Simple container with padding
+// Div with padding
 class PaddingDiv extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;

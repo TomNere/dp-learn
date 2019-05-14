@@ -2,12 +2,12 @@ import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
 import { Grid, Typography } from '@material-ui/core';
-import { TreeDynCode, TreeRecCode, treeDpSpaceComplex, treeDpTimeComplex, treeFormula, treeRecSpaceComplex, treeRecTimeComplex } from 'src/strings/dpProblemsStrings/TreeStrings';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
+import { treeDpSpaceComplex, treeDpTimeComplex, treeDynCode, treeFormula, treeRecCode, treeRecSpaceComplex, treeRecTimeComplex } from 'src/strings/dpProblemsStrings/TreeStrings';
 
 import BottomMarginDiv from 'src/components/hoc/BottomMarginDiv';
 import Complexity from 'src/components/specialized/Complexity';
-import CustomTitle from 'src/components/customStyled/CustomTitle';
+import CustomTitle from 'src/components/hoc/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
 import Formula from 'src/components/hoc/Formula';
 import Img from 'src/components/hoc/PaddingImage';
@@ -26,6 +26,7 @@ import { strings } from 'src/strings/translations/strings';
 type AllProps =
     WithStyles<typeof globalStyles>;
 
+// Optimal binary search tree problem theory
 class TreeTheory extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;
@@ -85,7 +86,7 @@ class TreeTheory extends React.Component<AllProps> {
 
                             {/* Recursion Tree */}
                             <Typography variant={'h6'} className={classes.bottomMargin}>
-                                {strings.global.recusionTree}
+                                {strings.theoryGlobal.recusionTree}
                             </Typography>
                             <BottomMarginDiv>
                                 <Typography variant={'subtitle1'}>
@@ -96,7 +97,7 @@ class TreeTheory extends React.Component<AllProps> {
                             </BottomMarginDiv>
                             <Img src={Tree} alt="optimalTreeRecTree" width='740' padding='small' />
                             <SourceCode>
-                                {TreeRecCode}
+                                {treeRecCode}
                             </SourceCode>
                         </PaddingDiv>
                     </FlexOne>
@@ -163,16 +164,17 @@ class TreeTheory extends React.Component<AllProps> {
                             }
 
                             <SourceCode>
-                                {TreeDynCode}
+                                {treeDynCode}
                             </SourceCode>
                         </PaddingDiv>
                     </FlexOne>
                 </Grid>
                 <CustomTitle variant='h5'>
-                    {strings.global.similarProblems}
+                    {strings.theoryGlobal.similarProblems}
                 </CustomTitle>
                 <ul>
                     <li><b><a href={strings.tree.theory.matrixMultHref}>{strings.tree.theory.matrixMultTitle}</a></b></li>
+                    <li><b><a href={strings.tree.theory.rnaHref}>{strings.tree.theory.rnaTitle}</a></b></li>
                 </ul>
             </div>
         );

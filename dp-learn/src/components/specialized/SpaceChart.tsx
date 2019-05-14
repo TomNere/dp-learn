@@ -50,7 +50,7 @@ class SpaceChart extends React.Component<AllProps> {
         return (
             <Paper className={classes.bottomMargin}>
                 <Typography align={'center'} className={classes.title} variant={'h6'}>
-                    {global.spaceComplex}
+                    {global.spaceComplex} - {strings.statsGlobal.dataStructureSize}
                 </Typography>
                 <Chart data={data}>
                     <ValueScale name='rec' />

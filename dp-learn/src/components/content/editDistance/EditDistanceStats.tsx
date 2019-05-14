@@ -9,7 +9,7 @@ import ChartsAndTable from 'src/components/specialized/ChartsAndTable';
 import Complexity from 'src/components/specialized/Complexity';
 import CustomButton from 'src/components/customStyled/CustomButton';
 import CustomTextField from 'src/components/customStyled/CustomTextField';
-import CustomTitle from 'src/components/customStyled/CustomTitle';
+import CustomTitle from 'src/components/hoc/CustomTitle';
 import FlexOne from 'src/components/hoc/FlexOne';
 import FlexTwo from 'src/components/hoc/FlexTwo';
 import { Grid } from '@material-ui/core';
@@ -25,6 +25,7 @@ interface IEditDistanceStatsState {
     statsVisible: boolean
 }
 
+// Edit distance problem stats
 class EditDistanceStats extends React.Component<any, IEditDistanceStatsState> {
     private spaceChartStats: ISpaceChartData[];
     private timeChartStats: ITimeChartData[];
@@ -54,7 +55,7 @@ class EditDistanceStats extends React.Component<any, IEditDistanceStatsState> {
                             <CustomTextField label={`${strings.global.string} X (max. 15)`} value={this.state.stringX} onChange={this.handlestrXChange} />
                             <CustomTextField label={`${strings.global.string} Y (max. 15)`} value={this.state.stringY} onChange={this.handlestrYChange} />
                         </Grid>
-                        <CustomButton onClick={this.drawStats} label={strings.global.evaluateStats} />
+                        <CustomButton onClick={this.drawStats} label={strings.statsGlobal.evaluateStats} />
                     </FlexOne>
                     <FlexTwo>
                         <Grid container={true} direction='row'>
@@ -68,7 +69,7 @@ class EditDistanceStats extends React.Component<any, IEditDistanceStatsState> {
                 {this.state.statsVisible &&
                     <div>
                         <CustomTitle variant='h5'>
-                            {strings.global.conclusion}
+                            {strings.statsGlobal.conclusion}
                         </CustomTitle>
                         <Markdown source={strings.editDistance.stats.conclusion} />
                     </div>
@@ -111,7 +112,7 @@ class EditDistanceStats extends React.Component<any, IEditDistanceStatsState> {
         dpEditDistance(strX, strY, length1, length2, calls);
         dpCalls = calls.value;
 
-        name = `'${strX}', '${strY}'`;
+        name = `${strings.statsGlobal.x}: '${strX}', ${strings.statsGlobal.y}: '${strY}'`;
         data = {
             name,
             recTheorTime: recEditDistanceTime(length1, length2),
@@ -133,21 +134,12 @@ class EditDistanceStats extends React.Component<any, IEditDistanceStatsState> {
             strY = example.strY;
             length2 = strY.length;
 
-            recursiveEditDistance(strX, strY, length1, length2, calls);
-
-            recCalls = calls.value;
-
-            calls = { value: 0 };
-            dpEditDistance(strX, strY, length1, length2, calls);
-
-            dpCalls = calls.value;
-
-            name = `'${strX}', '${strY}'`;
+            name = `${strings.statsGlobal.x}: '${strX}', ${strings.statsGlobal.y}: '${strY}'`;
             data = {
                 name,
                 recTheorTime: recEditDistanceTime(length1, length2),
-                recTime: recCalls,
-                dpTime: dpCalls,
+                recTime: example.recTime,
+                dpTime: example.dpTime,
                 dpTheorTime: dpEditDistanceTime(length1, length2),
                 dpSpace: dpEditDistanceSpace(length1, length2),
                 recSpace: recEditDistanceSpace(length1, length2)

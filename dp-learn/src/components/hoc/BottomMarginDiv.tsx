@@ -18,8 +18,7 @@ const styles = (theme: Theme) => createStyles({
     },
 });
 
-// Container with flex row displayed content and bottom margin
-// Takes multiple children
+// Div with bottom margin
 class BottomMarginDiv extends React.Component<AllProps> {
     public render() {
         const { classes } = this.props;

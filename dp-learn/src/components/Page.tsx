@@ -14,8 +14,6 @@ import Tree from 'src/components/content/tree/Tree';
 import { darkColor } from 'src/styles/globalStyles';
 import { strings } from 'src/strings/translations/strings';
 
-// import Substring from './examples/Substring';
-
 type AllProps =
     WithStyles<typeof styles>;
 
@@ -38,6 +36,7 @@ const styles = (theme: Theme) => createStyles({
     },
     content: {
         flexGrow: 1,
+        overflowX: 'hidden'
     },
     toolbar: theme.mixins.toolbar,
     selectedItem: {
