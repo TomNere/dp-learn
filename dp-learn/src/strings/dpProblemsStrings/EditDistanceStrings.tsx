@@ -1,3 +1,7 @@
+// author: Tomáš Nereča, 2019
+
+// Codes are inspirated by https://www.geeksforgeeks.org/edit-distance-dp-5/
+
 export const editDistRecCode = `// Global variables
 char* X;
 char* Y;

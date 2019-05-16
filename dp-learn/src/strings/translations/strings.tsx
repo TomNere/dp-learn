@@ -1,3 +1,5 @@
+// author: Tomáš Nereča, 2019
+
 import LocalizedStrings from 'react-localization';
 import { english } from './english';
 import { slovak } from './slovak';

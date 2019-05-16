@@ -1,3 +1,5 @@
+// author: Tomáš Nereča, 2019
+
 import * as React from 'react';
 
 import  SpaceChart, { ISpaceChartData } from './SpaceChart';

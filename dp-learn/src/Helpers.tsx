@@ -1,3 +1,5 @@
+// author: Tomáš Nereča, 2019
+
 // Convert numbers in string to number array
 export const getNumbers = (str: string, sorted: boolean) => {
     const numbers: number[] = [];

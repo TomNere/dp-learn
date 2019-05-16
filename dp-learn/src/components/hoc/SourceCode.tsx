@@ -1,3 +1,5 @@
+// author: Tomáš Nereča, 2019
+
 import 'src/styles/prism.css';
 
 import * as Prism from 'prismjs';

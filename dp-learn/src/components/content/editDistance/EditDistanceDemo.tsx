@@ -1,3 +1,7 @@
+// author: Tomáš Nereča, 2019
+
+// Codes for optimization problem solutiom are inspirated by https://www.geeksforgeeks.org/edit-distance-dp-5/
+
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
@@ -386,8 +390,9 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
         this.greenCells = [];
         const operations: string[] = [];
 
-        // Inspirated by
-        // https://github.com/mission-peace/interview/blob/master/src/com/interview/dynamic/EditDistance.java
+        /*****************************************************************************************************************/
+        // Inspirated by https://github.com/mission-peace/interview/blob/master/src/com/interview/dynamic/EditDistance.java
+        
         let i = this.LENGTH1;
         let j = this.LENGTH2;
 
@@ -435,6 +440,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
                 j -= 1;
             }
         }
+        /****************************************************************************************************/
 
         this.setState({
             inProgress: false,

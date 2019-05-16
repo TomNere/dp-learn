@@ -1,3 +1,5 @@
+// author: Tomáš Nereča, 2019
+
 import * as React from 'react';
 
 import { Table, TableBody, TableCell, TableRow } from '@material-ui/core';

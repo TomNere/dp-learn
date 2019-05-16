@@ -1,3 +1,7 @@
+// author: Tomáš Nereča, 2019
+
+// Codes are inspirated by https://www.geeksforgeeks.org/cutting-a-rod-dp-13/
+
 export const rodRecCode = `// Return best obtainable price
 // prices[] - array of prices of rod length 1,2,3, ...
 // arrSize - number of prices

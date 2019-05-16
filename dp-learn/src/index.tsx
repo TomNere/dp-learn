@@ -1,3 +1,5 @@
+// author: Tomáš Nereča, 2019
+
 import './styles/index.css';
 
 import * as React from 'react';

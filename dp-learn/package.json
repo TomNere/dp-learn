@@ -1,27 +1,35 @@
 {
+  "author": {
+    "name": "Tomáš Nereča"
+  },
   "name": "dp-learn",
-  "version": "0.9.1",
+  "version": "1.0.0",
   "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tondo8881/ibt.git"
+  },
+  "license": "MIT",
+  "description": "Web application DP learn demonstrates principles and advantages of Dynamic programming bottom-up(tabulation) method on several optimization problems. Each problem has its own theory, demo and statistics page.",
   "dependencies": {
     "@devexpress/dx-react-chart": "^1.10.1",
     "@devexpress/dx-react-chart-material-ui": "^1.10.1",
     "@devexpress/dx-react-core": "^1.10.1",
-    "@material-ui/core": "^3.9.1",
+    "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
-    "@types/jss": "^9.5.7",
-    "@types/prismjs": "^1.9.0",
+    "@types/jss": "^9.5.8",
+    "@types/prismjs": "^1.16.0",
     "@types/universal-cookie": "^2.2.0",
-    "prismjs": "^1.15.0",
+    "prismjs": "^1.16.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-jss": "^8.6.1",
     "react-localization": "^1.0.13",
-    "react-markdown": "^4.0.6",
+    "react-markdown": "^4.0.8",
     "react-mathjax2": "0.0.2",
-    "react-scripts-ts": "4.0.8",
-    "save": "^2.3.3",
+    "react-scripts-ts": "^4.0.8",
     "typeface-roboto": "0.0.54",
-    "typescript": "^3.3.3",
+    "typescript": "^3.4.5",
     "universal-cookie": "^3.1.0"
   },
   "scripts": {
@@ -30,9 +38,9 @@
     "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
-    "@types/node": "^10.12.19",
-    "@types/react": "^16.7.22",
-    "@types/react-dom": "^16.0.11"
+    "@types/node": "^10.14.6",
+    "@types/react": "^16.8.17",
+    "@types/react-dom": "^16.8.4"
   },
   "browserslist": [
     ">0.2%",

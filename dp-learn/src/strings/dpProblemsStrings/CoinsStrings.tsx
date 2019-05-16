@@ -1,3 +1,8 @@
+// author: Tomáš Nereča, 2019
+
+// Codes are inspirated by https://www.geeksforgeeks.org/find-minimum-number-of-coins-that-make-a-change/
+// and https://ide.geeksforgeeks.org/GRzz5RFtqr
+
 export const coinsRecCode = `// Returns number of coins to make given value
 // coins[] - table of different coins
 // arrSize - size of coins[]

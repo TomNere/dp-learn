@@ -1,3 +1,5 @@
+// author: Tomáš Nereča, 2019
+
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
@@ -63,7 +65,7 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
 
                     <FlexTwo>
                         <Grid container={true} direction='row'>
-                            <Complexity time={treeRecTimeComplex} space={treeRecSpaceComplex} recOrDp='rec' />
+                            <Complexity time={treeRecTimeComplex} space={treeRecSpaceComplex} recOrDp='rec' theta={true} />
                             <Complexity time={treeDpTimeComplex}  space={treeDpSpaceComplex} recOrDp='dp' />
                         </Grid>
                     </FlexTwo>

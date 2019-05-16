@@ -1,3 +1,7 @@
+// author: Tomáš Nereča, 2019
+
+// Codes for optimization problem solutiom are inspirated by https://www.geeksforgeeks.org/optimal-binary-search-tree-dp-24/
+
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 

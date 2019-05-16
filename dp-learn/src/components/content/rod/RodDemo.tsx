@@ -1,3 +1,7 @@
+// author: Tomáš Nereča, 2019
+
+// Codes for optimization problem solutiom are inspirated by https://www.geeksforgeeks.org/cutting-a-rod-dp-13/
+
 import * as React from 'react';
 
 import { Grid, TableCell, TableRow } from '@material-ui/core';

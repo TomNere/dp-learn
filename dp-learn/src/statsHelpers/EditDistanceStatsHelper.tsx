@@ -1,3 +1,7 @@
+// author: Tomáš Nereča, 2019
+
+// Codes are inspirated by https://www.geeksforgeeks.org/edit-distance-dp-5/
+
 import { ISimpleObjectParameter } from 'src/statsHelpers/CoinsStatsHelper';
 import { min } from 'src/helpers';
 

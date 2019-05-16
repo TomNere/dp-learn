@@ -1,3 +1,5 @@
+// author: Tomáš Nereča, 2019
+
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
@@ -34,8 +36,8 @@ class EditDistanceStats extends React.Component<any, IEditDistanceStatsState> {
     public constructor(props: any) {
         super(props)
         this.state = {
-            stringX: "AdRemovee",
-            stringY: "AddRemove",
+            stringX: "AdRemo",
+            stringY: "AddRe",
             statsVisible: false
         }
     }

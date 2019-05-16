@@ -1,3 +1,5 @@
+// author: Tomáš Nereča, 2019
+
 import { Theme } from "@material-ui/core";
 import { createStyles } from "@material-ui/core/styles";
 

@@ -1,3 +1,7 @@
+// author: Tomáš Nereča, 2019
+
+// Codes are inspirated by https://www.geeksforgeeks.org/cutting-a-rod-dp-13/
+
 import { ISimpleObjectParameter } from 'src/statsHelpers/CoinsStatsHelper';
 
 export const recursiveRod = (prices: number[], arrSize: number, calls: ISimpleObjectParameter) => {

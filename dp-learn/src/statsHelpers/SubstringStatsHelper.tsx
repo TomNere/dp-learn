@@ -1,3 +1,7 @@
+// author: Tomáš Nereča, 2019
+
+// Codes are inspirated by https://www.geeksforgeeks.org/longest-common-substring-dp-29/
+
 import { ISimpleObjectParameter } from 'src/statsHelpers/CoinsStatsHelper';
 
 export const recursiveSubstring = (strX: string, strY: string, length1: number, length2: number, result: number, calls: ISimpleObjectParameter) => {

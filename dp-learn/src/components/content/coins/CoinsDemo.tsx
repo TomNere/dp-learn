@@ -1,3 +1,8 @@
+// author: Tomáš Nereča, 2019
+
+// Codes for optimization problem solutiom are inspirated by https://www.geeksforgeeks.org/find-minimum-number-of-coins-that-make-a-change/
+// and https://ide.geeksforgeeks.org/GRzz5RFtqr
+
 import * as React from 'react';
 
 import { Grid, TableCell, TableRow } from '@material-ui/core';

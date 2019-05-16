@@ -1,3 +1,7 @@
+// author: Tomáš Nereča, 2019
+
+// Codes are inspirated by https://www.geeksforgeeks.org/optimal-binary-search-tree-dp-24/
+
 import { ISimpleObjectParameter } from 'src/statsHelpers/CoinsStatsHelper';
 import { freqArraySum } from 'src/helpers';
 
@@ -95,8 +99,15 @@ export const treeExamples = [
         dpTime: 210,
     },
     {
+        freqs: [1,2,3,4,55,66,77,88,99,100],
+        recTime: 32805,
+        dpTime: 210,
+    },
+    {
         freqs: [1,2,3,4,5,6,7,8,9,10,11],
         recTime: 98415,
         dpTime: 275,
     },
 ];
+
+

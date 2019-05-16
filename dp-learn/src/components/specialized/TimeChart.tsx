@@ -1,3 +1,5 @@
+// author: Tomáš Nereča, 2019
+
 import * as React from 'react';
 
 import { Animation, ValueScale } from '@devexpress/dx-react-chart';

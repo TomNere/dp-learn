@@ -1,3 +1,5 @@
+// author: Tomáš Nereča, 2019
+
 // Strings for english localization
 export const english = {
     global: {
@@ -73,22 +75,22 @@ export const english = {
         f: 'F'
     },
     intro: {
-        dpLearn: "Web application **DP learn** demonstrates principles and advantages of **Dynamic programming** **\"bottom-up\"(tabulation)** method on several optimization problems. Each problem has its own *theory*, *demo* and *statistics* page.",
+        dpLearn: "Web application **DP learn** is focused on a computer programming method called **dynamic programming**, in the concrete it's **\"bottom-up\" (tabulation)** variant. Principles and advantages of dynamic programming are demonstrated on several optimization problems. Each problem has its own *theory*, *demo* and *statistics* page.",
         fitVutbr: 'FIT BUT',
         fitVutbrHref: 'https://www.fit.vutbr.cz/',
         whatIsDpTitle: 'What is dynamic programming?',
-        whatIsDpText1: 'Dynamic programming (**DP**) is a mathematical optimization method, which can be used to optimize inefficient recursive solution of a certain type of optimization problems. Dynamic programming is also a computer programming method. Following are the two main properties of a problem that suggest that the given problem can be solved:',
+        whatIsDpText1: 'Dynamic programming (**DP**) is a mathematical optimization method, which can be used to optimize inefficient recursive solution of a certain type of optimization problems. Dynamic programming is also a computer programming method. Following are the two main properties of a problem that suggest that the given problem can be solved using dynamic programming:',
         optSubstruct: '**optimal substructure** - results of subproblems can be used to obtain optimal solution of the given problem',
         repeating: '**overlapping subproblems** - function is recursively called again and again with the same parameters',
-        whatIsDpText2: "In DP algorithm, results of subproblems are stored and that's why DP algorithm is much more efficient and faster than a naive recursive algorithm.",
+        whatIsDpText2: "In DP algorithm, optimal solution is built by using results of subproblems stored in array. Each subproblem is solved only one time. That's why DP algorithm is much more efficient and faster than a naive recursive algorithm.",
         partsTitle: 'Demonstration of principles and advantages on optimization problems',
-        partsText: 'Application contains 5 optimization problems, which can be solved by dynamic programming. Each problem has these 3 tabs',
+        partsText: 'Application contains 5 optimization problems, which can be solved using dynamic programming. After selecting one them, these 3 tabs are available:',
         theoryTitle: 'Theory',
-        theoryText: "This tab provides problem definition with concrete example followed by recursive and DP algorithms. After algorithm explanation is given its time and space complexity. Space complexity of DP algorithm doesn't contain helping structures for full solution building. Under recursive algorithm is listed the recursive calls tree and under DP algorithm the tables with values selection. Source codes in C language contains one function solving the problem. Main function and helpers are easy to add. At the end, examples of similar optimization problems (table building is similar) are stated.",
+        theoryText: "This tab provides problem definition with concrete example followed by recursive and DP algorithms. After algorithm explanation is given its time and space complexity. Complexity is expressed by Big-Omicron notation which defines upper bound - maximal theoretical value. Space complexity of DP algorithm doesn't contain helping structures for full solution building. Under recursive algorithm is listed a recursive calls tree and under DP algorithm a tables with values selection. Source codes in C language contains one function solving the problem and global variables. Often constants from **limits.f** are used. Main function and helpers are easy to add. At the end, examples of similar optimization problems (table building is similar) are stated.",
         demoTitle: 'Demo',
-        demoText: 'After the button is clicked, DP algorithm starts. You can choose speed or select "step by step". After the table is filled, value of optimal solution and also full solution shows up (in *Optimal binary search tree* only solution value is given). Also the formula describing values evaluation is given.',
+        demoText: 'After the button is clicked, **\"bottom-up\" (tabulation)** variant of DP algorithm starts. You can choose speed or select "step by step" variant. After the table is filled, value of optimal solution and also full solution shows up (in *Optimal binary search tree* only solution value is given). Also the formula describing values evaluation is given.',
         statsTitle: 'Statistics',
-        statsText: 'After the button is clicked, charts and table comparing complexity of recursive and DP algorithm shows up. U časovej zložitosti je uvedená maximálna teoretická hodnota podľa funkcie zložitosti a skutočný počet rekurzívnych volaní alebo behov cykla pri DP algoritme. Priestorová zložitosť je vypočítaná z funkcie zložitosti. Okrem štatistík pre zadaný vstup aplikácia obsahuje niekoľko "vzorových" vstupov. Pod štatistikami sa nachádza ich slovné zhodnotenie.',
+        statsText: 'After the button is clicked, charts and table comparing complexity of recursive and DP algorithm shows up. Under time complexity, both maximal theoretical number of calls (recursive algorithm) or number of iterations (DP algorithm) and also real number are stated. Space complexity is computed from complexity function. Statistics for some predefined input values also shows up. At the end, you can find conclusion of the statistics.',
         references: 'References',
         geeksTitle: 'GeeksforGeeks',
         geeksHref: 'https://www.geeksforgeeks.org/',
@@ -121,8 +123,8 @@ export const english = {
                 recSpace: '**Space complexity** is pretty obvious - **N + 1**, where **N** is the number of coins and **1** is needed to store given value **V**.',
             },
             dp:{
-                brief: 'Table is 1-dimensional array in this case. All values in array of size **V + 1** are set to **INT_MAX** at start excepting **0** at **0.** index. New value of the table cell is incremented value of some of the previous cells. Distance between cell which value is computed and cell which value is used depends on coins. If value is **4** for and there is coin **4**, max distance is **4**. Value of the last cell is the optimal solution at the end. For full solution building we need additional array.',
-                dpTime: 'Due to nested loop in algorithm, **time complexity** is polynomic.',
+                brief: "Table is 1-dimensional array in this case. All values in array of size **V + 1** are set to **INT_MAX** at start excepting **0** at **0.** index. That's because for value 0, solution is also 0. New value of the table cell is incremented value of some of the previous cells. Distance between cell which value is computed and cell which value is used depends on coins. If value is **4** for and there is coin with value of **4**, max distance is **4**. At the end of algorithm, each cell of table contains optimal solution for value of index in array. So, value of the last cell is the optimal solution of given problem at the end. For full solution building we need additional array, where used coins are stored.",
+                dpTime: 'Due to nested loop in algorithm, **time complexity** is polynomic - number of coins multiplied by value.',
                 dpSpace: 'Additional space compared to recursive algorithm is needed to storing values in table.',
                 input11: 'C = { 1, 2, 5 }',
                 input12: 'V = 4',
@@ -133,7 +135,7 @@ export const english = {
         },
         demo: {
             title: 'Minimum number of coins that make a given value - demo',
-            brief: 'Enter value to make (from 0 to 20) and comma separated coins (max. 15). Table columns symbolize coin values. First row will contain solutions for all values at the end. Second row is full solution building helper. Value of a cell in second row is value of highest used coin.',
+            brief: 'Enter value to make (from 0 to 20) and comma separated coins (max. 15). Table columns symbolize values which optimal solution is computed for. First row will contain solutions for all values at the end. Second row is full solution building helper. Value of a cell in second row is value of highest used coin.',
             isNeeded: 'Number of coins',
             evalCoinsFor: 'Evaluating coins needed for value ',
             usedCoin: 'used coin',
@@ -154,7 +156,7 @@ export const english = {
         theory: {
             title: 'Rod cutting - theory',
             brief: {
-                b1: 'We have rod of length **L**. Determine the maximum value obtainable by cutting up the rod and selling the pieces. Prices of pieces of lengths 1, 2 etc. are **P = { p1, p2, p3, ..., pL}**.',
+                b1: 'We have rod of length **L**. Determine the maximum value obtainable by cutting up the rod and selling the pieces. Prices of pieces of lengths 1, 2, ..., L are **P = { p1, p2, p3, ..., pL}**.',
                 input: 'P = { 1, 3, 5 }',
                 b2: 'How can we cut up the rod?',
                 output1: '3 = 1 + 1 + 1 => prices: 1 + 1 + 1 = 3',
@@ -169,8 +171,8 @@ export const english = {
                 input: 'P = { 1, 3, 5 }'
             },
             dp: {
-                brief: 'Best obtainable prices for all lengths will be stored in one-dimensional array (so the table is array). New value of the table cell can be evaluated from all of the previous cells. We need to get sum of the maximum prices of lengths to get maximum price for next length. For full solution building we need additional array.',
-                dpTime: 'Due to nested loop in algorithm, **time complexity** is polynomic.',
+                brief: 'Best obtainable prices for all lengths will be stored in one-dimensional array (so the table is array). New value of the table cell can be evaluated from all of the previous cells. We need to get sum of the maximum prices of lengths to get maximum price for next length. For full solution building we need additional array, where used lengths are stored.',
+                dpTime: 'Due to nested loop in algorithm, **time complexity** is polynomic - length multiplied by itself.',
                 dpSpace: 'Additional space compared to recursive algorithm is needed to storing values in table.',
                 outerLoop: 'Outer loop',
                 input: 'P = { 1, 5, 6, 6, 9 }',
@@ -194,32 +196,32 @@ export const english = {
             title: 'Rod cutting - statistics',
             brief: 'Enter max. 20 comma separated prices of lengths (lengths are 1, 2, 3, ...).',
             p: 'P',
-            conclusion: "There is no condition for recursive call, so theoretical and real number of recursive calls will be always the same. The actual prices doesn't matter. Number of calls depends only on number of given prices. DP algorithm is always faster than recursive algorithm. There is a condition in inner loop, so the real and theoretical number of iterations is different.",
+            conclusion: "There is no condition for recursive call in recursive algorithm, so theoretical and real number of recursive calls will be always the same (as you can see in statistics). The actual prices doesn't matter. Number of calls depends only on number of given prices. DP algorithm is always faster than recursive algorithm. There is a condition in inner loop, so the real and theoretical number of iterations is different.",
         }
     },
     substring: {
         theory: {
             title: 'Longest common substring - theory',
             brief: {
-                b1: 'We have two strings, **X** with length **L1** and **Y** with length **L2**. What is the longest common substring of this strings?',
+                b1: 'We have two strings, **X** with length **L1** and **Y** with length **L2**. What is the longest common substring?',
                 input1: "X = 'Unicasting'",
                 input2: "Y = 'unitTesting'",
-                b2: 'What is the longest common substring?',
+                b2: 'What is the longest common substring of these two strings?',
                 strX: "X = 'U|ni|ca|s||**ting**|'",
                 strY: "Y = 'u|ni|tTe|s||**ting**|'",
-                b3: 'As you can see, the strings have several common substrings. The longest is **ting** with length **4**.',
-                b4:'A simple solution is to take all substrings from **X** and for every substring check if it is a substring in **Y**. There will be **O(L1 ^ 2)** substrings in **X**. Using the **Knuth-Morris-Pratt** algorithm, time complexity of this solution would be **O((L1 ^ 2) * L2)**.',
+                b3: 'As you can see, the strings have several common substrings. The longest is **ting** with length of **4** characters.',
+                b4:'A simple solution is to take all substrings from **X** and for every substring check if it is a substring in **Y**. There will be **O(L1 ^ 2)** substrings in **X**. By using the **Knuth-Morris-Pratt** algorithm for searching substring in string, time complexity of this solution would be **O((L1 ^ 2) * L2)**.',
             },
             recursion:{
                 brief: 'If **L1** or **L2** is **0**, result is also **0** (no substring). If algorithm find equal characters, result is incremented and algorithm continues with next characters. If characters are different, function is called recursively for next character in **X** and next character in **Y** and maximum result is taken. This algorithm is simple but very inefficient.',
                 recTime: '**Time complexity** is growing exponentially with lengths of strings.',
-                recSpace: '**Space complexity** is sum of lengths.',
+                recSpace: '**Space complexity** is sum of lengths of both strings.',
                 input1: "X = 'hw'",
                 input2: "Y = 'sw'",
             },
             dp: {
-                brief: "Algorithm is searching for longest common suffix for all substrings of both strings and stores these lengths in a table. If characters in col and row are different, **0** is stored to the cell. If characters are equal, suffix is incremented (previous value on diagonal) or **1** is assigned if it's a first character in string. We need variables to store position of longest suffix to build full solution.",
-                dpTime: '**Time complexity** is polynomic - filling the table **L1 * L2**.',
+                brief: "Algorithm is searching for longest common suffix for all substrings of both strings and stores these lengths in a two-dimensional array (actual table). If characters in col and row are different, **0** is assigned into the cell. If characters are equal, suffix is incremented (previous value on diagonal) or **1** is assigned if it's a first character in string. We need variables to store position of longest suffix to build full solution. Thanks to this variables we know position of the longest suffix and its length.",
+                dpTime: '**Time complexity** is polynomic - filling up the table **L1 * L2**.',
                 dpSpace: '**Space complexity** is sum of lengths + table size.',
                 input1: "X = 'dog'",
                 input2: "Y = 'frog'",
@@ -243,39 +245,39 @@ export const english = {
         stats: {
             title: 'Longest common substring - statistics',
             brief: 'Enter 2 strings - **X** a **Y** with max. length 15 characters.',
-            conclusion: 'Theoretical and real number of recursive calls is quite different. Number of recursive calls is pretty big even if strings are the same. Recursive algorithm is very inefficient. Theoretical and real number of iteration is the same because all characters in strings are compared.',
+            conclusion: 'Considering the statistics, we can say that function of time complexity of recursive algorithm is only upper bound. Theoretical and real number of recursive calls is quite different even if strings has no common substring. Number of recursive calls is pretty big even if strings are the same. Recursive algorithm is very inefficient. Theoretical and real number of iteration is the same because all characters in string **X** are compared to characters in string **Y**.',
         }
     },
     editDistance: {
         theory: {
             title: 'Edit distance - theory',
             brief: {
-                b1: 'We have two strings, **X** with length **L1** and **Y** with length **L2**. There are 3 operations: **insert**, **remove** and **replace**. We must convert **X** to **Y** using the minimum number of operations.',
+                b1: 'We have two strings, **X** with length **L1** and **Y** with length **L2**. There are 3 operations: **insert**, **remove** and **replace**. Costs of all operations are the same. We must convert **X** to **Y** using the minimum number of operations. Which operations we need to use?',
                 input1: "X = 'AdRemovee'",
                 input2: "Y = 'AddRemove'",
-                b2: 'Which operations we need to perform on string **X**?',
+                b2: 'Which operations we need to execute on string **X**?',
                 strX: "X = 'Ad|**+**|Remove|**-**|e'",
                 strY: "Y = 'AddRemove'",
-                b3: 'We need to **insert** character d and **remove** character e',
+                b3: 'We need to **insert** character d and **remove** character e.',
             },
             recursion: {
-                brief1: "Recursive algorithm compares string's characters from right to left. If last character in **X** is equal to last character in **Y**, characters are ignored and algorithm continues with lengths **L1 - 1** and **L2 - 2**. If characters are different (or string is empty), there are 3 recursive calls that symbolize 3 operations:",
-                op1: '**Insert** - continue recursively for lengths **L1 a L2 - 1**.',
-                op2: '**Remove** - continue recursively for lengths **L1 - 1 a L2**.',
-                op3: '**Replace** - continue recursively for lengths **L1 - 1 a L2 - 1**.',
+                brief1: "Recursive algorithm compares characters of strings from right to left. If last character in **X** is equal to last character in **Y**, characters are ignored and algorithm continues with lengths **L1 - 1** and **L2 - 2**. If characters are different (or string is empty), there are 3 recursive calls that symbolize 3 operations:",
+                op1: '**Insert** - continue recursively for lengths **L1 and L2 - 1**.',
+                op2: '**Remove** - continue recursively for lengths **L1 - 1 and L2**.',
+                op3: '**Replace** - continue recursively for lengths **L1 - 1 and L2 - 1**.',
                 brief2: 'Operation which lead to optimal solution is selected.',
                 recTime: '**Time complexity** is growing exponentially with lengths of strings. 3 operations - base is **3**.',
-                recSpace: '**Space complexity** is sum of lengths.',
+                recSpace: '**Space complexity** is sum of lengths of both strings.',
                 input1: "X = 'a'",
                 input2: "Y = 'bbcd'",
             },
             dp: {
-                brief1: "Recursive algorithm compares string's from left to right. It starts with strings of length 0 and continues with all combinations of string's lengths. If string **X** is empty, we need to insert all characters from string **Y** - value in cell is column number. If string **Y** is empty, we need to remove all characters from string **X** - value in cell is row number. If characters are equal, previous value from diagonal is taken - no operation needed. If characters are different, minimum value from following cells is incremented:",
+                brief1: "DP algorithm compares strings from left to right. It starts with strings of length 0 and continues with all combinations of  lengths of strings. If string **X** is empty, we need to insert all characters from string **Y** - value in cell is column number. If string **Y** is empty, we need to remove all characters from string **X** - value in cell is row number. If characters are equal, previous value from diagonal is taken - no operation needed. If characters are different, minimum value from following cells is incremented:",
                 dpOp1: 'previous column - **insert**',
                 dpOp2: 'previous row - **remove**',
                 dpOp3: 'previous value from diagonal - **replace**',
-                brief2: 'To build full solution we need perform special backtrace.',
-                dpTime: '**Time complexity** is polynomic - filling the table **L1 + 1** * **L2 + 2**.',
+                brief2: 'To build full solution we need to perform special backtrace.',
+                dpTime: '**Time complexity** is polynomic - filling the table **(L1 + 1)** * **(L2 + 2)**.',
                 dpSpace: '**Space complexity** is sum of lengths + table size.',
                 input1: "X = 'AdRemovee'",
                 input2: "Y = 'AddRemove'",
@@ -304,7 +306,7 @@ export const english = {
         stats: {
             title: 'Edit distance - statistics',
             brief: 'Enter 2 strings - **X** a **Y** with max. length 15 characters.',
-            conclusion: 'If very short or empty strings are given, recursive algorithm is faster than DP algorithm, but his time complexity dramatically grows with lengths of strings. Sum of lengths in last example is 20 and real number of recursive calls has **8 digits**. This number is huge in comparison to number of iteration (**121**) in DP algorithm. Real number of iterations equals to theoretical value because all table cells are filled in.',
+            conclusion: 'Considering the statistics, we can say that function of time complexity of recursive algorithm is only upper bound. If very short or empty strings are given, recursive algorithm is faster than DP algorithm, but its time complexity is growing with lengths of strings, especially if strings are not so similar. Recursive algorithm is also faster when equal strings are given. Real number of iterations equals to theoretical value because all table cells are filled in.',
         }
     },
     tree: {
@@ -314,20 +316,20 @@ export const english = {
         theory: {
             title: 'Optimal binary search tree - theory',
             brief: {
-                b1: 'We have a **sorted** array of search keys **K = { k1, k2, k3, ..., kN }** (**N** is number of keys) and an array of frequency counts **F = { f1, f2, f3, ..., fN }**. We must build the optimal binary search tree which contains all keys.',
+                b1: "We have a **sorted** array of search keys **K = { k1, k2, k3, ..., kN }** (**N** is number of keys) and an array of frequency counts **F = { f1, f2, f3, ..., fN }**. We must build an optimal binary search tree which contains all keys. Cost of search is multiplied by level of tree - 1. level = number of search \\* 1, 2. level = number of search \\* 2 etc.",
                 b2: 'What is cost of the tree a what is the actual tree?',
                 b3: 'Total cost of the first tree is **44**. Total cost of the second tree is **36**. So, second tree is optimal.',
             },
             recursion: {
-                brief: 'Recursive algorithm will try all keys as root of tree, root of subtree etc. Total cost will be evaluated. If every subtree is optimal, the tree is optimal too.',
-                recTime: '**Time complexity** is growing exponentially with number of search keys.',
-                recSpace: "**Space complexity** is number of keys. Keys doesn't matter when array is sorted.",
+                brief: 'Recursive algorithm will try all keys as root of tree, root of subtree etc. Total cost will be evaluated for each tree. If every subtree is optimal, the tree is optimal too.',
+                recTime: '**Time complexity** is given by Theta notation - exact value, not upper bound as in Omicron notation. Function defines number of tree which can be created.',
+                recSpace: "**Space complexity** is number of keys. Actual keys doesn't matter when array is sorted.",
                 input: 'F = { 1, 2, 3 }',
             },
             dp: {
-                brief1: 'Cells on main diagonal contains values from **F** array. Value in cell above main diagonal is optimal cost of tree from key in row to key in column. Cells bellow diagonal are empty. Value of the cells is evaluated from cells creating the tree. If new value is lower, cell is updated. Cost of created optimal tree is in the last cell of first row. Following formula explains cell value evaluation:',
-                brief2: "Only costs are stored in table. If we want to build the tree, we need to store also used keys. Key is the root of subtree. Root of the whole tree is stored in the same cell as total cost of the tree. Then, we take next key with lower value from array. If the array contains only one key with lower value, we can use this key as root of left subtree and continue with right subtree. Otherwise, we check, which from two keys was used as a root of left subtree (used key is stored in the table). After whole left subtree is built, we must build right subtree the same way.",
-                dpTime: 'In **time complexity**, we must consider 2 nested loops.',
+                brief1: 'Cells on main diagonal contains values from **F** array. Value in cell above main diagonal is optimal cost of tree from key in row to key in column. Cells bellow diagonal are empty. Value of the cells is evaluated from cells creating the current subtree. If new value is lower than current value, cell is updated. Cost of created optimal tree is in the last cell of first row. Following formula explains cell value evaluation:',
+                brief2: "Only costs are stored in table. If we want to build the actual tree, we need to store also used keys. Key is the root of subtree. Root of the whole tree is stored in the same cell as total cost of the tree. Then, we take next key with lower value from array. If the array contains only one key with lower value, we can use this key as root of left subtree and continue with right subtree. Otherwise, we check, which from two keys was used as a root of left subtree (used key is stored in the table). After whole left subtree is built, we must build right subtree the same way.",
+                dpTime: 'In **time complexity**, we must consider 3 nested loops.',
                 dpSpace: "**Time complexity** is number of keys + table size. Values of keys doesn't matter when building the actual tree isn't needed."
             },
             keysExample: 'K = { 1, 2, 3, 4 }',
@@ -341,7 +343,7 @@ export const english = {
         },
         demo: {
             title: 'Optimal binary search tree - demo',
-            brief: "Enter a **sorted** array of search keys (max 15.) and an array of frequency counts. Value in cell is optimal cost of tree from key in row to key in column. Value in parenthesis is index in array of key - value symbolize which key was used as root of subtree. It's possible to build whole tree by using this values.",
+            brief: "Enter a **sorted** array of search keys (max 15.) and an array of frequency counts. Values must be comma separated. Value in cell is optimal cost of tree from key in row to key in column. Value in parenthesis is index in array of key - value symbolize which key was used as root of subtree. It's possible to build whole tree by using these values.",
             initialState: 'Initial state',
             evalChainLength: 'Evaluating values for chain length ',
             assignedIntMax: 'Assigned INT_MAX',
@@ -357,7 +359,7 @@ export const english = {
         stats: {
             title: 'Optimal binary search tree - statistics',
             brief: "Enter an array of frequency counts. An array of keys isn't needed.",
-            conclusion: "Even for little array of keys, DP algorithm is faster than recursive algorithm. Number of calls and also number of iteration depend only on keys count, not the actual keys. It's because there's no key containing condition in algorithms."
+            conclusion: " Statistics are specific due to Theta notation in recursive algorithm time complexity. Theoretical and real number of calls is most similar when **F: 1,4**. In last predefined input, theoretical number is much bigger than real number. Even for little array of keys, DP algorithm is faster than recursive algorithm. Number of calls and also number of iteration depends only on keys count, not the actual keys. That's because there's no key containing condition in algorithms. Theoretical number of iterations in DP algorithm differs from real number. So theoretical value is upper bound."
         }
     }
 };

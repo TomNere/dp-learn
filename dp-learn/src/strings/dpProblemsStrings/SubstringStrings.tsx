@@ -1,3 +1,7 @@
+// author: Tomáš Nereča, 2019
+
+// Codes are inspirated by https://www.geeksforgeeks.org/longest-common-substring-dp-29/
+
 export const substrRecCode = `// Global variables
 char* X;
 char* Y;

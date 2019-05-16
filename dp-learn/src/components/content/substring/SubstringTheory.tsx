@@ -1,3 +1,5 @@
+// author: Tomáš Nereča, 2019
+
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 

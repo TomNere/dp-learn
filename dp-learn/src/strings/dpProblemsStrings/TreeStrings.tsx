@@ -1,3 +1,7 @@
+// author: Tomáš Nereča, 2019
+
+// Codes are inspirated by https://www.geeksforgeeks.org/optimal-binary-search-tree-dp-24/
+
 export const treeRecCode = `// Return table of optimal binary search tree
 // freqs[] - array of key searching frequences
 // i, j - indexes of subarray

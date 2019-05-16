@@ -1,3 +1,5 @@
+// author: Tomáš Nereča, 2019
+
 import * as React from 'react';
 
 import { AccessTime, Storage } from '@material-ui/icons';
@@ -13,7 +15,8 @@ type AllProps =
 interface IComplexityProps {
     time: string,
     space: string,
-    recOrDp: 'rec' | 'dp' | undefined
+    recOrDp: 'rec' | 'dp' | undefined,
+    theta: boolean
 }
 
 const styles = () => createStyles({
@@ -42,7 +45,8 @@ class Complexity extends React.Component<AllProps> {
     public static defaultProps: any = {
         time: "",
         space: "",
-        dpOrRec: undefined
+        dpOrRec: undefined,
+        theta: false
     }
 
     public render() {
@@ -67,7 +71,12 @@ class Complexity extends React.Component<AllProps> {
                                     <AccessTime />
                                     {strings.global.timeComplex}:
                                 </div>
-                                <b>O({this.props.time})</b>
+                                {this.props.theta &&
+                                    <b>Θ({this.props.time})</b>
+                                }
+                                {!this.props.theta &&
+                                    <b>O({this.props.time})</b>
+                                }
                                 <br />
                             </Grid>
                         }

@@ -1,3 +1,5 @@
+// author: Tomáš Nereča, 2019
+
 import * as Markdown from 'react-markdown';
 import * as React from 'react';
 
@@ -81,7 +83,7 @@ class TreeTheory extends React.Component<AllProps> {
                             </BottomMarginDiv>
 
                             <BottomMarginDiv>
-                                <Complexity time={treeRecTimeComplex} space={treeRecSpaceComplex} />
+                                <Complexity time={treeRecTimeComplex} space={treeRecSpaceComplex} theta={true} />
                             </BottomMarginDiv>
 
                             {/* Recursion Tree */}

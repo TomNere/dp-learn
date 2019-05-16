@@ -1,3 +1,7 @@
+// author: Tomáš Nereča, 2019
+
+// Codes are inspirated by https://www.geeksforgeeks.org/find-minimum-number-of-coins-that-make-a-change/
+
 // Helper for passing methods parameters by reference
 export interface ISimpleObjectParameter {
     value: number
@@ -71,21 +75,21 @@ export const coinsExamples = [
         dpTime: 0,
     },
     {
-        coins: [1,2,3,4],
-        value: 4,
-        recTime: 16,
-        dpTime: 10,
-    },
-    {
-        coins: [1,3,5],
+        coins: [1,2,3,4,5,6,7,8],
         value: 8,
-        recTime: 52,
-        dpTime: 18,
+        recTime: 256,
+        dpTime: 36,
     },
     {
         coins: [4,6,8],
         value: 12,
         recTime: 11,
         dpTime: 21,
+    },
+    {
+        coins: [7,4,8],
+        value: 10,
+        recTime: 5,
+        dpTime: 14,
     },
 ];
