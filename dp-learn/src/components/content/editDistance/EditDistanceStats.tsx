@@ -45,7 +45,7 @@ class EditDistanceStats extends React.Component<any, IEditDistanceStatsState> {
     public render() {
         return (
             <div>
-                <CustomTitle variant='h5'>
+                <CustomTitle variant='h2'>
                     {strings.editDistance.stats.title}
                 </CustomTitle>
                 <BottomMarginDiv>

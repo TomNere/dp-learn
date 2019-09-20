@@ -34,7 +34,7 @@ class TreeTheory extends React.Component<AllProps> {
         const { classes } = this.props;
         return (
             <div>
-                <CustomTitle variant='h5'>
+                <CustomTitle variant='h2'>
                     {strings.tree.theory.title}
                 </CustomTitle>
                 {/* What is edit distance problem */}

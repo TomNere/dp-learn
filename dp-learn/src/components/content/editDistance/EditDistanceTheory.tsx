@@ -31,7 +31,7 @@ class EditDistanceTheory extends React.Component<AllProps> {
         const { classes } = this.props;
         return (
             <div>
-                <CustomTitle variant='h5'>
+                <CustomTitle variant='h2'>
                     {strings.editDistance.theory.title}
                 </CustomTitle>
                 {/* What is edit distance problem */}

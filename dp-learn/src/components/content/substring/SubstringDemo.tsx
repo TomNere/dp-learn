@@ -88,7 +88,7 @@ class SubstringDemo extends React.Component<AllProps, ISubstringDemoState> {
     public render() {
         return (
             <div>
-                <CustomTitle variant='h5'>
+                <CustomTitle variant='h2'>
                     {strings.substring.demo.title}
                 </CustomTitle>
                 <BottomMarginDiv>

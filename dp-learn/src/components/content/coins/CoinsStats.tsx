@@ -48,7 +48,7 @@ class CoinsStats extends React.Component<any, ICoinsStatsState> {
     public render() {
         return (
             <div>
-                <CustomTitle variant='h5'>
+                <CustomTitle variant='h2'>
                     {strings.coins.stats.title}
                 </CustomTitle>
                 <BottomMarginDiv>

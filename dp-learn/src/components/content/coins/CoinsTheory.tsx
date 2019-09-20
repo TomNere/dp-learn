@@ -31,7 +31,7 @@ class CoinsTheory extends React.Component<AllProps> {
         const { classes } = this.props;
         return (
             <div>
-                <CustomTitle variant='h5'>
+                <CustomTitle variant='h2'>
                     {strings.coins.theory.title}
                 </CustomTitle>
                 {/* What is minimum number of coins problem */}

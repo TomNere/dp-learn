@@ -47,7 +47,7 @@ class RodStats extends React.Component<any, IRodStatsState> {
     public render() {
         return (
             <div>
-                <CustomTitle variant='h5'>
+                <CustomTitle variant='h2'>
                     {strings.rod.stats.title}
                 </CustomTitle>
                 <BottomMarginDiv>

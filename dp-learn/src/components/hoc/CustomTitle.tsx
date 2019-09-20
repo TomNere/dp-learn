@@ -13,13 +13,17 @@ type AllProps =
 
 interface ITitleProps {
     children: ReactNode,
-    variant: 'h5' | 'h6'
+    variant: 'h1' | 'h2' | 'h5' | 'h6'
 }
 
 const styles = (theme: Theme) => createStyles({
-    margin: {
-        marginBottom: theme.spacing.unit * 2,
-        marginTop: theme.spacing.unit * 2,
+    h1size: {
+        fontSize: 32,
+        fontWeight: 400
+    },
+    h2size: {
+        fontSize: 28,
+        fontWeight: 400
     },
 });
 
@@ -29,13 +33,20 @@ class CustomTitle extends React.Component<AllProps> {
         const { classes } = this.props;
         return (
             <div>
-                {this.props.variant === 'h5' &&
-                    <Typography variant={'h5'} className={classes.margin}>
-                        {this.props.children}
-                    </Typography>
+                {/* To boost search engines */}
+                {this.props.variant === 'h1' &&
+                    <h1 className={classes.h1size}>
+                            {this.props.children}
+                    </h1>
                 }
-                {this.props.variant === 'h6' &&
-                    <Typography variant={'h6'} className={classes.margin}>
+                {/* To boost search engines */}
+                {this.props.variant === 'h2' &&
+                    <h2 className={classes.h2size}>
+                            {this.props.children}
+                    </h2>
+                }
+                {(this.props.variant === 'h5' || this.props.variant === 'h6') &&
+                    <Typography variant={this.props.variant}>
                         {this.props.children}
                     </Typography>
                 }

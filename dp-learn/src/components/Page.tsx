@@ -98,7 +98,7 @@ class Page extends React.Component<AllProps, IPageState> {
                 {/* Left menu */}
                 <Drawer variant="permanent" classes={{ paper: classes.drawerPaper }}>
                     <div className={classes.toolbar} />
-                    <MenuHeader title={strings.global.dpLearn} onLanguageChange={this.handleLanguageChange} />
+                    <MenuHeader title={strings.global.dpLearnShort} onLanguageChange={this.handleLanguageChange} />
                     <List className={classes.noPadding}>
                         {/* About DP */}
                         <ListItem className={this.isSelected('intro')} button={true} onClick={this.handleSelectIntro}>

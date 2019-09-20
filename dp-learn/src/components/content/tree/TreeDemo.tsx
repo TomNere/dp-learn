@@ -93,7 +93,7 @@ class TreeDemo extends React.Component<AllProps, ITreeDemoState> {
     public render() {
         return (
             <div>
-                <CustomTitle variant='h5'>
+                <CustomTitle variant='h2'>
                     {strings.tree.demo.title}
                 </CustomTitle>
                 <BottomMarginDiv>

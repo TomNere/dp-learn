@@ -49,7 +49,7 @@ class TreeStats extends React.Component<any, ITreeStatsState> {
     public render() {
         return (
             <div>
-                <CustomTitle variant='h5'>
+                <CustomTitle variant='h2'>
                     {strings.tree.stats.title}
                 </CustomTitle>
                 <BottomMarginDiv>

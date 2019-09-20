@@ -87,7 +87,7 @@ class CoinsDemo extends React.Component<AllProps, ICoinsDemoState> {
     public render() {
         return (
             <div>
-                <CustomTitle variant='h5'>
+                <CustomTitle variant='h2'>
                     {strings.coins.demo.title}
                 </CustomTitle>
                 <BottomMarginDiv>

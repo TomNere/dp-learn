@@ -30,7 +30,7 @@ class SubstringTheory extends React.Component<AllProps> {
         const { classes } = this.props;
         return (
             <div>
-                <CustomTitle variant='h5'>
+                <CustomTitle variant='h2'>
                     {strings.substring.theory.title}
                 </CustomTitle>
                 {/* What is longest common substring problem */}

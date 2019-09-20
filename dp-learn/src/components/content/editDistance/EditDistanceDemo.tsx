@@ -98,7 +98,7 @@ class EditDistanceDemo extends React.Component<AllProps, ISubstringDemoState> {
     public render() {
         return (
             <div>
-                <CustomTitle variant='h5'>
+                <CustomTitle variant='h2'>
                     {strings.editDistance.demo.title}
                 </CustomTitle>
                 <BottomMarginDiv>

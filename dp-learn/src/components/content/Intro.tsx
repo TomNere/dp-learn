@@ -25,12 +25,12 @@ class Intro extends React.Component<AllProps> {
         const { classes } = this.props;
         return (
             <div className={classes.parent}>
-                <CustomTitle variant='h5'>
+                <CustomTitle variant='h1'>
                     {strings.global.dpLearn}
                 </CustomTitle>
                 <Markdown source={strings.intro.dpLearn} />
 
-                <CustomTitle variant='h5'>
+                <CustomTitle variant='h2'>
                     {strings.intro.whatIsDpTitle}
                 </CustomTitle>
 
@@ -45,7 +45,7 @@ class Intro extends React.Component<AllProps> {
                 </ul>
                 <Markdown source={strings.intro.whatIsDpText2} />
 
-                <CustomTitle variant='h5'>
+                <CustomTitle variant='h2'>
                     {strings.intro.partsTitle}
                 </CustomTitle>
                 <Markdown source={strings.intro.partsText} />

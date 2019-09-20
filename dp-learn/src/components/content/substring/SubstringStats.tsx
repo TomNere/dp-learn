@@ -44,7 +44,7 @@ class SubstringStats extends React.Component<any, ISubstringStatsState> {
     public render() {
         return (
             <div>
-                <CustomTitle variant='h5'>
+                <CustomTitle variant='h2'>
                     {strings.substring.stats.title}
                 </CustomTitle>
                 <BottomMarginDiv>

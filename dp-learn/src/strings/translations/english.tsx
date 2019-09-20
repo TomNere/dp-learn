@@ -4,7 +4,8 @@
 export const english = {
     global: {
         intro: 'Introduction',
-        dpLearn: 'DP learn',
+        dpLearn: 'DP learn - dynamic programming learning app',
+        dpLearnShort: 'DP learn',
         dynProg: 'Dynamic programming',
         recursiveSolution: 'Recursive algorithm',
         dynProgSolution: 'DP algorithm',
