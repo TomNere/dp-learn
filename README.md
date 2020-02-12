@@ -1,5 +1,4 @@
 # DP learn
-------------------------
 
 Running application is available on:
 - https://dp-learn.firebaseapp.com/
