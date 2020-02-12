@@ -21,7 +21,11 @@ export const slovak = {
         demo: 'Demo',
         stats: 'Štatistiky',
         string: 'Reťazec',
-        dots: '...'
+        dots: '...',
+        github: 'GitHub',
+        githubAddress: 'https://github.com/tondo8881/dp-learn',
+        writeUs: 'Napíšte nám',
+        mail: 'dplearnwebapp@gmail.com'
     },
     menu: {
         coins: 'Minimálny počet mincí na vytvorenie danej hodnoty',
@@ -100,8 +104,6 @@ export const slovak = {
         algorithmsTitle: 'Introduction to Algorithms',
         algorithmsHref: 'https://www.amazon.com/Introduction-Algorithms-3rd-MIT-Press/dp/0262033844',
         algorithmsText: 'teória k dynamickému programovaniu a niektorým úlohám',
-        writeUs: 'Napíšte nám',
-        mail: 'dplearnwebapp@gmail.com'
     },
     coins: {
         coin: 'Minca',

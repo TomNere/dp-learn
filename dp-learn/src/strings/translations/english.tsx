@@ -21,7 +21,11 @@ export const english = {
         demo: 'Demo',
         stats: 'Statistics',
         string: 'String',
-        dots: '...'
+        dots: '...',
+        github: 'GitHub',
+        githubAddress: 'https://github.com/tondo8881/dp-learn',
+        writeUs: 'Write Us',
+        mail: 'dplearnwebapp@gmail.com'
     },
     menu: {
         coins: 'Minimum number of coins that make a given value',
@@ -99,8 +103,6 @@ export const english = {
         algorithmsTitle: 'Introduction to Algorithms',
         algorithmsHref: 'https://www.amazon.com/Introduction-Algorithms-3rd-MIT-Press/dp/0262033844',
         algorithmsText: 'dynamic programming and some optimization problems theory',
-        writeUs: 'Write Us',
-        mail: 'dplearnwebapp@gmail.com'
     },
     coins: {
         coin: 'Coin',

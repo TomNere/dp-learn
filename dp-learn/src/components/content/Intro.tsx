@@ -8,14 +8,16 @@ import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/s
 import CustomTitle from 'src/components/hoc/CustomTitle';
 import LeftMarginDiv from 'src/components/hoc/LeftMarginDiv';
 import { strings } from 'src/strings/translations/strings';
+import MailLink from '../customStyled/MailLink';
+import CustomLink from '../customStyled/CustomLink';
 
 type AllProps =
     WithStyles<typeof styles>;
 
 const styles = (theme: Theme) => createStyles({
     parent: {
-        paddingLeft: theme.spacing.unit * 2,
-        paddingRight: theme.spacing.unit * 2,
+        padding: theme.spacing.unit * 2,
+        paddingTop: 0
     },
 });
 
@@ -69,17 +71,25 @@ class Intro extends React.Component<AllProps> {
                 </CustomTitle>
                 <ul>
                     <li>
-                        <b><a href={strings.intro.geeksHref}>{strings.intro.geeksTitle}</a></b> - {strings.intro.geeksText}
+                        <CustomLink href={strings.intro.geeksHref}>
+                            {strings.intro.geeksTitle}
+                        </CustomLink> - {strings.intro.geeksText}
                     </li>
                     <li>
-                        <b><a href={strings.intro.algorithmsHref}>{strings.intro.algorithmsTitle}</a></b> - {strings.intro.algorithmsText}
+                        <CustomLink href={strings.intro.algorithmsHref}>
+                            {strings.intro.algorithmsTitle}
+                        </CustomLink> - {strings.intro.algorithmsText}
                     </li>
                 </ul>
                 <CustomTitle variant='h5'>
-                    {strings.intro.writeUs}
+                    {strings.global.writeUs}:
                 </CustomTitle>
                 <ul>
-                    <li><a href={`mailto:${strings.intro.mail}`}>{strings.intro.mail}</a></li>
+                    <li>
+                        <MailLink>
+                            {strings.global.mail}
+                        </MailLink>
+                    </li>
                 </ul>
             </div>
         );
