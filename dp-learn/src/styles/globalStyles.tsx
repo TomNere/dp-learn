@@ -10,6 +10,7 @@ export const recTheorColor = '#42a5f5';
 export const recColor = '#ff7043';
 export const dpTheorColor = '#ffca28';
 export const dpColor = '#9ccc65';
+export const grayColor = '#999';
 
 // Style definition for all "Demo" components
 export const globalStyles = (theme: Theme) => createStyles({
