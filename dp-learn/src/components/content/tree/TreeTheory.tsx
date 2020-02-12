@@ -24,6 +24,7 @@ import TreeExample1 from 'src/resources/tree/treeExample1.svg';
 import TreeExample2 from 'src/resources/tree/treeExample2.svg';
 import { globalStyles } from 'src/styles/globalStyles';
 import { strings } from 'src/strings/translations/strings';
+import CustomLink from 'src/components/customStyled/CustomLink';
 
 type AllProps =
     WithStyles<typeof globalStyles>;
@@ -175,8 +176,8 @@ class TreeTheory extends React.Component<AllProps> {
                     {strings.theoryGlobal.similarProblems}
                 </CustomTitle>
                 <ul>
-                    <li><b><a href={strings.tree.theory.matrixMultHref}>{strings.tree.theory.matrixMultTitle}</a></b></li>
-                    <li><b><a href={strings.tree.theory.rnaHref}>{strings.tree.theory.rnaTitle}</a></b></li>
+                    <li><CustomLink href={strings.tree.theory.matrixMultHref}>{strings.tree.theory.matrixMultTitle}</CustomLink></li>
+                    <li><CustomLink href={strings.tree.theory.rnaHref}>{strings.tree.theory.rnaTitle}</CustomLink></li>
                 </ul>
             </div>
         );

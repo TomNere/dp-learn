@@ -20,6 +20,7 @@ import Table3 from 'src/resources/substring/substringTable3.svg';
 import Tree from 'src/resources/substring/substringTree.svg';
 import { globalStyles } from 'src/styles/globalStyles';
 import { strings } from 'src/strings/translations/strings';
+import CustomLink from 'src/components/customStyled/CustomLink';
 
 type AllProps =
     WithStyles<typeof globalStyles>;
@@ -157,7 +158,7 @@ class SubstringTheory extends React.Component<AllProps> {
                     {strings.theoryGlobal.similarProblems}
                 </CustomTitle>
                 <ul>
-                    <li><b><a href={strings.substring.theory.longestPalindromHref}>{strings.substring.theory.longestPalindromTitle}</a></b></li>
+                    <li><CustomLink href={strings.substring.theory.longestPalindromHref}>{strings.substring.theory.longestPalindromTitle}</CustomLink></li>
                 </ul>
             </div>
         );

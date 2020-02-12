@@ -5,6 +5,7 @@ import * as React from 'react';
 import { Link } from "@material-ui/core";
 import { WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 import { ReactNode } from 'react';
+import { blueColor } from 'src/styles/globalStyles';
 
 type AllProps =
     ICustomLinkProps &
@@ -17,7 +18,7 @@ interface ICustomLinkProps {
 
 export const styles = () => createStyles({
     color: {
-        color: 'black'
+        color: blueColor
     },
 });
 

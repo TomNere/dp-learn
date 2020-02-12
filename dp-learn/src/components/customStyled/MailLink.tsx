@@ -5,6 +5,7 @@ import * as React from 'react';
 import { Link } from "@material-ui/core";
 import { WithStyles, createStyles, withStyles } from '@material-ui/core/styles';
 import { ReactNode } from 'react';
+import { darkColor } from 'src/styles/globalStyles';
 
 type AllProps =
     IMailLinkProps &
@@ -16,7 +17,7 @@ interface IMailLinkProps {
 
 export const styles = () => createStyles({
     color: {
-        color: 'black'
+        color: darkColor
     },
 });
 
