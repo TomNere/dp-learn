@@ -10,7 +10,7 @@
     "url": "https://github.com/tondo8881/dp-learn"
   },
   "license": "MIT",
-  "description": "Web application DP learn demonstrates principles and advantages of Dynamic programming bottom-up(tabulation) method on several optimization problems. Each problem has its own theory, demo and statistics page.",
+  "description": "React web application demonstrating principles and advantages of Dynamic programming bottom-up(tabulation) method on several optimization problems. Each problem has its own theory, demo and statistics tab.",
   "dependencies": {
     "@devexpress/dx-react-chart": "^1.10.1",
     "@devexpress/dx-react-chart-material-ui": "^1.10.1",
