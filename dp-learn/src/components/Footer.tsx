@@ -8,7 +8,7 @@ import { Typography } from '@material-ui/core';
 import FooterItem from './hoc/FooterItem';
 import { darkColor } from 'src/styles/globalStyles';
 import MailLink from './customStyled/MailLink';
-import CustomLink from './customStyled/CustomLink';
+import BoldLink from './customStyled/CustomLink';
 
 type AllProps =
     WithStyles<typeof styles>;
@@ -45,7 +45,7 @@ class Footer extends React.Component<AllProps> {
                     <Typography variant='h6' color='inherit' align='left'>
                         {strings.global.github}
                     </Typography>
-                    <CustomLink>{strings.global.githubAddress}</CustomLink>
+                    <BoldLink>{strings.global.githubLink}</BoldLink>
                 </FooterItem>
                 
             </div>

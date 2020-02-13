@@ -21,7 +21,7 @@ import Table2Sk from 'src/resources/coins/coinsTable2Sk.svg';
 import Tree from 'src/resources/coins/coinsTree.svg';
 import { globalStyles } from 'src/styles/globalStyles';
 import { strings } from 'src/strings/translations/strings';
-import CustomLink from 'src/components/customStyled/CustomLink';
+import BoldLink from 'src/components/customStyled/CustomLink';
 
 type AllProps =
     WithStyles<typeof globalStyles>;
@@ -156,8 +156,8 @@ class CoinsTheory extends React.Component<AllProps> {
                 </CustomTitle>
                 <ul>
                     <li><b>{strings.coins.theory.rod}</b> ({strings.theoryGlobal.partOfApp})</li>
-                    <li><CustomLink hrev={strings.theoryGlobal.knapsackHref}>{strings.theoryGlobal.knapsackTitle}</CustomLink></li>
-                    <li><CustomLink hrev={strings.theoryGlobal.longestIncSubseqHref}>{strings.theoryGlobal.longestIncSubseqTitle}</CustomLink></li>
+                    <li><BoldLink hrev={strings.theoryGlobal.knapsackHref}>{strings.theoryGlobal.knapsackTitle}</BoldLink></li>
+                    <li><BoldLink hrev={strings.theoryGlobal.longestIncSubseqHref}>{strings.theoryGlobal.longestIncSubseqTitle}</BoldLink></li>
                 </ul>
             </div>
         );

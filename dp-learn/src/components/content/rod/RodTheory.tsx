@@ -21,7 +21,7 @@ import Table2Sk from 'src/resources/rod/rodTable2Sk.svg';
 import Tree from 'src/resources/rod/rodTree.svg';
 import { globalStyles } from 'src/styles/globalStyles';
 import { strings } from 'src/strings/translations/strings';
-import CustomLink from 'src/components/customStyled/CustomLink';
+import BoldLink from 'src/components/customStyled/CustomLink';
 
 type AllProps =
     WithStyles<typeof globalStyles>;
@@ -155,8 +155,8 @@ class RodTheory extends React.Component<AllProps> {
                 </CustomTitle>
                 <ul>
                     <li><b>{strings.rod.theory.coins}</b> ({strings.theoryGlobal.partOfApp})</li>
-                    <li><CustomLink href={strings.theoryGlobal.knapsackHref}>{strings.theoryGlobal.knapsackTitle}</CustomLink></li>
-                    <li><CustomLink href={strings.theoryGlobal.longestIncSubseqHref}>{strings.theoryGlobal.longestIncSubseqTitle}</CustomLink></li>
+                    <li><BoldLink href={strings.theoryGlobal.knapsackHref}>{strings.theoryGlobal.knapsackTitle}</BoldLink></li>
+                    <li><BoldLink href={strings.theoryGlobal.longestIncSubseqHref}>{strings.theoryGlobal.longestIncSubseqTitle}</BoldLink></li>
                 </ul>
             </div>
         );

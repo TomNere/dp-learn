@@ -23,7 +23,7 @@ export const slovak = {
         string: 'Reťazec',
         dots: '...',
         github: 'GitHub',
-        githubAddress: 'https://github.com/tondo8881/dp-learn',
+        githubLink: 'https://github.com/tondo8881/dp-learn',
         writeUs: 'Napíšte nám',
         mail: 'dplearnwebapp@gmail.com'
     },

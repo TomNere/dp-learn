@@ -23,7 +23,7 @@ export const english = {
         string: 'String',
         dots: '...',
         github: 'GitHub',
-        githubAddress: 'https://github.com/tondo8881/dp-learn',
+        githubLink: 'https://github.com/tondo8881/dp-learn',
         writeUs: 'Write Us',
         mail: 'dplearnwebapp@gmail.com'
     },

@@ -8,8 +8,8 @@ import { Theme, WithStyles, createStyles, withStyles } from '@material-ui/core/s
 import CustomTitle from 'src/components/hoc/CustomTitle';
 import LeftMarginDiv from 'src/components/hoc/LeftMarginDiv';
 import { strings } from 'src/strings/translations/strings';
-import MailLink from '../customStyled/MailLink';
-import CustomLink from '../customStyled/CustomLink';
+import BoldLink from '../customStyled/CustomLink';
+import { Link } from '@material-ui/core';
 
 type AllProps =
     WithStyles<typeof styles>;
@@ -71,24 +71,22 @@ class Intro extends React.Component<AllProps> {
                 </CustomTitle>
                 <ul>
                     <li>
-                        <CustomLink href={strings.intro.geeksHref}>
+                        <BoldLink href={strings.intro.geeksHref}>
                             {strings.intro.geeksTitle}
-                        </CustomLink> - {strings.intro.geeksText}
+                        </BoldLink> - {strings.intro.geeksText}
                     </li>
                     <li>
-                        <CustomLink href={strings.intro.algorithmsHref}>
+                        <BoldLink href={strings.intro.algorithmsHref}>
                             {strings.intro.algorithmsTitle}
-                        </CustomLink> - {strings.intro.algorithmsText}
+                        </BoldLink> - {strings.intro.algorithmsText}
                     </li>
                 </ul>
                 <CustomTitle variant='h5'>
-                    {strings.global.writeUs}:
+                    {strings.global.github}
                 </CustomTitle>
                 <ul>
                     <li>
-                        <MailLink>
-                            {strings.global.mail}
-                        </MailLink>
+                        <Link href={strings.global.githubLink}>{strings.global.githubLink}</Link>
                     </li>
                 </ul>
             </div>

@@ -21,7 +21,7 @@ import Table2Sk from 'src/resources/editDistance/editDistTable2Sk.svg';
 import Tree from 'src/resources/editDistance/editDistTree.svg';
 import { globalStyles } from 'src/styles/globalStyles';
 import { strings } from 'src/strings/translations/strings';
-import CustomLink from 'src/components/customStyled/CustomLink';
+import BoldLink from 'src/components/customStyled/CustomLink';
 
 type AllProps =
     WithStyles<typeof globalStyles>;
@@ -167,8 +167,8 @@ class EditDistanceTheory extends React.Component<AllProps> {
                     {strings.theoryGlobal.similarProblems}
                 </CustomTitle>
                 <ul>
-                    <li><CustomLink href={strings.editDistance.theory.longestPalindromHref}>{strings.editDistance.theory.longestPalindromTitle}</CustomLink></li>
-                    <li><CustomLink href={strings.editDistance.theory.longestCommonSubseqHref}>{strings.editDistance.theory.longestCommonSubseqTitle}</CustomLink></li>
+                    <li><BoldLink href={strings.editDistance.theory.longestPalindromHref}>{strings.editDistance.theory.longestPalindromTitle}</BoldLink></li>
+                    <li><BoldLink href={strings.editDistance.theory.longestCommonSubseqHref}>{strings.editDistance.theory.longestCommonSubseqTitle}</BoldLink></li>
                 </ul>
             </div>
         );

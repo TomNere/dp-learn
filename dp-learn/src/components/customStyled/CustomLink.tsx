@@ -23,7 +23,7 @@ export const styles = () => createStyles({
 });
 
 // Blue colored material Button
-class CustomLink extends React.Component<AllProps> {
+class BoldLink extends React.Component<AllProps> {
     public static defaultProps: any = {
         disabled: false,
     }
@@ -37,4 +37,4 @@ class CustomLink extends React.Component<AllProps> {
     }
 }
 
-export default withStyles(styles)(CustomLink);
+export default withStyles(styles)(BoldLink);
